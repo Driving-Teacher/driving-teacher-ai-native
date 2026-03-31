@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "skills": {
+    "compound": {
+      "source": "ai-native-camp/camp-2",
+      "sourceType": "github",
+      "computedHash": "33cab17740442415044b0c926f709ad3ff48bc1d3a751bb9d552ea8614203f22"
+    },
+    "content-digest": {
+      "source": "ai-native-camp/camp-2",
+      "sourceType": "github",
+      "computedHash": "46b48952aa3d993cde8383b41d94de7cf21abba20e257e7e9acbb669b02f393f"
+    },
+    "day1-onboarding": {
+      "source": "ai-native-camp/camp-2",
+      "sourceType": "github",
+      "computedHash": "b36594e8e5c2665e9a145d4b837d8557c4c3c68ba7189f989c9acb89550629a3"
+    },
+    "day1-test-skill": {
+      "source": "ai-native-camp/camp-2",
+      "sourceType": "github",
+      "computedHash": "ade6914f56370b04e978a5403dff7fe408ddba3aabf5856a256c9afe8c60ba80"
+    },
+    "day2-mcp-and-context-sync": {
+      "source": "ai-native-camp/camp-2",
+      "sourceType": "github",
+      "computedHash": "7104fe6c90c86dab02bf35d772a8be27bc43978a8bf6ebc40489a33be98a3e19"
+    },
+    "day3-clarify": {
+      "source": "ai-native-camp/camp-2",
+      "sourceType": "github",
+      "computedHash": "6559a7794e3342acc33bb95b7d47ce402f06ea8754f8e7ddc91686a34c46af7b"
+    },
+    "day4-wrap-and-analyze": {
+      "source": "ai-native-camp/camp-2",
+      "sourceType": "github",
+      "computedHash": "04dc094c90cbb77b78308e29ce1444ede75e6f027c55f614cde4bcc21c417d35"
+    },
+    "fetch-tweet": {
+      "source": "ai-native-camp/camp-2",
+      "sourceType": "github",
+      "computedHash": "e5d2c787eec48edf15279cf525c5b646a12874378cbc794d60da269c76c25655"
+    },
+    "history-insight": {
+      "source": "ai-native-camp/camp-2",
+      "sourceType": "github",
+      "computedHash": "befc2c325028a73379f14ae05d91cdaafeccbdd79847fd384c566966487f5e25"
+    },
+    "session-analyzer": {
+      "source": "ai-native-camp/camp-2",
+      "sourceType": "github",
+      "computedHash": "a53d865d2e43cfcfc91013f6ea913cc94746077ff8ca8f1ee73f051a47a1d705"
+    },
+    "session-wrap": {
+      "source": "ai-native-camp/camp-2",
+      "sourceType": "github",
+      "computedHash": "ad70140fe68b77d630057bbbcf12ad53c1bac601376f4fbf02386c6f36781dbb"
+    },
+    "team-assemble": {
+      "source": "ai-native-camp/camp-2",
+      "sourceType": "github",
+      "computedHash": "e4fb62d69888783bdcf6d3355d9797a296c03200695f7ab25796d1992da3519f"
+    }
+  }
+}
