@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Native Camp — Week 1 Kickoff</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+  @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #1C1C1C;
+    --fg: #F6F6F3;
+    --accent: #FFD547;
+    --accent2: #4F7DFF;
+    --red: #FF7439;
+    --green: #1AC569;
+    --dim: #6B6B6B;
+    --surface: #2A2929;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Pretendard Variable', 'Pretendard', sans-serif;
+    --display: 'Syncopate', sans-serif;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    overflow: hidden;
+  }
+
+  /* ── Slide System ── */
+  .deck {
+    width: 100vw; height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8vh 10vw;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+
+  .slide.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .slide.active .reveal {
+    animation: slideUp 0.7s ease forwards;
+  }
+
+  .slide.active .reveal-delay-1 { animation-delay: 0.15s; }
+  .slide.active .reveal-delay-2 { animation-delay: 0.3s; }
+  .slide.active .reveal-delay-3 { animation-delay: 0.45s; }
+  .slide.active .reveal-delay-4 { animation-delay: 0.6s; }
+  .slide.active .reveal-delay-5 { animation-delay: 0.75s; }
+  .slide.active .reveal-delay-6 { animation-delay: 0.9s; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal { opacity: 0; }
+
+  /* ── Typography ── */
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 6vw, 6.5rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4.5vw, 5rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  h3 {
+    font-size: clamp(1.2rem, 2vw, 2.2rem);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  p, li {
+    font-size: clamp(1rem, 1.8vw, 1.6rem);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .accent { color: var(--accent); }
+  .accent2 { color: var(--accent2); }
+  .dim { color: var(--dim); }
+  .bold { font-weight: 700; }
+  .mono { font-family: var(--mono); }
+
+  .big-quote {
+    font-family: var(--sans);
+    font-size: clamp(1.8rem, 4vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.3;
+    max-width: 90%;
+  }
+
+  .big-quote::before {
+    content: '"';
+    color: var(--accent);
+    font-size: 1.5em;
+    line-height: 0;
+    vertical-align: -0.15em;
+    margin-right: 0.05em;
+  }
+
+  .big-quote::after {
+    content: '"';
+    color: var(--accent);
+    font-size: 1.5em;
+    line-height: 0;
+    vertical-align: -0.15em;
+    margin-left: 0.05em;
+  }
+
+  /* ── Code Block ── */
+  .code-block {
+    background: var(--surface);
+    border-left: 4px solid var(--accent);
+    padding: 2rem 2.5rem;
+    font-family: var(--mono);
+    font-size: clamp(0.9rem, 1.5vw, 1.4rem);
+    line-height: 1.8;
+    border-radius: 0 8px 8px 0;
+    white-space: pre-line;
+    max-width: 70vw;
+  }
+
+  /* ── Not-Equal / Equal Blocks ── */
+  .eq-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .eq-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: clamp(1.2rem, 2.5vw, 2.4rem);
+    font-weight: 700;
+  }
+
+  .eq-symbol {
+    font-family: var(--mono);
+    font-size: 1.3em;
+    min-width: 2ch;
+    text-align: center;
+  }
+
+  .eq-symbol.neq { color: var(--red); }
+  .eq-symbol.yes { color: var(--green); }
+
+  /* ── Stage Flow ── */
+  .stage-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .stage {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 1.5rem 0;
+    border-left: 3px solid var(--dim);
+    padding-left: 2rem;
+    position: relative;
+    transition: all 0.4s ease;
+  }
+
+  .stage::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 1.8rem;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--dim);
+    transition: all 0.4s ease;
+  }
+
+  .stage.current {
+    border-left-color: var(--accent);
+  }
+
+  .stage.current::before {
+    background: var(--accent);
+    box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(255, 213, 71, 0.3);
+  }
+
+  .stage-num {
+    font-family: var(--mono);
+    font-size: clamp(0.8rem, 1.2vw, 1.1rem);
+    color: var(--dim);
+    min-width: 2rem;
+    padding-top: 0.2rem;
+  }
+
+  .stage.current .stage-num { color: var(--accent); }
+
+  .stage-content h3 {
+    font-size: clamp(1.1rem, 2vw, 1.8rem);
+    margin-bottom: 0.3rem;
+  }
+
+  .stage-content p {
+    font-size: clamp(0.85rem, 1.3vw, 1.15rem);
+    color: var(--dim);
+    font-weight: 300;
+  }
+
+  .stage.current .stage-content h3 { color: var(--fg); }
+  .stage.current .stage-content p { color: #999; }
+  .stage:not(.current) .stage-content h3 { color: var(--dim); }
+
+  /* ── Roadmap Table ── */
+  .roadmap {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    gap: 0;
+    margin: 2rem 0;
+    max-width: 70vw;
+  }
+
+  .roadmap-cell {
+    padding: 1.2rem 1.8rem;
+    border-bottom: 1px solid #222;
+    font-size: clamp(0.9rem, 1.4vw, 1.3rem);
+  }
+
+  .roadmap-cell.header {
+    color: var(--dim);
+    font-size: clamp(0.75rem, 1vw, 0.95rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.8rem;
+  }
+
+  .roadmap-cell.week {
+    font-family: var(--mono);
+    font-weight: 700;
+    color: var(--accent2);
+  }
+
+  .roadmap-cell.today {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ── Principle Cards ── */
+  .principles {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .principle {
+    flex: 1;
+    background: var(--surface);
+    border-top: 3px solid var(--accent);
+    padding: 2rem;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .principle-num {
+    font-family: var(--mono);
+    font-size: clamp(2rem, 3vw, 3.5rem);
+    font-weight: 700;
+    color: var(--accent);
+    opacity: 0.4;
+    margin-bottom: 0.5rem;
+  }
+
+  .principle h3 {
+    font-size: clamp(1rem, 1.8vw, 1.5rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .principle p {
+    font-size: clamp(0.8rem, 1.2vw, 1.05rem);
+    color: #888;
+  }
+
+  /* ── Terminal ── */
+  .terminal {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 0;
+    max-width: 600px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+  }
+
+  .terminal-bar {
+    background: #2a2a2a;
+    padding: 0.8rem 1.2rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .terminal-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+  }
+
+  .terminal-dot.red { background: #ff5f57; }
+  .terminal-dot.yellow { background: #ffbd2e; }
+  .terminal-dot.green { background: #28ca41; }
+
+  .terminal-body {
+    padding: 1.5rem 2rem 2rem;
+    font-family: var(--mono);
+    font-size: clamp(1rem, 1.6vw, 1.4rem);
+    line-height: 2;
+  }
+
+  .terminal-prompt {
+    color: var(--accent);
+  }
+
+  .terminal-cmd {
+    color: var(--fg);
+  }
+
+  .terminal-cursor {
+    display: inline-block;
+    width: 10px;
+    height: 1.3em;
+    background: var(--fg);
+    vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  /* ── Hierarchy List ── */
+  .hierarchy {
+    list-style: none;
+    margin: 1.5rem 0;
+  }
+
+  .hierarchy li {
+    padding: 0.6rem 0;
+    padding-left: 2rem;
+    position: relative;
+    font-size: clamp(1rem, 1.6vw, 1.4rem);
+  }
+
+  .hierarchy li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 8px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .hierarchy li.last::before {
+    background: var(--accent2);
+    width: 12px;
+    height: 3px;
+  }
+
+  /* ── Progress Bar ── */
+  .progress {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: var(--accent);
+    transition: width 0.4s ease;
+    z-index: 100;
+  }
+
+  /* ── Slide Counter ── */
+  .counter {
+    position: fixed;
+    bottom: 2rem;
+    right: 3rem;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--dim);
+    z-index: 100;
+  }
+
+  /* ── Noise Overlay ── */
+  .noise {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ── Tag ── */
+  .tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .spacer { height: 2rem; }
+  .spacer-sm { height: 1rem; }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .slide { padding: 5vh 6vw; }
+    .principles { flex-direction: column; }
+    .roadmap { max-width: 95vw; }
+    .stage { gap: 1rem; padding-left: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+<div class="progress" id="progress"></div>
+<div class="counter" id="counter"></div>
+
+<div class="deck" id="deck">
+
+  <!-- ════════════ SLIDE 0: Title ════════════ -->
+  <div class="slide active">
+    <div class="tag reveal">Week 1 Kickoff</div>
+    <h1 class="reveal reveal-delay-1">AI Native<br><span class="accent">Camp</span></h1>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-2" style="font-size:clamp(1.1rem,2vw,1.6rem); color:#888;">
+      운전선생 팀 — 4주간의 전환
+    </p>
+  </div>
+
+  <!-- ════════════ SLIDE 1: Opening Quote ════════════ -->
+  <div class="slide">
+    <div class="big-quote reveal">
+      4주 후, 우리 조직의 업무 방식은<br>
+      <span class="accent">영구적으로</span> 바뀐다.
+    </div>
+  </div>
+
+  <!-- ════════════ SLIDE 2: Not Education ════════════ -->
+  <div class="slide">
+    <h2 class="reveal">이 캠프는<br><span class="accent">교육이 아니다</span></h2>
+    <div class="spacer"></div>
+    <ul class="hierarchy reveal reveal-delay-1">
+      <li>누가 가르쳐주는 게 아니라</li>
+      <li><span class="bold">각자 AI와 대화하면서 발견</span>하는 과정</li>
+      <li>내가 해줄 수 있는 건 <span class="accent2">방향</span>과 <span class="accent2">도구</span>뿐</li>
+      <li class="last"><span class="bold">나머지는 여러분이 직접 해야 함</span></li>
+    </ul>
+  </div>
+
+  <!-- ════════════ SLIDE 3: AI Native Definition ════════════ -->
+  <div class="slide">
+    <div class="tag reveal">AI Native란?</div>
+    <div class="spacer-sm"></div>
+    <div class="eq-block">
+      <div class="eq-row reveal reveal-delay-1">
+        <span class="eq-symbol neq">≠</span>
+        <span>ChatGPT를 잘 쓰는 것</span>
+      </div>
+      <div class="eq-row reveal reveal-delay-2">
+        <span class="eq-symbol neq">≠</span>
+        <span>기존 업무에 AI를 붙이는 것</span>
+      </div>
+      <div class="eq-row reveal reveal-delay-3">
+        <span class="eq-symbol yes">=</span>
+        <span>AI가 있다는 전제로 <span class="accent">업무를 재설계</span>하는 것</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ SLIDE 4: Core Question ════════════ -->
+  <div class="slide">
+    <div class="big-quote reveal">
+      지금 하고 있지만,<br>
+      사실 <span class="accent">안 해도 되는 일</span>은 뭔가?
+    </div>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-1" style="color:#888;">
+      "더 잘하는 것"이 아니라 <span class="bold" style="color:var(--fg);">"안 하는 것"</span>을 찾는 캠프
+    </p>
+  </div>
+
+  <!-- ════════════ SLIDE 5: Vibe Coding Title ════════════ -->
+  <div class="slide">
+    <div class="tag reveal">바이브코딩의 흐름</div>
+    <h2 class="reveal reveal-delay-1">지금<br>어디까지 왔는가</h2>
+  </div>
+
+  <!-- ════════════ SLIDE 6: Stage Flow ════════════ -->
+  <div class="slide">
+    <div class="stage-flow">
+      <div class="stage reveal">
+        <div class="stage-num">01</div>
+        <div class="stage-content">
+          <h3>Model <span style="color:var(--dim)">모델</span></h3>
+          <p>"이거 해줘" → 복붙 &nbsp; | &nbsp; ChatGPT에 질문, 답변 복사</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-1">
+        <div class="stage-num">02</div>
+        <div class="stage-content">
+          <h3>Context <span style="color:var(--dim)">컨텍스트</span></h3>
+          <p>"내 코드 보고 해줘" &nbsp; | &nbsp; Cursor, Copilot — 코드베이스를 읽고 제안</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-2">
+        <div class="stage-num">03</div>
+        <div class="stage-content">
+          <h3>Agent <span style="color:var(--dim)">에이전트</span></h3>
+          <p>"알아서 해줘" &nbsp; | &nbsp; Claude Code — 읽기/쓰기/실행/커밋을 자율 수행</p>
+        </div>
+      </div>
+      <div class="stage current reveal reveal-delay-3">
+        <div class="stage-num">04</div>
+        <div class="stage-content">
+          <h3>Harness <span class="accent">조종석</span></h3>
+          <p>"<span style="color:var(--fg); font-weight:700;">우리 방식대로 해줘</span>" &nbsp; | &nbsp; CLAUDE.md, Skill, MCP, Hook, Plugin, Agent Teams</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ SLIDE 7: Harness = AI Native ════════════ -->
+  <div class="slide">
+    <h2 class="reveal"><span class="accent">조종석</span>의 시대</h2>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-1" style="font-size:clamp(1.1rem,2vw,1.7rem); max-width:60vw;">
+      AI가 우리 회사의 <span class="bold">맥락, 도구, 프로세스</span>를<br>
+      알고 있는 상태에서 일하는 것
+    </p>
+    <div class="spacer"></div>
+    <div class="big-quote reveal reveal-delay-2" style="font-size:clamp(1.4rem,3vw,3rem);">
+      4주간의 목표:<br>전원이 주 3회 이상 AI로 일하는 것.
+    </div>
+  </div>
+
+  <!-- ════════════ SLIDE 8: 4-Week Roadmap ════════════ -->
+  <div class="slide">
+    <div class="tag reveal">4주 로드맵</div>
+    <div class="spacer-sm"></div>
+    <div class="roadmap reveal reveal-delay-1">
+      <div class="roadmap-cell header">Week</div>
+      <div class="roadmap-cell header">한 줄 요약</div>
+      <div class="roadmap-cell header">만드는 것</div>
+
+      <div class="roadmap-cell week today">1 (오늘)</div>
+      <div class="roadmap-cell today">Claude Code 첫 체험</div>
+      <div class="roadmap-cell today">개발 환경 + 7개 기능 체험</div>
+
+      <div class="roadmap-cell week">2</div>
+      <div class="roadmap-cell">내 도구를 AI에 연결</div>
+      <div class="roadmap-cell">Context Sync 스킬</div>
+
+      <div class="roadmap-cell week">3</div>
+      <div class="roadmap-cell">모호한 아이디어 → 실행 가능한 기획</div>
+      <div class="roadmap-cell">Clarify 스킬 + PRD</div>
+
+      <div class="roadmap-cell week">4</div>
+      <div class="roadmap-cell">되돌아보기 + 습관 만들기</div>
+      <div class="roadmap-cell">Session Wrap + Zeude</div>
+    </div>
+  </div>
+
+  <!-- ════════════ SLIDE 9: Homework Note ════════════ -->
+  <div class="slide">
+    <h2 class="reveal">매주 <span class="accent">숙제</span>가 있다</h2>
+    <div class="spacer"></div>
+    <ul class="hierarchy reveal reveal-delay-1">
+      <li>누가 체크하지 않는다</li>
+      <li>안 하면 <span class="bold">본인만 뒤처진다</span></li>
+      <li class="last">
+        <span class="mono accent2">/homework</span> 치면 Claude가 알려줌
+      </li>
+    </ul>
+  </div>
+
+  <!-- ════════════ SLIDE 10: 3 Principles ════════════ -->
+  <div class="slide">
+    <div class="tag reveal">3개 원칙</div>
+    <div class="spacer-sm"></div>
+    <div class="principles">
+      <div class="principle reveal reveal-delay-1">
+        <div class="principle-num">01</div>
+        <h3>액션 전에 문제</h3>
+        <p>"뭘 할까" 전에<br>"왜 해야 하나"</p>
+      </div>
+      <div class="principle reveal reveal-delay-2">
+        <div class="principle-num">02</div>
+        <h3>성공과 실패 동시에</h3>
+        <p>Plan A만 세우지 않는다<br>"이게 안 되면?"을 같이</p>
+      </div>
+      <div class="principle reveal reveal-delay-3">
+        <div class="principle-num">03</div>
+        <h3>임기응변 체크</h3>
+        <p>"이거 시스템인가 땜빵인가?"<br>알고는 있어야 한다</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ SLIDE 11: Today ════════════ -->
+  <div class="slide">
+    <h2 class="reveal">오늘 할 것</h2>
+    <div class="spacer"></div>
+    <div class="terminal reveal reveal-delay-1">
+      <div class="terminal-bar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+      </div>
+      <div class="terminal-body">
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">claude</span></div>
+        <div><span class="terminal-prompt">></span> <span class="terminal-cmd">1일차</span><span class="terminal-cursor"></span></div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-2" style="color:#888; font-size:clamp(0.9rem,1.4vw,1.2rem);">
+      이 한 마디면 Claude가 오늘의 수업을 진행해줌
+    </p>
+  </div>
+
+  <!-- ════════════ SLIDE 12: Not Spoon-feeding ════════════ -->
+  <div class="slide">
+    <h2 class="reveal" style="font-size:clamp(2rem,5vw,5.5rem);">
+      <span class="accent">떠먹여주지<br>않는다</span>
+    </h2>
+    <div class="spacer"></div>
+    <ul class="hierarchy reveal reveal-delay-1">
+      <li>막히면 — Claude에게 물어보기</li>
+      <li>그래도 막히면 — 슬랙에 올리기</li>
+      <li class="last">그래도 안 되면 — 나한테 오기 <span class="dim">(최후의 수단)</span></li>
+    </ul>
+  </div>
+
+  <!-- ════════════ SLIDE 13: Closing ════════════ -->
+  <div class="slide">
+    <div class="big-quote reveal" style="max-width:95%;">
+      AI Native는 도구를 잘 쓰는 게 아니라,<br>
+      안 해도 되는 일을 발견하고 <span class="accent">제거</span>하는 것이다.
+    </div>
+  </div>
+
+  <!-- ════════════ SLIDE 14: Declaration ════════════ -->
+  <div class="slide">
+    <p class="reveal" style="color:#888; font-size:clamp(1rem,1.5vw,1.3rem);">4주 후, 각자 하나씩 선언할 것:</p>
+    <div class="spacer-sm"></div>
+    <h2 class="reveal reveal-delay-1" style="max-width:90vw;">
+      "나는 앞으로 <span class="accent">___</span>를 하지 않겠다."
+    </h2>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-2" style="color:var(--dim); font-size:clamp(1.1rem,2vw,1.6rem);">
+      오늘은 그 <span style="color:var(--fg)">첫 번째 날</span>.
+    </p>
+  </div>
+
+</div>
+
+<script>
+  const deck = document.getElementById('deck');
+  const slides = deck.querySelectorAll('.slide');
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  let current = 0;
+
+  function goTo(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides[current].classList.remove('active');
+    // Reset animations
+    slides[current].querySelectorAll('.reveal').forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight; // trigger reflow
+      el.style.animation = '';
+      el.style.opacity = '0';
+    });
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current / (slides.length - 1)) * 100) + '%';
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault();
+      goTo(current + 1);
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      goTo(current - 1);
+    }
+    if (e.key === 'Home') goTo(0);
+    if (e.key === 'End') goTo(slides.length - 1);
+  });
+
+  // Touch support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      diff > 0 ? goTo(current + 1) : goTo(current - 1);
+    }
+  });
+
+  // Click to advance
+  deck.addEventListener('click', (e) => {
+    if (e.clientX > window.innerWidth / 2) goTo(current + 1);
+    else goTo(current - 1);
+  });
+
+  // Init
+  goTo(0);
+</script>
+
+</body>
+</html>
