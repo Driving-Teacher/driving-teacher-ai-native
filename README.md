@@ -63,6 +63,7 @@ AI Native **=** AI가 있다는 전제로 업무/경험을 재설계하는 것
 **숙제**
 - CLAUDE.md에 본인 정보 작성 → 새 세션에서 기억하는지 확인
 - 업무 1개를 Claude Code로 직접 수행해보기
+- `/think-deeper`로 자기 업무 고민 1개 기획해보기
 - (도전) 평소 하던 업무 1개를 일주일간 "안 해보기" 실험
 
 ---
@@ -99,9 +100,9 @@ AI Native **=** AI가 있다는 전제로 업무/경험을 재설계하는 것
 | PRD + GitHub | PRD 초안 자동 작성 → 검증 → GitHub 첫 PR 제출 | PRD 문서 + PR 경험 |
 
 **숙제**
-- 조별 /think-deeper 스킬 마무리 (5 Whys, Plan A/B/C)
+- Clarify 스킬 마무리 + 테스트
 - 자주 반복하는 회사 업무를 Skill 1개로 만들기 (예: /daily-report, /student-stats)
-- Quick Win 재설계안을 마크다운 문서로 정리
+- PRD 보강
 
 ---
 
@@ -116,6 +117,7 @@ AI Native **=** AI가 있다는 전제로 업무/경험을 재설계하는 것
 | 실행 + 확인 | 만든 스킬 실행 → 결과 확인 | 작동하는 스킬 |
 | 세션 분석 | history-insight + session-analyzer로 과거 작업 분석 | 내 작업 패턴 인사이트 |
 | 콘텐츠 소화 | fetch-tweet + content-digest (Quiz-First 학습법) | 콘텐츠 소화 파이프라인 |
+| 스킬 소개 | 각자 만든 스킬 돌아가며 소개 — "나 이거 만들었는데 이럴 때 써봐" | 서로의 도구 공유 |
 | 보너스 | compound, team-assemble 스킬 소개 | 추가 도구 파악 |
 | Zeude 도입 | [zep-us/zeude](https://github.com/zep-us/zeude) 설치 — 조직 Claude Code 사용량/스킬 모니터링 | 팀 AI 사용 현황 대시보드 |
 
