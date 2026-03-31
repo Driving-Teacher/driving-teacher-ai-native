@@ -154,15 +154,23 @@ AI Native **=** AI가 있다는 전제로 업무/경험을 재설계하는 것
 - **읽기**: Claude Code는 로컬 docs/ 직접 접근, Claude Desktop은 GDrive MCP
 - **쓰기**: 개발자는 git commit, 비개발자는 Claude Code에서 편집 요청
 
-## 캠프 후 (Phase 2)
+## 캠프 후 (Phase 2) — 로드맵
+
+```
+Level 1 (캠프 4주): "AI한테 시킬 수 있다" → 개인 생산성 향상
+Level 2 (캠프 후 4~8주): "안 해도 되는 일을 발견한다" → 업무 제거/재설계
+Level 3 (캠프 후 8~12주): "AI 전제 프로세스를 만든다" → 팀 운영 방식 변화
+```
 
 | 시점 | 할 것 |
 |------|-------|
 | 캠프 후 즉시 | `#ai-native-log` 슬랙 채널 운영 |
 | 캠프 후 즉시 | Zeude 대시보드로 팀 AI 사용 현황 추적 |
-| 4주 후 | 리뷰 미팅 — 선언 이행 체크 + Zeude 지표 리뷰 |
-| 넥스트 스텝 | [OpenClaw](https://github.com/openclaw) 도입 검토 — 오픈소스 AI 코딩 에이전트, 모델 무관, Telegram/Discord 연동으로 "항상 켜져있는" AI 워크플로우 |
-| 점진적 | GitHub에 스킬/PRD 축적, 도메인 문서 보강 |
+| 4주 후 | 리뷰 미팅 — Zeude 지표 + 선언 이행 체크 |
+| 4~8주 | 업무 제거 스프린트 — "안 해도 되는 일" 3개 골라서 실제로 안 하기 |
+| 8~12주 | 프로세스 재설계 — AI 전제로 회의/CS/리포트 방식 변경 |
+| 관심자 대상 | [OpenClaw](https://github.com/openclaw) 도입 — 항상 켜져있는 AI (Telegram/Discord) |
+| 팀이 준비됐을 때 | 노션 → Git docs/ 전환 (지식 SSOT 이동) |
 
 ## 성공 지표
 
