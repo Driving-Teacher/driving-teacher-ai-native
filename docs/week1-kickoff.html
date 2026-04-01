@@ -460,7 +460,7 @@
 
 <div class="deck" id="deck">
 
-  <!-- ════════════ SLIDE 0: Title + Quote ════════════ -->
+  <!-- ═══ 1. 타이틀 ═══ -->
   <div class="slide active">
     <div class="tag reveal">Week 1 Kickoff</div>
     <h1 class="reveal reveal-delay-1">AI Native<br><span class="accent">Camp</span></h1>
@@ -470,7 +470,7 @@
     </p>
   </div>
 
-  <!-- ════════════ SLIDE 2: Not Education ════════════ -->
+  <!-- ═══ 2. 교육이 아니다 ═══ -->
   <div class="slide">
     <h2 class="reveal">이 캠프는<br><span class="accent">교육이 아니다</span></h2>
     <div class="spacer"></div>
@@ -482,7 +482,7 @@
     </ul>
   </div>
 
-  <!-- ════════════ SLIDE 3: AI Native Definition ════════════ -->
+  <!-- ═══ 3. AI Native ≠/= ═══ -->
   <div class="slide">
     <div class="tag reveal">AI Native란?</div>
     <div class="spacer-sm"></div>
@@ -502,7 +502,7 @@
     </div>
   </div>
 
-  <!-- ════════════ SLIDE 4: Core Question ════════════ -->
+  <!-- ═══ 4. 핵심 질문 ═══ -->
   <div class="slide">
     <div class="big-quote reveal">
       지금 하고 있지만,<br>
@@ -514,7 +514,25 @@
     </p>
   </div>
 
-  <!-- ════════════ SLIDE 5: Stage Flow (merged) ════════════ -->
+  <!-- ═══ 5. 설문 결과 ═══ -->
+  <div class="slide">
+    <div class="tag reveal">설문 결과</div>
+    <h3 class="reveal reveal-delay-1" style="margin-top:1rem;">여러분이 <span class="accent">귀찮다고 한 것들</span></h3>
+    <div class="spacer-sm"></div>
+    <ul class="hierarchy reveal reveal-delay-2">
+      <li>리서치/인터뷰 자료 요약에 시간이 너무 오래 걸림</li>
+      <li>채널톡에서 비슷한 패턴의 답변을 반복</li>
+      <li>계약서 검토, 서류 작성, 매출 프로젝션</li>
+      <li>문서 포맷이 안 정해져서 매번 처음부터</li>
+      <li class="last">데일리 스크럼 쓰기</li>
+    </ul>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-3" style="color:var(--accent); font-weight:700; font-size:clamp(1.1rem,1.8vw,1.5rem);">
+      오늘 이것들을 해결합니다.
+    </p>
+  </div>
+
+  <!-- ═══ 6. 바이브코딩 4단계 ═══ -->
   <div class="slide">
     <div class="tag reveal">바이브코딩의 흐름</div>
     <div class="spacer-sm"></div>
@@ -523,70 +541,34 @@
         <div class="stage-num">01</div>
         <div class="stage-content">
           <h3>Model <span style="color:var(--dim)">모델</span></h3>
-          <p>"이거 해줘" → 복붙 &nbsp; | &nbsp; ChatGPT에 질문, 답변 복사</p>
+          <p>"이거 해줘" → 복붙</p>
         </div>
       </div>
       <div class="stage reveal reveal-delay-1">
         <div class="stage-num">02</div>
         <div class="stage-content">
           <h3>Context <span style="color:var(--dim)">컨텍스트</span></h3>
-          <p>"내 코드 보고 해줘" &nbsp; | &nbsp; Cursor, Copilot — 코드베이스를 읽고 제안</p>
+          <p>"내 코드 보고 해줘" — Cursor, Copilot</p>
         </div>
       </div>
       <div class="stage reveal reveal-delay-2">
         <div class="stage-num">03</div>
         <div class="stage-content">
           <h3>Agent <span style="color:var(--dim)">에이전트</span></h3>
-          <p>"알아서 해줘" &nbsp; | &nbsp; Claude Code — 읽기/쓰기/실행/커밋을 자율 수행</p>
+          <p>"알아서 해줘" — Claude Code = 빈 차</p>
         </div>
       </div>
       <div class="stage current reveal reveal-delay-3">
         <div class="stage-num">04</div>
         <div class="stage-content">
           <h3>Harness <span class="accent">조종석</span></h3>
-          <p>"<span style="color:var(--fg); font-weight:700;">우리 방식대로 해줘</span>" &nbsp; | &nbsp; CLAUDE.md, Skill, MCP, Hook, Plugin, Agent Teams</p>
+          <p>"<span style="color:var(--fg); font-weight:700;">우리 방식대로 해줘</span>" — Claude Code + 우리 회사 설정 = 세팅된 차</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ════════════ SLIDE 7: Vision 1 ════════════ -->
-  <div class="slide">
-    <div class="tag reveal">내가 꿈꾸는 회사</div>
-    <div class="spacer-sm"></div>
-    <div class="eq-block">
-      <div class="eq-row reveal reveal-delay-1">
-        <span class="eq-symbol neq" style="font-size:1.5em;">AS</span>
-        <span>"파일 어디있죠?" "히스토리 전해주세요" "이거 어떻게 돼요?"</span>
-      </div>
-      <div class="eq-row reveal reveal-delay-2">
-        <span class="eq-symbol yes" style="font-size:1.5em;">TO</span>
-        <span><span class="accent">AI에게 먼저 물어본다.</span> 사람한테 묻는 건 더블체크용.</span>
-      </div>
-    </div>
-    <div class="spacer"></div>
-    <ul class="hierarchy reveal reveal-delay-3">
-      <li>필요한 게 있으면 → 먼저 <span class="bold">검색</span></li>
-      <li>없으면 → 스스로 <span class="bold">만든다</span></li>
-      <li class="last">만들면 → 팀에 <span class="accent">공유</span>한다</li>
-    </ul>
-  </div>
-
-  <!-- ════════════ SLIDE 7.2: Vision 2 — Document for AI ════════════ -->
-  <div class="slide">
-    <h2 class="reveal" style="font-size:clamp(1.6rem,3.5vw,3.5rem);">
-      문서를<br>
-      <span style="color:var(--red); text-decoration:line-through;">사람이 보기좋게</span><br>
-      <span class="accent">AI가 보기좋게</span>
-    </h2>
-    <div class="spacer"></div>
-    <p class="reveal reveal-delay-1" style="color:#888; font-size:clamp(0.95rem,1.4vw,1.2rem); max-width:65vw;">
-      노션의 예쁜 페이지 대신, AI가 검색하고 이해할 수 있는 구조화된 문서.<br>
-      그게 진짜 SSOT다.
-    </p>
-  </div>
-
-  <!-- ════════════ SLIDE 7.5: Claude Products ════════════ -->
+  <!-- ═══ 7. Claude 제품 비교 ═══ -->
   <div class="slide">
     <div class="tag reveal">왜 Claude Code인가?</div>
     <div class="spacer-sm"></div>
@@ -613,71 +595,76 @@
         </div>
       </div>
     </div>
-    <div class="spacer"></div>
-    <p class="reveal reveal-delay-3" style="color:#888; font-size:clamp(0.9rem,1.3vw,1.1rem);">
-      Cowork = AI가 놀러 옴 &nbsp;|&nbsp; <span style="color:var(--fg); font-weight:700;">Code = AI가 출근함</span> → 조종석이 가능한 이유
-    </p>
   </div>
 
-  <!-- ════════════ SLIDE 7.6: Survey Insight ════════════ -->
+  <!-- ═══ 8. 7개 기능 ═══ -->
   <div class="slide">
-    <div class="tag reveal">설문 결과</div>
-    <h3 class="reveal reveal-delay-1" style="margin-top:1rem;">여러분이 <span class="accent">귀찮다고 한 것들</span></h3>
+    <div class="tag reveal">Claude Code의 7가지 기능</div>
     <div class="spacer-sm"></div>
-    <ul class="hierarchy reveal reveal-delay-2">
-      <li>리서치/인터뷰 자료 요약하는 데 시간이 너무 오래 걸림</li>
-      <li>채널톡에서 비슷한 패턴의 답변을 반복</li>
-      <li>계약서 검토, 서류 작성, 매출 프로젝션</li>
-      <li>문서 포맷이 안 정해져서 매번 처음부터</li>
-      <li class="last">데일리 스크럼 쓰기</li>
-    </ul>
+    <div class="stage-flow">
+      <div class="stage current reveal">
+        <div class="stage-num" style="color:var(--accent);">1</div>
+        <div class="stage-content">
+          <h3><span class="accent">Memory</span></h3>
+          <p>AI가 나를 기억 (CLAUDE.md)</p>
+        </div>
+      </div>
+      <div class="stage current reveal reveal-delay-1">
+        <div class="stage-num" style="color:var(--accent);">2</div>
+        <div class="stage-content">
+          <h3><span class="accent">Skill</span></h3>
+          <p>반복 업무 자동화</p>
+        </div>
+      </div>
+      <div class="stage current reveal reveal-delay-2">
+        <div class="stage-num" style="color:var(--accent);">3</div>
+        <div class="stage-content">
+          <h3><span class="accent">MCP</span></h3>
+          <p>외부 도구 연결 (채널톡, 노션 등)</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-3">
+        <div class="stage-num">4</div>
+        <div class="stage-content">
+          <h3 style="color:var(--dim);">Subagent / Teams / Hook / Plugin</h3>
+          <p>전문가 호출, 팀 작업, 자동 실행, 앱스토어</p>
+        </div>
+      </div>
+    </div>
     <div class="spacer"></div>
-    <p class="reveal reveal-delay-3" style="color:var(--accent); font-weight:700; font-size:clamp(1.1rem,1.8vw,1.5rem);">
-      오늘 이것들을 해결합니다.
+    <p class="reveal reveal-delay-4" style="color:#888; font-size:clamp(0.9rem,1.3vw,1.1rem);">
+      오늘은 위 <span class="accent">3개</span>. 나머지가 궁금하면 <span class="mono accent2">/day1-onboarding</span>
     </p>
   </div>
 
-  <!-- ════════════ SLIDE 8: 4-Week Roadmap ════════════ -->
+  <!-- ═══ 9. 4주 로드맵 ═══ -->
   <div class="slide">
     <div class="tag reveal">4주 로드맵</div>
     <div class="spacer-sm"></div>
     <div class="roadmap reveal reveal-delay-1">
       <div class="roadmap-cell header">Week</div>
-      <div class="roadmap-cell header">한 줄 요약</div>
-      <div class="roadmap-cell header">만드는 것</div>
+      <div class="roadmap-cell header">테마</div>
+      <div class="roadmap-cell header">결과물</div>
 
       <div class="roadmap-cell week today">1 (오늘)</div>
-      <div class="roadmap-cell today">체험 + 연결 + 첫 스킬</div>
-      <div class="roadmap-cell today">MCP 연결 + 나만의 스킬</div>
+      <div class="roadmap-cell today">체험 + MCP + 첫 스킬</div>
+      <div class="roadmap-cell today">내 첫 스킬 + MCP 연결</div>
 
       <div class="roadmap-cell week">2</div>
-      <div class="roadmap-cell">모호한 아이디어 → 실행 가능한 기획</div>
-      <div class="roadmap-cell">Clarify 스킬 + PRD</div>
+      <div class="roadmap-cell">실전 적용 + 공유 + Zeude</div>
+      <div class="roadmap-cell">고도화 스킬 + 모니터링</div>
 
       <div class="roadmap-cell week">3</div>
-      <div class="roadmap-cell">되돌아보기 + 분석</div>
-      <div class="roadmap-cell">Session Wrap + Zeude</div>
+      <div class="roadmap-cell">OpenClaw — 항상 켜진 AI</div>
+      <div class="roadmap-cell">Telegram/Discord 연동</div>
 
       <div class="roadmap-cell week">4</div>
-      <div class="roadmap-cell">공유 + 재설계 + 선언</div>
-      <div class="roadmap-cell">스킬 소개 + AI Native 선언</div>
+      <div class="roadmap-cell">회고 + 선언</div>
+      <div class="roadmap-cell">Zeude 리뷰 + AI Native 선언</div>
     </div>
   </div>
 
-  <!-- ════════════ SLIDE 9: Homework Note ════════════ -->
-  <div class="slide">
-    <h2 class="reveal">매주 <span class="accent">숙제</span>가 있다</h2>
-    <div class="spacer"></div>
-    <ul class="hierarchy reveal reveal-delay-1">
-      <li>누가 체크하지 않는다</li>
-      <li>안 하면 <span class="bold">본인만 뒤처진다</span></li>
-      <li class="last">
-        <span class="mono accent2">/homework</span> 치면 Claude가 알려줌
-      </li>
-    </ul>
-  </div>
-
-  <!-- ════════════ SLIDE 10: 3 Principles ════════════ -->
+  <!-- ═══ 10. 3개 원칙 ═══ -->
   <div class="slide">
     <div class="tag reveal">3개 원칙</div>
     <div class="spacer-sm"></div>
@@ -700,81 +687,100 @@
     </div>
   </div>
 
-  <!-- ════════════ SLIDE 11: Today Timeline ════════════ -->
+  <!-- ═══ 11. 가이드: 첫 체험 ═══ -->
   <div class="slide">
-    <div class="tag reveal">오늘 할 것</div>
+    <div class="tag reveal">실습 1 — Claude Code 첫 체험 (15분)</div>
     <div class="spacer-sm"></div>
-    <div class="stage-flow">
-      <div class="stage reveal">
-        <div class="stage-num" style="color:var(--dim);">20m</div>
-        <div class="stage-content">
-          <h3 style="color:var(--dim);">지금</h3>
-          <p>발표 (이 슬라이드)</p>
-        </div>
+    <div class="terminal reveal reveal-delay-1">
+      <div class="terminal-bar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
       </div>
-      <div class="stage current reveal reveal-delay-1">
-        <div class="stage-num">20m</div>
-        <div class="stage-content">
-          <h3>Claude Code 첫 체험</h3>
-          <p>"1일차" 입력 → Claude가 진행</p>
-        </div>
-      </div>
-      <div class="stage reveal reveal-delay-2">
-        <div class="stage-num">30m</div>
-        <div class="stage-content">
-          <h3>MCP 연결</h3>
-          <p>채널톡 or 노션을 AI에 연결</p>
-        </div>
-      </div>
-      <div class="stage reveal reveal-delay-3">
-        <div class="stage-num">40m</div>
-        <div class="stage-content">
-          <h3>나만의 첫 스킬</h3>
-          <p>귀찮은 업무 1개를 스킬로 만들기</p>
-        </div>
-      </div>
-      <div class="stage reveal reveal-delay-4">
-        <div class="stage-num">10m</div>
-        <div class="stage-content">
-          <h3>숙제 + 마무리</h3>
-          <p>/think-deeper 체험 + "안 해보기" 실험</p>
-        </div>
+      <div class="terminal-body">
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">claude</span></div>
+        <div><span class="terminal-prompt">></span> <span class="terminal-cmd">이번 주 할 일을 표로 정리해줘</span><span class="terminal-cursor"></span></div>
       </div>
     </div>
-  </div>
-
-  <!-- ════════════ SLIDE 12: Not Spoon-feeding ════════════ -->
-  <div class="slide">
-    <h2 class="reveal" style="font-size:clamp(2rem,5vw,5.5rem);">
-      <span class="accent">떠먹여주지<br>않는다</span>
-    </h2>
     <div class="spacer"></div>
-    <ul class="hierarchy reveal reveal-delay-1">
-      <li>막히면 — Claude에게 물어보기</li>
-      <li>그래도 막히면 — 슬랙에 올리기</li>
-      <li class="last">그래도 안 되면 — 나한테 오기 <span class="dim">(최후의 수단)</span></li>
+    <ul class="hierarchy reveal reveal-delay-2">
+      <li>"이 데이터 분석해서 인사이트 3개 뽑아줘"</li>
+      <li>"채널톡 답변 템플릿 만들어줘"</li>
+      <li>"계약서 검토 체크리스트 만들어줘"</li>
+      <li class="last">막히면 옆 사람한테.</li>
     </ul>
   </div>
 
-  <!-- ════════════ SLIDE 13: Closing ════════════ -->
+  <!-- ═══ 12. 가이드: MCP ═══ -->
   <div class="slide">
-    <div class="big-quote reveal" style="max-width:95%;">
-      AI Native는 도구를 잘 쓰는 게 아니라,<br>
-      안 해도 되는 일을 발견하고 <span class="accent">제거</span>하는 것이다.
+    <div class="tag reveal">실습 2 — MCP 연결 (25분)</div>
+    <div class="spacer-sm"></div>
+    <div class="terminal reveal reveal-delay-1">
+      <div class="terminal-bar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+      </div>
+      <div class="terminal-body">
+        <div><span class="terminal-prompt">></span> <span class="terminal-cmd">채널톡을 MCP로 연결해줘</span><span class="terminal-cursor"></span></div>
+      </div>
     </div>
+    <div class="spacer"></div>
+    <ul class="hierarchy reveal reveal-delay-2">
+      <li>채널톡 or 노션 중 하나 선택</li>
+      <li>연결 후: "최근 문의 요약해줘"</li>
+      <li class="last">파워유저분들 도와주세요.</li>
+    </ul>
   </div>
 
-  <!-- ════════════ SLIDE 14: Declaration ════════════ -->
+  <!-- ═══ 13. 가이드: 스킬 ═══ -->
   <div class="slide">
-    <p class="reveal" style="color:#888; font-size:clamp(1rem,1.5vw,1.3rem);">4주 후, 각자 하나씩 선언할 것:</p>
+    <div class="tag reveal">실습 3 — 나만의 첫 스킬 (40분)</div>
     <div class="spacer-sm"></div>
-    <h2 class="reveal reveal-delay-1" style="max-width:90vw;">
-      "나는 앞으로 <span class="accent">___</span>를 하지 않겠다."
-    </h2>
+    <div class="terminal reveal reveal-delay-1">
+      <div class="terminal-bar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+      </div>
+      <div class="terminal-body">
+        <div><span class="terminal-prompt">></span> <span class="terminal-cmd">채널톡 답변 초안을 만드는 스킬을 만들어줘.</span></div>
+        <div><span class="terminal-prompt">&nbsp;</span> <span class="terminal-cmd">/cs-reply로 실행할 수 있게 해줘.</span><span class="terminal-cursor"></span></div>
+      </div>
+    </div>
     <div class="spacer"></div>
-    <p class="reveal reveal-delay-2" style="color:var(--dim); font-size:clamp(1.1rem,2vw,1.6rem);">
-      오늘은 그 <span style="color:var(--fg)">첫 번째 날</span>.
-    </p>
+    <ul class="hierarchy reveal reveal-delay-2">
+      <li><span class="mono">/cs-reply</span> — 채널톡 답변 초안</li>
+      <li><span class="mono">/daily-scrum</span> — 데일리 스크럼</li>
+      <li><span class="mono">/research-summary</span> — 리서치 요약</li>
+      <li class="last">설문에서 쓴 귀찮은 업무로!</li>
+    </ul>
+  </div>
+
+  <!-- ═══ 14. 비전 ═══ -->
+  <div class="slide">
+    <div class="tag reveal">내가 꿈꾸는 회사</div>
+    <div class="spacer-sm"></div>
+    <ul class="hierarchy reveal reveal-delay-1">
+      <li><span class="accent">AI에게 먼저 물어본다.</span> 사람한테 묻는 건 더블체크용.</li>
+      <li>필요한 게 없으면 → 스스로 <span class="bold">만든다</span> → 팀에 <span class="accent">공유</span></li>
+      <li class="last">문서를 <span style="color:var(--red); text-decoration:line-through;">사람이 보기좋게</span> → <span class="accent">AI가 보기좋게</span></li>
+    </ul>
+  </div>
+
+  <!-- ═══ 15. 숙제 + 클로징 ═══ -->
+  <div class="slide">
+    <div class="tag reveal">숙제</div>
+    <div class="spacer-sm"></div>
+    <ul class="hierarchy reveal reveal-delay-1">
+      <li>CLAUDE.md에 본인 정보 작성</li>
+      <li>만든 스킬 실전 사용 (못 만들었으면 만들어오기)</li>
+      <li><span class="mono accent2">/think-deeper</span>로 업무 고민 1개 기획</li>
+      <li>(도전) 평소 하던 업무 1개를 <span class="accent">안 해보기</span></li>
+    </ul>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-2" style="color:#888;">4주 후 선언:</p>
+    <h3 class="reveal reveal-delay-3">"나는 앞으로 <span class="accent">___</span>를 하지 않겠다."</h3>
   </div>
 
 </div>
@@ -789,10 +795,9 @@
   function goTo(n) {
     if (n < 0 || n >= slides.length) return;
     slides[current].classList.remove('active');
-    // Reset animations
     slides[current].querySelectorAll('.reveal').forEach(el => {
       el.style.animation = 'none';
-      el.offsetHeight; // trigger reflow
+      el.offsetHeight;
       el.style.animation = '';
       el.style.opacity = '0';
     });
@@ -804,34 +809,27 @@
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
-      e.preventDefault();
-      goTo(current + 1);
+      e.preventDefault(); goTo(current + 1);
     }
     if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-      e.preventDefault();
-      goTo(current - 1);
+      e.preventDefault(); goTo(current - 1);
     }
     if (e.key === 'Home') goTo(0);
     if (e.key === 'End') goTo(slides.length - 1);
   });
 
-  // Touch support
   let touchStartX = 0;
   document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
   document.addEventListener('touchend', (e) => {
     const diff = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      diff > 0 ? goTo(current + 1) : goTo(current - 1);
-    }
+    if (Math.abs(diff) > 50) { diff > 0 ? goTo(current + 1) : goTo(current - 1); }
   });
 
-  // Click to advance
   deck.addEventListener('click', (e) => {
     if (e.clientX > window.innerWidth / 2) goTo(current + 1);
     else goTo(current - 1);
   });
 
-  // Init
   goTo(0);
 </script>
 
