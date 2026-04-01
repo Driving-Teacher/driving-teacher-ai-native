@@ -1,0 +1,194 @@
+---
+name: day1-onboarding
+description: AI Native Camp Week 1 실습. Claude Code 체험 → MCP 연결 → 나만의 첫 스킬 만들기. "1일차", "Day 1", "온보딩" 요청에 사용.
+---
+
+# Week 1: 체험 + MCP + 첫 스킬
+
+이 스킬이 호출되면 아래 3개 Block을 **순서대로** 진행한다.
+각 Block이 끝나면 **AskUserQuestion**으로 다음으로 넘어갈지 물어본다.
+
+---
+
+## STOP PROTOCOL
+
+> **절대 한 번에 여러 Block을 진행하지 않는다.**
+> 하나의 Block이 완료될 때까지 다음 Block을 시작하지 않는다.
+> 사용자의 응답을 기다린 후에만 진행한다.
+
+---
+
+## Block 1: Claude Code 첫 체험 (~15분)
+
+### 목표
+Claude Code가 **내 컴퓨터에서 직접 파일을 읽고 쓸 수 있다**는 것을 체감.
+
+### 진행
+
+1. 먼저 인사하고 현재 프로젝트 구조를 보여준다:
+
+```
+안녕하세요! AI Native Camp Week 1 실습을 시작합니다.
+
+먼저, Claude Code가 여러분의 컴퓨터에서 직접 동작한다는 걸 보여드릴게요.
+```
+
+2. 프로젝트의 파일/폴더 구조를 간단히 탐색해서 보여준다.
+
+3. AskUserQuestion으로 체험할 업무를 선택하게 한다:
+
+```json
+AskUserQuestion({
+  "questions": [{
+    "question": "Claude Code로 뭘 시켜볼까요? 하나 골라보세요.",
+    "header": "첫 체험",
+    "options": [
+      {"label": "데이터 정리", "description": "표나 리스트를 정리해줘"},
+      {"label": "문서 초안", "description": "안내문/보고서 초안 만들어줘"},
+      {"label": "아이디어 브레인스토밍", "description": "아이디어 5개 내줘"},
+      {"label": "내 업무 직접 말할게", "description": "자유롭게 시켜볼래요"}
+    ],
+    "multiSelect": false
+  }]
+})
+```
+
+4. 선택한 업무를 실행하되, **파일을 직접 생성**해서 결과를 저장한다.
+   (이것이 ChatGPT와의 차이 — 답변을 복사할 필요 없이 파일이 바로 생긴다)
+
+5. 결과를 보여주고 "이게 ChatGPT와의 차이입니다. 파일이 바로 생겼죠?"라고 설명.
+
+6. 다음으로 넘어갈지 물어본다:
+
+```json
+AskUserQuestion({
+  "questions": [{
+    "question": "첫 체험 어떠셨나요? MCP 연결로 넘어갈까요?",
+    "header": "다음 단계",
+    "options": [
+      {"label": "넘어가자", "description": "MCP 연결 실습으로"},
+      {"label": "하나 더 해볼래", "description": "다른 업무도 시켜보고 싶어"}
+    ],
+    "multiSelect": false
+  }]
+})
+```
+
+---
+
+## Block 2: MCP 연결 (~25분)
+
+### 목표
+외부 도구(채널톡 or 노션)를 Claude Code에 **연결**해서, AI가 내 도구의 데이터를 읽을 수 있게 한다.
+
+### 진행
+
+1. MCP 개념 간단 설명:
+
+```
+MCP는 외부 도구를 Claude Code에 연결하는 방법입니다.
+USB-C처럼 — 꽂으면 바로 쓸 수 있어요.
+```
+
+2. 어떤 도구를 연결할지 물어본다:
+
+```json
+AskUserQuestion({
+  "questions": [{
+    "question": "어떤 도구를 Claude Code에 연결해볼까요?",
+    "header": "MCP 연결",
+    "options": [
+      {"label": "채널톡", "description": "고객 문의를 AI가 읽고 답변 초안을 만들 수 있음"},
+      {"label": "노션", "description": "노션 문서를 AI가 검색하고 읽을 수 있음"},
+      {"label": "슬랙", "description": "슬랙 메시지를 AI가 읽고 요약할 수 있음"},
+      {"label": "다른 도구", "description": "직접 말할게"}
+    ],
+    "multiSelect": false
+  }]
+})
+```
+
+3. 선택한 도구의 MCP 서버를 검색하고 연결을 시도한다.
+   - 연결 과정을 **단계별로 설명하면서** 진행
+   - API 키 등이 필요하면 사용자에게 안내
+
+4. 연결 성공 후, 실제로 데이터를 가져와서 보여준다:
+   - 채널톡: "최근 문의 3개 요약해줘"
+   - 노션: "___페이지 내용 읽어줘"
+   - 슬랙: "오늘 나한테 온 메시지 요약해줘"
+
+5. 다음으로 넘어갈지 물어본다:
+
+```json
+AskUserQuestion({
+  "questions": [{
+    "question": "MCP 연결 완료! 이제 나만의 스킬을 만들어볼까요?",
+    "header": "다음 단계",
+    "options": [
+      {"label": "스킬 만들러 가자", "description": "나만의 첫 스킬 만들기"},
+      {"label": "MCP 하나 더 연결할래", "description": "다른 도구도 연결하고 싶어"}
+    ],
+    "multiSelect": false
+  }]
+})
+```
+
+---
+
+## Block 3: 나만의 첫 스킬 만들기 (~40분)
+
+### 목표
+반복하는 업무를 **스킬**로 만들어서 명령어 하나로 실행할 수 있게 한다.
+
+### 진행
+
+1. 스킬 개념 설명:
+
+```
+스킬은 반복하는 업무를 자동화하는 명령어입니다.
+예: /cs-reply 치면 채널톡 답변 초안이 나오는 식.
+한 번 만들면 계속 쓸 수 있고, 팀원과 공유도 됩니다.
+```
+
+2. 어떤 스킬을 만들지 물어본다:
+
+```json
+AskUserQuestion({
+  "questions": [{
+    "question": "어떤 스킬을 만들어볼까요? 설문에서 쓴 귀찮은 업무를 떠올려보세요.",
+    "header": "스킬 만들기",
+    "options": [
+      {"label": "/cs-reply", "description": "채널톡 답변 초안 자동 생성"},
+      {"label": "/daily-scrum", "description": "데일리 스크럼 자동 작성"},
+      {"label": "/research-summary", "description": "리서치 자료 요약"},
+      {"label": "/contract-review", "description": "계약서 검토 체크리스트"}
+    ],
+    "multiSelect": false
+  }]
+})
+```
+
+3. 선택한 스킬의 SKILL.md를 **사용자와 대화하면서** 만든다:
+   - "이 스킬이 어떤 입력을 받으면 좋을까요?"
+   - "출력 형식은 어떻게 하면 좋을까요?"
+   - `.claude/skills/` 아래에 실제 파일을 생성
+
+4. 만든 스킬을 **바로 테스트**한다:
+   - 실제로 실행해보고 결과를 확인
+   - 수정할 부분이 있으면 즉석에서 개선
+
+5. 완료 후 마무리:
+
+```
+축하합니다! 나만의 첫 스킬을 만들었습니다. 🎉
+
+이제 이 스킬은 언제든 사용할 수 있습니다.
+다음 주에는 이 스킬을 실전에 써보고, 팀원들과 공유합니다.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📝 숙제는 /homework 으로 확인하세요!
+
+💡 7개 기능 전체를 더 배우고 싶다면:
+   /claude-code-deep
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
