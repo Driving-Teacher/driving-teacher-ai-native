@@ -460,22 +460,14 @@
 
 <div class="deck" id="deck">
 
-  <!-- ════════════ SLIDE 0: Title ════════════ -->
+  <!-- ════════════ SLIDE 0: Title + Quote ════════════ -->
   <div class="slide active">
     <div class="tag reveal">Week 1 Kickoff</div>
     <h1 class="reveal reveal-delay-1">AI Native<br><span class="accent">Camp</span></h1>
     <div class="spacer"></div>
-    <p class="reveal reveal-delay-2" style="font-size:clamp(1.1rem,2vw,1.6rem); color:#888;">
-      운전선생 팀 — 4주간의 전환
+    <p class="reveal reveal-delay-2" style="font-size:clamp(1.1rem,2.2vw,1.8rem); color:#888; font-weight:300;">
+      4주 후, 우리 조직의 업무 방식은 <span style="color:var(--fg); font-weight:700;">영구적으로</span> 바뀐다.
     </p>
-  </div>
-
-  <!-- ════════════ SLIDE 1: Opening Quote ════════════ -->
-  <div class="slide">
-    <div class="big-quote reveal">
-      4주 후, 우리 조직의 업무 방식은<br>
-      <span class="accent">영구적으로</span> 바뀐다.
-    </div>
   </div>
 
   <!-- ════════════ SLIDE 2: Not Education ════════════ -->
@@ -522,14 +514,10 @@
     </p>
   </div>
 
-  <!-- ════════════ SLIDE 5: Vibe Coding Title ════════════ -->
+  <!-- ════════════ SLIDE 5: Stage Flow (merged) ════════════ -->
   <div class="slide">
     <div class="tag reveal">바이브코딩의 흐름</div>
-    <h2 class="reveal reveal-delay-1">지금<br>어디까지 왔는가</h2>
-  </div>
-
-  <!-- ════════════ SLIDE 6: Stage Flow ════════════ -->
-  <div class="slide">
+    <div class="spacer-sm"></div>
     <div class="stage-flow">
       <div class="stage reveal">
         <div class="stage-num">01</div>
@@ -562,18 +550,91 @@
     </div>
   </div>
 
-  <!-- ════════════ SLIDE 7: Harness = AI Native ════════════ -->
+  <!-- ════════════ SLIDE 7: Vision 1 ════════════ -->
   <div class="slide">
-    <h2 class="reveal"><span class="accent">조종석</span>의 시대</h2>
-    <div class="spacer"></div>
-    <p class="reveal reveal-delay-1" style="font-size:clamp(1.1rem,2vw,1.7rem); max-width:60vw;">
-      AI가 우리 회사의 <span class="bold">맥락, 도구, 프로세스</span>를<br>
-      알고 있는 상태에서 일하는 것
-    </p>
-    <div class="spacer"></div>
-    <div class="big-quote reveal reveal-delay-2" style="font-size:clamp(1.4rem,3vw,3rem);">
-      4주간의 목표:<br>전원이 주 3회 이상 AI로 일하는 것.
+    <div class="tag reveal">내가 꿈꾸는 회사</div>
+    <div class="spacer-sm"></div>
+    <div class="eq-block">
+      <div class="eq-row reveal reveal-delay-1">
+        <span class="eq-symbol neq" style="font-size:1.5em;">AS</span>
+        <span>"파일 어디있죠?" "히스토리 전해주세요" "이거 어떻게 돼요?"</span>
+      </div>
+      <div class="eq-row reveal reveal-delay-2">
+        <span class="eq-symbol yes" style="font-size:1.5em;">TO</span>
+        <span><span class="accent">AI에게 먼저 물어본다.</span> 사람한테 묻는 건 더블체크용.</span>
+      </div>
     </div>
+    <div class="spacer"></div>
+    <ul class="hierarchy reveal reveal-delay-3">
+      <li>필요한 게 있으면 → 먼저 <span class="bold">검색</span></li>
+      <li>없으면 → 스스로 <span class="bold">만든다</span></li>
+      <li class="last">만들면 → 팀에 <span class="accent">공유</span>한다</li>
+    </ul>
+  </div>
+
+  <!-- ════════════ SLIDE 7.2: Vision 2 — Document for AI ════════════ -->
+  <div class="slide">
+    <h2 class="reveal" style="font-size:clamp(1.6rem,3.5vw,3.5rem);">
+      문서를<br>
+      <span style="color:var(--red); text-decoration:line-through;">사람이 보기좋게</span><br>
+      <span class="accent">AI가 보기좋게</span>
+    </h2>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-1" style="color:#888; font-size:clamp(0.95rem,1.4vw,1.2rem); max-width:65vw;">
+      노션의 예쁜 페이지 대신, AI가 검색하고 이해할 수 있는 구조화된 문서.<br>
+      그게 진짜 SSOT다.
+    </p>
+  </div>
+
+  <!-- ════════════ SLIDE 7.5: Claude Products ════════════ -->
+  <div class="slide">
+    <div class="tag reveal">왜 Claude Code인가?</div>
+    <div class="spacer-sm"></div>
+    <div class="stage-flow">
+      <div class="stage reveal">
+        <div class="stage-num" style="color:var(--dim);">web</div>
+        <div class="stage-content">
+          <h3>Claude.ai <span style="color:var(--dim)">(웹)</span></h3>
+          <p>대화창에 질문 → 답변 복사 붙여넣기</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-1">
+        <div class="stage-num" style="color:var(--accent2);">co</div>
+        <div class="stage-content">
+          <h3>Claude <span style="color:var(--accent2);">Cowork</span></h3>
+          <p>브라우저에서 파일 올려서 협업 — AI가 <span style="color:var(--accent2);">놀러 온 것</span></p>
+        </div>
+      </div>
+      <div class="stage current reveal reveal-delay-2">
+        <div class="stage-num" style="color:var(--accent);">CC</div>
+        <div class="stage-content">
+          <h3>Claude <span class="accent">Code</span></h3>
+          <p>내 컴퓨터에서 직접 실행 — AI가 <span class="accent">출근한 것</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-3" style="color:#888; font-size:clamp(0.9rem,1.3vw,1.1rem);">
+      Cowork = AI가 놀러 옴 &nbsp;|&nbsp; <span style="color:var(--fg); font-weight:700;">Code = AI가 출근함</span> → 조종석이 가능한 이유
+    </p>
+  </div>
+
+  <!-- ════════════ SLIDE 7.6: Survey Insight ════════════ -->
+  <div class="slide">
+    <div class="tag reveal">설문 결과</div>
+    <h3 class="reveal reveal-delay-1" style="margin-top:1rem;">여러분이 <span class="accent">귀찮다고 한 것들</span></h3>
+    <div class="spacer-sm"></div>
+    <ul class="hierarchy reveal reveal-delay-2">
+      <li>리서치/인터뷰 자료 요약하는 데 시간이 너무 오래 걸림</li>
+      <li>채널톡에서 비슷한 패턴의 답변을 반복</li>
+      <li>계약서 검토, 서류 작성, 매출 프로젝션</li>
+      <li>문서 포맷이 안 정해져서 매번 처음부터</li>
+      <li class="last">데일리 스크럼 쓰기</li>
+    </ul>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-3" style="color:var(--accent); font-weight:700; font-size:clamp(1.1rem,1.8vw,1.5rem);">
+      오늘 이것들을 해결합니다.
+    </p>
   </div>
 
   <!-- ════════════ SLIDE 8: 4-Week Roadmap ════════════ -->
@@ -586,20 +647,20 @@
       <div class="roadmap-cell header">만드는 것</div>
 
       <div class="roadmap-cell week today">1 (오늘)</div>
-      <div class="roadmap-cell today">Claude Code 첫 체험</div>
-      <div class="roadmap-cell today">개발 환경 + 7개 기능 체험</div>
+      <div class="roadmap-cell today">체험 + 연결 + 첫 스킬</div>
+      <div class="roadmap-cell today">MCP 연결 + 나만의 스킬</div>
 
       <div class="roadmap-cell week">2</div>
-      <div class="roadmap-cell">내 도구를 AI에 연결</div>
-      <div class="roadmap-cell">Context Sync 스킬</div>
-
-      <div class="roadmap-cell week">3</div>
       <div class="roadmap-cell">모호한 아이디어 → 실행 가능한 기획</div>
       <div class="roadmap-cell">Clarify 스킬 + PRD</div>
 
-      <div class="roadmap-cell week">4</div>
-      <div class="roadmap-cell">되돌아보기 + 습관 만들기</div>
+      <div class="roadmap-cell week">3</div>
+      <div class="roadmap-cell">되돌아보기 + 분석</div>
       <div class="roadmap-cell">Session Wrap + Zeude</div>
+
+      <div class="roadmap-cell week">4</div>
+      <div class="roadmap-cell">공유 + 재설계 + 선언</div>
+      <div class="roadmap-cell">스킬 소개 + AI Native 선언</div>
     </div>
   </div>
 
@@ -639,25 +700,47 @@
     </div>
   </div>
 
-  <!-- ════════════ SLIDE 11: Today ════════════ -->
+  <!-- ════════════ SLIDE 11: Today Timeline ════════════ -->
   <div class="slide">
-    <h2 class="reveal">오늘 할 것</h2>
-    <div class="spacer"></div>
-    <div class="terminal reveal reveal-delay-1">
-      <div class="terminal-bar">
-        <div class="terminal-dot red"></div>
-        <div class="terminal-dot yellow"></div>
-        <div class="terminal-dot green"></div>
+    <div class="tag reveal">오늘 할 것</div>
+    <div class="spacer-sm"></div>
+    <div class="stage-flow">
+      <div class="stage reveal">
+        <div class="stage-num" style="color:var(--dim);">20m</div>
+        <div class="stage-content">
+          <h3 style="color:var(--dim);">지금</h3>
+          <p>발표 (이 슬라이드)</p>
+        </div>
       </div>
-      <div class="terminal-body">
-        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">claude</span></div>
-        <div><span class="terminal-prompt">></span> <span class="terminal-cmd">1일차</span><span class="terminal-cursor"></span></div>
+      <div class="stage current reveal reveal-delay-1">
+        <div class="stage-num">20m</div>
+        <div class="stage-content">
+          <h3>Claude Code 첫 체험</h3>
+          <p>"1일차" 입력 → Claude가 진행</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-2">
+        <div class="stage-num">30m</div>
+        <div class="stage-content">
+          <h3>MCP 연결</h3>
+          <p>채널톡 or 노션을 AI에 연결</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-3">
+        <div class="stage-num">40m</div>
+        <div class="stage-content">
+          <h3>나만의 첫 스킬</h3>
+          <p>귀찮은 업무 1개를 스킬로 만들기</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-4">
+        <div class="stage-num">10m</div>
+        <div class="stage-content">
+          <h3>숙제 + 마무리</h3>
+          <p>/think-deeper 체험 + "안 해보기" 실험</p>
+        </div>
       </div>
     </div>
-    <div class="spacer"></div>
-    <p class="reveal reveal-delay-2" style="color:#888; font-size:clamp(0.9rem,1.4vw,1.2rem);">
-      이 한 마디면 Claude가 오늘의 수업을 진행해줌
-    </p>
   </div>
 
   <!-- ════════════ SLIDE 12: Not Spoon-feeding ════════════ -->
