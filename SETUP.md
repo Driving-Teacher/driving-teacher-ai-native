@@ -5,7 +5,19 @@
 
 ---
 
-## Step 0: GitHub 계정
+## Step 0: Claude 계정 (필수)
+
+Claude Code를 사용하려면 **유료 계정**이 필요합니다.
+
+1. [claude.ai](https://claude.ai) 접속
+2. 계정이 없으면 가입
+3. **Pro ($20/월)** 이상 구독 → Settings > Subscription에서 확인
+
+> Pro면 충분합니다. 캠프 끝나고 더 쓰고 싶으면 그때 Max로 업그레이드.
+
+---
+
+## Step 0.5: GitHub 계정
 
 1. [github.com](https://github.com) 접속
 2. 계정이 없으면 **Sign up** → 가입 (무료)
