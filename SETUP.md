@@ -9,11 +9,9 @@
 
 Claude Code를 사용하려면 **유료 계정**이 필요합니다.
 
-1. [claude.ai](https://claude.ai) 접속
-2. 계정이 없으면 가입
-3. **Pro ($20/월)** 이상 구독 → Settings > Subscription에서 확인
-
-> Pro면 충분합니다. 캠프 끝나고 더 쓰고 싶으면 그때 Max로 업그레이드.
+1. [claude.ai](https://claude.ai) 접속 → 계정이 없으면 가입
+2. **Teams 초대**를 이메일로 보내드립니다 → 수락하면 끝
+3. 별도 결제 필요 없음 (회사에서 Teams 플랜으로 일괄 결제)
 
 ---
 
