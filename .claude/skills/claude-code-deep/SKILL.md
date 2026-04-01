@@ -1,6 +1,6 @@
 ---
-name: day1-onboarding
-description: AI Native Camp Day 1 온보딩. Claude와 대화하면서 Claude Code를 익힌다. "1일차", "Day 1", "온보딩" 요청에 사용.
+name: claude-code-deep
+description: Claude Code 7개 기능 심화 학습. Memory, Skill, MCP, Subagent, Agent Teams, Hook, Plugin을 각각 설명→실행→퀴즈로 배운다. "심화", "7개 기능", "deep" 요청에 사용.
 ---
 
 # Day 1: Onboarding
