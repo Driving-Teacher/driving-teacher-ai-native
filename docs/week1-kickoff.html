@@ -32,39 +32,23 @@
     overflow: hidden;
   }
 
-  /* ── Slide System ── */
-  .deck {
-    width: 100vw; height: 100vh;
-    position: relative;
-  }
+  .deck { width: 100vw; height: 100vh; position: relative; }
 
   .slide {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: center;
     padding: 8vh 10vw;
-    opacity: 0;
-    pointer-events: none;
+    opacity: 0; pointer-events: none;
     transition: opacity 0.6s ease;
   }
 
-  .slide.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .slide.active .reveal {
-    animation: slideUp 0.7s ease forwards;
-  }
-
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide.active .reveal { animation: slideUp 0.7s ease forwards; }
   .slide.active .reveal-delay-1 { animation-delay: 0.15s; }
   .slide.active .reveal-delay-2 { animation-delay: 0.3s; }
   .slide.active .reveal-delay-3 { animation-delay: 0.45s; }
   .slide.active .reveal-delay-4 { animation-delay: 0.6s; }
   .slide.active .reveal-delay-5 { animation-delay: 0.75s; }
-  .slide.active .reveal-delay-6 { animation-delay: 0.9s; }
 
   @keyframes slideUp {
     from { opacity: 0; transform: translateY(40px); }
@@ -73,34 +57,26 @@
 
   .reveal { opacity: 0; }
 
-  /* ── Typography ── */
   h1 {
     font-family: var(--display);
     font-size: clamp(2.5rem, 6vw, 6.5rem);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
+    font-weight: 700; text-transform: uppercase;
+    line-height: 1.05; letter-spacing: -0.03em;
   }
 
   h2 {
     font-size: clamp(2rem, 4.5vw, 5rem);
-    font-weight: 900;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+    font-weight: 900; line-height: 1.15; letter-spacing: -0.02em;
   }
 
   h3 {
     font-size: clamp(1.2rem, 2vw, 2.2rem);
-    font-weight: 700;
-    line-height: 1.3;
+    font-weight: 700; line-height: 1.3;
   }
 
   p, li {
     font-size: clamp(1rem, 1.8vw, 1.6rem);
-    line-height: 1.7;
-    font-weight: 300;
+    line-height: 1.7; font-weight: 300;
   }
 
   .accent { color: var(--accent); }
@@ -112,101 +88,53 @@
   .big-quote {
     font-family: var(--sans);
     font-size: clamp(1.8rem, 4vw, 4.5rem);
-    font-weight: 800;
-    line-height: 1.3;
-    max-width: 90%;
+    font-weight: 800; line-height: 1.3; max-width: 90%;
   }
 
   .big-quote::before {
-    content: '"';
-    color: var(--accent);
-    font-size: 1.5em;
-    line-height: 0;
-    vertical-align: -0.15em;
-    margin-right: 0.05em;
+    content: '\201C'; color: var(--accent);
+    font-size: 1.5em; line-height: 0;
+    vertical-align: -0.15em; margin-right: 0.05em;
   }
 
   .big-quote::after {
-    content: '"';
-    color: var(--accent);
-    font-size: 1.5em;
-    line-height: 0;
-    vertical-align: -0.15em;
-    margin-left: 0.05em;
-  }
-
-  /* ── Code Block ── */
-  .code-block {
-    background: var(--surface);
-    border-left: 4px solid var(--accent);
-    padding: 2rem 2.5rem;
-    font-family: var(--mono);
-    font-size: clamp(0.9rem, 1.5vw, 1.4rem);
-    line-height: 1.8;
-    border-radius: 0 8px 8px 0;
-    white-space: pre-line;
-    max-width: 70vw;
+    content: '\201D'; color: var(--accent);
+    font-size: 1.5em; line-height: 0;
+    vertical-align: -0.15em; margin-left: 0.05em;
   }
 
   /* ── Not-Equal / Equal Blocks ── */
-  .eq-block {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin: 2rem 0;
-  }
+  .eq-block { display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0; }
 
   .eq-row {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    font-size: clamp(1.2rem, 2.5vw, 2.4rem);
-    font-weight: 700;
+    display: flex; align-items: center; gap: 1.5rem;
+    font-size: clamp(1.2rem, 2.5vw, 2.4rem); font-weight: 700;
   }
 
   .eq-symbol {
-    font-family: var(--mono);
-    font-size: 1.3em;
-    min-width: 2ch;
-    text-align: center;
+    font-family: var(--mono); font-size: 1.3em;
+    min-width: 2ch; text-align: center;
   }
 
   .eq-symbol.neq { color: var(--red); }
   .eq-symbol.yes { color: var(--green); }
 
   /* ── Stage Flow ── */
-  .stage-flow {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
+  .stage-flow { display: flex; flex-direction: column; gap: 0; }
 
   .stage {
-    display: flex;
-    align-items: flex-start;
-    gap: 2rem;
-    padding: 1.5rem 0;
-    border-left: 3px solid var(--dim);
-    padding-left: 2rem;
-    position: relative;
-    transition: all 0.4s ease;
+    display: flex; align-items: flex-start; gap: 2rem;
+    padding: 1.5rem 0; border-left: 3px solid var(--dim);
+    padding-left: 2rem; position: relative;
   }
 
   .stage::before {
-    content: '';
-    position: absolute;
-    left: -8px;
-    top: 1.8rem;
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
+    content: ''; position: absolute; left: -8px; top: 1.8rem;
+    width: 13px; height: 13px; border-radius: 50%;
     background: var(--dim);
-    transition: all 0.4s ease;
   }
 
-  .stage.current {
-    border-left-color: var(--accent);
-  }
+  .stage.current { border-left-color: var(--accent); }
 
   .stage.current::before {
     background: var(--accent);
@@ -216,22 +144,18 @@
   .stage-num {
     font-family: var(--mono);
     font-size: clamp(0.8rem, 1.2vw, 1.1rem);
-    color: var(--dim);
-    min-width: 2rem;
-    padding-top: 0.2rem;
+    color: var(--dim); min-width: 2rem; padding-top: 0.2rem;
   }
 
   .stage.current .stage-num { color: var(--accent); }
 
   .stage-content h3 {
-    font-size: clamp(1.1rem, 2vw, 1.8rem);
-    margin-bottom: 0.3rem;
+    font-size: clamp(1.1rem, 2vw, 1.8rem); margin-bottom: 0.3rem;
   }
 
   .stage-content p {
     font-size: clamp(0.85rem, 1.3vw, 1.15rem);
-    color: var(--dim);
-    font-weight: 300;
+    color: var(--dim); font-weight: 300;
   }
 
   .stage.current .stage-content h3 { color: var(--fg); }
@@ -240,213 +164,119 @@
 
   /* ── Roadmap Table ── */
   .roadmap {
-    display: grid;
-    grid-template-columns: auto 1fr 1fr;
-    gap: 0;
-    margin: 2rem 0;
-    max-width: 70vw;
+    display: grid; grid-template-columns: auto 1fr 1fr;
+    gap: 0; margin: 2rem 0; max-width: 70vw;
   }
 
   .roadmap-cell {
-    padding: 1.2rem 1.8rem;
-    border-bottom: 1px solid #222;
+    padding: 1.2rem 1.8rem; border-bottom: 1px solid #222;
     font-size: clamp(0.9rem, 1.4vw, 1.3rem);
   }
 
   .roadmap-cell.header {
-    color: var(--dim);
-    font-size: clamp(0.75rem, 1vw, 0.95rem);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    border-bottom: 2px solid var(--accent);
-    padding-bottom: 0.8rem;
+    color: var(--dim); font-size: clamp(0.75rem, 1vw, 0.95rem);
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em;
+    border-bottom: 2px solid var(--accent); padding-bottom: 0.8rem;
   }
 
   .roadmap-cell.week {
-    font-family: var(--mono);
-    font-weight: 700;
-    color: var(--accent2);
+    font-family: var(--mono); font-weight: 700; color: var(--accent2);
   }
 
-  .roadmap-cell.today {
-    color: var(--accent);
-    font-weight: 700;
-  }
-
-  /* ── Principle Cards ── */
-  .principles {
-    display: flex;
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-
-  .principle {
-    flex: 1;
-    background: var(--surface);
-    border-top: 3px solid var(--accent);
-    padding: 2rem;
-    border-radius: 0 0 8px 8px;
-  }
-
-  .principle-num {
-    font-family: var(--mono);
-    font-size: clamp(2rem, 3vw, 3.5rem);
-    font-weight: 700;
-    color: var(--accent);
-    opacity: 0.4;
-    margin-bottom: 0.5rem;
-  }
-
-  .principle h3 {
-    font-size: clamp(1rem, 1.8vw, 1.5rem);
-    margin-bottom: 0.5rem;
-  }
-
-  .principle p {
-    font-size: clamp(0.8rem, 1.2vw, 1.05rem);
-    color: #888;
-  }
+  .roadmap-cell.today { color: var(--accent); font-weight: 700; }
 
   /* ── Terminal ── */
   .terminal {
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 12px;
-    padding: 0;
-    max-width: 600px;
-    overflow: hidden;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+    background: #1a1a1a; border: 1px solid #333;
+    border-radius: 12px; padding: 0; max-width: 600px;
+    overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.5);
   }
 
   .terminal-bar {
-    background: #2a2a2a;
-    padding: 0.8rem 1.2rem;
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
+    background: #2a2a2a; padding: 0.8rem 1.2rem;
+    display: flex; gap: 0.5rem; align-items: center;
   }
 
-  .terminal-dot {
-    width: 12px; height: 12px;
-    border-radius: 50%;
-  }
-
+  .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
   .terminal-dot.red { background: #ff5f57; }
   .terminal-dot.yellow { background: #ffbd2e; }
   .terminal-dot.green { background: #28ca41; }
 
   .terminal-body {
-    padding: 1.5rem 2rem 2rem;
-    font-family: var(--mono);
-    font-size: clamp(1rem, 1.6vw, 1.4rem);
-    line-height: 2;
+    padding: 1.5rem 2rem 2rem; font-family: var(--mono);
+    font-size: clamp(1rem, 1.6vw, 1.4rem); line-height: 2;
   }
 
-  .terminal-prompt {
-    color: var(--accent);
-  }
-
-  .terminal-cmd {
-    color: var(--fg);
-  }
+  .terminal-prompt { color: var(--accent); }
+  .terminal-cmd { color: var(--fg); }
 
   .terminal-cursor {
-    display: inline-block;
-    width: 10px;
-    height: 1.3em;
-    background: var(--fg);
-    vertical-align: text-bottom;
+    display: inline-block; width: 10px; height: 1.3em;
+    background: var(--fg); vertical-align: text-bottom;
     animation: blink 1s step-end infinite;
   }
 
-  @keyframes blink {
-    50% { opacity: 0; }
-  }
+  @keyframes blink { 50% { opacity: 0; } }
 
   /* ── Hierarchy List ── */
-  .hierarchy {
-    list-style: none;
-    margin: 1.5rem 0;
-  }
+  .hierarchy { list-style: none; margin: 1.5rem 0; }
 
   .hierarchy li {
-    padding: 0.6rem 0;
-    padding-left: 2rem;
-    position: relative;
+    padding: 0.6rem 0; padding-left: 2rem; position: relative;
     font-size: clamp(1rem, 1.6vw, 1.4rem);
   }
 
   .hierarchy li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 8px;
-    height: 2px;
-    background: var(--accent);
+    content: ''; position: absolute; left: 0; top: 50%;
+    width: 8px; height: 2px; background: var(--accent);
   }
 
   .hierarchy li.last::before {
-    background: var(--accent2);
-    width: 12px;
-    height: 3px;
+    background: var(--accent2); width: 12px; height: 3px;
   }
 
-  /* ── Progress Bar ── */
+  /* ── Progress + Counter ── */
   .progress {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    height: 3px;
-    background: var(--accent);
-    transition: width 0.4s ease;
-    z-index: 100;
+    position: fixed; bottom: 0; left: 0; height: 3px;
+    background: var(--accent); transition: width 0.4s ease; z-index: 100;
   }
 
-  /* ── Slide Counter ── */
   .counter {
-    position: fixed;
-    bottom: 2rem;
-    right: 3rem;
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    color: var(--dim);
-    z-index: 100;
+    position: fixed; bottom: 2rem; right: 3rem;
+    font-family: var(--mono); font-size: 0.85rem;
+    color: var(--dim); z-index: 100;
   }
 
-  /* ── Noise Overlay ── */
   .noise {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 99;
-    opacity: 0.03;
+    position: fixed; inset: 0; pointer-events: none; z-index: 99; opacity: 0.03;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* ── Tag ── */
   .tag {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
+    display: inline-block; font-family: var(--mono);
+    font-size: clamp(0.85rem, 1.2vw, 1.1rem); font-weight: 700;
+    letter-spacing: 0.05em; margin-bottom: 1.5rem;
+  }
+
+  .tag .num {
     color: var(--accent);
-    border: 1px solid var(--accent);
-    padding: 0.3rem 0.8rem;
-    border-radius: 2px;
-    margin-bottom: 1.5rem;
+    margin-right: 0.3em;
+  }
+
+  .tag .sep {
+    color: var(--dim);
+    margin-right: 0.5em;
+  }
+
+  .tag .label {
+    color: #888;
   }
 
   .spacer { height: 2rem; }
   .spacer-sm { height: 1rem; }
 
-  /* ── Responsive ── */
   @media (max-width: 768px) {
     .slide { padding: 5vh 6vw; }
-    .principles { flex-direction: column; }
     .roadmap { max-width: 95vw; }
     .stage { gap: 1rem; padding-left: 1.2rem; }
   }
@@ -462,7 +292,7 @@
 
   <!-- ═══ 1. 타이틀 ═══ -->
   <div class="slide active">
-    <div class="tag reveal">Week 1 Kickoff</div>
+    <div class="tag reveal"><span class="num">01</span><span class="sep">—</span><span class="label">Week 1 Kickoff</span></div>
     <h1 class="reveal reveal-delay-1">AI Native<br><span class="accent">Camp</span></h1>
     <div class="spacer"></div>
     <p class="reveal reveal-delay-2" style="font-size:clamp(1.1rem,2.2vw,1.8rem); color:#888; font-weight:300;">
@@ -484,7 +314,7 @@
 
   <!-- ═══ 3. AI Native ≠/= ═══ -->
   <div class="slide">
-    <div class="tag reveal">AI Native란?</div>
+    <div class="tag reveal"><span class="num">03</span><span class="sep">—</span><span class="label">AI Native란?</span></div>
     <div class="spacer-sm"></div>
     <div class="eq-block">
       <div class="eq-row reveal reveal-delay-1">
@@ -516,7 +346,7 @@
 
   <!-- ═══ 5. 설문 결과 ═══ -->
   <div class="slide">
-    <div class="tag reveal">설문 결과</div>
+    <div class="tag reveal"><span class="num">05</span><span class="sep">—</span><span class="label">설문 결과</span></div>
     <h3 class="reveal reveal-delay-1" style="margin-top:1rem;">여러분이 <span class="accent">귀찮다고 한 것들</span></h3>
     <div class="spacer-sm"></div>
     <ul class="hierarchy reveal reveal-delay-2">
@@ -528,49 +358,24 @@
     </ul>
     <div class="spacer"></div>
     <p class="reveal reveal-delay-3" style="color:var(--accent); font-weight:700; font-size:clamp(1.1rem,1.8vw,1.5rem);">
-      오늘 이것들을 해결합니다.
+      이것들을 다룰 겁니다.
     </p>
   </div>
 
-  <!-- ═══ 6. 바이브코딩 4단계 ═══ -->
+  <!-- ═══ 6. 비전 ═══ -->
   <div class="slide">
-    <div class="tag reveal">바이브코딩의 흐름</div>
+    <div class="tag reveal"><span class="num">06</span><span class="sep">—</span><span class="label">내가 꿈꾸는 회사</span></div>
     <div class="spacer-sm"></div>
-    <div class="stage-flow">
-      <div class="stage reveal">
-        <div class="stage-num">01</div>
-        <div class="stage-content">
-          <h3>Model <span style="color:var(--dim)">모델</span></h3>
-          <p>"이거 해줘" → 복붙</p>
-        </div>
-      </div>
-      <div class="stage reveal reveal-delay-1">
-        <div class="stage-num">02</div>
-        <div class="stage-content">
-          <h3>Context <span style="color:var(--dim)">컨텍스트</span></h3>
-          <p>"내 코드 보고 해줘" — Cursor, Copilot</p>
-        </div>
-      </div>
-      <div class="stage reveal reveal-delay-2">
-        <div class="stage-num">03</div>
-        <div class="stage-content">
-          <h3>Agent <span style="color:var(--dim)">에이전트</span></h3>
-          <p>"알아서 해줘" — Claude Code = 빈 차</p>
-        </div>
-      </div>
-      <div class="stage current reveal reveal-delay-3">
-        <div class="stage-num">04</div>
-        <div class="stage-content">
-          <h3>Harness <span class="accent">조종석</span></h3>
-          <p>"<span style="color:var(--fg); font-weight:700;">우리 방식대로 해줘</span>" — Claude Code + 우리 회사 설정 = 세팅된 차</p>
-        </div>
-      </div>
-    </div>
+    <ul class="hierarchy reveal reveal-delay-1">
+      <li><span class="accent">AI에게 먼저 물어본다.</span> 사람한테 묻는 건 더블체크용.</li>
+      <li>필요한 게 없으면 → 스스로 <span class="bold">만든다</span> → 팀에 <span class="accent">공유</span></li>
+      <li class="last">문서를 <span style="color:var(--red); text-decoration:line-through;">사람이 보기좋게</span> → <span class="accent">AI가 보기좋게</span></li>
+    </ul>
   </div>
 
   <!-- ═══ 7. Claude 제품 비교 ═══ -->
   <div class="slide">
-    <div class="tag reveal">왜 Claude Code인가?</div>
+    <div class="tag reveal"><span class="num">07</span><span class="sep">—</span><span class="label">왜 Claude Code인가?</span></div>
     <div class="spacer-sm"></div>
     <div class="stage-flow">
       <div class="stage reveal">
@@ -597,9 +402,45 @@
     </div>
   </div>
 
-  <!-- ═══ 8. 7개 기능 ═══ -->
+  <!-- ═══ 8. 바이브코딩 4단계 ═══ -->
   <div class="slide">
-    <div class="tag reveal">Claude Code의 7가지 기능</div>
+    <div class="tag reveal"><span class="num">08</span><span class="sep">—</span><span class="label">바이브코딩의 흐름</span></div>
+    <div class="spacer-sm"></div>
+    <div class="stage-flow">
+      <div class="stage reveal">
+        <div class="stage-num">01</div>
+        <div class="stage-content">
+          <h3>Model <span style="color:var(--dim)">모델</span></h3>
+          <p>"이거 해줘" → 복붙</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-1">
+        <div class="stage-num">02</div>
+        <div class="stage-content">
+          <h3>Context <span style="color:var(--dim)">컨텍스트</span></h3>
+          <p>"내 코드 보고 해줘" — Cursor, Copilot</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-2">
+        <div class="stage-num">03</div>
+        <div class="stage-content">
+          <h3>Agent <span style="color:var(--dim)">에이전트</span></h3>
+          <p>"알아서 해줘" — Claude Code = 빈 차</p>
+        </div>
+      </div>
+      <div class="stage current reveal reveal-delay-3">
+        <div class="stage-num" style="color:var(--accent);">04</div>
+        <div class="stage-content">
+          <h3>Harness <span class="accent">조종석</span></h3>
+          <p>"<span style="color:var(--fg); font-weight:700;">우리 방식대로 해줘</span>" — Claude Code + 우리 회사 설정 = 세팅된 차</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 9. 7개 기능 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">09</span><span class="sep">—</span><span class="label">Claude Code의 7가지 기능</span></div>
     <div class="spacer-sm"></div>
     <div class="stage-flow">
       <div class="stage current reveal">
@@ -613,7 +454,7 @@
         <div class="stage-num" style="color:var(--accent);">2</div>
         <div class="stage-content">
           <h3><span class="accent">Skill</span></h3>
-          <p>반복 업무 자동화</p>
+          <p>명령어 하나로 실행 — 예: <span style="font-family:var(--mono); color:var(--accent2);">/think-deeper</span></p>
         </div>
       </div>
       <div class="stage current reveal reveal-delay-2">
@@ -633,13 +474,57 @@
     </div>
     <div class="spacer"></div>
     <p class="reveal reveal-delay-4" style="color:#888; font-size:clamp(0.9rem,1.3vw,1.1rem);">
-      오늘은 위 <span class="accent">3개</span>. 나머지가 궁금하면 <span class="mono accent2">/day1-onboarding</span>
+      오늘은 위 <span class="accent">3개</span>를 직접 해봅니다. 나머지가 궁금하면 <span class="mono accent2">/claude-code-deep</span>
     </p>
   </div>
 
-  <!-- ═══ 9. 4주 로드맵 ═══ -->
+  <!-- ═══ 10. /think-deeper 소개 ═══ -->
   <div class="slide">
-    <div class="tag reveal">4주 로드맵</div>
+    <div class="tag reveal"><span class="num">10</span><span class="sep">—</span><span class="label">스킬 예시</span></div>
+    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">
+      <span class="mono accent2">/think-deeper</span>
+    </h2>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-2" style="color:#888; font-size:clamp(1rem,1.6vw,1.3rem);">
+      팀 빌딩에서 나온 문제: <span style="color:var(--fg); font-weight:700;">"일단 처리"하는 습관</span><br>
+      장기적으로 생각하는 자리가 없다 → 그래서 만든 스킬
+    </p>
+    <div class="spacer"></div>
+    <div class="stage-flow">
+      <div class="stage current reveal reveal-delay-3">
+        <div class="stage-num" style="color:var(--accent);">1</div>
+        <div class="stage-content">
+          <h3>문제 정의</h3>
+          <p>"왜 해야 하나?" — 5 Whys로 근본 원인까지</p>
+        </div>
+      </div>
+      <div class="stage current reveal reveal-delay-4">
+        <div class="stage-num" style="color:var(--accent);">2</div>
+        <div class="stage-content">
+          <h3>Plan A / B / C</h3>
+          <p>성공과 실패를 동시에 — "이게 안 되면?"</p>
+        </div>
+      </div>
+      <div class="stage current reveal reveal-delay-5">
+        <div class="stage-num" style="color:var(--accent);">3</div>
+        <div class="stage-content">
+          <h3>임기응변 체크</h3>
+          <p>"이거 시스템인가 땜빵인가?"</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-5" style="border-left-color:var(--accent2);">
+        <div class="stage-num" style="color:var(--accent2);">→</div>
+        <div class="stage-content">
+          <h3 style="color:var(--accent2);">기획 문서 자동 생성</h3>
+          <p>4단계 답변 → 구조화된 기획서로 출력</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 11. 4주 로드맵 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">11</span><span class="sep">—</span><span class="label">4주 로드맵</span></div>
     <div class="spacer-sm"></div>
     <div class="roadmap reveal reveal-delay-1">
       <div class="roadmap-cell header">Week</div>
@@ -664,29 +549,6 @@
     </div>
   </div>
 
-  <!-- ═══ 10. 3개 원칙 ═══ -->
-  <div class="slide">
-    <div class="tag reveal">3개 원칙</div>
-    <div class="spacer-sm"></div>
-    <div class="principles">
-      <div class="principle reveal reveal-delay-1">
-        <div class="principle-num">01</div>
-        <h3>액션 전에 문제</h3>
-        <p>"뭘 할까" 전에<br>"왜 해야 하나"</p>
-      </div>
-      <div class="principle reveal reveal-delay-2">
-        <div class="principle-num">02</div>
-        <h3>성공과 실패 동시에</h3>
-        <p>Plan A만 세우지 않는다<br>"이게 안 되면?"을 같이</p>
-      </div>
-      <div class="principle reveal reveal-delay-3">
-        <div class="principle-num">03</div>
-        <h3>임기응변 체크</h3>
-        <p>"이거 시스템인가 땜빵인가?"<br>알고는 있어야 한다</p>
-      </div>
-    </div>
-  </div>
-
   <!-- ═══ 11. 자, 시작합니다 ═══ -->
   <div class="slide">
     <h2 class="reveal">자, <span class="accent">시작합니다</span></h2>
@@ -699,7 +561,7 @@
       </div>
       <div class="terminal-body">
         <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">claude</span></div>
-        <div><span class="terminal-prompt">></span> <span class="terminal-cmd">1일차</span><span class="terminal-cursor"></span></div>
+        <div><span class="terminal-prompt">></span> <span class="terminal-cmd">/day1-onboarding</span><span class="terminal-cursor"></span></div>
       </div>
     </div>
     <div class="spacer"></div>
@@ -711,26 +573,13 @@
     </ul>
   </div>
 
-  <!-- ═══ 14. 비전 ═══ -->
+  <!-- ═══ 12. 숙제 + 클로징 ═══ -->
   <div class="slide">
-    <div class="tag reveal">내가 꿈꾸는 회사</div>
+    <div class="tag reveal"><span class="num">13</span><span class="sep">—</span><span class="label">숙제</span></div>
     <div class="spacer-sm"></div>
     <ul class="hierarchy reveal reveal-delay-1">
-      <li><span class="accent">AI에게 먼저 물어본다.</span> 사람한테 묻는 건 더블체크용.</li>
-      <li>필요한 게 없으면 → 스스로 <span class="bold">만든다</span> → 팀에 <span class="accent">공유</span></li>
-      <li class="last">문서를 <span style="color:var(--red); text-decoration:line-through;">사람이 보기좋게</span> → <span class="accent">AI가 보기좋게</span></li>
-    </ul>
-  </div>
-
-  <!-- ═══ 15. 숙제 + 클로징 ═══ -->
-  <div class="slide">
-    <div class="tag reveal">숙제</div>
-    <div class="spacer-sm"></div>
-    <ul class="hierarchy reveal reveal-delay-1">
-      <li>CLAUDE.md에 본인 정보 작성</li>
-      <li>만든 스킬 실전 사용 (못 만들었으면 만들어오기)</li>
-      <li><span class="mono accent2">/think-deeper</span>로 업무 고민 1개 기획</li>
-      <li>(도전) 평소 하던 업무 1개를 <span class="accent">안 해보기</span></li>
+      <li><span class="bold">CLAUDE.md 작성</span> → 새 세션에서 기억하는지 확인</li>
+      <li><span class="bold"><span class="mono accent2">/think-deeper</span>로 정리</span> → 스킬 만들기 → 써보기 → 후기를 <span class="accent">#ai-native-camp</span>에 공유</li>
     </ul>
     <div class="spacer"></div>
     <p class="reveal reveal-delay-2" style="color:#888;">4주 후 선언:</p>
