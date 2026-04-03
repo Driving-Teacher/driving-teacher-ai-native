@@ -1,58 +1,62 @@
 # 운전선생 AI Native Camp - Windows 세팅 스크립트
 # 실행: PowerShell 관리자 권한으로 열고 .\setup-windows.ps1
 
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
+
 Write-Host "=============================="
-Write-Host " 운전선생 AI Native Camp 세팅"
+Write-Host " AI Native Camp Setup"
 Write-Host "=============================="
 Write-Host ""
 
 # 1. git
-Write-Host "[ 1/4 ] git 확인..."
+Write-Host "[ 1/4 ] git ..."
 if (Get-Command git -ErrorAction SilentlyContinue) {
-    Write-Host "  ✅ $(git --version)"
+    Write-Host "  [OK] $(git --version)"
 } else {
-    Write-Host "  ⏳ git 설치 중..."
+    Write-Host "  [installing] git ..."
     winget install Git.Git --accept-package-agreements --accept-source-agreements
-    Write-Host "  ✅ git 설치 완료"
+    Write-Host "  [OK] git installed"
 }
 
 # 2. Node.js
-Write-Host "[ 2/4 ] Node.js 확인..."
+Write-Host "[ 2/4 ] Node.js ..."
 if (Get-Command node -ErrorAction SilentlyContinue) {
-    Write-Host "  ✅ Node.js $(node --version)"
+    Write-Host "  [OK] Node.js $(node --version)"
 } else {
-    Write-Host "  ⏳ Node.js 설치 중..."
+    Write-Host "  [installing] Node.js ..."
     winget install OpenJS.NodeJS.LTS --accept-package-agreements --accept-source-agreements
-    Write-Host "  ✅ Node.js 설치 완료"
+    Write-Host "  [OK] Node.js installed"
 }
 
 # 3. Python
-Write-Host "[ 3/4 ] Python 확인..."
+Write-Host "[ 3/4 ] Python ..."
 if (Get-Command python -ErrorAction SilentlyContinue) {
-    Write-Host "  ✅ Python $(python --version 2>&1)"
+    Write-Host "  [OK] Python $(python --version 2>&1)"
 } else {
-    Write-Host "  ⏳ Python 설치 중..."
+    Write-Host "  [installing] Python ..."
     winget install Python.Python.3.12 --accept-package-agreements --accept-source-agreements
-    Write-Host "  ✅ Python 설치 완료"
+    Write-Host "  [OK] Python installed"
 }
 
 # 4. Claude Code
-Write-Host "[ 4/4 ] Claude Code 확인..."
+Write-Host "[ 4/4 ] Claude Code ..."
 if (Get-Command claude -ErrorAction SilentlyContinue) {
-    Write-Host "  ✅ Claude Code 설치됨"
+    Write-Host "  [OK] Claude Code installed"
 } else {
-    Write-Host "  ⏳ Claude Code 설치 중..."
+    Write-Host "  [installing] Claude Code ..."
     Invoke-RestMethod https://claude.ai/install.ps1 | Invoke-Expression
-    Write-Host "  ✅ Claude Code 설치 완료"
+    Write-Host "  [OK] Claude Code installed"
 }
 
 Write-Host ""
 Write-Host "=============================="
-Write-Host " 세팅 완료!"
+Write-Host " Setup complete!"
 Write-Host "=============================="
 Write-Host ""
-Write-Host "다음 단계:"
-Write-Host "  1. PowerShell 껐다가 다시 열기"
-Write-Host "  2. claude 입력 → 브라우저에서 로그인"
-Write-Host "  3. 슬랙 #ai-native-camp 세팅 스레드에 '완료' 남기기"
+Write-Host "Next steps:"
+Write-Host "  1. Close and reopen PowerShell"
+Write-Host "  2. Type: claude"
+Write-Host "  3. Login in the browser"
+Write-Host "  4. Post 'done' in Slack #ai-native-camp thread"
 Write-Host ""
