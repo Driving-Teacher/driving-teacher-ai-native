@@ -37,7 +37,20 @@ if command -v node &> /dev/null; then
     echo "  ✅ Node.js $(node --version)"
 else
     echo "  ⏳ Node.js 설치 중 (fnm)..."
-    curl -fsSL https://fnm.vercel.app/install | bash
+    # Homebrew 없이도 설치되도록 바이너리 직접 다운로드
+    FNM_DIR="$HOME/.local/share/fnm"
+    ARCH=$(uname -m)
+    if [[ "$ARCH" == "arm64" ]]; then
+        FNM_PLATFORM="aarch64-apple-darwin"
+    else
+        FNM_PLATFORM="x86_64-apple-darwin"
+    fi
+    FNM_URL="https://github.com/Schniz/fnm/releases/latest/download/fnm-${FNM_PLATFORM}.zip"
+    mkdir -p "$FNM_DIR"
+    curl -fsSL "$FNM_URL" -o /tmp/fnm.zip
+    unzip -o /tmp/fnm.zip -d "$FNM_DIR"
+    chmod +x "$FNM_DIR/fnm"
+    rm -f /tmp/fnm.zip
     export PATH="$HOME/.local/share/fnm:$PATH"
     eval "$(fnm env)"
     fnm install --lts
