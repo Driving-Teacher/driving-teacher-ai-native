@@ -1,3 +1,9 @@
+# OpenClaw agent files
+SOUL.md
+AGENTS.md
+MEMORY.md
+memory/
+
 # Credentials & secrets
 configs/gcp-oauth.keys.json
 *.env
