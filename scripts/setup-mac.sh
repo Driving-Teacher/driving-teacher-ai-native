@@ -27,7 +27,11 @@ if command -v claude &> /dev/null; then
 else
     echo "  ⏳ Claude Code 설치 중..."
     curl -fsSL https://claude.ai/install.sh | bash
-    export PATH="$HOME/.claude/bin:$PATH"
+    # PATH에 추가 (현재 셸 + 영구)
+    export PATH="$HOME/.local/bin:$HOME/.claude/bin:$PATH"
+    if ! grep -q '.local/bin' "$HOME/.zshrc" 2>/dev/null; then
+        echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.zshrc"
+    fi
     echo "  ✅ Claude Code 설치 완료"
 fi
 
@@ -37,23 +41,21 @@ if command -v node &> /dev/null; then
     echo "  ✅ Node.js $(node --version)"
 else
     echo "  ⏳ Node.js 설치 중 (fnm)..."
-    # Homebrew 없이도 설치되도록 바이너리 직접 다운로드
     FNM_DIR="$HOME/.local/share/fnm"
-    ARCH=$(uname -m)
-    if [[ "$ARCH" == "arm64" ]]; then
-        FNM_PLATFORM="aarch64-apple-darwin"
-    else
-        FNM_PLATFORM="x86_64-apple-darwin"
-    fi
-    FNM_URL="https://github.com/Schniz/fnm/releases/latest/download/fnm-${FNM_PLATFORM}.zip"
+    FNM_URL="https://github.com/Schniz/fnm/releases/latest/download/fnm-macos.zip"
     mkdir -p "$FNM_DIR"
     curl -fsSL "$FNM_URL" -o /tmp/fnm.zip
     unzip -o /tmp/fnm.zip -d "$FNM_DIR"
     chmod +x "$FNM_DIR/fnm"
     rm -f /tmp/fnm.zip
-    export PATH="$HOME/.local/share/fnm:$PATH"
-    eval "$(fnm env)"
-    fnm install --lts
+    export PATH="$FNM_DIR:$PATH"
+    eval "$("$FNM_DIR/fnm" env)"
+    "$FNM_DIR/fnm" install --lts
+    # fnm을 셸에 영구 등록
+    if ! grep -q 'fnm env' "$HOME/.zshrc" 2>/dev/null; then
+        echo 'export PATH="$HOME/.local/share/fnm:$PATH"' >> "$HOME/.zshrc"
+        echo 'eval "$(fnm env)"' >> "$HOME/.zshrc"
+    fi
     echo "  ✅ Node.js $(node --version) 설치 완료"
 fi
 
