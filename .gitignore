@@ -1,0 +1,13 @@
+# Credentials & secrets
+configs/gcp-oauth.keys.json
+*.env
+*.env.*
+*secret*
+*credential*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
