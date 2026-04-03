@@ -11,6 +11,9 @@ configs/gcp-oauth.keys.json
 *secret*
 *credential*
 
+# Practice output
+output/
+
 # OS
 .DS_Store
 Thumbs.db
