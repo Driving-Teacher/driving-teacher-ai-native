@@ -110,7 +110,7 @@ python3 --version   # macOS
 python --version    # Windows
 ```
 
-4개 다 버전이 나오면 완료! **스크린샷을 슬랙 #ai-native-camp에 올려주세요.**
+4개 다 버전이 나오면 완료! **슬랙 #ai-native-camp 세팅 스레드에 "완료" 남겨주세요.**
 
 ---
 
