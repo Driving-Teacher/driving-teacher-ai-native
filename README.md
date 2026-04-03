@@ -17,7 +17,7 @@ AI Native **=** AI가 있다는 전제로 업무/경험을 재설계하는 것
 [SETUP.md](SETUP.md) 참고. **캠프 전까지 완료.**
 
 ```
-1. GitHub 계정 만들기 → 슬랙에 아이디 공유 → 초대 받기
+1. Claude 계정 가입 → Teams 초대 수락
 2. git 설치 확인
 3. git clone + 세팅 스크립트 실행 (Claude Code, Node.js, Python 한 번에)
 4. claude 로그인
