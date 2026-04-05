@@ -102,11 +102,10 @@ AskUserQuestion({
 4주간 배우고 체험한 것을 바탕으로,
 각자 하나씩 선언합니다:
 
-"나는 앞으로 ___를 하지 않겠다."
+"___를 제거하고, 그 시간에 ___를 하겠다."
 
-이건 단순한 다짐이 아닙니다.
-"안 해도 되는 일을 발견하고 제거한다" — 
-AI Native의 핵심을 실천하는 첫 번째 행동입니다.
+빼는 것만이 아닙니다.
+빼서 뭘 하는지까지 — 그게 AI Native입니다.
 ```
 
 2. 선언을 입력받는다:
@@ -114,12 +113,12 @@ AI Native의 핵심을 실천하는 첫 번째 행동입니다.
 ```json
 AskUserQuestion({
   "questions": [{
-    "question": "나는 앞으로 ___를 하지 않겠다.",
+    "question": "___를 제거하고, 그 시간에 ___를 하겠다.",
     "header": "AI Native 선언",
     "options": [
-      {"label": "수동으로 리포트 만들기", "description": "AI가 생성"},
-      {"label": "채널톡 답변을 처음부터 쓰기", "description": "스킬이 초안 생성"},
-      {"label": "파일 위치를 사람에게 물어보기", "description": "AI에게 먼저"},
+      {"label": "수동 리포트 → 고객 인사이트 분석", "description": "리포트는 AI가, 나는 분석을"},
+      {"label": "채널톡 반복 답변 → 답변 품질 개선", "description": "초안은 스킬이, 나는 톤 조정을"},
+      {"label": "파일 위치 물어보기 → 문서 구조 개선", "description": "검색은 AI가, 나는 정리를"},
       {"label": "직접 쓸게", "description": "나만의 선언"}
     ],
     "multiSelect": false
