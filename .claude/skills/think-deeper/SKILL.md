@@ -58,6 +58,9 @@ AskUserQuestion({
 
 답변 후 **5 Whys**를 진행한다. AskUserQuestion으로 "왜?"를 최대 5번 반복하되, 근본 원인에 도달하면 멈춘다.
 
+> **최소 2회는 진행한다.** Why 1에서는 "이게 근본 원인이다" 선택지를 제공하지 않는다.
+> Why 2부터 "이게 근본 원인이다" 탈출구를 제공한다.
+
 각 Why에서는:
 
 ```json
@@ -67,7 +70,8 @@ AskUserQuestion({
     "header": "Why [N]",
     "options": [
       // 이전 답변에 따라 동적으로 3-4개 선택지를 생성한다
-      // 마지막 선택지는 항상: {"label": "이게 근본 원인이다", "description": "더 파고들 필요 없음"}
+      // Why 2부터 마지막 선택지에: {"label": "이게 근본 원인이다", "description": "더 파고들 필요 없음"}
+      // Why 1에서는 "이게 근본 원인이다" 선택지를 넣지 않는다
     ],
     "multiSelect": false
   }]
@@ -141,10 +145,10 @@ AskUserQuestion({
 ```json
 AskUserQuestion({
   "questions": [{
-    "question": "기획서 작성 전에 Google Drive에서 참고할 자료가 있나요?",
+    "question": "기획서 작성 전에 참고할 자료가 있나요?",
     "header": "참고 자료",
     "options": [
-      {"label": "있다 — 검색해줘", "description": "키워드를 입력하면 Google Drive에서 검색합니다"},
+      {"label": "있다 — 검색해줘", "description": "키워드를 입력하면 Google Drive, 노션 등에서 검색합니다"},
       {"label": "없다 — 바로 작성해줘", "description": "지금까지의 사고 결과만으로 기획서를 작성합니다"}
     ],
     "multiSelect": false
@@ -186,9 +190,9 @@ AskUserQuestion({
 - [Google Drive에서 검색한 문서 목록과 핵심 요약] (없으면 생략)
 
 ## 5. 다음 액션
-- [ ] [구체적 다음 단계 1]
-- [ ] [구체적 다음 단계 2]
-- [ ] [구체적 다음 단계 3]
+- [ ] [구체적 다음 단계 1] — 기한: [날짜] / 담당: [이름]
+- [ ] [구체적 다음 단계 2] — 기한: [날짜] / 담당: [이름]
+- [ ] [구체적 다음 단계 3] — 기한: [날짜] / 담당: [이름]
 
 ---
 > 생성일: [날짜] | /think-deeper로 생성
