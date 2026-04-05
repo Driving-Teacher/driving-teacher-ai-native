@@ -78,7 +78,26 @@ Claude Code에는 기억 시스템이 있습니다. 3가지예요.
 - "이제 새 세션을 열어도 Claude가 여러분을 기억합니다."
 - **핵심 메시지**: "ChatGPT는 매번 처음부터 설명해야 하지만, Claude Code는 기억합니다. 이게 'AI가 출근한 것'의 의미예요."
 
-7. 다음으로 넘어갈지 물어본다:
+7. 퀴즈로 핵심을 확���한다:
+
+```json
+AskUserQuestion({
+  "questions": [{
+    "question": "Claude Code의 기억 시스템 — CLAUDE.md와 Auto Memory의 차이는?",
+    "header": "Block 1 퀴즈",
+    "options": [
+      {"label": "CLAUDE.md는 내가 쓰고, Auto Memory는 Claude가 쓴다", "description": "작성 주체가 다르다"},
+      {"label": "같은 파일이다", "description": "이름만 다른 같은 기능"},
+      {"label": "Auto Memory는 한 번만 읽힌다", "description": "매 세션마다? 한 번만?"}
+    ],
+    "multiSelect": false
+  }]
+})
+```
+
+정답: 1번. CLAUDE.md는 **내가 직접 적는 매뉴얼**, Auto Memory는 **Claude가 대화하면서 알아서 적는 메모**. 둘 다 매 세션 시작 시 자동으로 읽힌다.
+
+8. 다음으로 넘어갈지 물어본다:
 
 ```json
 AskUserQuestion({
@@ -189,7 +208,26 @@ API 키를 발급받으면 **한 마디만 안내한다**:
    - 슬랙: "오늘 나한테 온 메시지 요약해줘"
    - Google Drive: "최근 문서 검색해줘"
 
-5. 다음으로 넘어갈지 물어본다:
+5. 퀴즈로 핵심을 확인한다:
+
+```json
+AskUserQuestion({
+  "questions": [{
+    "question": "MCP를 한 마디로 말하면?",
+    "header": "Block 2 퀴즈",
+    "options": [
+      {"label": "Claude와 외부 도구를 연결하는 표준 프로토콜", "description": "노션, 슬랙 등을 꽂는 USB-C"},
+      {"label": "Claude의 내장 기능", "description": "MCP는 외부 연결 vs 내장?"},
+      {"label": "프로그래밍 언어", "description": "도구 연결 프로토콜 vs 언어?"}
+    ],
+    "multiSelect": false
+  }]
+})
+```
+
+정답: 1번. MCP는 외부 도구를 Claude에 연결하는 **오픈 표준 프로토콜**. USB-C처럼 꽂으면 쓸 수 있다.
+
+6. 다음으로 넘어갈지 물어본다:
 
 ```json
 AskUserQuestion({
@@ -271,7 +309,26 @@ AskUserQuestion({
    - 실제로 실행해보고 결과를 확인
    - 수정할 부분이 있으면 즉석에서 개선
 
-6. 완료 후 마무리:
+6. 퀴즈로 핵심을 확인한다:
+
+```json
+AskUserQuestion({
+  "questions": [{
+    "question": "스킬은 CLAUDE.md와 어떻게 다르게 로드되나요?",
+    "header": "Block 3 퀴즈",
+    "options": [
+      {"label": "필요할 때만 로드된다", "description": "/명령어를 치거나 자동 매칭될 때만"},
+      {"label": "CLAUDE.md처럼 매번 전부 로드된다", "description": "그러면 스킬이 많아질수록 느려지겠죠?"},
+      {"label": "한 번 로드하면 영구 저장된다", "description": "세션이 끝나면?"}
+    ],
+    "multiSelect": false
+  }]
+})
+```
+
+정답: 1번. CLAUDE.md는 매 세션마다 전부 로드되지만, 스킬은 **필요할 때만** 로드된다. 그래서 스킬을 아무리 많이 만들어도 무겁지 않다.
+
+7. 완료 후 마무리:
 
 ```
 축하합니다! 나만의 첫 스킬을 만들었습니다. 🎉
