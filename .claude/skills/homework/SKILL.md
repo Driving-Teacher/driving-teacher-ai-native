@@ -13,7 +13,7 @@ AskUserQuestion({
     "question": "어떤 Day의 숙제를 확인할까요?",
     "header": "숙제 확인",
     "options": [
-      {"label": "Day 1", "description": "CLAUDE.md 작성 + 업무 1개 Claude로 해보기"},
+      {"label": "Day 1", "description": "CLAUDE.md 보강 + /think-deeper → 스킬 만들기"},
       {"label": "Day 2", "description": "고객 여정 탐험 + MCP 연결"},
       {"label": "Day 3", "description": "/think-deeper 마무리 + 스킬 만들기"},
       {"label": "Day 4", "description": "AI Native 루틴 정착"}

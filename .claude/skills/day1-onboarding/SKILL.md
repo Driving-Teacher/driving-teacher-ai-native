@@ -117,10 +117,10 @@ MCP는 수백 개가 있어요. 노션, 슬랙 말고도 구글시트, 지메일
 "이런 것도 연결할 수 있어?" 싶으면 검색해보세요 — 거의 다 있어요!
 ```
 
-> **중요: 회사 도구가 아닌 개인 계정으로 먼저 연습하세요!**
-> 회사 노션/슬랙은 Admin 권한 문제로 막힐 수 있어요.
-> 개인 노션 워크스페이스, 개인 슬랙, 개인 Gmail 등으로 먼저 연결해보고,
-> 회사 도구는 나중에 권한 받고 연결하면 됩니다.
+⚠️ **반드시 개인 계정으로 먼저!** 회사 노션/슬랙은 Admin 권한으로 막힐 수 있어요.
+개인 노션, 개인 Gmail 등으로 먼저 연결 → 성공하면 나중에 회사 도구로.
+
+이 경고를 AskUserQuestion **전에** 반드시 말한다. 도구 선택 후가 아니라 선택 전에.
 
 2. 어떤 도구를 연결할지 물어본다:
 
@@ -225,7 +225,8 @@ AskUserQuestion({
       {"label": "/cs-reply", "description": "채널톡 답변 초안 자동 생성"},
       {"label": "/daily-scrum", "description": "데일리 스크럼 자동 작성"},
       {"label": "/research-summary", "description": "리서치 자료 요약"},
-      {"label": "/contract-review", "description": "계약서 검토 체크리스트"}
+      {"label": "/contract-review", "description": "계약서 검토 체크리스트"},
+      {"label": "직접 말할게", "description": "위에 없는 다른 업무를 자동화하고 싶어"}
     ],
     "multiSelect": false
   }]
