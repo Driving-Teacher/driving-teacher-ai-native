@@ -1,6 +1,6 @@
 ---
-name: claude-code-deep
-description: Claude Code 7개 기능 심화 학습. Memory, Skill, MCP, Subagent, Agent Teams, Hook, Plugin을 각각 설명→실행→퀴즈로 배운다. "심화", "7개 기능", "deep" 요청에 사용.
+name: claude-code-guide
+description: Claude Code 7개 기능 가이드. Memory, Skill, MCP, Subagent, Agent Teams, Hook, Plugin을 각각 설명→실행→퀴즈로 배운다. "가이드", "7개 기능", "guide" 요청에 사용.
 ---
 
 # Day 1: Onboarding
