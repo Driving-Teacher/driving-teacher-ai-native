@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Native Camp — Week 2 Kickoff</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+  @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #1C1C1C;
+    --fg: #F6F6F3;
+    --accent: #FFD547;
+    --accent2: #4F7DFF;
+    --red: #FF7439;
+    --green: #1AC569;
+    --dim: #6B6B6B;
+    --surface: #2A2929;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Pretendard Variable', 'Pretendard', sans-serif;
+    --display: 'Syncopate', sans-serif;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    overflow: hidden;
+  }
+
+  .deck { width: 100vw; height: 100vh; position: relative; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8vh 10vw;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide.active .reveal { animation: slideUp 0.7s ease forwards; }
+  .slide.active .reveal-delay-1 { animation-delay: 0.15s; }
+  .slide.active .reveal-delay-2 { animation-delay: 0.3s; }
+  .slide.active .reveal-delay-3 { animation-delay: 0.45s; }
+  .slide.active .reveal-delay-4 { animation-delay: 0.6s; }
+  .slide.active .reveal-delay-5 { animation-delay: 0.75s; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal { opacity: 0; }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 6vw, 6.5rem);
+    font-weight: 700; text-transform: uppercase;
+    line-height: 1.05; letter-spacing: -0.03em;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4.5vw, 5rem);
+    font-weight: 900; line-height: 1.15; letter-spacing: -0.02em;
+  }
+
+  h3 {
+    font-size: clamp(1.2rem, 2vw, 2.2rem);
+    font-weight: 700; line-height: 1.3;
+  }
+
+  p, li {
+    font-size: clamp(1rem, 1.8vw, 1.6rem);
+    line-height: 1.7; font-weight: 300;
+  }
+
+  .accent { color: var(--accent); }
+  .accent2 { color: var(--accent2); }
+  .dim { color: var(--dim); }
+  .bold { font-weight: 700; }
+  .mono { font-family: var(--mono); }
+
+  .big-quote {
+    font-family: var(--sans);
+    font-size: clamp(1.8rem, 4vw, 4.5rem);
+    font-weight: 800; line-height: 1.3; max-width: 90%;
+  }
+
+  .big-quote::before {
+    content: '\201C'; color: var(--accent);
+    font-size: 1.5em; line-height: 0;
+    vertical-align: -0.15em; margin-right: 0.05em;
+  }
+
+  .big-quote::after {
+    content: '\201D'; color: var(--accent);
+    font-size: 1.5em; line-height: 0;
+    vertical-align: -0.15em; margin-left: 0.05em;
+  }
+
+  /* ── Stage Flow ── */
+  .stage-flow { display: flex; flex-direction: column; gap: 0; }
+
+  .stage {
+    display: flex; align-items: flex-start; gap: 2rem;
+    padding: 1.5rem 0; border-left: 3px solid var(--dim);
+    padding-left: 2rem; position: relative;
+  }
+
+  .stage::before {
+    content: ''; position: absolute; left: -8px; top: 1.8rem;
+    width: 13px; height: 13px; border-radius: 50%;
+    background: var(--dim);
+  }
+
+  .stage.current { border-left-color: var(--accent); }
+
+  .stage.current::before {
+    background: var(--accent);
+    box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(255, 213, 71, 0.3);
+  }
+
+  .stage-num {
+    font-family: var(--mono);
+    font-size: clamp(0.8rem, 1.2vw, 1.1rem);
+    color: var(--dim); min-width: 2rem; padding-top: 0.2rem;
+  }
+
+  .stage.current .stage-num { color: var(--accent); }
+
+  .stage-content h3 {
+    font-size: clamp(1.1rem, 2vw, 1.8rem); margin-bottom: 0.3rem;
+  }
+
+  .stage-content p {
+    font-size: clamp(0.85rem, 1.3vw, 1.15rem);
+    color: var(--dim); font-weight: 300;
+  }
+
+  .stage.current .stage-content h3 { color: var(--fg); }
+  .stage.current .stage-content p { color: #999; }
+  .stage:not(.current) .stage-content h3 { color: var(--dim); }
+
+  /* ── Card Grid ── */
+  .card-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.2rem; margin: 2rem 0; max-width: 700px;
+  }
+
+  .card {
+    background: var(--surface); border: 1px solid #333;
+    border-radius: 12px; padding: 1.5rem 1.8rem;
+    transition: border-color 0.3s ease;
+  }
+
+  .card:hover { border-color: var(--accent); }
+
+  .card h3 {
+    font-family: var(--mono); font-size: clamp(0.9rem, 1.4vw, 1.2rem);
+    color: var(--accent); margin-bottom: 0.5rem;
+  }
+
+  .card p {
+    font-size: clamp(0.85rem, 1.2vw, 1.05rem);
+    color: #999; font-weight: 300; line-height: 1.5;
+  }
+
+  /* ── Hierarchy List ── */
+  .hierarchy { list-style: none; margin: 1.5rem 0; }
+
+  .hierarchy li {
+    padding: 0.6rem 0; padding-left: 2rem; position: relative;
+    font-size: clamp(1rem, 1.6vw, 1.4rem);
+  }
+
+  .hierarchy li::before {
+    content: ''; position: absolute; left: 0; top: 50%;
+    width: 8px; height: 2px; background: var(--accent);
+  }
+
+  .hierarchy li.last::before {
+    background: var(--accent2); width: 12px; height: 3px;
+  }
+
+  /* ── Progress + Counter ── */
+  .progress {
+    position: fixed; bottom: 0; left: 0; height: 3px;
+    background: var(--accent); transition: width 0.4s ease; z-index: 100;
+  }
+
+  .counter {
+    position: fixed; bottom: 2rem; right: 3rem;
+    font-family: var(--mono); font-size: 0.85rem;
+    color: var(--dim); z-index: 100;
+  }
+
+  .noise {
+    position: fixed; inset: 0; pointer-events: none; z-index: 99; opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .tag {
+    display: inline-block; font-family: var(--mono);
+    font-size: clamp(0.85rem, 1.2vw, 1.1rem); font-weight: 700;
+    letter-spacing: 0.05em; margin-bottom: 1.5rem;
+  }
+
+  .tag .num {
+    color: var(--accent);
+    margin-right: 0.3em;
+  }
+
+  .tag .sep {
+    color: var(--dim);
+    margin-right: 0.5em;
+  }
+
+  .tag .label {
+    color: #888;
+  }
+
+  .spacer { height: 2rem; }
+  .spacer-sm { height: 1rem; }
+
+  @media (max-width: 768px) {
+    .slide { padding: 5vh 6vw; }
+    .card-grid { grid-template-columns: 1fr; max-width: 95vw; }
+    .stage { gap: 1rem; padding-left: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+<div class="progress" id="progress"></div>
+<div class="counter" id="counter"></div>
+
+<div class="deck" id="deck">
+
+  <!-- ═══ 1. 타이틀 ═══ -->
+  <div class="slide active">
+    <div class="tag reveal"><span class="num">01</span><span class="sep">—</span><span class="label">Week 2 Kickoff</span></div>
+    <h1 class="reveal reveal-delay-1">AI Native<br><span class="accent">Camp</span></h1>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-2" style="font-size:clamp(1.1rem,2.2vw,1.8rem); color:#888; font-weight:300;">
+      <span style="color:var(--fg); font-weight:700;">서로 배우기</span>
+    </p>
+  </div>
+
+  <!-- ═══ 2. 오늘 할 것 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">02</span><span class="sep">—</span><span class="label">오늘 할 것</span></div>
+    <div class="spacer-sm"></div>
+    <div class="stage-flow">
+      <div class="stage current reveal reveal-delay-1">
+        <div class="stage-num" style="color:var(--accent);">01</div>
+        <div class="stage-content">
+          <h3>숙제 발표</h3>
+          <p>30분</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-2">
+        <div class="stage-num">02</div>
+        <div class="stage-content">
+          <h3>새 도구 배우기</h3>
+          <p>20분</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-3">
+        <div class="stage-num">03</div>
+        <div class="stage-content">
+          <h3>페어 실습</h3>
+          <p>50분</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-4">
+        <div class="stage-num">04</div>
+        <div class="stage-content">
+          <h3>Zeude + 마무리</h3>
+          <p>20분</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 3. 숙제 발표 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">03</span><span class="sep">—</span><span class="label">숙제 발표</span></div>
+    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">지난주에 <span class="accent">뭘 해봤나요?</span></h2>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-1" style="color:#888;">각자 3분. 잘 됐든 안 됐든.</p>
+    <div class="spacer-sm"></div>
+    <ul class="hierarchy reveal reveal-delay-2">
+      <li>CLAUDE.md 만들었다</li>
+      <li><span class="mono accent2">/think-deeper</span> 써봤다</li>
+      <li>MCP로 업무 해봤다</li>
+      <li class="last">스킬 만들었다</li>
+    </ul>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-3" style="color:var(--accent); font-weight:700; font-size:clamp(1rem,1.5vw,1.3rem);">
+      다른 사람이 한 걸 보는 게 가장 빠른 방법
+    </p>
+  </div>
+
+  <!-- ═══ 4. 새 도구 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">04</span><span class="sep">—</span><span class="label">새 도구</span></div>
+    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">이런 것도 <span class="accent">됩니다</span></h2>
+    <div class="spacer-sm"></div>
+    <div class="card-grid reveal reveal-delay-2">
+      <div class="card">
+        <h3>docx/pdf/xlsx/pptx</h3>
+        <p>문서 작업 4종 (Anthropic 공식)</p>
+      </div>
+      <div class="card">
+        <h3>humanizer</h3>
+        <p>AI 글에서 AI 냄새 제거</p>
+      </div>
+      <div class="card">
+        <h3>marketingskills</h3>
+        <p>마케팅 스킬 세트</p>
+      </div>
+      <div class="card">
+        <h3>나만의 스킬</h3>
+        <p>Week 1에서 만든 걸 더 발전</p>
+      </div>
+    </div>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-3" style="color:var(--accent); font-weight:700; font-size:clamp(1rem,1.5vw,1.3rem);">
+      지금 하나씩 설치해보세요
+    </p>
+  </div>
+
+  <!-- ═══ 5. 페어 실습 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">05</span><span class="sep">—</span><span class="label">페어 실습</span></div>
+    <div class="big-quote reveal reveal-delay-1">50분</div>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-2" style="color:#888; font-size:clamp(1rem,1.6vw,1.3rem);">
+      옆 사람이랑 같이. <span style="color:var(--fg); font-weight:700;">진짜 업무 하나.</span>
+    </p>
+    <div class="spacer-sm"></div>
+    <ul class="hierarchy reveal reveal-delay-3">
+      <li class="dim">CS: 채널톡 문의 패턴 분석</li>
+      <li class="dim">운영: 매뉴얼 업데이트</li>
+      <li class="dim">마케팅: 경쟁사 비교 리포트</li>
+      <li class="dim">기획: 기획안 초안</li>
+    </ul>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-4" style="color:var(--accent); font-weight:700; font-size:clamp(1.1rem,1.8vw,1.5rem);">
+      결과를 슬랙에 올리세요
+    </p>
+  </div>
+
+  <!-- ═══ 6. Zeude ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">06</span><span class="sep">—</span><span class="label">Zeude</span></div>
+    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);"><span class="accent">측정</span> 시작</h2>
+    <div class="spacer"></div>
+    <div class="stage-flow">
+      <div class="stage current reveal reveal-delay-2">
+        <div class="stage-num" style="color:var(--accent);">1</div>
+        <div class="stage-content">
+          <h3><span class="accent">측정</span></h3>
+          <p>누가 얼마나 쓰는지</p>
+        </div>
+      </div>
+      <div class="stage current reveal reveal-delay-3">
+        <div class="stage-num" style="color:var(--accent);">2</div>
+        <div class="stage-content">
+          <h3><span class="accent">배포</span></h3>
+          <p>스킬 자동 설치</p>
+        </div>
+      </div>
+      <div class="stage current reveal reveal-delay-4">
+        <div class="stage-num" style="color:var(--accent);">3</div>
+        <div class="stage-content">
+          <h3><span class="accent">추천</span></h3>
+          <p>상황에 맞는 스킬 제안</p>
+        </div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-5" style="color:var(--accent); font-weight:700; font-size:clamp(1.1rem,1.8vw,1.5rem);">
+      슬랙 링크 눌러서 설치
+    </p>
+  </div>
+
+  <!-- ═══ 7. 숙제 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">07</span><span class="sep">—</span><span class="label">숙제</span></div>
+    <div class="spacer-sm"></div>
+    <ul class="hierarchy reveal reveal-delay-1">
+      <li><span class="bold">1. OpenClaw 셋업</span> <span class="dim">(필수)</span> — Week 3 사전 준비</li>
+      <li class="last"><span class="bold">2. AI로 업무 하나 더 해보기</span> <span class="dim">(필수)</span> — 결과를 슬랙에</li>
+    </ul>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-2 dim" style="font-size:clamp(1rem,1.5vw,1.3rem);">
+      <span class="mono accent2">/homework</span> 치면 자세히 안내
+    </p>
+  </div>
+
+  <!-- ═══ 8. 클로징 ═══ -->
+  <div class="slide">
+    <div class="big-quote reveal">나는 매일 이걸 AI한테 시킨다</div>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-1 dim" style="font-size:clamp(1.1rem,1.8vw,1.5rem);">
+      오늘 해본 게 그 루틴의 시작입니다.
+    </p>
+  </div>
+
+</div>
+
+<script>
+  const deck = document.getElementById('deck');
+  const slides = deck.querySelectorAll('.slide');
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  let current = 0;
+
+  function goTo(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides[current].classList.remove('active');
+    slides[current].querySelectorAll('.reveal').forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight;
+      el.style.animation = '';
+      el.style.opacity = '0';
+    });
+    current = n;
+    slides[current].classList.add('active');
+    progress.style.width = ((current / (slides.length - 1)) * 100) + '%';
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault(); goTo(current + 1);
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault(); goTo(current - 1);
+    }
+    if (e.key === 'Home') goTo(0);
+    if (e.key === 'End') goTo(slides.length - 1);
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { diff > 0 ? goTo(current + 1) : goTo(current - 1); }
+  });
+
+  deck.addEventListener('click', (e) => {
+    if (e.clientX > window.innerWidth / 2) goTo(current + 1);
+    else goTo(current - 1);
+  });
+
+  goTo(0);
+</script>
+
+</body>
+</html>
