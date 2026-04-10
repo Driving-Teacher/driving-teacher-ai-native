@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Hackle 실험 스냅샷 스키마. experiment-share 스킬이 저장하는 JSON 파일의 구조.",
+  "type": "object",
+  "required": ["experimentId", "snapshots"],
+  "properties": {
+    "experimentId": {
+      "type": "number",
+      "description": "Hackle 실험 키 (experimentKey). 예: 17"
+    },
+    "experimentName": {
+      "type": "string",
+      "description": "Hackle 실험 이름. 예: 필기 info banner 추가"
+    },
+    "snapshots": {
+      "type": "array",
+      "description": "날짜별 스냅샷 배열. 최신이 마지막.",
+      "items": {
+        "type": "object",
+        "required": ["date", "label", "metrics", "conclusion"],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "스냅샷 날짜. 예: 2026-04-10"
+          },
+          "label": {
+            "type": "string",
+            "description": "진행일 라벨. 예: D+3"
+          },
+          "source": {
+            "type": "string",
+            "enum": ["hackle-mcp", "manual"],
+            "description": "데이터 출처"
+          },
+          "metrics": {
+            "type": "array",
+            "description": "핵심 지표 (objective type=PRIMARY)",
+            "items": {
+              "type": "object",
+              "required": ["name", "type", "a", "b", "improvement", "pValue", "direction"],
+              "properties": {
+                "name": { "type": "string" },
+                "type": { "type": "string", "enum": ["rate", "time", "count"] },
+                "a": { "type": "string", "description": "A군 값 (포맷팅된 문자열)" },
+                "b": { "type": "string", "description": "B군 값 (포맷팅된 문자열)" },
+                "aRaw": { "type": "number", "description": "A군 원시값 (선택)" },
+                "bRaw": { "type": "number", "description": "B군 원시값 (선택)" },
+                "improvement": { "type": "string", "description": "개선량. 예: +3.85%p, -38.09%" },
+                "improvementRate": { "type": "string", "description": "개선율. 예: +12.26%" },
+                "pValue": { "type": "number" },
+                "direction": { "type": "string", "enum": ["positive", "negative", "neutral"] },
+                "note": { "type": "string" }
+              }
+            }
+          },
+          "guardrail": {
+            "type": "object",
+            "description": "가드레일 지표 (objective type=GUARDRAIL)",
+            "properties": {
+              "name": { "type": "string" },
+              "a": { "type": "string" },
+              "b": { "type": "string" },
+              "aCount": { "type": "number" },
+              "bCount": { "type": "number" },
+              "improvement": { "type": "string" },
+              "pValue": { "type": "number" },
+              "direction": { "type": "string" },
+              "note": { "type": "string" }
+            }
+          },
+          "extra": {
+            "type": "array",
+            "description": "부가 지표 (objective type=NONE). B군 전용 UI 등.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "type": { "type": "string" },
+                "a": { "type": "string" },
+                "b": { "type": "string" },
+                "bCount": { "type": "number" },
+                "improvement": { "type": "string" },
+                "pValue": { "type": "number" },
+                "direction": { "type": "string" },
+                "significant": { "type": "boolean" }
+              }
+            }
+          },
+          "conclusion": { "type": "string" },
+          "sampleSize": {
+            "type": "object",
+            "properties": {
+              "a": { "type": "number" },
+              "b": { "type": "number" }
+            }
+          }
+        }
+      }
+    }
+  }
+}
