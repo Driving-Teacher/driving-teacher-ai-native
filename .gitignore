@@ -20,3 +20,6 @@ Thumbs.db
 
 # Node
 node_modules/
+
+# Experiment snapshots (per-user)
+.claude/experiment-data/
