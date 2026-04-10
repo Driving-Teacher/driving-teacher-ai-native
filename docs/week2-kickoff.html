@@ -146,29 +146,39 @@
   .stage.current .stage-content p { color: #999; }
   .stage:not(.current) .stage-content h3 { color: var(--dim); }
 
-  /* ── Card Grid ── */
-  .card-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 1.2rem; margin: 2rem 0; max-width: 700px;
+  /* ── Terminal ── */
+  .terminal {
+    background: #1a1a1a; border: 1px solid #333;
+    border-radius: 12px; padding: 0; max-width: 600px;
+    overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.5);
   }
 
-  .card {
-    background: var(--surface); border: 1px solid #333;
-    border-radius: 12px; padding: 1.5rem 1.8rem;
-    transition: border-color 0.3s ease;
+  .terminal-bar {
+    background: #2a2a2a; padding: 0.8rem 1.2rem;
+    display: flex; gap: 0.5rem; align-items: center;
   }
 
-  .card:hover { border-color: var(--accent); }
+  .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .terminal-dot.red { background: #ff5f57; }
+  .terminal-dot.yellow { background: #ffbd2e; }
+  .terminal-dot.green { background: #28ca41; }
 
-  .card h3 {
-    font-family: var(--mono); font-size: clamp(0.9rem, 1.4vw, 1.2rem);
-    color: var(--accent); margin-bottom: 0.5rem;
+  .terminal-body {
+    padding: 1.5rem 2rem 2rem; font-family: var(--mono);
+    font-size: clamp(0.9rem, 1.4vw, 1.25rem); line-height: 2;
   }
 
-  .card p {
-    font-size: clamp(0.85rem, 1.2vw, 1.05rem);
-    color: #999; font-weight: 300; line-height: 1.5;
+  .terminal-prompt { color: var(--accent); }
+  .terminal-cmd { color: var(--fg); }
+  .terminal-comment { color: var(--dim); }
+
+  .terminal-cursor {
+    display: inline-block; width: 10px; height: 1.3em;
+    background: var(--fg); vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
   }
+
+  @keyframes blink { 50% { opacity: 0; } }
 
   /* ── Hierarchy List ── */
   .hierarchy { list-style: none; margin: 1.5rem 0; }
@@ -229,7 +239,6 @@
 
   @media (max-width: 768px) {
     .slide { padding: 5vh 6vw; }
-    .card-grid { grid-template-columns: 1fr; max-width: 95vw; }
     .stage { gap: 1rem; padding-left: 1.2rem; }
   }
 </style>
@@ -257,32 +266,39 @@
     <div class="tag reveal"><span class="num">02</span><span class="sep">—</span><span class="label">오늘 할 것</span></div>
     <div class="spacer-sm"></div>
     <div class="stage-flow">
-      <div class="stage current reveal reveal-delay-1">
+      <div class="stage current reveal">
         <div class="stage-num" style="color:var(--accent);">01</div>
         <div class="stage-content">
           <h3>숙제 발표</h3>
           <p>30분</p>
         </div>
       </div>
-      <div class="stage reveal reveal-delay-2">
+      <div class="stage reveal reveal-delay-1">
         <div class="stage-num">02</div>
         <div class="stage-content">
-          <h3>새 도구 배우기</h3>
-          <p>20분</p>
+          <h3>Git 교육</h3>
+          <p>10분</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-2">
+        <div class="stage-num">03</div>
+        <div class="stage-content">
+          <h3>Zeude 셋업</h3>
+          <p>10분</p>
         </div>
       </div>
       <div class="stage reveal reveal-delay-3">
-        <div class="stage-num">03</div>
+        <div class="stage-num">04</div>
         <div class="stage-content">
           <h3>페어 실습</h3>
           <p>50분</p>
         </div>
       </div>
       <div class="stage reveal reveal-delay-4">
-        <div class="stage-num">04</div>
+        <div class="stage-num">05</div>
         <div class="stage-content">
-          <h3>Zeude + 마무리</h3>
-          <p>20분</p>
+          <h3>마무리</h3>
+          <p>10분</p>
         </div>
       </div>
     </div>
@@ -291,126 +307,117 @@
   <!-- ═══ 3. 숙제 발표 ═══ -->
   <div class="slide">
     <div class="tag reveal"><span class="num">03</span><span class="sep">—</span><span class="label">숙제 발표</span></div>
-    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">지난주에 <span class="accent">뭘 해봤나요?</span></h2>
+    <h2 class="reveal reveal-delay-1">지난주에 <span class="accent">뭘 해봤나요?</span></h2>
     <div class="spacer-sm"></div>
-    <p class="reveal reveal-delay-1" style="color:#888;">각자 3분. 잘 됐든 안 됐든.</p>
-    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-1" style="color:#888; font-size:clamp(1rem,1.6vw,1.3rem);">
+      각자 3분. 잘 됐든 안 됐든.
+    </p>
+    <div class="spacer"></div>
     <ul class="hierarchy reveal reveal-delay-2">
-      <li>CLAUDE.md 만들었다</li>
-      <li><span class="mono accent2">/think-deeper</span> 써봤다</li>
-      <li>MCP로 업무 해봤다</li>
-      <li class="last">스킬 만들었다</li>
+      <li><span class="mono accent2">CLAUDE.md</span></li>
+      <li><span class="mono accent2">/think-deeper</span></li>
+      <li>MCP 업무</li>
+      <li class="last">스킬</li>
     </ul>
     <div class="spacer"></div>
-    <p class="reveal reveal-delay-3" style="color:var(--accent); font-weight:700; font-size:clamp(1rem,1.5vw,1.3rem);">
+    <p class="reveal reveal-delay-3" style="color:var(--accent); font-weight:700; font-size:clamp(1.1rem,1.8vw,1.5rem);">
       다른 사람이 한 걸 보는 게 가장 빠른 방법
     </p>
   </div>
 
-  <!-- ═══ 4. 새 도구 ═══ -->
+  <!-- ═══ 4. Git 최소 생존 키트 ═══ -->
   <div class="slide">
-    <div class="tag reveal"><span class="num">04</span><span class="sep">—</span><span class="label">새 도구</span></div>
-    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">이런 것도 <span class="accent">됩니다</span></h2>
+    <div class="tag reveal"><span class="num">04</span><span class="sep">—</span><span class="label">Git 최소 생존 키트</span></div>
     <div class="spacer-sm"></div>
-    <div class="card-grid reveal reveal-delay-2">
-      <div class="card">
-        <h3>docx/pdf/xlsx/pptx</h3>
-        <p>문서 작업 4종 (Anthropic 공식)</p>
+    <div class="terminal reveal reveal-delay-1">
+      <div class="terminal-bar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
       </div>
-      <div class="card">
-        <h3>humanizer</h3>
-        <p>AI 글에서 AI 냄새 제거</p>
-      </div>
-      <div class="card">
-        <h3>marketingskills</h3>
-        <p>마케팅 스킬 세트</p>
-      </div>
-      <div class="card">
-        <h3>나만의 스킬</h3>
-        <p>Week 1에서 만든 걸 더 발전</p>
+      <div class="terminal-body">
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git clone [url]</span>  <span class="terminal-comment">&larr; 다운로드</span></div>
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git pull</span>  <span class="terminal-comment">&larr; 최신으로</span></div>
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git add .</span>  <span class="terminal-comment">&larr; 올릴 거야</span></div>
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git commit -m "메시지"</span>  <span class="terminal-comment">&larr; 확정</span></div>
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git push</span>  <span class="terminal-comment">&larr; 업로드</span><span class="terminal-cursor"></span></div>
       </div>
     </div>
-    <div class="spacer-sm"></div>
-    <p class="reveal reveal-delay-3" style="color:var(--accent); font-weight:700; font-size:clamp(1rem,1.5vw,1.3rem);">
-      지금 하나씩 설치해보세요
-    </p>
-  </div>
-
-  <!-- ═══ 5. 페어 실습 ═══ -->
-  <div class="slide">
-    <div class="tag reveal"><span class="num">05</span><span class="sep">—</span><span class="label">페어 실습</span></div>
-    <div class="big-quote reveal reveal-delay-1">50분</div>
-    <div class="spacer-sm"></div>
-    <p class="reveal reveal-delay-2" style="color:#888; font-size:clamp(1rem,1.6vw,1.3rem);">
-      옆 사람이랑 같이. <span style="color:var(--fg); font-weight:700;">진짜 업무 하나.</span>
-    </p>
-    <div class="spacer-sm"></div>
-    <ul class="hierarchy reveal reveal-delay-3">
-      <li class="dim">CS: 채널톡 문의 패턴 분석</li>
-      <li class="dim">운영: 매뉴얼 업데이트</li>
-      <li class="dim">마케팅: 경쟁사 비교 리포트</li>
-      <li class="dim">기획: 기획안 초안</li>
-    </ul>
     <div class="spacer"></div>
-    <p class="reveal reveal-delay-4" style="color:var(--accent); font-weight:700; font-size:clamp(1.1rem,1.8vw,1.5rem);">
-      결과를 슬랙에 올리세요
+    <p class="reveal reveal-delay-2" style="color:var(--accent); font-weight:700; font-size:clamp(1.1rem,1.8vw,1.5rem);">
+      충돌나면? git pull &rarr; 다시 push
     </p>
   </div>
 
-  <!-- ═══ 6. Zeude ═══ -->
+  <!-- ═══ 5. Zeude ═══ -->
   <div class="slide">
-    <div class="tag reveal"><span class="num">06</span><span class="sep">—</span><span class="label">Zeude</span></div>
-    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);"><span class="accent">측정</span> 시작</h2>
+    <div class="tag reveal"><span class="num">05</span><span class="sep">—</span><span class="label">Zeude</span></div>
+    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">
+      측정 시작 + <span class="accent">스킬 자동 배포</span>
+    </h2>
     <div class="spacer"></div>
     <div class="stage-flow">
       <div class="stage current reveal reveal-delay-2">
-        <div class="stage-num" style="color:var(--accent);">1</div>
+        <div class="stage-num" style="color:var(--accent);">01</div>
         <div class="stage-content">
-          <h3><span class="accent">측정</span></h3>
-          <p>누가 얼마나 쓰는지</p>
+          <h3>측정</h3>
+          <p>누가 얼마나</p>
         </div>
       </div>
       <div class="stage current reveal reveal-delay-3">
-        <div class="stage-num" style="color:var(--accent);">2</div>
+        <div class="stage-num" style="color:var(--accent);">02</div>
         <div class="stage-content">
-          <h3><span class="accent">배포</span></h3>
+          <h3>배포</h3>
           <p>스킬 자동 설치</p>
         </div>
       </div>
       <div class="stage current reveal reveal-delay-4">
-        <div class="stage-num" style="color:var(--accent);">3</div>
+        <div class="stage-num" style="color:var(--accent);">03</div>
         <div class="stage-content">
-          <h3><span class="accent">추천</span></h3>
-          <p>상황에 맞는 스킬 제안</p>
+          <h3>추천</h3>
+          <p>상황에 맞는 스킬</p>
         </div>
       </div>
     </div>
     <div class="spacer"></div>
     <p class="reveal reveal-delay-5" style="color:var(--accent); font-weight:700; font-size:clamp(1.1rem,1.8vw,1.5rem);">
-      슬랙 링크 눌러서 설치
+      스킬 push하면 팀 전원에게 자동 배포
     </p>
   </div>
 
-  <!-- ═══ 7. 숙제 ═══ -->
+  <!-- ═══ 6. 페어 실습 ═══ -->
   <div class="slide">
-    <div class="tag reveal"><span class="num">07</span><span class="sep">—</span><span class="label">숙제</span></div>
+    <div class="tag reveal"><span class="num">06</span><span class="sep">—</span><span class="label">페어 실습</span></div>
+    <div class="big-quote reveal reveal-delay-1">50분</div>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-1" style="font-size:clamp(1.1rem,2vw,1.6rem); color:#888; font-weight:300;">
+      짝지어서 회사 문제 하나를 AI로
+    </p>
+    <div class="spacer"></div>
+    <ul class="hierarchy reveal reveal-delay-2">
+      <li class="dim">고민 공유 (5분) &rarr; 하나 선택</li>
+      <li class="dim">분담해서 풀기 (35분)</li>
+      <li class="dim">합치고 push (10분)</li>
+    </ul>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-3" style="color:var(--accent); font-weight:700; font-size:clamp(1.1rem,1.8vw,1.5rem);">
+      결과를 슬랙에 올리세요
+    </p>
+  </div>
+
+  <!-- ═══ 7. 숙제 + 클로징 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">07</span><span class="sep">—</span><span class="label">숙제 + 클로징</span></div>
     <div class="spacer-sm"></div>
     <ul class="hierarchy reveal reveal-delay-1">
       <li><span class="bold">1. OpenClaw 셋업</span> <span class="dim">(필수)</span> — Week 3 사전 준비</li>
-      <li class="last"><span class="bold">2. AI로 업무 하나 더 해보기</span> <span class="dim">(필수)</span> — 결과를 슬랙에</li>
+      <li class="last"><span class="bold">2. 못 다한 문제 마저 풀기</span> <span class="dim">(필수)</span></li>
     </ul>
     <div class="spacer"></div>
-    <p class="reveal reveal-delay-2 dim" style="font-size:clamp(1rem,1.5vw,1.3rem);">
-      <span class="mono accent2">/homework</span> 치면 자세히 안내
-    </p>
-  </div>
-
-  <!-- ═══ 8. 클로징 ═══ -->
-  <div class="slide">
-    <div class="big-quote reveal">나는 매일 이걸 AI한테 시킨다</div>
+    <div class="big-quote reveal reveal-delay-2">나는 매일 이걸 AI한테 시킨다</div>
     <div class="spacer"></div>
-    <p class="reveal reveal-delay-1 dim" style="font-size:clamp(1.1rem,1.8vw,1.5rem);">
-      오늘 해본 게 그 루틴의 시작입니다.
+    <p class="reveal reveal-delay-3 dim" style="font-size:clamp(1rem,1.6vw,1.3rem);">
+      오늘 같이 푼 게 그 루틴의 시작입니다.
     </p>
   </div>
 
