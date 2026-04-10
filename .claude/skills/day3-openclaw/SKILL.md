@@ -28,10 +28,10 @@ AskUserQuestion({
     "question": "지난주에 뭘 해봤나요?",
     "header": "숙제 공유",
     "options": [
-      {"label": "다른 사람 스킬 써봤다", "description": "어떤 스킬을 써봤는지 공유"},
-      {"label": "새 스킬 만들었다", "description": "어떤 스킬인지 소개"},
-      {"label": "MCP 추가 연결했다", "description": "어떤 도구를 연결했는지"},
-      {"label": "못 했다", "description": "괜찮아요, 오늘 새로운 걸 합니다"}
+      {"label": "OpenClaw 셋업 완료했다", "description": "스크린샷 보여주세요!"},
+      {"label": "Knowledge Base에 질문해봤다", "description": "어떤 질문을 했는지, 답이 나왔는지"},
+      {"label": "스킬 만들었다/개선했다", "description": "어떤 스킬인지 소개"},
+      {"label": "못 했다", "description": "괜찮아요, 오늘 같이 합니다"}
     ],
     "multiSelect": true
   }]
@@ -42,11 +42,38 @@ AskUserQuestion({
 
 ---
 
-## Block 2: OpenClaw 소개 + 셋업 (~35분)
+## Block 2: OpenClaw 셋업 확인 + 실전 활용 (~35분)
 
-### 진행
+> Week 2 숙제에서 OpenClaw 셋업을 미리 해왔으므로, 셋업 시간을 줄이고 실전에 집중한다.
 
-1. OpenClaw 소개:
+### 셋업 확인 + 트러블슈팅 (10분)
+
+1. 셋업 완료 여부를 확인한다:
+
+```json
+AskUserQuestion({
+  "questions": [{
+    "question": "OpenClaw 셋업 상태가 어떤가요?",
+    "header": "셋업 확인",
+    "options": [
+      {"label": "완료! 메시지 주고받기 성공", "description": "바로 실전으로"},
+      {"label": "설치는 했는데 응답이 안 와", "description": "같이 트러블슈팅"},
+      {"label": "아직 못 했다", "description": "지금 빠르게 셋업"}
+    ],
+    "multiSelect": false
+  }]
+})
+```
+
+2. 완료한 사람: 확인만 하고 대기.
+3. 문제 있는 사람: 빠르게 트러블슈팅 (봇 토큰, 서버 연결 등).
+4. 못 한 사람: 지금 같이 셋업 진행 — 10분 안에 끝낸다.
+
+> 원칙: 트러블슈팅에 10분 이상 쓰지 않는다. 안 되면 옆 사람과 페어로.
+
+### 실전 활용 (25분)
+
+1. OpenClaw 소개 (셋업 완료한 사람도 다시 짚기):
 
 ```
 OpenClaw는 "항상 켜진 AI"입니다.
@@ -60,32 +87,7 @@ OpenClaw를 쓰면 Telegram이나 Discord에서
 이런 게 가능해집니다.
 ```
 
-2. 어떤 플랫폼으로 할지 물어본다:
-
-```json
-AskUserQuestion({
-  "questions": [{
-    "question": "OpenClaw를 어떤 메신저에 연결할까요?",
-    "header": "플랫폼 선택",
-    "options": [
-      {"label": "Telegram", "description": "개인 메신저로 AI와 대화"},
-      {"label": "Discord", "description": "팀 서버에서 AI 채널 운영"}
-    ],
-    "multiSelect": false
-  }]
-})
-```
-
-3. 선택한 플랫폼에 맞춰 OpenClaw 셋업을 진행한다.
-   - 설치, 봇 생성, 연결, 테스트까지 단계별 안내
-
----
-
-## Block 3: 실전 시나리오 + 마무리 (~30분)
-
-### 진행
-
-1. OpenClaw로 실제 업무를 요청해본다:
+2. 실전 시나리오를 바로 시작한다:
 
 ```json
 AskUserQuestion({
@@ -95,6 +97,7 @@ AskUserQuestion({
     "options": [
       {"label": "오늘 할 일 정리", "description": "일정/업무 정리"},
       {"label": "채널톡 문의 요약", "description": "MCP 연동 활용"},
+      {"label": "Knowledge Base에 질문", "description": "팀 지식 검색"},
       {"label": "리서치 요약", "description": "자료 분석"},
       {"label": "직접 말할게", "description": "자유롭게 요청"}
     ],
@@ -103,7 +106,33 @@ AskUserQuestion({
 })
 ```
 
-2. 요청을 실행하고 결과를 확인.
+3. 요청을 실행하고 결과를 확인. 여러 시나리오를 돌아가며 시도한다.
+
+---
+
+## Block 3: 심화 시나리오 + 마무리 (~30분)
+
+### 진행
+
+1. Block 2에서 기본 시나리오를 해봤으니, 심화 시나리오를 시도한다:
+
+```json
+AskUserQuestion({
+  "questions": [{
+    "question": "좀 더 복잡한 걸 시켜볼까요?",
+    "header": "심화 시나리오",
+    "options": [
+      {"label": "MCP 복합 요청", "description": "채널톡 + 노션 등 여러 도구 연동"},
+      {"label": "팀원과 함께 쓰기", "description": "같은 채널에서 팀 업무 요청"},
+      {"label": "자동화 아이디어", "description": "매일 아침 자동 보고 등 스케줄링"},
+      {"label": "직접 말할게", "description": "자유롭게 요청"}
+    ],
+    "multiSelect": false
+  }]
+})
+```
+
+2. 요청을 실행하고 결과를 확인. 여러 시나리오를 돌아가며 시도.
 
 3. 마무리:
 
