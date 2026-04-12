@@ -77,8 +77,8 @@
   }
 
   p, li {
-    font-size: clamp(1rem, 1.8vw, 1.6rem);
-    line-height: 1.7; font-weight: 300;
+    font-size: clamp(0.9rem, 1.5vw, 1.35rem);
+    line-height: 1.6; font-weight: 300;
   }
 
   .accent { color: var(--accent); }
@@ -190,11 +190,11 @@
   @keyframes blink { 50% { opacity: 0; } }
 
   /* ── Hierarchy List ── */
-  .hierarchy { list-style: none; margin: 1.5rem 0; }
+  .hierarchy { list-style: none; margin: 0.8rem 0; }
 
   .hierarchy li {
-    padding: 0.6rem 0; padding-left: 2rem; position: relative;
-    font-size: clamp(1rem, 1.6vw, 1.4rem);
+    padding: 0.4rem 0; padding-left: 2rem; position: relative;
+    font-size: clamp(0.9rem, 1.4vw, 1.25rem);
   }
 
   .hierarchy li::before {
@@ -243,15 +243,15 @@
     color: #888;
   }
 
-  .spacer { height: 2rem; }
-  .spacer-sm { height: 1rem; }
+  .spacer { height: 1.5rem; }
+  .spacer-sm { height: 0.6rem; }
 
   /* ── Scrollable slide ── */
   .slide.scrollable {
     overflow-y: auto;
     justify-content: flex-start;
-    padding-top: 6vh;
-    padding-bottom: 6vh;
+    padding-top: 5vh;
+    padding-bottom: 4vh;
   }
 
   @media (max-width: 768px) {
