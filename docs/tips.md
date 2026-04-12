@@ -38,7 +38,9 @@
 - **3번 같은 걸 설명했으면 → 그건 스킬로 만들어야 할 것**
 - 스킬은 `.claude/skills/스킬이름/SKILL.md` 구조
 - "이거 자동화해줘"라고 시키면 Claude가 알아서 스킬 파일을 만들어줌
-- `/superpowers:writing-skills` → 스킬을 만들어주는 스킬 (Superpowers 플러그인)
+- `/superpowers:writing-skills` → 스킬을 만들어주는 스킬
+  - 설치: `claude plugin add superpowers`
+  - 설치 후 `/superpowers:writing-skills` 로 실행
 
 ## 에러/디버깅
 
