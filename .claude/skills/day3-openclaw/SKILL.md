@@ -29,7 +29,7 @@ AskUserQuestion({
     "header": "숙제 공유",
     "options": [
       {"label": "OpenClaw 셋업 완료했다", "description": "스크린샷 보여주세요!"},
-      {"label": "Knowledge Base에 질문해봤다", "description": "어떤 질문을 했는지, 답이 나왔는지"},
+      {"label": "페어 실습 문제 마저 풀었다", "description": "어떤 결과가 나왔는지 공유"},
       {"label": "스킬 만들었다/개선했다", "description": "어떤 스킬인지 소개"},
       {"label": "못 했다", "description": "괜찮아요, 오늘 같이 합니다"}
     ],
@@ -38,7 +38,10 @@ AskUserQuestion({
 })
 ```
 
-2. Zeude 대시보드를 확인해서 1주간의 사용 데이터를 간단히 리뷰.
+2. Zeude 소개 + 셋업 (Week 2에서 예고한 것):
+   - Zeude가 뭔지 간단 설명 (팀 AI 사용 측정 + 스킬 자동 배포)
+   - 슬랙에 공유한 설치 명령어로 shim 설치
+   - 대시보드에서 자기 이름 뜨는지 확인
 
 ---
 
