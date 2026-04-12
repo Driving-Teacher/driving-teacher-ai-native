@@ -132,6 +132,36 @@ AI 검색(ChatGPT, Perplexity)에서 우리 사이트가 인용되는지 진단�
 
 ---
 
+### gstack — 가상 팀 (YC 대표 Garry Tan이 만듦)
+
+설치:
+```bash
+git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git ~/.claude/skills/gstack && cd ~/.claude/skills/gstack && ./setup
+```
+
+30개+ 커맨드 중 **비개발자도 쓸 수 있는 것**:
+
+| 커맨드 | 뭘 하나 |
+|--------|--------|
+| `/office-hours` | YC 오피스아워 — 6개 질문으로 아이디어를 기획서로 |
+| `/plan-ceo-review` | CEO 관점에서 기획서 검토 |
+| `/plan-design-review` | 디자인 0-10점 채점 + 개선안 |
+| `/design-shotgun` | AI 목업 4-6개 한번에 생성, 골라서 발전 |
+| `/qa` | URL 주면 실제 브라우저로 앱 테스트 |
+| `/qa-only` | 코드 수정 없이 버그 리포트만 |
+| `/retro` | 주간 회고 — 커밋/라인수 통계 자동 |
+| `/browse` | 실제 브라우저로 웹 탐색 |
+
+예시:
+```
+/office-hours
+"고객 불만 접수를 카카오톡으로 받는데 응답이 너무 느려요.
+AI로 자동 응답하는 걸 만들고 싶어요."
+→ 6개 질문으로 진짜 문제를 파고들고 기획서 작성
+```
+
+---
+
 ## 운전선생 팀 역할별 추천
 
 | 역할 | 먼저 설치할 것 | 다음에 |
