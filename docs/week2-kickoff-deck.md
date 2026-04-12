@@ -33,23 +33,33 @@
 **화면**: "지난주에 뭘 해봤나요?" + 추천 도구
 
 **말할 것**:
-- "각자 3분씩 발표합니다."
+- "각자 2분씩 발표합니다. 타이머 켤게요."
 - "CLAUDE.md 만든 사람, /think-deeper 써본 사람, MCP로 뭔가 한 사람, 스킬 만든 사람."
 - "잘 됐든 안 됐든 다 OK. 핵심은 서로 보면서 '아 저렇게도 되는구나' 아이디어를 얻는 것."
 
-> 25분. 7명 x 3분 = 21분 + 리액션/질문.
-
-발표 끝나면 추천 도구 소개 (5분):
-- "다른 사람들이 많이 쓰는 것도 소개합니다."
-- **Anthropic 공식 직무별 플러그인**: customer-support(CS), operations(운영), productivity(전원), data(데이터 분석), product-management(기획)
-- **humanizer**: "AI가 쓴 글에서 AI 냄새 제거. CS 답변에 유용."
-- **brand-voice**: "브랜드 톤앤매너를 추출해서 모든 글에 강제 적용."
-- "설치법: `claude plugin marketplace add anthropics/knowledge-work-plugins`"
-- "관심 있으면 나중에 설치해보세요."
+> 20분. 7명 x 2분 = 14분 + 리액션/질문 6분. 타이머 필수.
 
 ---
 
-## Slide 4: Git 최소 생존 키트
+## Slide 4: 추천 도구
+
+**화면**: 역할별 추천 도구 테이블
+
+**말할 것**:
+- "다른 사람들이 많이 쓰는 도구를 소개합니다. 자기 역할 것만 보세요."
+- CS → customer-support
+- 운영 → operations
+- 마케팅 → compounding-marketing + claude-rank
+- 기획 → product-management + data
+- 전원 → productivity
+- "설치: `claude plugin marketplace add anthropics/knowledge-work-plugins`"
+- "지금 안 해도 돼요. 나중에 복습 스킬(/day2-practice)에서 설치 가이드해줍니다."
+
+> 5분. 슬라이드 보여주고 간단 설명만. 설치는 나중에.
+
+---
+
+## Slide 5: Git 최소 생존 키트
 
 **화면**: clone / pull / add + commit + push
 
@@ -66,7 +76,7 @@
 
 ---
 
-## Slide 5: 페어 실습
+## Slide 6: 페어 실습
 
 **화면**: "짝지어서 회사 문제 하나를 AI로 풀기"
 
@@ -83,10 +93,12 @@
 
 > 60분. 승아 + 멘토가 돌아다니면서 도와줌.
 > "뭘 해야 할지 모르겠다"는 팀이 있으면 고민 잡아주기.
+> push 막히면? "Claude한테 'git push 해줘'라고 시키거나, 파일을 슬랙에 공유도 OK."
+> 짝 구성: 승아가 사전에 정해둔다 (비슷한 역할끼리 or 다른 역할끼리).
 
 ---
 
-## Slide 6: 숙제 + 클로징
+## Slide 7: 숙제 + 클로징
 
 **화면**: 숙제 + 클로징
 
@@ -94,4 +106,5 @@
 - "숙제 2개입니다."
 - "하나, **OpenClaw 셋업.** 다음 주에 '항상 켜진 AI'를 합니다. Telegram이나 Discord에서 AI한테 메시지로 업무 요청하는 거예요. 미리 셋업해오세요."
 - "둘, **오늘 못 다한 문제 마저 풀기.** 짝이랑 시간 잡아서 마무리하거나, 혼자 이어서 해보세요. 결과를 슬랙에."
+- "그리고 — 다음 주에 **Zeude**로 여러분의 AI 사용 데이터를 같이 봅니다. 누가 얼마나 쓰는지, 어떤 스킬이 인기인지."
 - "마지막 주에 선언합니다 — '나는 매일 이걸 AI한테 시킨다.' 오늘 같이 푼 게 그 루틴의 시작입니다."
