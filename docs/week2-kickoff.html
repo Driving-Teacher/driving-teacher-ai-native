@@ -428,12 +428,12 @@
     <p class="dim reveal reveal-delay-4">지금 설치 안 해도 돼요. <span class="mono accent2">/day2-practice</span>에서 가이드해줍니다.</p>
   </div>
 
-  <!-- ═══ 7. Git 교육 ═══ -->
-  <div class="slide scrollable">
+  <!-- ═══ 7. Git 교육 — 명령어 ═══ -->
+  <div class="slide">
     <div class="tag reveal"><span class="num">07</span><span class="sep">—</span><span class="label">Git</span></div>
     <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">Git 최소 생존 키트</h2>
     <div class="spacer-sm"></div>
-    <p class="dim reveal reveal-delay-2">노션이 문서를 저장하는 곳이면, Git은 코드를 저장하는 곳. 스킬을 올리면 팀 전원이 씁니다.</p>
+    <p class="dim reveal reveal-delay-2">노션 = 문서 저장소. Git = 코드 저장소. 스킬을 올리면 팀 전원이 씁니다.</p>
     <div class="spacer-sm"></div>
     <div class="terminal reveal reveal-delay-3">
       <div class="terminal-bar">
@@ -444,29 +444,40 @@
       <div class="terminal-body">
         <div><span class="terminal-comment"># 받기 (처음 한 번)</span></div>
         <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git clone https://github.com/Driving-Teacher/driving-teacher-ai-native.git</span></div>
-        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git clone https://github.com/Driving-Teacher/driving-teacher-knowledge-base.git</span></div>
-        <div style="margin-top:0.5rem;"><span class="terminal-comment"># 당기기 (최신으로)</span></div>
+        <div style="margin-top:0.5rem;"><span class="terminal-comment"># 당기기 → 올리기 (3줄 세트)</span></div>
         <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git pull</span></div>
-        <div style="margin-top:0.5rem;"><span class="terminal-comment"># 올리기 (3줄 세트)</span></div>
-        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git add .</span></div>
-        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git commit -m "메시지"</span></div>
-        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git push</span><span class="terminal-cursor"></span></div>
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git add . && git commit -m "메시지" && git push</span><span class="terminal-cursor"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 8. Git 교육 — 부딪힐 것들 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">08</span><span class="sep">—</span><span class="label">Git — 부딪힐 것들</span></div>
+    <ul class="hierarchy reveal reveal-delay-1">
+      <li><span class="accent bold">Permission denied</span> → <span class="mono">gh auth login</span></li>
+      <li><span class="accent bold">충돌</span> → git pull 하고 다시 push</li>
+      <li><span class="accent bold">안 되면</span> → Claude한테 "git push 해줘"</li>
+    </ul>
+    <div class="spacer-sm"></div>
+    <div class="terminal reveal reveal-delay-2">
+      <div class="terminal-bar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+      </div>
+      <div class="terminal-body">
+        <div><span class="terminal-comment"># Knowledge Base도 받기</span></div>
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git clone https://github.com/Driving-Teacher/driving-teacher-knowledge-base.git</span></div>
       </div>
     </div>
     <div class="spacer-sm"></div>
-    <h3 class="reveal reveal-delay-4">부딪힐 것들</h3>
-    <ul class="hierarchy dim reveal reveal-delay-4">
-      <li><span class="bold" style="color:var(--fg);">Permission denied</span> → <span class="mono">gh auth login</span></li>
-      <li><span class="bold" style="color:var(--fg);">충돌</span> → git pull 하고 다시 push</li>
-      <li><span class="bold" style="color:var(--fg);">안 되면</span> → Claude한테 "git push 해줘"</li>
-    </ul>
-    <div class="spacer-sm"></div>
-    <p class="accent reveal reveal-delay-5" style="font-weight:700;">모르면 Claude한테 물어보세요. Git 명령어도 Claude가 다 알아요.</p>
+    <p class="accent reveal reveal-delay-3" style="font-weight:700;">모르면 Claude한테 물어보세요. Git도 Claude가 다 알아요.</p>
   </div>
 
-  <!-- ═══ 8. 페어 실습 — 팀 + 흐름 ═══ -->
+  <!-- ═══ 9. 페어 실습 — 팀 + 흐름 ═══ -->
   <div class="slide">
-    <div class="tag reveal"><span class="num">08</span><span class="sep">—</span><span class="label">페어 실습</span></div>
+    <div class="tag reveal"><span class="num">09</span><span class="sep">—</span><span class="label">페어 실습</span></div>
     <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">짝지어서 회사 문제 하나를 AI로</h2>
     <div class="spacer-sm"></div>
     <div class="big-number reveal reveal-delay-2">60<span style="font-size:0.4em; color:var(--dim);">min</span></div>
@@ -484,9 +495,9 @@
     </ul>
   </div>
 
-  <!-- ═══ 9. 페어 실습 — 예시 + KB ═══ -->
+  <!-- ═══ 10. 페어 실습 — 예시 + KB ═══ -->
   <div class="slide">
-    <div class="tag reveal"><span class="num">09</span><span class="sep">—</span><span class="label">페어 실습 — 이렇게</span></div>
+    <div class="tag reveal"><span class="num">10</span><span class="sep">—</span><span class="label">페어 실습 — 이렇게</span></div>
     <h3 class="reveal reveal-delay-1" style="font-size:clamp(1.3rem,2.5vw,2.2rem);">예시</h3>
     <ul class="hierarchy dim reveal reveal-delay-2">
       <li>CS FAQ: A는 문의 패턴 분석, B는 빠진 항목 찾기</li>
@@ -512,9 +523,9 @@
     <p class="dim reveal reveal-delay-4">push 막히면? Claude한테 물어보거나, 파일을 슬랙에 공유도 OK</p>
   </div>
 
-  <!-- ═══ 10. 숙제 + 클로징 ═══ -->
+  <!-- ═══ 11. 숙제 + 클로징 ═══ -->
   <div class="slide scrollable">
-    <div class="tag reveal"><span class="num">10</span><span class="sep">—</span><span class="label">클로징</span></div>
+    <div class="tag reveal"><span class="num">11</span><span class="sep">—</span><span class="label">클로징</span></div>
     <div class="spacer-sm"></div>
     <p class="dim reveal">매번 터미널 열고 claude 치실 건가요? 회의 중에? 출퇴근길에?</p>
     <div class="spacer-sm"></div>
