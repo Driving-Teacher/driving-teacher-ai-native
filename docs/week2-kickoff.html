@@ -370,12 +370,63 @@
     <div class="spacer-sm"></div>
     <p class="accent reveal reveal-delay-4" style="font-weight:700;"><span class="mono">/tips</span> 치면 더 많은 팁</p>
     <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-4" style="font-size:0.95rem;"><span class="accent bold">내 팁도 공유하세요 — 팀 집단지성</span><br>범용 Claude 팁 → <span class="mono accent2">docs/tips.md</span>에 add + push (ai-native, public)<br>회사 업무 팁 → <span class="mono accent2">knowledge-base/tips/</span>에 add + push (private)<br>Claude한테 <span class="mono">"이 팁을 적절한 곳에 추가해줘"</span> 하면 알아서 정리</p>
+    <div class="spacer-sm"></div>
     <p class="dim reveal reveal-delay-5">그리고 제일 중요한 건 — <span class="accent">스스로 계속 찾는 것.</span><br>이걸 말하는 이 순간에도 더 좋은 도구가 나오고 있어요.<br>웹 검색으로 끊임없이 내가 필요한 툴을 찾아오세요.</p>
+    <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-6" style="font-size:0.95rem;"><span class="accent bold">참고할 만한 사이트</span> (개발/비개발 모두):</p>
+    <ul class="hierarchy reveal reveal-delay-6" style="font-size:0.95rem;">
+      <li><a href="https://www.lennysnewsletter.com/p/everyone-should-be-using-claude-code" target="_blank" rel="noopener" class="mono accent2" style="text-decoration:underline;">lennysnewsletter.com</a> <span class="dim">· "Everyone should be using Claude Code more" — 실제 사용자들 활용 사례 15개</span></li>
+      <li><a href="https://newsletter.mkt1.co/p/real-marketers-claude-code-builds" target="_blank" rel="noopener" class="mono accent2" style="text-decoration:underline;">newsletter.mkt1.co</a> <span class="dim">· 마케터들이 만든 스킬 예시</span></li>
+      <li><a href="https://www.animalz.co/blog/claude-code" target="_blank" rel="noopener" class="mono accent2" style="text-decoration:underline;">animalz.co/blog/claude-code</a> <span class="dim">· 콘텐츠 마케터용 활용법</span></li>
+      <li><a href="https://github.com/hesreallyhim/awesome-claude-code" target="_blank" rel="noopener" class="mono accent2" style="text-decoration:underline;">github.com/hesreallyhim/awesome-claude-code</a> <span class="dim">· 오픈소스 플러그인/스킬 모음</span></li>
+      <li class="last"><a href="https://github.com/ykdojo/claude-code-tips" target="_blank" rel="noopener" class="mono accent2" style="text-decoration:underline;">github.com/ykdojo/claude-code-tips</a> <span class="dim">· 45 Tips 모음</span></li>
+    </ul>
   </div>
 
-  <!-- ═══ 5. 스킬 만들기 ═══ -->
+  <!-- ═══ 5. 스킬/플러그인 찾기 ═══ -->
   <div class="slide scrollable">
-    <div class="tag reveal"><span class="num">05</span><span class="sep">—</span><span class="label">스킬 만들기</span></div>
+    <div class="tag reveal"><span class="num">05</span><span class="sep">—</span><span class="label">스킬·플러그인 찾기</span></div>
+    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">이미 만들어진 걸 먼저 찾아보세요</h2>
+    <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-2">만들기 전에 — 남이 이미 만든 걸 검색. 수천 개가 공개돼 있어요.</p>
+    <div class="spacer-sm"></div>
+
+    <p class="accent reveal reveal-delay-3" style="font-weight:700; font-size:0.95rem;">🏆 공식</p>
+    <ul class="hierarchy reveal reveal-delay-3" style="font-size:0.95rem;">
+      <li>Claude Code 안에서 <span class="mono accent2">/plugin</span> <span class="dim">· Anthropic 공식 마켓 (33 공식 + 68 파트너)</span></li>
+      <li class="last"><span class="mono accent2">knowledge-work-plugins</span> <span class="dim">· 마케팅·세일즈·HR 역할별 14개</span></li>
+    </ul>
+
+    <div class="spacer-sm"></div>
+    <p class="accent reveal reveal-delay-4" style="font-weight:700; font-size:0.95rem;">🌟 커뮤니티 큐레이션 (추천)</p>
+    <ul class="hierarchy reveal reveal-delay-4" style="font-size:0.95rem;">
+      <li><a href="https://awesome-skills.com/" target="_blank" rel="noopener" class="mono accent2" style="text-decoration:underline;">awesome-skills.com</a> <span class="dim">· 1,030+ 스킬 + 보안 리뷰 배지 ⭐ 비개발자 친화</span></li>
+      <li><a href="https://github.com/travisvn/awesome-claude-skills" target="_blank" rel="noopener" class="mono accent2" style="text-decoration:underline;">github.com/travisvn/awesome-claude-skills</a> <span class="dim">· 카테고리 정리 (8.7k ⭐)</span></li>
+      <li class="last"><a href="https://github.com/ComposioHQ/awesome-claude-skills" target="_blank" rel="noopener" class="mono accent2" style="text-decoration:underline;">ComposioHQ/awesome-claude-skills</a> <span class="dim">· Slack·Notion·Trello 등 1000+ 서비스 연동</span></li>
+    </ul>
+
+    <div class="spacer-sm"></div>
+    <p class="accent reveal reveal-delay-5" style="font-weight:700; font-size:0.95rem;">🔍 검색/인덱스</p>
+    <ul class="hierarchy reveal reveal-delay-5" style="font-size:0.95rem;">
+      <li><a href="https://skills.sh" target="_blank" rel="noopener" class="mono accent2" style="text-decoration:underline;">skills.sh</a> <span class="dim">· Vercel 운영 검색 엔진</span></li>
+      <li class="last"><a href="https://claudepluginhub.com" target="_blank" rel="noopener" class="mono accent2" style="text-decoration:underline;">claudepluginhub.com</a> <span class="dim">· 14,000+ 자동 인덱스</span></li>
+    </ul>
+
+    <div class="spacer-sm"></div>
+    <p class="accent reveal reveal-delay-6" style="font-weight:700; font-size:0.95rem;">📦 대표 모음 팩</p>
+    <ul class="hierarchy reveal reveal-delay-6" style="font-size:0.95rem;">
+      <li><a href="https://github.com/obra/superpowers" target="_blank" rel="noopener" class="mono accent2" style="text-decoration:underline;">superpowers</a> <span class="dim">· 개발 전 과정 (브레인스토밍→TDD→리뷰) 40.9k ⭐</span></li>
+      <li class="last"><a href="https://github.com/garrytan/gstack" target="_blank" rel="noopener" class="mono accent2" style="text-decoration:underline;">gstack</a> <span class="dim">· YC CEO Garry Tan의 28개 명령어 (CEO·QA·엔지니어 모드)</span></li>
+    </ul>
+
+    <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-7" style="font-size:0.9rem;">⚠️ 플러그인은 내 컴퓨터에서 코드 실행 가능. <span class="accent">신뢰하는 곳에서만 설치.</span><br>awesome-skills.com에 보안 배지가 있어 초보자에게 가장 안전</p>
+  </div>
+
+  <!-- ═══ 6. 스킬 만들기 ═══ -->
+  <div class="slide scrollable">
+    <div class="tag reveal"><span class="num">06</span><span class="sep">—</span><span class="label">스킬 만들기</span></div>
     <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">스킬은 이렇게 만듭니다</h2>
     <div class="spacer-sm"></div>
     <div class="terminal reveal reveal-delay-2">
@@ -400,18 +451,18 @@
     <p class="accent reveal reveal-delay-4" style="font-weight:700;">만든 스킬은 git push하면 팀 전원이 씁니다</p>
   </div>
 
-  <!-- ═══ 6. 추천 도구 ═══ -->
+  <!-- ═══ 7. 추천 도구 ═══ -->
   <div class="slide scrollable">
-    <div class="tag reveal"><span class="num">06</span><span class="sep">—</span><span class="label">추천 도구</span></div>
+    <div class="tag reveal"><span class="num">07</span><span class="sep">—</span><span class="label">추천 도구</span></div>
     <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">역할별 추천 도구</h2>
     <div class="spacer-sm"></div>
     <ul class="hierarchy reveal reveal-delay-2">
-      <li><span class="accent bold">CS</span> — <span class="mono dim">customer-support</span></li>
-      <li><span class="accent bold">운영</span> — <span class="mono dim">operations</span></li>
-      <li><span class="accent bold">마케팅</span> — <span class="mono dim">compounding-marketing</span> + <span class="mono dim">claude-rank</span></li>
-      <li><span class="accent bold">기획</span> — <span class="mono dim">product-management</span> + <span class="mono dim">data</span></li>
-      <li><span class="accent bold">전원</span> — <span class="mono dim">productivity</span></li>
-      <li class="last"><span class="accent bold">가상 팀</span> — <span class="mono dim">gstack</span> (YC 대표가 만든 30개+ 도구. /office-hours, /qa 등)</li>
+      <li><span class="accent bold">CS</span> — <span class="mono dim">customer-support</span> <span class="dim">· 티켓 분석, 답변 초안</span></li>
+      <li><span class="accent bold">운영</span> — <span class="mono dim">operations</span> <span class="dim">· SOP, 체크리스트 자동화</span></li>
+      <li><span class="accent bold">마케팅</span> — <span class="mono dim">compounding-marketing</span> <span class="dim">· 콘텐츠 루프/리서치</span></li>
+      <li><span class="accent bold">기획</span> — <span class="mono dim">product-management</span> <span class="dim">· PRD, 인터뷰 정리</span></li>
+      <li><span class="accent bold">전원</span> — <span class="mono dim">productivity</span> <span class="dim">· 노트/회의록/메일 초안</span></li>
+      <li class="last"><span class="accent bold">가상 팀</span> — <span class="mono dim">gstack</span> <span class="dim">· /office-hours, /qa 등 30+ 명령어</span></li>
     </ul>
     <div class="spacer-sm"></div>
     <div class="terminal reveal reveal-delay-3">
@@ -428,12 +479,12 @@
     <p class="dim reveal reveal-delay-4">지금 설치 안 해도 돼요. <span class="mono accent2">/day2-practice</span>에서 가이드해줍니다.</p>
   </div>
 
-  <!-- ═══ 7. Git 교육 — 명령어 ═══ -->
+  <!-- ═══ 8. Git 교육 — 명령어 ═══ -->
   <div class="slide">
-    <div class="tag reveal"><span class="num">07</span><span class="sep">—</span><span class="label">Git</span></div>
+    <div class="tag reveal"><span class="num">08</span><span class="sep">—</span><span class="label">Git</span></div>
     <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">Git 최소 생존 키트</h2>
     <div class="spacer-sm"></div>
-    <p class="dim reveal reveal-delay-2">노션 = 문서 저장소. Git = 코드 저장소.<br>누가 스킬을 push하면 → 다른 사람이 git pull하면 → <span class="accent">내 폴더에도 자동으로 들어옴.</span></p>
+    <p class="dim reveal reveal-delay-2">Git = 공동 폴더.<br>내가 만든 업무 스킬을 <span class="accent">knowledge-base</span>에 push →<br>다른 팀원이 pull → <span class="accent">그 사람 claude도 내 스킬 사용 가능</span></p>
     <div class="spacer-sm"></div>
     <div class="terminal reveal reveal-delay-3">
       <div class="terminal-bar">
@@ -442,8 +493,8 @@
         <div class="terminal-dot green"></div>
       </div>
       <div class="terminal-body">
-        <div><span class="terminal-comment"># 받기 (처음 한 번)</span></div>
-        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git clone https://github.com/Driving-Teacher/driving-teacher-ai-native.git</span></div>
+        <div><span class="terminal-comment"># 업무 스킬·도메인 지식 받기 (처음 한 번)</span></div>
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git clone https://github.com/Driving-Teacher/driving-teacher-knowledge-base.git</span></div>
         <div style="margin-top:0.5rem;"><span class="terminal-comment"># 당기기 → 올리기 (3줄 세트)</span></div>
         <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git pull</span></div>
         <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git add . && git commit -m "메시지" && git push</span><span class="terminal-cursor"></span></div>
@@ -451,33 +502,27 @@
     </div>
   </div>
 
-  <!-- ═══ 8. Git 교육 — 부딪힐 것들 ═══ -->
+  <!-- ═══ 9. Git 교육 — 부딪힐 것들 ═══ -->
   <div class="slide">
-    <div class="tag reveal"><span class="num">08</span><span class="sep">—</span><span class="label">Git — 부딪힐 것들</span></div>
+    <div class="tag reveal"><span class="num">09</span><span class="sep">—</span><span class="label">Git — 부딪힐 것들</span></div>
     <ul class="hierarchy reveal reveal-delay-1">
       <li><span class="accent bold">Permission denied</span> → <span class="mono">gh auth login</span></li>
       <li><span class="accent bold">충돌</span> → git pull 하고 다시 push</li>
       <li><span class="accent bold">안 되면</span> → Claude한테 "git push 해줘"</li>
     </ul>
     <div class="spacer-sm"></div>
-    <div class="terminal reveal reveal-delay-2">
-      <div class="terminal-bar">
-        <div class="terminal-dot red"></div>
-        <div class="terminal-dot yellow"></div>
-        <div class="terminal-dot green"></div>
-      </div>
-      <div class="terminal-body">
-        <div><span class="terminal-comment"># Knowledge Base도 받기</span></div>
-        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git clone https://github.com/Driving-Teacher/driving-teacher-knowledge-base.git</span></div>
-      </div>
-    </div>
+    <p class="dim reveal reveal-delay-2" style="font-size:0.95rem;"><span class="accent bold">두 레포 구분</span></p>
+    <ul class="hierarchy dim reveal reveal-delay-2" style="font-size:0.95rem;">
+      <li><span class="mono accent2">driving-teacher-ai-native</span> <span class="dim">· public · 커리큘럼 스킬 (day1, day2…)</span></li>
+      <li class="last"><span class="mono accent2">driving-teacher-knowledge-base</span> <span class="dim">· private · 업무 스킬 + 도메인 지식 ← 여기에 push</span></li>
+    </ul>
     <div class="spacer-sm"></div>
     <p class="accent reveal reveal-delay-3" style="font-weight:700;">모르면 Claude한테 물어보세요. Git도 Claude가 다 알아요.</p>
   </div>
 
-  <!-- ═══ 9. 페어 실습 — 팀 + 흐름 ═══ -->
+  <!-- ═══ 10. 페어 실습 — 팀 + 흐름 ═══ -->
   <div class="slide">
-    <div class="tag reveal"><span class="num">09</span><span class="sep">—</span><span class="label">페어 실습</span></div>
+    <div class="tag reveal"><span class="num">10</span><span class="sep">—</span><span class="label">페어 실습</span></div>
     <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">짝지어서 회사 문제 하나를 AI로</h2>
     <div class="spacer-sm"></div>
     <div class="big-number reveal reveal-delay-2">60<span style="font-size:0.4em; color:var(--dim);">min</span></div>
@@ -495,9 +540,9 @@
     </ul>
   </div>
 
-  <!-- ═══ 10. 페어 실습 — 예시 + KB ═══ -->
+  <!-- ═══ 11. 페어 실습 — 예시 + KB ═══ -->
   <div class="slide">
-    <div class="tag reveal"><span class="num">10</span><span class="sep">—</span><span class="label">페어 실습 — 이렇게</span></div>
+    <div class="tag reveal"><span class="num">11</span><span class="sep">—</span><span class="label">페어 실습 — 이렇게</span></div>
     <h3 class="reveal reveal-delay-1" style="font-size:clamp(1.3rem,2.5vw,2.2rem);">예시</h3>
     <ul class="hierarchy dim reveal reveal-delay-2">
       <li>CS FAQ: A는 문의 패턴 분석, B는 빠진 항목 찾기</li>
@@ -523,9 +568,9 @@
     <p class="dim reveal reveal-delay-4">push 막히면? Claude한테 물어보거나, 파일을 슬랙에 공유도 OK</p>
   </div>
 
-  <!-- ═══ 11. 숙제 + 클로징 ═══ -->
+  <!-- ═══ 12. 숙제 + 클로징 ═══ -->
   <div class="slide scrollable">
-    <div class="tag reveal"><span class="num">11</span><span class="sep">—</span><span class="label">클로징</span></div>
+    <div class="tag reveal"><span class="num">12</span><span class="sep">—</span><span class="label">클로징 → Week 3</span></div>
     <div class="spacer-sm"></div>
     <p class="dim reveal">매번 터미널 열고 claude 치실 건가요? 회의 중에? 출퇴근길에?</p>
     <div class="spacer-sm"></div>
@@ -538,16 +583,16 @@
     <p class="accent reveal reveal-delay-2" style="font-weight:700; font-size:clamp(1.1rem,1.8vw,1.5rem);">오늘: 사람이 시켜서. 다음 주: 사람이 안 시켜도.</p>
     <div class="spacer-sm"></div>
     <ul class="hierarchy reveal reveal-delay-3">
-      <li><span class="bold">1. OpenClaw 셋업 (필수)</span> — Week 3 사전 준비</li>
-      <li><span class="bold">2. 못 다한 문제 마저 풀기 (필수)</span> — 결과를 슬랙에</li>
+      <li><span class="bold">숙제 1. 남이 만든 스킬/플러그인 1개 깔아서 써보기 (필수)</span> <span class="dim">— awesome-skills.com에서 골라서. "이거 써봤다" 슬랙에 공유</span></li>
+      <li><span class="bold">숙제 2. 못 다한 문제 마저 풀기 (필수)</span> <span class="dim">— 결과를 슬랙에</span></li>
     </ul>
     <div class="spacer-sm"></div>
-    <p class="dim reveal reveal-delay-4">다음 주 팀도 오늘 짝 그대로. 뭘 자동화할지 아이디어 생각해오세요.</p>
-    <p class="dim reveal reveal-delay-4">다음 주에 Zeude로 AI 사용 데이터를 같이 봅니다.</p>
+    <p class="accent reveal reveal-delay-4" style="font-weight:700; font-size:1rem;">📌 Week 3 예고 — 내 AI "팀" 만들기</p>
+    <p class="dim reveal reveal-delay-4" style="font-size:0.95rem;">메인 에이전트 + 서브 에이전트가 서로 일을 나눠 하는 구조.<br>궁금하면 Claude한테 <span class="mono">"멀티 에이전트가 뭐야? Task 도구 한번 보여줘"</span> 한 번만 쳐보세요.<br>Zeude로 이번 주 AI 사용 데이터도 같이 봅니다.</p>
     <div class="spacer"></div>
-    <div class="big-quote reveal reveal-delay-5">나는 매일 이걸 AI한테 시킨다</div>
+    <div class="big-quote reveal reveal-delay-6">나는 매일 이걸 AI한테 시킨다</div>
     <div class="spacer-sm"></div>
-    <p class="dim reveal reveal-delay-6">마지막 주에 선언합니다. 오늘이 그 루틴의 시작입니다.</p>
+    <p class="dim reveal reveal-delay-7">마지막 주에 선언합니다. 오늘이 그 루틴의 시작입니다.</p>
   </div>
 
 </div>
@@ -594,6 +639,7 @@
   });
 
   deck.addEventListener('click', (e) => {
+    if (e.target.closest('a')) return;
     if (e.clientX > window.innerWidth / 2) goTo(current + 1);
     else goTo(current - 1);
   });
