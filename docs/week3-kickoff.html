@@ -398,7 +398,11 @@
     </ul>
     <div class="spacer-sm"></div>
     <p class="accent reveal reveal-delay-4" style="font-weight:700;">못 한 것도 OK. 막힌 이야기가 가장 좋은 학습입니다.</p>
-    <p class="dim reveal reveal-delay-4">화면 공유하면서, 서로 보면서 아이디어 얻는 시간.</p>
+    <div class="spacer-sm"></div>
+    <div class="terminal reveal reveal-delay-4" style="padding:1.2rem;">
+      <p style="color:var(--accent2);font-weight:700;margin-bottom:0.5rem;">발표 후 투표</p>
+      <p style="color:var(--dim);font-size:0.9rem;">발표 끝나면 슬랙에서 이모지 투표 — 가장 인상적인 팀에 한 표!</p>
+    </div>
   </div>
 
   <!-- 4. Zeude Introduction -->
@@ -427,6 +431,8 @@
         <div><span class="terminal-comment"># Zeude 셋업 — Claude한테:</span></div>
         <div><span class="terminal-prompt">&gt;</span> <span class="terminal-cmd">/zeude-setup</span><span class="terminal-cursor"></span></div>
         <div style="margin-top:0.5rem;"><span class="terminal-comment"># shim 설치 + 텔레메트리 + 대시보드 접속까지 한번에</span></div>
+        <div style="margin-top:1rem;"><span class="terminal-comment"># 셋업 후 대시보드 열기:</span></div>
+        <div><span class="terminal-prompt">&gt;</span> <span class="terminal-cmd">/zeude</span></div>
       </div>
     </div>
     <div class="spacer-sm"></div>
@@ -609,6 +615,11 @@
 
     <div class="spacer-sm"></div>
     <p class="accent reveal reveal-delay-6" style="font-weight:700;">내 직무에 맞는 메시지를 슬랙에서 바로 보내보세요.</p>
+    <div class="spacer-sm"></div>
+    <div class="terminal reveal reveal-delay-6" style="padding:0.8rem 1.2rem;">
+      <div><span class="terminal-comment"># 더 많은 유스케이스 보기 (50개+):</span></div>
+      <div><span class="terminal-prompt">&gt;</span> <span class="terminal-cmd">/hermes-usecases</span></div>
+    </div>
   </div>
 
   <!-- 9. Cron / Automation -->
