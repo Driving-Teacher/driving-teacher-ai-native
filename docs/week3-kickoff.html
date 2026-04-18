@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Native Camp — Week 3 Kickoff</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+  @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #1C1C1C;
+    --fg: #F6F6F3;
+    --accent: #C89BFF;
+    --accent2: #FFD547;
+    --red: #FF7439;
+    --green: #1AC569;
+    --dim: #6B6B6B;
+    --surface: #2A2929;
+    --purple-deep: #7B5EA7;
+    --gold: #FFD547;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Pretendard Variable', 'Pretendard', sans-serif;
+    --display: 'Syncopate', sans-serif;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    overflow: hidden;
+  }
+
+  .deck { width: 100vw; height: 100vh; position: relative; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8vh 10vw;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide.active .reveal { animation: slideUp 0.7s ease forwards; }
+  .slide.active .reveal-delay-1 { animation-delay: 0.15s; }
+  .slide.active .reveal-delay-2 { animation-delay: 0.3s; }
+  .slide.active .reveal-delay-3 { animation-delay: 0.45s; }
+  .slide.active .reveal-delay-4 { animation-delay: 0.6s; }
+  .slide.active .reveal-delay-5 { animation-delay: 0.75s; }
+  .slide.active .reveal-delay-6 { animation-delay: 0.9s; }
+  .slide.active .reveal-delay-7 { animation-delay: 1.05s; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal { opacity: 0; }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 6vw, 6.5rem);
+    font-weight: 700; text-transform: uppercase;
+    line-height: 1.05; letter-spacing: -0.03em;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4.5vw, 5rem);
+    font-weight: 900; line-height: 1.15; letter-spacing: -0.02em;
+  }
+
+  h3 {
+    font-size: clamp(1.2rem, 2vw, 2.2rem);
+    font-weight: 700; line-height: 1.3;
+  }
+
+  p, li {
+    font-size: clamp(0.9rem, 1.5vw, 1.35rem);
+    line-height: 1.6; font-weight: 300;
+  }
+
+  .accent { color: var(--accent); }
+  .accent2 { color: var(--accent2); }
+  .dim { color: var(--dim); }
+  .bold { font-weight: 700; }
+  .mono { font-family: var(--mono); }
+
+  .big-quote {
+    font-family: var(--sans);
+    font-size: clamp(1.8rem, 4vw, 4.5rem);
+    font-weight: 800; line-height: 1.3; max-width: 90%;
+  }
+
+  .big-quote::before {
+    content: '\201C'; color: var(--accent);
+    font-size: 1.5em; line-height: 0;
+    vertical-align: -0.15em; margin-right: 0.05em;
+  }
+
+  .big-quote::after {
+    content: '\201D'; color: var(--accent);
+    font-size: 1.5em; line-height: 0;
+    vertical-align: -0.15em; margin-left: 0.05em;
+  }
+
+  .big-number {
+    font-family: var(--display);
+    font-size: clamp(4rem, 10vw, 10rem);
+    font-weight: 700; color: var(--accent);
+    line-height: 1;
+  }
+
+  /* ── Stage Flow ── */
+  .stage-flow { display: flex; flex-direction: column; gap: 0; }
+
+  .stage {
+    display: flex; align-items: flex-start; gap: 2rem;
+    padding: 1.5rem 0; border-left: 3px solid var(--dim);
+    padding-left: 2rem; position: relative;
+  }
+
+  .stage::before {
+    content: ''; position: absolute; left: -8px; top: 1.8rem;
+    width: 13px; height: 13px; border-radius: 50%;
+    background: var(--dim);
+  }
+
+  .stage.current { border-left-color: var(--accent); }
+
+  .stage.current::before {
+    background: var(--accent);
+    box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(200, 155, 255, 0.3);
+  }
+
+  .stage-num {
+    font-family: var(--mono);
+    font-size: clamp(0.8rem, 1.2vw, 1.1rem);
+    color: var(--dim); min-width: 2rem; padding-top: 0.2rem;
+  }
+
+  .stage.current .stage-num { color: var(--accent); }
+
+  .stage-content h3 {
+    font-size: clamp(1.1rem, 2vw, 1.8rem); margin-bottom: 0.3rem;
+  }
+
+  .stage-content p {
+    font-size: clamp(0.85rem, 1.3vw, 1.15rem);
+    color: var(--dim); font-weight: 300;
+  }
+
+  .stage.current .stage-content h3 { color: var(--fg); }
+  .stage.current .stage-content p { color: #999; }
+  .stage:not(.current) .stage-content h3 { color: var(--dim); }
+
+  /* ── Terminal ── */
+  .terminal {
+    background: #1a1a1a; border: 1px solid #333;
+    border-radius: 12px; padding: 0; max-width: 100%; width: 100%;
+    overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+  }
+
+  .terminal-bar {
+    background: #2a2a2a; padding: 0.8rem 1.2rem;
+    display: flex; gap: 0.5rem; align-items: center;
+  }
+
+  .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .terminal-dot.red { background: #ff5f57; }
+  .terminal-dot.yellow { background: #ffbd2e; }
+  .terminal-dot.green { background: #28ca41; }
+
+  .terminal-body {
+    padding: 1.2rem 1.5rem 1.5rem; font-family: var(--mono);
+    font-size: clamp(0.8rem, 1.2vw, 1rem); line-height: 1.8;
+  }
+
+  .terminal-prompt { color: var(--accent); }
+  .terminal-cmd { color: var(--fg); }
+  .terminal-comment { color: var(--dim); }
+
+  .terminal-cursor {
+    display: inline-block; width: 10px; height: 1.3em;
+    background: var(--fg); vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* ── Hierarchy List ── */
+  .hierarchy { list-style: none; margin: 0.8rem 0; }
+
+  .hierarchy li {
+    padding: 0.4rem 0; padding-left: 2rem; position: relative;
+    font-size: clamp(0.9rem, 1.4vw, 1.25rem);
+  }
+
+  .hierarchy li::before {
+    content: ''; position: absolute; left: 0; top: 50%;
+    width: 8px; height: 2px; background: var(--accent);
+  }
+
+  .hierarchy li.last::before {
+    background: var(--accent2); width: 12px; height: 3px;
+  }
+
+  /* ── Comparison Table ── */
+  .compare-table {
+    width: 100%; border-collapse: collapse; margin: 0.5rem 0;
+  }
+
+  .compare-table th, .compare-table td {
+    padding: 0.7rem 1rem; text-align: left;
+    font-size: clamp(0.8rem, 1.2vw, 1.05rem);
+    border-bottom: 1px solid #333;
+  }
+
+  .compare-table th {
+    font-weight: 700; color: var(--accent);
+    font-size: clamp(0.85rem, 1.3vw, 1.1rem);
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .compare-table td { color: #bbb; font-weight: 300; }
+  .compare-table td:first-child { color: var(--dim); font-family: var(--mono); font-size: 0.9em; }
+
+  /* ── Slack Bubble ── */
+  .slack-msg {
+    background: #2C2C3A; border-radius: 10px; padding: 1rem 1.3rem;
+    margin: 0.4rem 0; border-left: 3px solid var(--accent);
+  }
+
+  .slack-msg .sender {
+    font-weight: 700; font-size: 0.9rem; color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+
+  .slack-msg .body {
+    font-size: clamp(0.85rem, 1.2vw, 1.05rem);
+    color: #ccc; line-height: 1.5;
+  }
+
+  /* ── Progress + Counter ── */
+  .progress {
+    position: fixed; bottom: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 0.4s ease; z-index: 100;
+  }
+
+  .counter {
+    position: fixed; bottom: 2rem; right: 3rem;
+    font-family: var(--mono); font-size: 0.85rem;
+    color: var(--dim); z-index: 100;
+  }
+
+  .noise {
+    position: fixed; inset: 0; pointer-events: none; z-index: 99; opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .tag {
+    display: inline-block; font-family: var(--mono);
+    font-size: clamp(0.85rem, 1.2vw, 1.1rem); font-weight: 700;
+    letter-spacing: 0.05em; margin-bottom: 1.5rem;
+  }
+
+  .tag .num {
+    color: var(--accent);
+    margin-right: 0.3em;
+  }
+
+  .tag .sep {
+    color: var(--dim);
+    margin-right: 0.5em;
+  }
+
+  .tag .label {
+    color: #888;
+  }
+
+  .spacer { height: 1.5rem; }
+  .spacer-sm { height: 0.6rem; }
+
+  /* ── Scrollable slide ── */
+  .slide.scrollable {
+    overflow-y: auto;
+    justify-content: flex-start;
+    padding-top: 5vh;
+    padding-bottom: 4vh;
+  }
+
+  /* ── Glow effect for Hermes theme ── */
+  .glow-purple {
+    text-shadow: 0 0 30px rgba(200, 155, 255, 0.4), 0 0 60px rgba(200, 155, 255, 0.15);
+  }
+
+  .glow-gold {
+    text-shadow: 0 0 30px rgba(255, 213, 71, 0.4), 0 0 60px rgba(255, 213, 71, 0.15);
+  }
+
+  /* ── Badge ── */
+  .badge {
+    display: inline-block; padding: 0.25rem 0.8rem;
+    border-radius: 20px; font-size: 0.8rem; font-weight: 700;
+    margin-right: 0.5rem;
+  }
+
+  .badge-purple { background: rgba(200,155,255,0.15); color: var(--accent); border: 1px solid rgba(200,155,255,0.3); }
+  .badge-gold { background: rgba(255,213,71,0.15); color: var(--accent2); border: 1px solid rgba(255,213,71,0.3); }
+  .badge-green { background: rgba(26,197,105,0.15); color: var(--green); border: 1px solid rgba(26,197,105,0.3); }
+  .badge-red { background: rgba(255,116,57,0.15); color: var(--red); border: 1px solid rgba(255,116,57,0.3); }
+
+  @media (max-width: 768px) {
+    .slide { padding: 5vh 6vw; }
+    .stage { gap: 1rem; padding-left: 1.2rem; }
+    .terminal { max-width: 95vw; }
+    .compare-table th, .compare-table td { padding: 0.5rem 0.6rem; font-size: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+<div class="progress" id="progress"></div>
+<div class="counter" id="counter"></div>
+
+<div class="deck" id="deck">
+
+  <!-- 1. Title -->
+  <div class="slide active">
+    <div class="tag reveal"><span class="num">01</span><span class="sep">—</span><span class="label">Week 3 Kickoff</span></div>
+    <h1 class="reveal reveal-delay-1 glow-purple" style="font-size:clamp(2.2rem,5.5vw,5.5rem);">
+      <span class="accent">내 AI를</span><br>키우자
+    </h1>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-2" style="font-size:clamp(1.1rem,2.2vw,1.8rem); color:#888; font-weight:300;">
+      Week 3 — <span class="accent bold">Hermes Agent</span> + <span class="accent2 bold">Zeude</span>
+    </p>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-3 dim" style="font-size:clamp(0.9rem,1.5vw,1.2rem);">
+      터미널 밖으로. 슬랙에서. 자동으로. 쓸수록 나를 아는 AI.
+    </p>
+  </div>
+
+  <!-- 2. Agenda: 4 Blocks -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">02</span><span class="sep">—</span><span class="label">오늘 할 것</span></div>
+    <div class="spacer-sm"></div>
+    <div class="stage-flow">
+      <div class="stage current reveal">
+        <div class="stage-num" style="color:var(--accent);">01</div>
+        <div class="stage-content">
+          <h3>숙제 발표</h3>
+          <p>15분 — 3팀 x 5분</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-1">
+        <div class="stage-num">02</div>
+        <div class="stage-content">
+          <h3>Zeude 셋업</h3>
+          <p>15분 — 대시보드 연결</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-2">
+        <div class="stage-num">03</div>
+        <div class="stage-content">
+          <h3>Hermes 셋업</h3>
+          <p>30분 — 슬랙 봇 설치</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-3">
+        <div class="stage-num">04</div>
+        <div class="stage-content">
+          <h3>실전 활용</h3>
+          <p>50분 — 유스케이스 + 자동화 체험</p>
+        </div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <p class="dim reveal reveal-delay-4">2시간. 마무리 10분 포함.</p>
+  </div>
+
+  <!-- 3. Homework Presentation -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">03</span><span class="sep">—</span><span class="label">숙제 발표</span></div>
+    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">지난 한 주, 뭘 해봤나요?</h2>
+    <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-2">3팀 x 5분. 타이머 켤게요.</p>
+    <div class="spacer-sm"></div>
+    <ul class="hierarchy reveal reveal-delay-3">
+      <li><span class="accent bold">뭘 해봤는지</span> — 스킬 설치? 플러그인? 페어 실습 마무리?</li>
+      <li><span class="accent bold">뭘 배웠는지</span> — "이건 되더라" / "이건 안 되더라"</li>
+      <li class="last"><span class="accent bold">한 줄 느낌</span> — "생각보다 ___했다"</li>
+    </ul>
+    <div class="spacer-sm"></div>
+    <p class="accent reveal reveal-delay-4" style="font-weight:700;">못 한 것도 OK. 막힌 이야기가 가장 좋은 학습입니다.</p>
+    <p class="dim reveal reveal-delay-4">화면 공유하면서, 서로 보면서 아이디어 얻는 시간.</p>
+  </div>
+
+  <!-- 4. Zeude Introduction -->
+  <div class="slide scrollable">
+    <div class="tag reveal"><span class="num">04</span><span class="sep">—</span><span class="label">Zeude</span></div>
+    <h2 class="reveal reveal-delay-1 glow-gold" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">
+      <span class="accent2">Zeude</span> — 팀 AI 대시보드
+    </h2>
+    <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-2">"우리 팀이 AI를 얼마나, 어떻게 쓰고 있는지" 한눈에</p>
+    <div class="spacer-sm"></div>
+    <ul class="hierarchy reveal reveal-delay-3">
+      <li><span class="accent2 bold">리더보드</span> — 누가 가장 많이 쓰나? (건전한 경쟁)</li>
+      <li><span class="accent2 bold">스킬 통계</span> — 어떤 스킬이 가장 많이 쓰이나?</li>
+      <li><span class="accent2 bold">비용 추적</span> — 토큰/비용 추이, 팀 전체 &amp; 개인별</li>
+      <li class="last"><span class="accent2 bold">인사이트</span> — 사용 패턴에서 배우는 것들</li>
+    </ul>
+    <div class="spacer-sm"></div>
+    <div class="terminal reveal reveal-delay-4">
+      <div class="terminal-bar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+      </div>
+      <div class="terminal-body">
+        <div><span class="terminal-comment"># Zeude 셋업 — Claude한테:</span></div>
+        <div><span class="terminal-prompt">&gt;</span> <span class="terminal-cmd">/zeude-setup</span><span class="terminal-cursor"></span></div>
+        <div style="margin-top:0.5rem;"><span class="terminal-comment"># shim 설치 + 텔레메트리 + 대시보드 접속까지 한번에</span></div>
+      </div>
+    </div>
+    <div class="spacer-sm"></div>
+    <p class="accent2 reveal reveal-delay-5" style="font-weight:700;">Week 4에 이 데이터로 회고합니다. 오늘 셋업 필수!</p>
+  </div>
+
+  <!-- 5. Claude Code vs Hermes -->
+  <div class="slide scrollable">
+    <div class="tag reveal"><span class="num">05</span><span class="sep">—</span><span class="label">비교</span></div>
+    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.6rem,3vw,3rem);">Claude Code vs <span class="accent">Hermes</span></h2>
+    <div class="spacer-sm"></div>
+    <table class="compare-table reveal reveal-delay-2">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Claude Code</th>
+          <th style="color:var(--accent);">Hermes Agent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>WHERE</td>
+          <td>터미널</td>
+          <td style="color:var(--accent);">슬랙 DM</td>
+        </tr>
+        <tr>
+          <td>WHEN</td>
+          <td>내가 열었을 때</td>
+          <td style="color:var(--accent);">항상 켜져 있음</td>
+        </tr>
+        <tr>
+          <td>HOW</td>
+          <td>명령 1회성</td>
+          <td style="color:var(--accent);">자동 예약 (cron)</td>
+        </tr>
+        <tr>
+          <td>MEMORY</td>
+          <td>CLAUDE.md (수동)</td>
+          <td style="color:var(--accent);">자동 메모리 축적</td>
+        </tr>
+        <tr>
+          <td>LEARNING</td>
+          <td>세션마다 리셋</td>
+          <td style="color:var(--accent);">쓸수록 똑똑해짐</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-3">둘 다 쓰면 좋습니다. 용도가 다를 뿐.</p>
+    <p class="reveal reveal-delay-3" style="font-size:clamp(0.9rem,1.4vw,1.2rem);">
+      <span class="dim">Claude Code =</span> <span class="accent2 bold">정밀 수술</span>
+      <span class="dim" style="margin:0 0.5rem;">|</span>
+      <span class="dim">Hermes =</span> <span class="accent bold">항상 옆에 있는 비서</span>
+    </p>
+  </div>
+
+  <!-- 6. Hermes Introduction -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">06</span><span class="sep">—</span><span class="label">Hermes</span></div>
+    <h2 class="reveal reveal-delay-1 glow-purple" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">
+      쓸수록 <span class="accent">나를 아는</span> AI
+    </h2>
+    <div class="spacer-sm"></div>
+    <ul class="hierarchy reveal reveal-delay-2">
+      <li><span class="accent bold">자가학습 루프</span> — 대화할수록 나의 업무 패턴을 기억</li>
+      <li><span class="accent bold">슬랙 봇</span> — 터미널 없이, 슬랙 DM으로 요청</li>
+      <li><span class="accent bold">자동 예약</span> — cron으로 반복 작업 예약</li>
+      <li class="last"><span class="accent bold">메모리</span> — 지난 대화를 기억하고 점점 정확해짐</li>
+    </ul>
+    <div class="spacer"></div>
+    <div class="big-quote reveal reveal-delay-3">쓸수록 나를 아는 AI가 됩니다</div>
+    <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-4">"지난번에 부탁한 그 형식으로 해줘" — 가 통합니다.</p>
+  </div>
+
+  <!-- 7-1. Hermes Setup: Overview -->
+  <div class="slide scrollable">
+    <div class="tag reveal"><span class="num">07</span><span class="sep">—</span><span class="label">Hermes 셋업 (1/2)</span></div>
+    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.6rem,3vw,2.8rem);">Hermes 설치하기</h2>
+    <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-2">3단계면 끝납니다.</p>
+    <div class="spacer-sm"></div>
+    <div class="stage-flow">
+      <div class="stage current reveal reveal-delay-3">
+        <div class="stage-num" style="color:var(--accent);">01</div>
+        <div class="stage-content">
+          <h3>Hermes 설치</h3>
+          <p>Mac: curl 한 줄 / Windows: WSL 먼저</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-4">
+        <div class="stage-num">02</div>
+        <div class="stage-content">
+          <h3>Slack App 만들기</h3>
+          <p>api.slack.com → 앱 생성 → 토큰 복사</p>
+        </div>
+      </div>
+      <div class="stage reveal reveal-delay-5">
+        <div class="stage-num">03</div>
+        <div class="stage-content">
+          <h3>연결 + 테스트</h3>
+          <p>/hermes-setup 으로 가이드</p>
+        </div>
+      </div>
+    </div>
+    <div class="spacer-sm"></div>
+    <div class="terminal reveal reveal-delay-6">
+      <div class="terminal-bar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+      </div>
+      <div class="terminal-body">
+        <div><span class="terminal-comment"># Mac 설치 (한 줄)</span></div>
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">curl -fsSL https://hermes.ai/install.sh | bash</span></div>
+        <div style="margin-top:0.5rem;"><span class="terminal-comment"># Windows는 WSL 먼저 (Week 1에 했으면 OK)</span></div>
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">wsl --install</span></div>
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">curl -fsSL https://hermes.ai/install.sh | bash</span><span class="terminal-cursor"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7-2. Hermes Setup: Warning -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">08</span><span class="sep">—</span><span class="label">Hermes 셋업 (2/2)</span></div>
+    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.6rem,3vw,2.8rem);">셋업 시 주의사항</h2>
+    <div class="spacer-sm"></div>
+    <div class="terminal reveal reveal-delay-2">
+      <div class="terminal-bar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+      </div>
+      <div class="terminal-body">
+        <div><span class="terminal-comment"># Claude Code에서:</span></div>
+        <div><span class="terminal-prompt">&gt;</span> <span class="terminal-cmd">/hermes-setup</span></div>
+        <div style="margin-top:0.5rem;"><span class="terminal-comment"># 가이드가 하나씩 안내합니다.</span></div>
+        <div><span class="terminal-comment"># 중간에 막히면 그냥 Claude한테 물어보세요.</span></div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div style="background:rgba(255,116,57,0.1); border:1px solid rgba(255,116,57,0.3); border-radius:12px; padding:1.5rem 2rem;" class="reveal reveal-delay-3">
+      <p style="color:var(--red); font-weight:700; font-size:clamp(1.1rem,1.8vw,1.5rem); margin-bottom:0.5rem;">
+        API 키는 절대 슬랙 채팅에 입력하지 마세요!
+      </p>
+      <p style="color:#999; font-size:clamp(0.85rem,1.2vw,1.05rem);">
+        API 키 = 내 지갑 비밀번호. 노출되면 과금 폭탄.<br>
+        반드시 <span class="mono accent">터미널</span> 또는 <span class="mono accent">환경변수</span>에서만 입력.
+      </p>
+    </div>
+    <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-4">셋업 완료되면 슬랙에서 Hermes에게 DM 보내보세요.</p>
+  </div>
+
+  <!-- 8. Use Cases by Role -->
+  <div class="slide scrollable">
+    <div class="tag reveal"><span class="num">09</span><span class="sep">—</span><span class="label">직무별 유스케이스</span></div>
+    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.6rem,3vw,2.8rem);">슬랙에서 이렇게 씁니다</h2>
+    <div class="spacer-sm"></div>
+
+    <div class="slack-msg reveal reveal-delay-2">
+      <div class="sender"><span class="badge badge-green">CS</span> @hermes</div>
+      <div class="body">"채널톡 문의 10건 요약해줘. 반복되는 패턴이 있으면 FAQ 초안도 만들어줘."</div>
+    </div>
+
+    <div class="slack-msg reveal reveal-delay-3">
+      <div class="sender"><span class="badge badge-purple">개발</span> @hermes</div>
+      <div class="body">"이 에러 로그 분석해줘. 최근 배포에서 바뀐 코드랑 연관 있는지 봐줘."</div>
+    </div>
+
+    <div class="slack-msg reveal reveal-delay-4">
+      <div class="sender"><span class="badge badge-gold">마케팅</span> @hermes</div>
+      <div class="body">"지난주 인스타 성과 데이터 정리해줘. 도달률 top 3 콘텐츠 특징 분석도."</div>
+    </div>
+
+    <div class="slack-msg reveal reveal-delay-5">
+      <div class="sender"><span class="badge badge-red">기획</span> @hermes</div>
+      <div class="body">"이번 스프린트 이슈 목록 정리하고, 우선순위 추천해줘. 기준은 고객 영향도."</div>
+    </div>
+
+    <div class="spacer-sm"></div>
+    <p class="accent reveal reveal-delay-6" style="font-weight:700;">내 직무에 맞는 메시지를 슬랙에서 바로 보내보세요.</p>
+  </div>
+
+  <!-- 9. Cron / Automation -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">10</span><span class="sep">—</span><span class="label">자동화 체험</span></div>
+    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3.5rem);">cron — <span class="accent">예약하면 끝</span></h2>
+    <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-2">사람이 매번 시키지 않아도 Hermes가 알아서.</p>
+    <div class="spacer-sm"></div>
+    <div class="slack-msg reveal reveal-delay-3">
+      <div class="sender">@hermes</div>
+      <div class="body">"매일 아침 9시에 오늘 할 일 정리해서 DM 보내줘."</div>
+    </div>
+    <div class="slack-msg reveal reveal-delay-4">
+      <div class="sender">@hermes</div>
+      <div class="body">"매주 금요일 오후 5시에 이번 주 성과 요약 만들어줘."</div>
+    </div>
+    <div class="slack-msg reveal reveal-delay-5">
+      <div class="sender">@hermes</div>
+      <div class="body">"매일 저녁 6시에 채널톡 미답변 문의 알려줘."</div>
+    </div>
+    <div class="spacer-sm"></div>
+    <p class="accent reveal reveal-delay-6" style="font-weight:700; font-size:clamp(1rem,1.6vw,1.3rem);">
+      "매일 ___ 에 ___" — 이 한 문장이 자동화의 시작
+    </p>
+  </div>
+
+  <!-- 10-1. Creative Use Cases -->
+  <div class="slide scrollable">
+    <div class="tag reveal"><span class="num">11</span><span class="sep">—</span><span class="label">창의적 유스케이스 (1/2)</span></div>
+    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.6rem,3vw,2.8rem);">이런 것도 됩니다</h2>
+    <div class="spacer-sm"></div>
+    <ul class="hierarchy reveal reveal-delay-2">
+      <li>
+        <span class="accent bold">트레이딩 봇</span><br>
+        <span class="dim" style="font-size:0.95em;">"매일 9시에 비트코인 시세 + 주요 뉴스 3개 요약해서 보내줘"</span>
+      </li>
+      <li>
+        <span class="accent bold">SNS 에이전트</span><br>
+        <span class="dim" style="font-size:0.95em;">"우리 브랜드 멘션 트윗 중 부정적인 것만 골라서 알려줘"</span>
+      </li>
+      <li>
+        <span class="accent bold">리서치 봇</span><br>
+        <span class="dim" style="font-size:0.95em;">"경쟁사 블로그 새 글 나오면 요약해서 슬랙에 올려줘"</span>
+      </li>
+    </ul>
+    <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-3">이건 혼자서도 만들 수 있어요. 슬랙 메시지 한 줄이면 끝.</p>
+  </div>
+
+  <!-- 10-2. Multi-Agent -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">12</span><span class="sep">—</span><span class="label">창의적 유스케이스 (2/2)</span></div>
+    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.6rem,3vw,2.8rem);"><span class="accent">멀티에이전트</span> — 봇끼리 대화</h2>
+    <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-2">에이전트가 혼자 일하는 게 아니라, 서로 일을 넘깁니다.</p>
+    <div class="spacer-sm"></div>
+    <div class="slack-msg reveal reveal-delay-3">
+      <div class="sender"><span class="badge badge-purple">리서치봇</span></div>
+      <div class="body">"경쟁사 새 기능 발견: OOO. @분석봇 에게 전달합니다."</div>
+    </div>
+    <div class="slack-msg reveal reveal-delay-4">
+      <div class="sender"><span class="badge badge-gold">분석봇</span></div>
+      <div class="body">"우리 서비스와 비교 완료. 요약을 @기획봇 에게 전달합니다."</div>
+    </div>
+    <div class="slack-msg reveal reveal-delay-5">
+      <div class="sender"><span class="badge badge-green">기획봇</span></div>
+      <div class="body">"대응 방안 3개 생성. 팀장님 확인 부탁드립니다."</div>
+    </div>
+    <div class="spacer-sm"></div>
+    <p class="accent reveal reveal-delay-6" style="font-weight:700;">사람은 최종 확인만. AI 팀이 일합니다.</p>
+    <p class="dim reveal reveal-delay-6">Week 4에서 이 구조를 직접 만들어봅니다.</p>
+  </div>
+
+  <!-- 11. Wrap-up + Homework -->
+  <div class="slide scrollable">
+    <div class="tag reveal"><span class="num">13</span><span class="sep">—</span><span class="label">마무리 + 숙제</span></div>
+    <h2 class="reveal reveal-delay-1" style="font-size:clamp(1.6rem,3vw,2.8rem);">이번 주 숙제</h2>
+    <div class="spacer-sm"></div>
+    <ul class="hierarchy reveal reveal-delay-2">
+      <li><span class="bold">숙제 1.</span> Hermes에게 <span class="accent bold">업무 요청 5개</span> 보내기 <span class="dim">(필수)</span><br>
+        <span class="dim" style="font-size:0.9em;">내 직무에 맞는 실제 업무로. "이걸 정리해줘", "이걸 분석해줘" 등</span></li>
+      <li><span class="bold">숙제 2.</span> <span class="accent bold">자동 예약 1개</span> 만들기 <span class="dim">(필수)</span><br>
+        <span class="dim" style="font-size:0.9em;">"매일 아침 9시에 ___" or "매주 금요일에 ___"</span></li>
+      <li class="last"><span class="bold">숙제 3.</span> <span class="accent2 bold">"이런 것도 돼?"</span> 도전 <span class="dim">(선택)</span><br>
+        <span class="dim" style="font-size:0.9em;">트레이딩봇, 리서치봇, 봇끼리 대화 등 — 뭐든 도전해보고 슬랙에 공유</span></li>
+    </ul>
+    <div class="spacer"></div>
+    <div style="background:rgba(200,155,255,0.08); border:1px solid rgba(200,155,255,0.2); border-radius:12px; padding:1.5rem 2rem;" class="reveal reveal-delay-3">
+      <p style="color:var(--accent); font-weight:700; font-size:clamp(1rem,1.5vw,1.3rem); margin-bottom:0.5rem;">
+        Week 4 예고 — 최종 회고
+      </p>
+      <ul class="hierarchy" style="margin:0;">
+        <li style="color:#999;"><span class="accent2 bold">Zeude 데이터 리뷰</span> — 4주간의 AI 사용 데이터 분석</li>
+        <li style="color:#999;"><span class="accent2 bold">회고</span> — 뭐가 됐고, 뭐가 안 됐고, 뭐가 남았는지</li>
+        <li style="color:#999;" class="last"><span class="accent2 bold">선언</span> — "나는 매일 이걸 AI한테 시킨다"</li>
+      </ul>
+    </div>
+    <div class="spacer"></div>
+    <div class="big-quote reveal reveal-delay-5">AI가 나를 알게 하세요</div>
+    <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-6">한 번 쓰면 도구. 매일 쓰면 팀원. 내 AI를 키우는 한 주입니다.</p>
+  </div>
+
+</div>
+
+<script>
+  const deck = document.getElementById('deck');
+  const slides = deck.querySelectorAll('.slide');
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  let current = 0;
+
+  function goTo(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides[current].classList.remove('active');
+    slides[current].querySelectorAll('.reveal').forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight;
+      el.style.animation = '';
+      el.style.opacity = '0';
+    });
+    current = n;
+    slides[current].classList.add('active');
+    slides[current].scrollTop = 0;
+    progress.style.width = ((current / (slides.length - 1)) * 100) + '%';
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault(); goTo(current + 1);
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault(); goTo(current - 1);
+    }
+    if (e.key === 'Home') goTo(0);
+    if (e.key === 'End') goTo(slides.length - 1);
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { diff > 0 ? goTo(current + 1) : goTo(current - 1); }
+  });
+
+  deck.addEventListener('click', (e) => {
+    if (e.target.closest('a')) return;
+    if (e.clientX > window.innerWidth / 2) goTo(current + 1);
+    else goTo(current - 1);
+  });
+
+  goTo(0);
+</script>
+
+</body>
+</html>
