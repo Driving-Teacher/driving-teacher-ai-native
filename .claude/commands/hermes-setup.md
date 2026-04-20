@@ -71,9 +71,10 @@ Slack App 만들기 (5분):
 
 ### Step 3: API 키 설정
 
-사용자에게 OpenRouter 키를 물어본다.
-- https://openrouter.ai/keys 에서 발급
-- 크레딧 $5 이상 충전 필요
+사용자에게 어떤 API 키가 있는지 물어본다:
+- OpenAI 키 (sk-...) → https://platform.openai.com/api-keys
+- 또는 OpenRouter 키 (sk-or-...) → https://openrouter.ai/keys
+- 또는 Anthropic 키 → https://console.anthropic.com/
 
 키 3개를 ~/.hermes/.env에 넣는다:
 
@@ -85,8 +86,8 @@ cat >> ~/.hermes/.env << 'EOF'
 SLACK_BOT_TOKEN=<xoxb-... 토큰>
 SLACK_APP_TOKEN=<xapp-... 토큰>
 
-# OpenRouter
-OPENROUTER_API_KEY=<sk-or-... 키>
+# LLM API 키 (아래 중 하나만 있으면 됨)
+OPENAI_API_KEY=<sk-... 키>
 
 # 모든 유저 허용
 GATEWAY_ALLOW_ALL_USERS=true
@@ -94,6 +95,15 @@ EOF
 ```
 
 > 주의: 위 명령어에서 <...> 부분을 실제 값으로 교체해야 한다. 사용자에게 각 값을 물어보고 대신 입력해준다.
+> API 키는 Claude Code 채팅창에 절대 입력하지 말 것! .env 파일에 직접 넣는다.
+
+OpenAI 키를 사용하는 경우, config.yaml에서 provider와 모델도 변경한다:
+
+```bash
+sed -i.bak 's|default: "anthropic/claude-opus-4.6"|default: "gpt-4o"|' ~/.hermes/config.yaml
+sed -i.bak 's|provider: "auto"|provider: "openai"|' ~/.hermes/config.yaml
+sed -i.bak 's|base_url: "https://openrouter.ai/api/v1"|base_url: "https://api.openai.com/v1"|' ~/.hermes/config.yaml
+```
 
 ### Step 4: Gateway 시작
 
