@@ -121,6 +121,32 @@ hermes gateway start
 - 402 에러 → OpenRouter 크레딧 부족. 충전 안내.
 - 응답 없음 → `hermes gateway status`로 상태 확인
 
+### 주의사항 안내
+
+셋업 완료 후 사용자에게 아래 주의사항을 알려준다:
+
+```
+주의사항:
+
+1. API 키 보안
+   - 키를 슬랙 채널이나 채팅창에 절대 붙여넣지 마세요
+   - .env 파일에만 저장하세요
+
+2. PC 꺼지면 봇도 꺼짐
+   - Hermes는 내 PC에서 돌아갑니다
+   - PC 끄거나 재부팅하면 봇이 응답 안 합니다
+   - 다시 켜려면: hermes gateway start
+
+3. 크레딧 관리
+   - OpenAI/OpenRouter 크레딧이 떨어지면 402 에러
+   - 잔액 확인: platform.openai.com/usage
+
+4. Slack App 관련
+   - Bot Token Scopes 빠뜨리면 기능 안 됨
+   - Event Subscriptions에서 message.im 꼭 추가
+   - Socket Mode 꺼져있으면 봇이 메시지 못 받음
+```
+
 ### 완료 메시지
 
 ```
@@ -132,7 +158,10 @@ Hermes 셋업 완료!
 - "매일 아침 9시에 날씨 알려줘" (자동 예약!)
 
 유용한 명령어:
-- hermes         : 터미널에서 직접 대화
+- hermes             : 터미널에서 직접 대화
+- hermes gateway start  : 봇 시작 (PC 재부팅 후)
 - hermes gateway status : 봇 상태 확인
-- hermes update   : 업데이트
+- hermes update       : 업데이트
+
+더 많은 유스케이스: /hermes-usecases
 ```
