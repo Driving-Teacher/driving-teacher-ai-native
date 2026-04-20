@@ -15,7 +15,7 @@ Zeude 모니터링 시스템을 셋업한다. shim 바이너리 설치 + OTel �
 2. install.sh 실행 (agent_key를 환경변수로 전달):
 
 ```bash
-ZEUDE_AGENT_KEY="<입력받은키>" bash <(curl -s http://34.22.107.196:8080/releases/install.sh)
+ZEUDE_AGENT_KEY="<입력받은키>" bash <(curl -s http://34.64.239.89:8080/releases/install.sh)
 ```
 
 이 스크립트가 자동으로 하는 것:
