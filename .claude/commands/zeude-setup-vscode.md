@@ -55,6 +55,8 @@ echo "$ENV_DUMP"
 
 출력에서 `OTEL_RESOURCE_ATTRIBUTES=zeude.user.id=...,zeude.user.email=...,zeude.team=...` 라인을 추출한다. 동일 키가 중복된 경우 하나만 남긴다 (shim 구버전 버그 대응).
 
+추출 값 끝에 **`,zeude.source=vscode`** 를 append 한다. VSCode 유입 이벤트를 CLI shim 유입과 구분하기 위함 (Zeude 대시보드에서 filter 가능).
+
 `OTEL_EXPORTER_OTLP_ENDPOINT` 값도 추출한다 (e.g. `http://34.64.239.89:4318`).
 
 ### 2. LaunchAgent plist 생성
