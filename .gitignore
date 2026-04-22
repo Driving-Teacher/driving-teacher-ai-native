@@ -1,8 +1,16 @@
-# OpenClaw agent files
+# OpenClaw agent files (per-user state)
 SOUL.md
 AGENTS.md
 MEMORY.md
 memory/
+HEARTBEAT.md
+IDENTITY.md
+TOOLS.md
+USER.md
+.openclaw/
+
+# per-user scripts
+scripts/create-week2-confidence-form.gs
 
 # Credentials & secrets
 configs/gcp-oauth.keys.json
