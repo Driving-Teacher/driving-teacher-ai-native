@@ -376,17 +376,46 @@
     <p class="reveal reveal-delay-4 mono dim" style="font-size:0.85rem;">2026.04.30 — 운전선생</p>
   </div>
 
-  <!-- 2. Welcome + Install -->
-  <div class="slide">
+  <!-- 2. Welcome + Install (SETUP.md 5단계) -->
+  <div class="slide scrollable">
     <div class="tag reveal"><span class="num">02</span><span class="sep">—</span><span class="label">먼저 깔고 시작합니다</span></div>
     <h2 class="reveal reveal-delay-1">
-      오늘 <span class="accent2 glow-gold">박주영 님</span> 첫 출근,<br>환영합니다.
+      오늘 <span class="accent2 glow-gold">박주영 님</span> 첫 출근, 환영합니다.
     </h2>
-    <div class="spacer"></div>
-    <p class="reveal reveal-delay-2" style="font-size:clamp(1rem,1.6vw,1.4rem); color:#ccc;">
-      노트북 켜고 <span class="accent bold">한 줄</span>만 실행하세요. 백그라운드로 깔립니다.
+    <p class="reveal reveal-delay-1 dim" style="font-size:clamp(0.9rem,1.3vw,1.1rem); margin-top: 0.3rem;">
+      노트북 켜고 — <span class="accent bold">10분</span>이면 끝납니다. 깔리는 동안 우리는 4주를 돌아봐요.
     </p>
-    <div class="spacer-sm"></div>
+    <div class="spacer"></div>
+
+    <!-- 5단계 흐름 -->
+    <div class="grid-2 reveal reveal-delay-2" style="gap: 0.6rem; margin-bottom: 1rem;">
+      <div class="card" style="padding: 0.7rem 1rem;">
+        <div class="label-mono accent2">①</div>
+        <p style="font-size: 0.95em;"><span class="bold">Claude Teams 초대 수락</span><br><span class="dim" style="font-size:0.85em;">메일함에서 "Accept invitation"</span></p>
+      </div>
+      <div class="card" style="padding: 0.7rem 1rem;">
+        <div class="label-mono accent2">②</div>
+        <p style="font-size: 0.95em;"><span class="bold">git 설치 확인</span><br><span class="dim" style="font-size:0.85em;">대부분 이미 OK · <span class="mono">git --version</span></span></p>
+      </div>
+      <div class="card gold" style="padding: 0.7rem 1rem;">
+        <div class="label-mono accent2">③ ⭐</div>
+        <p style="font-size: 0.95em;"><span class="bold accent2">세팅 스크립트 한 줄</span><br><span class="dim" style="font-size:0.85em;">Claude Code · Node · Python 자동 설치</span></p>
+      </div>
+      <div class="card" style="padding: 0.7rem 1rem;">
+        <div class="label-mono accent2">④</div>
+        <p style="font-size: 0.95em;"><span class="bold">claude 로그인</span><br><span class="dim" style="font-size:0.85em;">브라우저 자동 열림 → Claude.ai 로그인</span></p>
+      </div>
+      <div class="card" style="padding: 0.7rem 1rem;">
+        <div class="label-mono accent2">⑤</div>
+        <p style="font-size: 0.95em;"><span class="bold">버전 확인 + 슬랙 "완료"</span><br><span class="dim" style="font-size:0.85em;">claude / node / git / python --version</span></p>
+      </div>
+      <div class="card dim" style="padding: 0.7rem 1rem; border-style: dashed;">
+        <div class="label-mono dim">📘</div>
+        <p style="font-size: 0.95em;"><span class="bold">자세한 가이드</span><br><span class="mono accent2" style="font-size:0.85em;">SETUP.md</span></p>
+      </div>
+    </div>
+
+    <!-- 핵심 명령어 (Step 3) -->
     <div class="terminal reveal reveal-delay-3">
       <div class="terminal-bar">
         <div class="terminal-dot red"></div>
@@ -394,14 +423,17 @@
         <div class="terminal-dot green"></div>
       </div>
       <div class="terminal-body">
-        <div><span class="terminal-comment"># Claude Code 설치 (한 줄)</span></div>
-        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">npm install -g @anthropic-ai/claude-code</span></div>
-        <div class="dim" style="margin-top:0.4rem;">— 또는 Homebrew —</div>
-        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">brew install --cask claude-code</span><span class="terminal-cursor"></span></div>
+        <div><span class="terminal-comment"># Step 3 — 세팅 스크립트 (Mac)</span></div>
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git clone https://github.com/Driving-Teacher/driving-teacher-ai-native.git</span></div>
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">cd driving-teacher-ai-native &amp;&amp; bash scripts/setup-mac.sh</span></div>
+        <div class="dim" style="margin-top:0.3rem;"># Windows: PowerShell 관리자로 → <span class="terminal-cmd">.\scripts\setup-windows.ps1</span></div>
       </div>
     </div>
-    <div class="spacer"></div>
-    <p class="reveal reveal-delay-4 dim">깔리는 동안 우리는 <span class="accent">4주를 돌아봅니다</span>. 끝나면 같은 풀에 붙어요.</p>
+
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-4 dim" style="font-size: clamp(0.85rem, 1.2vw, 1rem);">
+      막히면 슬랙 <span class="mono">#ai-native-camp</span> 에 질문. 봇이 답해드립니다.
+    </p>
   </div>
 
   <!-- 3. Opening — 4-week timeline -->
@@ -442,41 +474,118 @@
   </div>
 
   <!-- 4. Data — Zeude review -->
-  <div class="slide">
+  <div class="slide scrollable">
     <div class="tag reveal"><span class="num">04</span><span class="sep">—</span><span class="label">데이터로 본 우리</span></div>
-    <h2 class="reveal reveal-delay-1">Zeude가 본 <span class="accent">4주</span>.</h2>
+    <h2 class="reveal reveal-delay-1">Zeude가 본 <span class="accent">이번 주</span>.</h2>
+    <p class="reveal reveal-delay-1 dim mono" style="font-size:0.85rem; margin-top: -0.4rem;">
+      2026-04-26 ~ 05-02 KST · 전 주 대비
+    </p>
     <div class="spacer"></div>
-    <div class="grid-3">
+
+    <!-- Top Users + Top Skills 좌우 -->
+    <div class="grid-2" style="gap: 1.5rem;">
+      <!-- Top 5 토큰 사용자 -->
       <div class="card purple reveal reveal-delay-2">
-        <div class="label-mono">누적 세션</div>
-        <h4 class="accent" style="font-size:clamp(2rem,3.5vw,3rem);">— · ——</h4>
-        <p>4주간 7명이 만든 흔적</p>
+        <div class="label-mono accent">🏆 Top 토큰 사용자</div>
+        <table style="width: 100%; margin-top: 0.6rem; font-size: clamp(0.85rem, 1.2vw, 1rem); border-collapse: collapse;">
+          <tr style="border-bottom: 1px solid #333;">
+            <td style="padding: 0.3rem 0;"><span class="accent2 bold">1.</span> 정승아</td>
+            <td style="text-align: right;" class="mono accent2 bold">3.9B</td>
+            <td style="text-align: right; padding-left: 0.6rem;" class="green mono">+22%</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #333;">
+            <td style="padding: 0.3rem 0;">2. 이희준</td>
+            <td style="text-align: right;" class="mono">1.5B</td>
+            <td style="text-align: right; padding-left: 0.6rem;" class="green mono">+4%</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #333;">
+            <td style="padding: 0.3rem 0;">3. heejin</td>
+            <td style="text-align: right;" class="mono">864.9M</td>
+            <td style="text-align: right; padding-left: 0.6rem;" class="green mono">+26%</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #333;">
+            <td style="padding: 0.3rem 0;">4. jay9304</td>
+            <td style="text-align: right;" class="mono">103.1M</td>
+            <td style="text-align: right; padding-left: 0.6rem;" class="green mono">+34%</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.3rem 0;">5. 정기흥</td>
+            <td style="text-align: right;" class="mono">8.1M</td>
+            <td style="text-align: right; padding-left: 0.6rem;" class="red mono">-70%</td>
+          </tr>
+        </table>
       </div>
-      <div class="card purple reveal reveal-delay-3">
-        <div class="label-mono">Top 사용자</div>
-        <h4 style="font-size:clamp(1.3rem,2vw,1.8rem);">@—</h4>
-        <p>가장 많이 시킨 사람</p>
-      </div>
-      <div class="card purple reveal reveal-delay-4">
-        <div class="label-mono">Top 스킬</div>
-        <h4 class="mono" style="font-size:clamp(1rem,1.5vw,1.4rem);">/—</h4>
-        <p>가장 많이 호출된 스킬</p>
+
+      <!-- Top Skills -->
+      <div class="card gold reveal reveal-delay-3">
+        <div class="label-mono accent2">🔧 Top 스킬</div>
+        <table style="width: 100%; margin-top: 0.6rem; font-size: clamp(0.85rem, 1.2vw, 1rem); border-collapse: collapse;">
+          <tr style="border-bottom: 1px solid #333;">
+            <td style="padding: 0.3rem 0;" class="mono">1. resume-session</td>
+            <td style="text-align: right;" class="accent2 bold">13회</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #333;">
+            <td style="padding: 0.3rem 0;" class="mono">2. autopilot</td>
+            <td style="text-align: right;">8회</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #333;">
+            <td style="padding: 0.3rem 0;" class="mono">3. plan</td>
+            <td style="text-align: right;">6회</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #333;">
+            <td style="padding: 0.3rem 0;" class="mono">4. firebase-query</td>
+            <td style="text-align: right;">5회</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #333;">
+            <td style="padding: 0.3rem 0;" class="mono accent2">5. ouroboros:ralph ⭐</td>
+            <td style="text-align: right;">5회</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #333;">
+            <td style="padding: 0.3rem 0;" class="mono">6. autoresearch</td>
+            <td style="text-align: right;">4회</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.3rem 0;" class="dim">7~10. functions-deploy · ralplan · code-review · firestore-deploy</td>
+            <td style="text-align: right;" class="dim">3~4회</td>
+          </tr>
+        </table>
       </div>
     </div>
-    <div class="spacer"></div>
-    <p class="reveal reveal-delay-5 dim" style="font-size:clamp(0.95rem,1.3vw,1.15rem);">
+
+    <div class="spacer-sm"></div>
+
+    <!-- 인사이트 박스 -->
+    <div class="reveal reveal-delay-4" style="background: rgba(200,155,255,0.08); border-left: 3px solid var(--accent); padding: 0.8rem 1.2rem; border-radius: 6px;">
+      <div class="mono accent bold" style="font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;">📊 이번 주 인사이트</div>
+      <ul style="list-style: none; padding: 0; margin-top: 0.4rem; font-size: clamp(0.88rem, 1.3vw, 1.05rem);">
+        <li style="padding: 0.15rem 0;">• <span class="bold">대부분 사용량 ↑</span> — heejin +26%, jay9304 +34% (캠프 마지막 주 활성도 ↑)</li>
+        <li style="padding: 0.15rem 0;">• <span class="bold">resume-session 13회</span> = 가장 많이 — 작업 이어가기 패턴이 자리 잡음</li>
+        <li style="padding: 0.15rem 0;">• <span class="accent2 bold">ouroboros:ralph 5회 ⭐</span> — <span class="accent">팀원이 이미 자기학습 도구를 쓰고 있다</span> (5.12에서 더)</li>
+      </ul>
+    </div>
+
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-5 dim" style="font-size:clamp(0.9rem,1.3vw,1.1rem);">
       <span class="accent2 bold">안 쓴 사람도 데이터입니다.</span> 왜 안 썼는지 — 그게 다음 캠프의 출발선.
     </p>
-    <div class="spacer-sm"></div>
-    <p class="reveal reveal-delay-6 mono dim" style="font-size:0.85rem;">→ 라이브: zeude.vercel.app 대시보드 함께 보기</p>
   </div>
 
-  <!-- 5. Homework — Hermes 1주 사용기 -->
+  <!-- 5. Homework — Hermes 1주 사용기 + 3주차 숙제 점검 -->
   <div class="slide">
-    <div class="tag reveal"><span class="num">05</span><span class="sep">—</span><span class="label">숙제 공유</span></div>
+    <div class="tag reveal"><span class="num">05</span><span class="sep">—</span><span class="label">지난주 숙제 점검</span></div>
     <h2 class="reveal reveal-delay-1">Hermes, 한 주 써봤더니?</h2>
     <div class="spacer-sm"></div>
-    <p class="dim reveal reveal-delay-2">한 명씩 30초. 솔직하게.</p>
+
+    <!-- 3주차 숙제 박스 -->
+    <div class="reveal reveal-delay-2" style="background: rgba(255,213,71,0.08); border-left: 3px solid var(--accent2); padding: 0.9rem 1.2rem; border-radius: 6px;">
+      <div class="mono accent2 bold" style="font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;">📋 3주차 숙제 — 한 명씩 30초 공유</div>
+      <ul style="list-style: none; padding: 0; margin-top: 0.5rem; font-size: clamp(0.9rem, 1.3vw, 1.1rem);">
+        <li style="padding: 0.18rem 0;">① <span class="bold">Hermes로 업무 3건 이상</span> 시도 — 슬랙에서 AI에게</li>
+        <li style="padding: 0.18rem 0;">② <span class="bold">"AI한테 먼저"</span> 실험 3회 — 사람보다 AI에게 먼저</li>
+        <li style="padding: 0.18rem 0;">🔥 <span class="bold">출퇴근길 활용</span> (도전) — 모바일에서 한 줄</li>
+      </ul>
+    </div>
+
     <div class="spacer"></div>
     <div class="grid-4">
       <div class="card gold reveal reveal-delay-3">
@@ -500,6 +609,361 @@
         <p>사람보다 AI가 먼저 떠오른 순간</p>
       </div>
     </div>
+  </div>
+
+  <!-- 5.5. 사례 — 캘린더가 안 됐다 -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">5.5</span><span class="sep">—</span><span class="label">실제 사례</span></div>
+    <h2 class="reveal reveal-delay-1">캘린더가 <span class="red">안 됐다.</span></h2>
+    <div class="spacer"></div>
+    <div class="reveal reveal-delay-2" style="background: rgba(255,116,57,0.08); border-left: 4px solid var(--red); padding: 1.5rem 1.8rem; border-radius: 8px; max-width: 800px;">
+      <div class="mono dim" style="font-size: 0.85rem;">@hermes-bot</div>
+      <p style="font-size: clamp(1.1rem, 1.8vw, 1.5rem); margin-top: 0.4rem; font-weight: 500;">
+        "내 구글 캘린더 일정 보여줘"
+      </p>
+      <div class="dim" style="margin: 0.6rem 0; text-align: center;">↓</div>
+      <p class="red bold" style="font-size: clamp(1.2rem, 2vw, 1.7rem);">
+        "일정이 없습니다."
+      </p>
+    </div>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-3 dim" style="font-size: clamp(1rem, 1.5vw, 1.2rem);">
+      이런 경험 있으시죠? 분명 일정 있는데 빈 답.<br>
+      <span class="accent">왜 그럴까요?</span>
+    </p>
+  </div>
+
+  <!-- 5.6. 본질 — AI는 "그거"를 모른다 -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">5.6</span><span class="sep">—</span><span class="label">본질</span></div>
+    <h2 class="reveal reveal-delay-1">AI는 <span class="accent">"그거"</span>를 모른다.</h2>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-2 dim" style="font-size: clamp(1rem, 1.5vw, 1.25rem);">
+      사람한테 "내 일정"이라 하면 다 알아듣지만 — AI는 다 모름.
+    </p>
+    <div class="spacer"></div>
+    <ul class="hierarchy reveal reveal-delay-3" style="font-size: clamp(1.05rem, 1.6vw, 1.4rem);">
+      <li><span class="bold">오늘이 며칠인지</span> 모름 <span class="dim">(모델 cutoff 시점)</span></li>
+      <li><span class="bold">Timezone이 KST인지</span> 모름 <span class="dim">(UTC로 검색해 빈 결과)</span></li>
+      <li class="last"><span class="bold">"내 캘린더"가 어느 calendar인지</span> 모름 <span class="dim">(primary? 회사? 구독?)</span></li>
+    </ul>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-4" style="font-size: clamp(1.05rem, 1.6vw, 1.35rem); color: #ddd;">
+      → 사람이 하나하나 알려줘야 한다.<br>
+      <span class="accent2 bold">알잘딱깔센은 AI의 본질이 아니다.</span>
+    </p>
+  </div>
+
+  <!-- 5.7. 트렌드 — Thin harness, Fat skills -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">5.7</span><span class="sep">—</span><span class="label">2026 트렌드</span></div>
+    <h2 class="reveal reveal-delay-1 glow-purple">
+      <span class="accent">"Thin harness,</span><br><span class="accent2">Fat skills."</span>
+    </h2>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-2 dim" style="font-size: clamp(0.95rem, 1.4vw, 1.2rem);">
+      Garry Tan (YC CEO) — X에 올린 프레임워크
+    </p>
+    <div class="spacer"></div>
+    <div class="big-quote reveal reveal-delay-3" style="font-size: clamp(1.3rem, 2.5vw, 2.2rem);">
+      도구는 얇게, 회사 지식은 두꺼운 매뉴얼로.
+    </div>
+    <div class="spacer"></div>
+    <ul class="hierarchy reveal reveal-delay-4">
+      <li>gstack (Garry Tan의 Claude Code 설정) — <span class="accent2 bold">66K GitHub stars</span> 몇 주 만에</li>
+      <li class="last">Claude Code 소스 유출 (2026-03) — <span class="dim">512K TypeScript 라인이 같은 패턴 확인</span></li>
+    </ul>
+  </div>
+
+  <!-- 5.8. 비판 — 단순화의 위험 -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">5.8</span><span class="sep">—</span><span class="label">⚠️ 비판</span></div>
+    <h2 class="reveal reveal-delay-1">그런데 — <span class="red">단순화의 위험.</span></h2>
+    <div class="spacer"></div>
+    <div class="grid-3">
+      <div class="card reveal reveal-delay-2" style="border-color: rgba(255,116,57,0.3);">
+        <div class="label-mono red">①</div>
+        <h4 class="red">컨텍스트 비용 폭증</h4>
+        <p>Anthropic 자체 cap: SKILL.md <span class="mono">5K</span>, 전체 <span class="mono">25K</span> 토큰<br><br>fat skill 여러 개 = context anxiety = 결과 품질 ↓</p>
+      </div>
+      <div class="card reveal reveal-delay-3" style="border-color: rgba(255,116,57,0.3);">
+        <div class="label-mono red">②</div>
+        <h4 class="red">"thin harness" 자체가 거짓</h4>
+        <p>Claude Code = <span class="mono">512K 줄</span> TypeScript<br><br>Hermes도 27 카테고리. 사실 다 <span class="bold">fat harness</span>.</p>
+      </div>
+      <div class="card reveal reveal-delay-4" style="border-color: rgba(255,116,57,0.3);">
+        <div class="label-mono red">③</div>
+        <h4 class="red">6개월 유통기한</h4>
+        <p>모델 진화하면 패턴 무효화<br><br>Sonnet 5 / Opus 5에선 또 다른 가이드 등장</p>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-5 dim" style="font-size: clamp(0.95rem, 1.4vw, 1.2rem);">
+      트렌드만 따라가면 6개월마다 갈아엎어야 한다.
+    </p>
+  </div>
+
+  <!-- 5.9. 진짜 풍경 — 4-layer 사고법 -->
+  <div class="slide scrollable">
+    <div class="tag reveal"><span class="num">5.9</span><span class="sep">—</span><span class="label">진짜 풍경</span></div>
+    <h2 class="reveal reveal-delay-1"><span class="accent2">4-layer</span> 사고법.</h2>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-2 dim" style="font-size: clamp(0.95rem, 1.4vw, 1.2rem);">
+      Garry Tan은 2-layer (harness + skills)로 단순화. 우린 더 정확히 — <span class="accent2">4-layer</span>로 본다.
+    </p>
+    <div class="spacer"></div>
+    <div class="grid-2" style="gap: 1rem;">
+      <div class="card purple reveal reveal-delay-3">
+        <div class="label-mono accent">Layer ①</div>
+        <h4 class="accent">🐎 하네스 + 환경</h4>
+        <p class="bold" style="color:#ddd; margin-bottom: 0.4rem;">AI를 둘러싼 작업 환경</p>
+        <p style="font-size: 0.9em;">Hermes · Claude Code · cliproxy · MCP · Zeude<br><span class="dim">→ 11번 슬라이드 cliproxy 셋업</span></p>
+      </div>
+      <div class="card purple reveal reveal-delay-3">
+        <div class="label-mono accent">Layer ②</div>
+        <h4 class="accent">🎭 컨텍스트</h4>
+        <p class="bold" style="color:#ddd; margin-bottom: 0.4rem;">AI에게 정체성·시간 주기</p>
+        <p style="font-size: 0.9em;">System prompt, Personality<br><span class="dim">"오늘이 며칠인지" 매번 박기</span></p>
+      </div>
+      <div class="card purple reveal reveal-delay-4">
+        <div class="label-mono accent">Layer ③</div>
+        <h4 class="accent">📖 Skills</h4>
+        <p class="bold" style="color:#ddd; margin-bottom: 0.4rem;">AI에게 회사 매뉴얼 주기</p>
+        <p style="font-size: 0.9em;">도메인 지식·PM 스타일<br><span class="dim">우리 회사 색을 박는 자리</span></p>
+      </div>
+      <div class="card gold reveal reveal-delay-5">
+        <div class="label-mono accent2">Layer ④</div>
+        <h4 class="accent2">🎯 복잡한 일 실행기</h4>
+        <p class="bold" style="color:#ddd; margin-bottom: 0.4rem;">모호함 → 명확함 → 실행</p>
+        <p style="font-size: 0.9em;">"뭘 시켜야 할지" 자동으로 끌어냄<br><span class="dim">→ 12번 슬라이드 Ouroboros</span></p>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <p class="big-quote reveal reveal-delay-6" style="font-size:clamp(1.1rem,2vw,1.6rem);">
+      넷 다 다른 일. 넷 다 필요.
+    </p>
+  </div>
+
+  <!-- 5.10. 도구 풍경 — 우리가 다루는 4가지 -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">5.10</span><span class="sep">—</span><span class="label">도구 풍경</span></div>
+    <h2 class="reveal reveal-delay-1">우리가 다루는 <span class="accent2">4가지</span> 도구.</h2>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-2 dim" style="font-size: clamp(0.95rem, 1.4vw, 1.2rem);">
+      이 layer들을 채우는 도구는 외부에 많아요. 우린 4개를 봅니다.
+    </p>
+    <div class="spacer"></div>
+
+    <div class="grid-2" style="gap: 1rem;">
+      <div class="card reveal reveal-delay-3">
+        <div class="label-mono accent">Claude Code <span class="dim mono" style="font-size:0.75em;">· Layer ①</span></div>
+        <h4>긴 작업 동료</h4>
+        <p>컴퓨터 앞 깊은 작업 (코드·문서·분석)<br><span class="dim">→ 개발자 + 비개발자 일부</span></p>
+      </div>
+      <div class="card gold reveal reveal-delay-3">
+        <div class="label-mono accent2">Hermes ✅ <span class="dim mono" style="font-size:0.75em;">· Layer ①</span></div>
+        <h4 class="accent2">짧은 일 메신저 AI</h4>
+        <p>어디서든 한 줄로 (슬랙·폰)<br><span class="green bold">→ Wk3부터 우리 메인</span></p>
+      </div>
+      <div class="card reveal reveal-delay-4">
+        <div class="label-mono accent">OpenClaw <span class="dim mono" style="font-size:0.75em;">· Layer ①</span></div>
+        <h4>메신저 컨트롤러</h4>
+        <p>AI agent 원격 조작<br><span class="dim">→ Hermes로 대체됨</span></p>
+      </div>
+      <div class="card gold reveal reveal-delay-4">
+        <div class="label-mono accent2">Ouroboros ✅ <span class="dim mono" style="font-size:0.75em;">· Layer ④</span></div>
+        <h4 class="accent2">복잡한 일 실행기</h4>
+        <p>모호함 → 명확함 → 실행<br><span class="green bold">→ 오늘 차용</span></p>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- 참고 박스 — 메타 하네스 -->
+    <div class="reveal reveal-delay-5" style="background: rgba(107,107,107,0.12); border-left: 3px solid var(--dim); padding: 0.8rem 1.2rem; border-radius: 6px;">
+      <div class="mono dim bold" style="font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;">ℹ️ 참고 — 외부엔 이런 흐름도 (개발팀 영역)</div>
+      <p style="margin-top: 0.4rem; font-size: clamp(0.88rem, 1.3vw, 1.05rem); color: #aaa;">
+        <span class="bold">메타 하네스</span> (OMC / OMX / omo) — 여러 AI를 동시에 부리는 매니저 레이어.
+        개발자가 코드 자동화에 쓰는 도구라 PM/CS/디자이너에겐 직접 쓸 일 X.
+        <span class="dim">"이런 흐름도 있다"는 시야 확장 차원.</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- 5.11. 우리는 layer마다 깎는다 -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">5.11</span><span class="sep">—</span><span class="label">우리 액션</span></div>
+    <h2 class="reveal reveal-delay-1">우리는 <span class="accent2">layer마다</span> 깎는다.</h2>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-2 dim" style="font-size: clamp(0.95rem, 1.4vw, 1.2rem);">
+      Hermes는 27 카테고리 fat harness. 우리는 회사 색을 채운다.
+    </p>
+    <div class="spacer"></div>
+    <div class="grid-4">
+      <div class="card purple reveal reveal-delay-3">
+        <div class="label-mono accent">① 🐎</div>
+        <h4 class="accent">하네스 + 환경 (진행 중)</h4>
+        <p style="font-size: 0.88em; line-height: 1.6;">
+          ✅ cliproxy <span class="dim">(오늘)</span><br>
+          ✅ Hermes <span class="dim">(Wk3)</span><br>
+          ✅ Zeude <span class="dim">(Wk3)</span><br>
+          🔄 Claude Code<br>
+          ⏳ MCP 더 — Notion·Hackle·Linear
+        </p>
+      </div>
+      <div class="card purple reveal reveal-delay-4">
+        <div class="label-mono accent">② 🎭</div>
+        <h4 class="accent">컨텍스트</h4>
+        <p>System prompt · personality<br>현재 날짜·timezone<br>⭐ 회사 컨텍스트 출처:<br><span class="mono accent2" style="font-size:0.85em;">@../driving-teacher-<br>knowledge-base/</span></p>
+      </div>
+      <div class="card purple reveal reveal-delay-5">
+        <div class="label-mono accent">③ 📖</div>
+        <h4 class="accent">Skills</h4>
+        <p>회사 도메인 스킬<br>PM/CS/디자이너 각자<br>⭐ 매뉴얼 출처:<br><span class="mono accent2" style="font-size:0.85em;">@../driving-teacher-<br>knowledge-base/</span></p>
+      </div>
+      <div class="card gold reveal reveal-delay-6">
+        <div class="label-mono accent2">④ 🎯</div>
+        <h4 class="accent2">복잡한 일 실행기</h4>
+        <p>모호함 → 명확함 → 실행<br><span class="dim">→ 다음 슬라이드 Ouroboros</span></p>
+      </div>
+    </div>
+    <div class="spacer-sm"></div>
+
+    <!-- 역할 매핑 박스 -->
+    <div class="reveal reveal-delay-7" style="background: rgba(200,155,255,0.06); border-left: 3px solid var(--accent); padding: 0.7rem 1.1rem; border-radius: 6px;">
+      <div class="mono accent bold" style="font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;">🗺️ 도구 → 역할 매핑</div>
+      <p style="margin-top: 0.3rem; font-size: clamp(0.85rem, 1.25vw, 1rem); color:#ccc;">
+        <span class="bold accent2">Hermes</span>: <span class="bold">짧은 일 메신저 AI</span> — 슬랙·폰에서 한 줄 (Layer ①)<br>
+        <span class="bold accent2">Claude Code</span>: <span class="bold">긴 작업 동료</span> — 컴퓨터 앞 깊은 작업 (Layer ①)<br>
+        <span class="bold accent2">cliproxy</span>: 둘 다 백엔드로 — 회사 Teams 토큰 풀 (Layer ①)<br>
+        <span class="bold accent2">Ouroboros</span>: <span class="bold">복잡한 일 실행기</span> — 위에 (Layer ④)
+      </p>
+    </div>
+
+    <div class="spacer-sm"></div>
+
+    <!-- knowledge-base 받기·쓰기 박스 -->
+    <div class="reveal reveal-delay-7" style="background: rgba(255,213,71,0.08); border-left: 3px solid var(--accent2); padding: 0.7rem 1.1rem; border-radius: 6px;">
+      <div class="mono accent2 bold" style="font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;">🗂️ Layer ②③ 회사 컨텍스트 — 받기 & 쓰기</div>
+      <p style="margin-top: 0.3rem; font-size: clamp(0.85rem, 1.25vw, 1rem); color:#ccc;">
+        <span class="bold accent2">받기</span> (안 받은 사람):<br>
+        <span class="mono" style="font-size:0.85em;">git clone git@github.com:driving-teacher-bot/driving-teacher-knowledge-base.git</span><br><br>
+        <span class="bold accent2">쓰기</span> — Claude Code/Hermes에서:<br>
+        <span class="mono">/kb [질문]</span> — 운전선생 질문 자동 검색 (그래프+Grep+파일)<br>
+        <span class="mono">/graphify query "질문"</span> — 세부 검색<br>
+        <span class="mono">@../driving-teacher-knowledge-base/wiki/...</span> — 직접 참조<br>
+        <span class="dim">구조: raw/ 원본 · wiki/ AI 정리 · graph-v2/ 그래프</span>
+      </p>
+    </div>
+
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-7" style="color:#ddd; font-size: clamp(0.95rem, 1.4vw, 1.2rem);">
+      <span class="badge badge-gold">우리 자산</span> Layer ②③ — 회사 색을 입힌 스킬들
+    </p>
+  </div>
+
+  <!-- 5.12. Ouroboros 소개 — Layer ④의 답 -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">5.12</span><span class="sep">—</span><span class="label">Layer ④의 답</span></div>
+    <h2 class="reveal reveal-delay-1 glow-gold">
+      <span class="accent2">Ouroboros.</span>
+    </h2>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-2 dim" style="font-size: clamp(0.95rem, 1.4vw, 1.2rem);">
+      복잡한 일 실행기 — <span class="accent">"모호함 → 명확함 → 실행"</span> · <span class="mono">github.com/Q00/ouroboros</span>
+    </p>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-2" style="font-size: clamp(0.95rem, 1.4vw, 1.2rem); color: #ddd;">
+      <span class="accent2 bold">"Stop prompting. Start specifying."</span><br>
+      <span class="dim">병목은 AI 능력이 아니라, 사람의 명확성.</span>
+    </p>
+    <div class="spacer"></div>
+    <h3 class="reveal reveal-delay-3 accent2">5단계 파이프라인</h3>
+    <div class="diagram reveal reveal-delay-3" style="margin-top: 0.6rem;">
+      <div class="node">interview</div>
+      <span class="arrow">→</span>
+      <div class="node">seed</div>
+      <span class="arrow">→</span>
+      <div class="node">run</div>
+      <span class="arrow">→</span>
+      <div class="node">evaluate</div>
+      <span class="arrow">→</span>
+      <div class="node gold">evolve</div>
+    </div>
+    <div class="spacer-sm"></div>
+    <ul class="hierarchy reveal reveal-delay-4">
+      <li><span class="bold">interview</span> — "정확히 뭐 원해요?" 모호함 자동 추출</li>
+      <li><span class="bold">seed</span> — 사용자 답 받아서 명세 자동 생성</li>
+      <li><span class="bold">run</span> — 명세 기반 실행 (핵심)</li>
+      <li><span class="bold">evaluate</span> — 결과 검증 → 실패 자동 감지 → 재시도</li>
+      <li class="last"><span class="dim">evolve — 다음번 자동 (부가 기능)</span></li>
+    </ul>
+
+    <div class="spacer-sm"></div>
+
+    <!-- Q&A 박스 — Hermes vs Ouroboros -->
+    <div class="reveal reveal-delay-5" style="background: rgba(200,155,255,0.08); border-left: 3px solid var(--accent); padding: 0.9rem 1.2rem; border-radius: 6px;">
+      <div class="mono accent bold" style="font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;">❓ "Hermes로는 안 되나요?"</div>
+      <p style="margin-top: 0.4rem; font-size: clamp(0.92rem, 1.35vw, 1.1rem);">
+        <span class="bold">Hermes</span> = <span class="accent2">간단한 한 줄</span> 받는 비서 (받자마자 AI에 던짐)<br>
+        <span class="bold">Ouroboros</span> = <span class="accent2">큰 일을 받아 "정확히 뭐죠?" 묻고 실행</span>하는 PM<br>
+        <span class="dim">→ 모호한 큰 일은 Hermes로 헛일. Ouroboros가 그 갭을 메움.</span>
+      </p>
+    </div>
+
+    <div class="spacer-sm"></div>
+
+    <p class="reveal reveal-delay-6" style="color:#ccc; font-size: clamp(0.92rem, 1.35vw, 1.1rem);">
+      <span class="badge badge-purple">외부 오픈소스</span> Hermes 공식 지원 (Claude Code · Codex · OpenCode와 함께)<br>
+      <span class="badge badge-gold">강사 maintain</span> · 직접 설치 + 컨트리뷰션 가능
+    </p>
+  </div>
+
+  <!-- 5.13. 박주영 라이브 데모 -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">5.13</span><span class="sep">—</span><span class="label">🎬 라이브 데모</span></div>
+    <h2 class="reveal reveal-delay-1">
+      박주영 님 <span class="accent2">첫 출근</span> 워크플로우.
+    </h2>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-2 dim" style="font-size: clamp(0.95rem, 1.4vw, 1.2rem);">
+      슬랙에서 한 줄 → Hermes → Ouroboros → 자동 모호함 추출.
+    </p>
+    <div class="spacer"></div>
+    <div class="terminal reveal reveal-delay-3">
+      <div class="terminal-bar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+      </div>
+      <div class="terminal-body">
+        <div class="dim" style="font-size: 0.85em;"># 슬랙에서 한 줄</div>
+        <div><span class="terminal-prompt">@hermes-bot</span> <span class="terminal-cmd">ooo interview "박주영 님 첫 출근 온보딩 워크플로우"</span></div>
+        <div class="dim" style="font-size: 0.85em; margin-top: 0.6rem;"># Ouroboros 자동 응답:</div>
+        <div class="accent">  "어떤 정보? 회사 도메인 / 슬랙 채널 / 도구 셋업?"</div>
+        <div class="accent">  "만나야 할 사람 = 직무별? 1on1 일정 자동?"</div>
+        <div class="accent">  "체크리스트 어디에? 노션? 슬랙 DM? 달력?"</div>
+        <div class="dim" style="font-size: 0.85em; margin-top: 0.6rem;"># 박주영 님이 한 번 답</div>
+        <div class="accent2">  → seed.yaml 자동 생성</div>
+        <div class="dim" style="font-size: 0.85em; margin-top: 0.6rem;"># 다음 신입에겐?</div>
+        <div class="accent2">  → evolve로 자동 적용. 알잘딱깔센 ✨</div>
+      </div>
+    </div>
+    <div class="spacer-sm"></div>
+
+    <!-- 박주영 님 다음 단계 — day1-onboarding -->
+    <div class="reveal reveal-delay-4" style="background: rgba(255,213,71,0.1); border-left: 3px solid var(--accent2); padding: 0.8rem 1.2rem; border-radius: 6px;">
+      <div class="mono accent2 bold" style="font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;">🎁 박주영 님께 — 본격 시작</div>
+      <p style="margin-top: 0.4rem; font-size: clamp(0.92rem, 1.35vw, 1.1rem);">
+        오늘 셋업 끝나면 첫 명령은 <span class="mono accent2 bold">/day1-onboarding</span><br>
+        <span class="dim">— Week 1 부터 차근차근. Claude Code 체험 → MCP 연결 → 첫 스킬 만들기.</span>
+      </p>
+    </div>
+
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-5" style="color:#ddd; font-size: clamp(1rem, 1.5vw, 1.25rem); text-align: center;">
+      "도구는 외부, <span class="accent2 bold">색은 우리 것.</span>"
+    </p>
   </div>
 
   <!-- 6. Retro — what changed most -->
