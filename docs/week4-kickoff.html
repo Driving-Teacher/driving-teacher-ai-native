@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Native Camp — Week 4 Kickoff</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+  @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #1C1C1C;
+    --fg: #F6F6F3;
+    --accent: #C89BFF;
+    --accent2: #FFD547;
+    --red: #FF7439;
+    --green: #1AC569;
+    --dim: #6B6B6B;
+    --surface: #2A2929;
+    --purple-deep: #7B5EA7;
+    --gold: #FFD547;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Pretendard Variable', 'Pretendard', sans-serif;
+    --display: 'Syncopate', sans-serif;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    overflow: hidden;
+  }
+
+  .deck { width: 100vw; height: 100vh; position: relative; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8vh 10vw;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide.active .reveal { animation: slideUp 0.7s ease forwards; }
+  .slide.active .reveal-delay-1 { animation-delay: 0.15s; }
+  .slide.active .reveal-delay-2 { animation-delay: 0.3s; }
+  .slide.active .reveal-delay-3 { animation-delay: 0.45s; }
+  .slide.active .reveal-delay-4 { animation-delay: 0.6s; }
+  .slide.active .reveal-delay-5 { animation-delay: 0.75s; }
+  .slide.active .reveal-delay-6 { animation-delay: 0.9s; }
+  .slide.active .reveal-delay-7 { animation-delay: 1.05s; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal { opacity: 0; }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 6vw, 6.5rem);
+    font-weight: 700; text-transform: uppercase;
+    line-height: 1.05; letter-spacing: -0.03em;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4.5vw, 5rem);
+    font-weight: 900; line-height: 1.15; letter-spacing: -0.02em;
+  }
+
+  h3 {
+    font-size: clamp(1.2rem, 2vw, 2.2rem);
+    font-weight: 700; line-height: 1.3;
+  }
+
+  p, li {
+    font-size: clamp(0.9rem, 1.5vw, 1.35rem);
+    line-height: 1.6; font-weight: 300;
+  }
+
+  .accent { color: var(--accent); }
+  .accent2 { color: var(--accent2); }
+  .dim { color: var(--dim); }
+  .bold { font-weight: 700; }
+  .mono { font-family: var(--mono); }
+  .red { color: var(--red); }
+  .green { color: var(--green); }
+
+  .big-quote {
+    font-family: var(--sans);
+    font-size: clamp(1.8rem, 4vw, 4.5rem);
+    font-weight: 800; line-height: 1.3; max-width: 90%;
+  }
+
+  .big-quote::before {
+    content: '\201C'; color: var(--accent);
+    font-size: 1.5em; line-height: 0;
+    vertical-align: -0.15em; margin-right: 0.05em;
+  }
+
+  .big-quote::after {
+    content: '\201D'; color: var(--accent);
+    font-size: 1.5em; line-height: 0;
+    vertical-align: -0.15em; margin-left: 0.05em;
+  }
+
+  .big-number {
+    font-family: var(--display);
+    font-size: clamp(4rem, 10vw, 10rem);
+    font-weight: 700; color: var(--accent);
+    line-height: 1;
+  }
+
+  /* ── Stage Flow ── */
+  .stage-flow { display: flex; flex-direction: column; gap: 0; }
+
+  .stage {
+    display: flex; align-items: flex-start; gap: 2rem;
+    padding: 1.5rem 0; border-left: 3px solid var(--dim);
+    padding-left: 2rem; position: relative;
+  }
+
+  .stage::before {
+    content: ''; position: absolute; left: -8px; top: 1.8rem;
+    width: 13px; height: 13px; border-radius: 50%;
+    background: var(--dim);
+  }
+
+  .stage.current { border-left-color: var(--accent); }
+  .stage.done { border-left-color: var(--accent2); }
+
+  .stage.current::before {
+    background: var(--accent);
+    box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(200, 155, 255, 0.3);
+  }
+
+  .stage.done::before { background: var(--accent2); }
+
+  .stage-num {
+    font-family: var(--mono);
+    font-size: clamp(0.8rem, 1.2vw, 1.1rem);
+    color: var(--dim); min-width: 2rem; padding-top: 0.2rem;
+  }
+
+  .stage.current .stage-num { color: var(--accent); }
+  .stage.done .stage-num { color: var(--accent2); }
+
+  .stage-content h3 {
+    font-size: clamp(1.1rem, 2vw, 1.8rem); margin-bottom: 0.3rem;
+  }
+
+  .stage-content p {
+    font-size: clamp(0.85rem, 1.3vw, 1.15rem);
+    color: var(--dim); font-weight: 300;
+  }
+
+  .stage.current .stage-content h3 { color: var(--fg); }
+  .stage.current .stage-content p { color: #999; }
+  .stage.done .stage-content h3 { color: #ddd; }
+  .stage:not(.current):not(.done) .stage-content h3 { color: var(--dim); }
+
+  /* ── Terminal ── */
+  .terminal {
+    background: #1a1a1a; border: 1px solid #333;
+    border-radius: 12px; padding: 0; max-width: 100%; width: 100%;
+    overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+  }
+
+  .terminal-bar {
+    background: #2a2a2a; padding: 0.8rem 1.2rem;
+    display: flex; gap: 0.5rem; align-items: center;
+  }
+
+  .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .terminal-dot.red { background: #ff5f57; }
+  .terminal-dot.yellow { background: #ffbd2e; }
+  .terminal-dot.green { background: #28ca41; }
+
+  .terminal-body {
+    padding: 1.2rem 1.5rem 1.5rem; font-family: var(--mono);
+    font-size: clamp(0.8rem, 1.2vw, 1rem); line-height: 1.8;
+  }
+
+  .terminal-prompt { color: var(--accent); }
+  .terminal-cmd { color: var(--fg); }
+  .terminal-comment { color: var(--dim); }
+
+  .terminal-cursor {
+    display: inline-block; width: 10px; height: 1.3em;
+    background: var(--fg); vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* ── Hierarchy List ── */
+  .hierarchy { list-style: none; margin: 0.8rem 0; }
+
+  .hierarchy li {
+    padding: 0.4rem 0; padding-left: 2rem; position: relative;
+    font-size: clamp(0.9rem, 1.4vw, 1.25rem);
+  }
+
+  .hierarchy li::before {
+    content: ''; position: absolute; left: 0; top: 50%;
+    width: 8px; height: 2px; background: var(--accent);
+  }
+
+  .hierarchy li.last::before {
+    background: var(--accent2); width: 12px; height: 3px;
+  }
+
+  /* ── Tag ── */
+  .tag {
+    display: inline-block; font-family: var(--mono);
+    font-size: clamp(0.85rem, 1.2vw, 1.1rem); font-weight: 700;
+    letter-spacing: 0.05em; margin-bottom: 1.5rem;
+  }
+  .tag .num { color: var(--accent); margin-right: 0.3em; }
+  .tag .sep { color: var(--dim); margin-right: 0.5em; }
+  .tag .label { color: #888; }
+
+  .spacer { height: 1.5rem; }
+  .spacer-sm { height: 0.6rem; }
+
+  /* ── Glow ── */
+  .glow-purple { text-shadow: 0 0 30px rgba(200, 155, 255, 0.4), 0 0 60px rgba(200, 155, 255, 0.15); }
+  .glow-gold   { text-shadow: 0 0 30px rgba(255, 213, 71, 0.4), 0 0 60px rgba(255, 213, 71, 0.15); }
+
+  /* ── Badge ── */
+  .badge {
+    display: inline-block; padding: 0.25rem 0.8rem;
+    border-radius: 20px; font-size: 0.8rem; font-weight: 700;
+    margin-right: 0.5rem;
+  }
+  .badge-purple { background: rgba(200,155,255,0.15); color: var(--accent); border: 1px solid rgba(200,155,255,0.3); }
+  .badge-gold   { background: rgba(255,213,71,0.15);  color: var(--accent2); border: 1px solid rgba(255,213,71,0.3); }
+  .badge-green  { background: rgba(26,197,105,0.15);  color: var(--green); border: 1px solid rgba(26,197,105,0.3); }
+  .badge-red    { background: rgba(255,116,57,0.15);  color: var(--red); border: 1px solid rgba(255,116,57,0.3); }
+
+  /* ── Progress + Counter ── */
+  .progress {
+    position: fixed; bottom: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 0.4s ease; z-index: 100;
+  }
+
+  .counter {
+    position: fixed; bottom: 2rem; right: 3rem;
+    font-family: var(--mono); font-size: 0.85rem;
+    color: var(--dim); z-index: 100;
+  }
+
+  .noise {
+    position: fixed; inset: 0; pointer-events: none; z-index: 99; opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ── Cards / Grid ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+
+  .card {
+    background: var(--surface); border: 1px solid #333;
+    border-radius: 14px; padding: 1.5rem 1.6rem;
+  }
+  .card.purple { border-color: rgba(200,155,255,0.3); }
+  .card.gold   { border-color: rgba(255,213,71,0.3); }
+  .card.dim    { border-color: #2a2a2a; opacity: 0.55; }
+
+  .card .label-mono {
+    font-family: var(--mono); font-size: 0.8rem; color: var(--dim);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .card h4 {
+    font-size: clamp(1rem, 1.7vw, 1.5rem);
+    font-weight: 700; margin-bottom: 0.4rem;
+  }
+
+  .card p { font-size: clamp(0.85rem, 1.2vw, 1.05rem); color: #aaa; }
+
+  /* ── Slack/Quote bubble ── */
+  .slack-msg {
+    background: #2C2C3A; border-radius: 10px; padding: 1rem 1.3rem;
+    margin: 0.4rem 0; border-left: 3px solid var(--accent);
+  }
+  .slack-msg.gold { border-left-color: var(--accent2); }
+  .slack-msg .sender {
+    font-weight: 700; font-size: 0.9rem; color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  .slack-msg.gold .sender { color: var(--accent2); }
+  .slack-msg .body {
+    font-size: clamp(0.85rem, 1.2vw, 1.05rem);
+    color: #ccc; line-height: 1.5;
+  }
+
+  /* ── Diagram ── */
+  .diagram {
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    flex-wrap: wrap; margin: 1rem 0;
+  }
+  .node {
+    background: var(--surface); border: 1.5px solid #444;
+    border-radius: 12px; padding: 1rem 1.4rem; min-width: 140px;
+    text-align: center; font-size: 0.95rem;
+  }
+  .node.purple { border-color: var(--accent); color: var(--accent); }
+  .node.gold   { border-color: var(--accent2); color: var(--accent2); }
+  .node .sub { display: block; font-size: 0.75rem; color: var(--dim); margin-top: 0.2rem; font-family: var(--mono); }
+  .arrow { font-size: 1.5rem; color: var(--dim); }
+
+  /* ── Two-track block ── */
+  .track { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin: 1rem 0; }
+  .track-card {
+    background: var(--surface); border-radius: 14px; padding: 1.5rem;
+    border-top: 4px solid var(--accent);
+  }
+  .track-card.right { border-top-color: var(--accent2); }
+  .track-card h4 { margin-bottom: 0.5rem; font-size: clamp(1.1rem, 1.8vw, 1.5rem); }
+  .track-card .who { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); margin-bottom: 0.8rem; letter-spacing: 0.05em; }
+  .track-card.right .who { color: var(--accent2); }
+  .track-card ol { padding-left: 1.2rem; margin-top: 0.4rem; }
+  .track-card ol li { margin-bottom: 0.3rem; font-size: 0.95rem; color: #bbb; }
+
+  /* ── Declaration box ── */
+  .decl-box {
+    background: linear-gradient(135deg, rgba(200,155,255,0.08), rgba(255,213,71,0.08));
+    border: 1.5px solid rgba(200,155,255,0.3);
+    border-radius: 18px; padding: 2rem 2.4rem; margin: 1rem 0;
+  }
+  .decl-box .blank {
+    display: inline-block; min-width: 120px;
+    border-bottom: 2px dashed var(--accent2);
+    color: var(--accent2); font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    .slide { padding: 5vh 6vw; }
+    .grid-2, .grid-3, .grid-4, .track { grid-template-columns: 1fr; }
+    .stage { gap: 1rem; padding-left: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+<div class="progress" id="progress"></div>
+<div class="counter" id="counter"></div>
+
+<div class="deck" id="deck">
+
+  <!-- 1. Title -->
+  <div class="slide active">
+    <div class="tag reveal"><span class="num">01</span><span class="sep">—</span><span class="label">Week 4 Kickoff</span></div>
+    <h1 class="reveal reveal-delay-1 glow-gold" style="font-size:clamp(2.2rem,5.5vw,5.5rem);">
+      <span class="accent2">Day 1,</span><br>또는 <span class="accent">Day 30</span>.
+    </h1>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-2" style="font-size:clamp(1.1rem,2.2vw,1.8rem); color:#aaa; font-weight:300;">
+      AI Native Camp — <span class="accent bold">마지막 주차</span>
+    </p>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-3 dim" style="font-size:clamp(0.9rem,1.5vw,1.2rem);">
+      4주를 돌아보고, 같은 풀에 붙고, 한 줄을 선언합니다.
+    </p>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-4 mono dim" style="font-size:0.85rem;">2026.04.30 — 운전선생</p>
+  </div>
+
+  <!-- 2. Welcome + Install -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">02</span><span class="sep">—</span><span class="label">먼저 깔고 시작합니다</span></div>
+    <h2 class="reveal reveal-delay-1">
+      오늘 <span class="accent2 glow-gold">박주영 님</span> 첫 출근,<br>환영합니다.
+    </h2>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-2" style="font-size:clamp(1rem,1.6vw,1.4rem); color:#ccc;">
+      노트북 켜고 <span class="accent bold">한 줄</span>만 실행하세요. 백그라운드로 깔립니다.
+    </p>
+    <div class="spacer-sm"></div>
+    <div class="terminal reveal reveal-delay-3">
+      <div class="terminal-bar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+      </div>
+      <div class="terminal-body">
+        <div><span class="terminal-comment"># Claude Code 설치 (한 줄)</span></div>
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">npm install -g @anthropic-ai/claude-code</span></div>
+        <div class="dim" style="margin-top:0.4rem;">— 또는 Homebrew —</div>
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">brew install --cask claude-code</span><span class="terminal-cursor"></span></div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-4 dim">깔리는 동안 우리는 <span class="accent">4주를 돌아봅니다</span>. 끝나면 같은 풀에 붙어요.</p>
+  </div>
+
+  <!-- 3. Opening — 4-week timeline -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">03</span><span class="sep">—</span><span class="label">4주를 한 장면으로</span></div>
+    <h2 class="reveal reveal-delay-1">지난 4주, 우리에게<br>무슨 일이 있었나.</h2>
+    <div class="spacer-sm"></div>
+    <div class="stage-flow">
+      <div class="stage done reveal reveal-delay-2">
+        <div class="stage-num">W1</div>
+        <div class="stage-content">
+          <h3>체험 · MCP · 스킬</h3>
+          <p>Claude Code 처음 깔고, "AI에게 시키기" 시작</p>
+        </div>
+      </div>
+      <div class="stage done reveal reveal-delay-3">
+        <div class="stage-num">W2</div>
+        <div class="stage-content">
+          <h3>같이 배우기 — 페어 실습</h3>
+          <p>꿀팁·스킬·추천 도구·Git. 혼자 → 같이</p>
+        </div>
+      </div>
+      <div class="stage done reveal reveal-delay-4">
+        <div class="stage-num">W3</div>
+        <div class="stage-content">
+          <h3>항상 켜진 AI — Hermes</h3>
+          <p>슬랙에서 AI에게. 터미널 밖으로</p>
+        </div>
+      </div>
+      <div class="stage current reveal reveal-delay-5">
+        <div class="stage-num">W4</div>
+        <div class="stage-content">
+          <h3>회고 · 인계 · 선언</h3>
+          <p>데이터로 보고, 같은 풀에 붙고, 한 줄을 박는다</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Data — Zeude review -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">04</span><span class="sep">—</span><span class="label">데이터로 본 우리</span></div>
+    <h2 class="reveal reveal-delay-1">Zeude가 본 <span class="accent">4주</span>.</h2>
+    <div class="spacer"></div>
+    <div class="grid-3">
+      <div class="card purple reveal reveal-delay-2">
+        <div class="label-mono">누적 세션</div>
+        <h4 class="accent" style="font-size:clamp(2rem,3.5vw,3rem);">— · ——</h4>
+        <p>4주간 7명이 만든 흔적</p>
+      </div>
+      <div class="card purple reveal reveal-delay-3">
+        <div class="label-mono">Top 사용자</div>
+        <h4 style="font-size:clamp(1.3rem,2vw,1.8rem);">@—</h4>
+        <p>가장 많이 시킨 사람</p>
+      </div>
+      <div class="card purple reveal reveal-delay-4">
+        <div class="label-mono">Top 스킬</div>
+        <h4 class="mono" style="font-size:clamp(1rem,1.5vw,1.4rem);">/—</h4>
+        <p>가장 많이 호출된 스킬</p>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-5 dim" style="font-size:clamp(0.95rem,1.3vw,1.15rem);">
+      <span class="accent2 bold">안 쓴 사람도 데이터입니다.</span> 왜 안 썼는지 — 그게 다음 캠프의 출발선.
+    </p>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-6 mono dim" style="font-size:0.85rem;">→ 라이브: zeude.vercel.app 대시보드 함께 보기</p>
+  </div>
+
+  <!-- 5. Homework — Hermes 1주 사용기 -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">05</span><span class="sep">—</span><span class="label">숙제 공유</span></div>
+    <h2 class="reveal reveal-delay-1">Hermes, 한 주 써봤더니?</h2>
+    <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-2">한 명씩 30초. 솔직하게.</p>
+    <div class="spacer"></div>
+    <div class="grid-4">
+      <div class="card gold reveal reveal-delay-3">
+        <div class="label-mono accent2">A</div>
+        <h4>자주 썼다</h4>
+        <p>매일·여러 번. 어디서 어떻게?</p>
+      </div>
+      <div class="card purple reveal reveal-delay-4">
+        <div class="label-mono accent">B</div>
+        <h4>가끔 썼다</h4>
+        <p>한두 번. 언제 떠올랐나?</p>
+      </div>
+      <div class="card dim reveal reveal-delay-5">
+        <div class="label-mono">C</div>
+        <h4>잘 안 썼다</h4>
+        <p>왜 안 됐는지 — 솔직하게</p>
+      </div>
+      <div class="card gold reveal reveal-delay-6">
+        <div class="label-mono accent2">D</div>
+        <h4>AI한테 먼저 물어봤다</h4>
+        <p>사람보다 AI가 먼저 떠오른 순간</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Retro — what changed most -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">06</span><span class="sep">—</span><span class="label">4주간 회고</span></div>
+    <h2 class="reveal reveal-delay-1">가장 크게 바뀐 것은?</h2>
+    <div class="spacer"></div>
+    <div class="grid-2" style="gap:1rem;">
+      <div class="card purple reveal reveal-delay-2">
+        <h4>① <span class="accent">시키는 게 자연스러워졌다</span></h4>
+        <p>"이거 내가 할까" 전에 "AI한테 시킬까"가 먼저 나옴</p>
+      </div>
+      <div class="card purple reveal reveal-delay-3">
+        <h4>② <span class="accent">반복 업무가 줄었다</span></h4>
+        <p>스킬·프롬프트로 자동화한 것들</p>
+      </div>
+      <div class="card gold reveal reveal-delay-4">
+        <h4>③ <span class="accent2">팀원이 뭘 하는지 보인다</span></h4>
+        <p>스킬 공유 · Zeude 대시보드</p>
+      </div>
+      <div class="card dim reveal reveal-delay-5">
+        <h4>④ <span style="color:#aaa;">아직 잘 모르겠다</span></h4>
+        <p>이것도 솔직한 답 — OK</p>
+      </div>
+    </div>
+    <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-6">멀티 선택 가능. 패턴이 보일 거예요.</p>
+  </div>
+
+  <!-- 7. The one line -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">07</span><span class="sep">—</span><span class="label">강사의 한 줄</span></div>
+    <div class="spacer"></div>
+    <div class="big-quote reveal reveal-delay-1 glow-purple" style="font-size:clamp(1.6rem,3.6vw,3.8rem);">
+      AI Native는<br>도구를 잘 쓰는 게 아니라,<br>
+      <span class="accent2 glow-gold">안 해도 되는 일을<br>발견하고 제거하는 것</span>입니다.
+    </div>
+    <div class="spacer"></div>
+    <p class="dim reveal reveal-delay-3 mono" style="font-size:0.85rem;">— Week 4의 결론, 캠프의 결론</p>
+  </div>
+
+  <!-- 8. cliproxy — why -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">08</span><span class="sep">—</span><span class="label">cliproxy — 왜 만들었나</span></div>
+    <h2 class="reveal reveal-delay-1">막혔던 길을 직접 뚫었습니다.</h2>
+    <div class="spacer"></div>
+    <div class="stage-flow">
+      <div class="stage done reveal reveal-delay-2">
+        <div class="stage-num">01</div>
+        <div class="stage-content">
+          <h3 class="red">2026-01 — Anthropic OAuth 끊김</h3>
+          <p>써드파티 클라이언트가 Claude 토큰 발급 못함</p>
+        </div>
+      </div>
+      <div class="stage done reveal reveal-delay-3">
+        <div class="stage-num">02</div>
+        <div class="stage-content">
+          <h3 class="red">2026-04 — 구독 크레딧도 차단</h3>
+          <p>Hermes / OpenClaw에서 Claude 사용 불가</p>
+        </div>
+      </div>
+      <div class="stage done reveal reveal-delay-4">
+        <div class="stage-num">03</div>
+        <div class="stage-content">
+          <h3>그래서 — 직접 만들었습니다</h3>
+          <p>회사 Teams 좌석을 팀이 같이 쓸 수 있는 우회로</p>
+        </div>
+      </div>
+      <div class="stage current reveal reveal-delay-5">
+        <div class="stage-num">04</div>
+        <div class="stage-content">
+          <h3 class="accent">오늘 — 팀에 인계합니다</h3>
+          <p>모두 같은 풀에 붙어서, 항상 켜진 Claude를 쓴다</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. cliproxy — how -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">09</span><span class="sep">—</span><span class="label">cliproxy — 어떻게 동작하나</span></div>
+    <h2 class="reveal reveal-delay-1">한 줄 다이어그램.</h2>
+    <div class="spacer"></div>
+    <div class="diagram reveal reveal-delay-2">
+      <div class="node">
+        <strong>팀원 8명</strong>
+        <span class="sub">Hermes · Claude Code</span>
+      </div>
+      <span class="arrow">→</span>
+      <div class="node purple">
+        <strong>cliproxy 서버</strong>
+        <span class="sub">공식 클라이언트 흉내</span>
+      </div>
+      <span class="arrow">→</span>
+      <div class="node gold">
+        <strong>Anthropic</strong>
+        <span class="sub">회사 Teams 풀</span>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <ul class="hierarchy reveal reveal-delay-3">
+      <li>각자 PC에서 한 번 로그인 → 토큰 발급</li>
+      <li>이후엔 Hermes·Claude Code가 알아서 cliproxy 경유</li>
+      <li class="last">사용량은 회사 Teams 풀에서 공동 차감 — 별도 결제 X</li>
+    </ul>
+  </div>
+
+  <!-- 10. Token policy — safety -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">10</span><span class="sep">—</span><span class="label">토큰 공유, 안전합니까</span></div>
+    <h2 class="reveal reveal-delay-1">한 장으로 정리.</h2>
+    <div class="spacer"></div>
+    <div class="grid-2">
+      <div class="card gold reveal reveal-delay-2">
+        <div class="label-mono accent2">OK</div>
+        <h4>회사 Teams 좌석 안에서</h4>
+        <p>유료 Teams 구독에 배정된 직원만 사용. 좌석 수만큼.</p>
+      </div>
+      <div class="card gold reveal reveal-delay-3">
+        <div class="label-mono accent2">OK</div>
+        <h4>같은 회사 직원끼리만</h4>
+        <p>외부 인원·개인 용도로 토큰 유출 금지.</p>
+      </div>
+      <div class="card purple reveal reveal-delay-4">
+        <div class="label-mono accent">방식</div>
+        <h4>cliproxy = 공식 클라이언트 흉내</h4>
+        <p>Anthropic CLI와 동일한 프로토콜. 우회가 아닌 클라이언트 변형.</p>
+      </div>
+      <div class="card reveal reveal-delay-5" style="border-color: rgba(255,116,57,0.3);">
+        <div class="label-mono red">NG</div>
+        <h4>토큰 외부 공유 / 개인 사이드 프로젝트</h4>
+        <p>Teams 약관 위반 — 절대 금지</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. Welcome setup — main event (REDESIGNED: 개인 한도 → 팀 풀) -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">11</span><span class="sep">—</span><span class="label">🎯 환영 셋업 — 메인 이벤트</span></div>
+    <h2 class="reveal reveal-delay-1 glow-purple">
+      <span class="accent2">개인 한도</span> → <span class="accent">팀 풀</span>
+    </h2>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-2" style="font-size:clamp(1rem,1.6vw,1.4rem); color:#ccc;">
+      각자 좌석을 cliproxy 풀로 묶음. <span class="accent bold">안 쓰는 좌석 = 다른 사람을 도움</span>.
+    </p>
+    <div class="spacer"></div>
+
+    <!-- BEFORE / AFTER -->
+    <div class="grid-2">
+      <div class="card reveal reveal-delay-3" style="border-color: rgba(255,116,57,0.3);">
+        <div class="label-mono red">BEFORE</div>
+        <h4 class="red">개인 좌석 1개</h4>
+        <p>한도 다 쓰면 멈춤<br>안 쓰는 사람 = 낭비</p>
+      </div>
+      <div class="card gold reveal reveal-delay-4">
+        <div class="label-mono accent2">AFTER</div>
+        <h4 class="accent2">8좌석 풀 (라운드로빈)</h4>
+        <p>한 명이 막혀도 다른 좌석 빌림<br>낭비 없음 · 한도 없음</p>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- 라이브 OAuth 절차 -->
+    <h3 class="reveal reveal-delay-5">라이브 등록 — 한 명씩 (~15분)</h3>
+    <div class="terminal reveal reveal-delay-6" style="margin-top:0.8rem;">
+      <div class="terminal-body">
+        <div><span class="terminal-comment"># 승아 화면 공유 (gcloud SSH 접속됨)</span></div>
+        <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">cli-proxy-api -claude-login --no-browser</span></div>
+        <div class="dim" style="font-size:0.85em;">→ 출력된 URL을 슬랙으로 차례인 분에게</div>
+        <div class="dim" style="font-size:0.85em;">→ 본인이 자기 회사 메일(<span class="mono">@tgsociety.co.kr</span>)로 OAuth 로그인</div>
+        <div class="dim" style="font-size:0.85em;">→ "다음!" — 7번 반복 (<span class="accent2">박주영 님 포함</span>)</div>
+        <div style="margin-top:0.4rem;"><span class="terminal-prompt">$</span> <span class="terminal-cmd">sudo systemctl restart cliproxyapi</span> <span class="dim">← 마지막 한 번</span></div>
+      </div>
+    </div>
+
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-7" style="font-size:clamp(0.95rem,1.4vw,1.2rem); color:#ddd;">
+      ✅ <span class="accent2 bold">8개 좌석 풀 완성</span> · 클라이언트 환경변수 셋업은 <span class="mono accent">/cliproxy-setup</span> 스킬로 자동
+    </p>
+  </div>
+
+  <!-- 12. AI Native Declaration -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">12</span><span class="sep">—</span><span class="label">AI Native 선언</span></div>
+    <h2 class="reveal reveal-delay-1">한 줄을 박습니다.</h2>
+    <div class="spacer"></div>
+    <div class="decl-box reveal reveal-delay-2">
+      <p style="font-size:clamp(1.3rem,2.5vw,2.2rem); font-weight:700; color:#fff; line-height:1.5;">
+        <span class="blank">&nbsp;____&nbsp;</span> 를 제거하고,<br>
+        그 시간에 <span class="blank">&nbsp;____&nbsp;</span> 를 하겠다.
+      </p>
+    </div>
+    <div class="spacer-sm"></div>
+    <div class="grid-2">
+      <div class="slack-msg reveal reveal-delay-3">
+        <div class="sender">기존 7명</div>
+        <div class="body">"___제거 / ___실행" — 4주 경험 기반의 액션 선언.</div>
+      </div>
+      <div class="slack-msg gold reveal reveal-delay-4">
+        <div class="sender">박주영 님 (변형)</div>
+        <div class="body">"내가 AI에게 가장 먼저 시키고 싶은 일 1개" — 첫날의 가설.</div>
+      </div>
+    </div>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-5 dim">한 명씩, 짧게. 슬라이드에 박제됩니다.</p>
+  </div>
+
+  <!-- 13. Closing -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">13</span><span class="sep">—</span><span class="label">Closing</span></div>
+    <h1 class="reveal reveal-delay-1 glow-gold" style="font-size:clamp(2rem,5vw,5rem);">
+      <span class="accent2">Day 1.</span><br>
+      <span class="accent">Day 30.</span><br>
+      같은 출발선.
+    </h1>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-2" style="font-size:clamp(1rem,1.6vw,1.4rem); color:#ccc;">
+      박주영 님에게는 첫날, 우리에게는 30일째.<br>
+      오늘부터 우리는 <span class="accent bold">같은 풀</span>에서 같은 도구로 일합니다.
+    </p>
+    <div class="spacer"></div>
+    <div class="terminal reveal reveal-delay-3" style="padding:1rem 1.5rem;">
+      <div><span class="terminal-comment"># 캠프가 끝나도 살아있는 것들:</span></div>
+      <div><span class="terminal-prompt">&gt;</span> <span class="terminal-cmd">/zeude</span> <span class="dim">← 대시보드는 계속 켜져있다</span></div>
+      <div><span class="terminal-prompt">&gt;</span> <span class="terminal-cmd">/hermes-usecases</span> <span class="dim">← 유스케이스는 쌓인다</span></div>
+      <div><span class="terminal-prompt">&gt;</span> <span class="terminal-cmd">cliproxy</span> <span class="dim">← 같은 풀, 항상 켜져있다</span></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="big-quote reveal reveal-delay-5" style="font-size:clamp(1.4rem,3vw,2.6rem);">
+      이건 끝이 아니라 <span class="accent2">시작</span>입니다.
+    </div>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-6 dim mono" style="font-size:0.85rem;">— 4주를 함께한 사람들에게 감사를</p>
+  </div>
+
+</div>
+
+<script>
+  const deck = document.getElementById('deck');
+  const slides = deck.querySelectorAll('.slide');
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  let current = 0;
+
+  function goTo(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides[current].classList.remove('active');
+    slides[current].querySelectorAll('.reveal').forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight;
+      el.style.animation = '';
+      el.style.opacity = '0';
+    });
+    current = n;
+    slides[current].classList.add('active');
+    slides[current].scrollTop = 0;
+    progress.style.width = ((current / (slides.length - 1)) * 100) + '%';
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault(); goTo(current + 1);
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault(); goTo(current - 1);
+    }
+    if (e.key === 'Home') goTo(0);
+    if (e.key === 'End') goTo(slides.length - 1);
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { diff > 0 ? goTo(current + 1) : goTo(current - 1); }
+  });
+
+  deck.addEventListener('click', (e) => {
+    if (e.target.closest('a')) return;
+    if (e.clientX > window.innerWidth / 2) goTo(current + 1);
+    else goTo(current - 1);
+  });
+
+  goTo(0);
+</script>
+
+</body>
+</html>
