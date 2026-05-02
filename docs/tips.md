@@ -52,10 +52,32 @@
 ## 컨텍스트 관리
 
 - 대화가 길어지면 `/compact` — 지금까지 내용을 압축
+- **`/compact Focus on X`** — 압축할 때 뭘 보존할지 지정 (예: "test output and code changes")
 - 완전히 새로 시작하려면 `/clear`
 - 컨텍스트 60% 넘기면 성능 떨어짐 — 일찍 압축하는 게 나음
 - 한 세션 = 한 작업 — 여러 작업을 한 세션에서 하지 마세요
 - 파일 참조: "이 파일 읽고 따라해" > 내용을 복붙해서 설명 (컨텍스트 절약)
+
+## 토큰 절약 (제일 중요)
+
+> 회사 Teams 좌석을 팀이 같이 쓰는 풀이라 한 명이 막 쓰면 모두에게 영향.
+
+**누구나 즉시 적용**
+- ⭐ **MCP보다 CLI 우선** — MCP 한 번 호출 = 수천 토큰. `gh`(GitHub), `notion-cli`(Notion), `aws`, `sentry-cli`가 훨씬 가벼움. 모르면 Claude한테 "이거 CLI로도 되나?"
+- `/usage` — 현재 세션 토큰·비용 통계 보기
+- `/context` — 컨텍스트 자리 누가 차지하는지 분석
+- `/statusline` — 상태바에 토큰 사용량 실시간 표시 (한번 켜두면 평생)
+- **모델은 Haiku → Sonnet → Opus 순으로** — Haiku는 Opus 대비 비용 약 1/5. 단순 작업은 Haiku로 충분. `/model`로 변경
+- **큰 탐색은 Subagent에 위임** — Explore subagent에 시키면 verbose 출력이 메인 컨텍스트를 안 먹음
+- ⚠️ **Agent teams = 7배 토큰** — 팀원 한 명당 컨텍스트 따로. 우리 풀 같이 쓰니 특히 주의
+
+**개발자에게 추가** (코드 만지는 분만)
+- `.claudeignore` 만들기 — `node_modules/`, `*.log`, `dist/` 등 제외해서 불필요한 파일 차단
+- Subagent에 `model: haiku` 명시 — 단순 위임은 Haiku에 보내서 비용 1/5
+- `/effort low` — Extended thinking 약하게. 단순 작업의 사고 토큰 줄임
+- 환경변수 `MAX_THINKING_TOKENS=8000` — 사고 토큰 상한 박기
+- **CLAUDE.md → Skills로 다이어트** — CLAUDE.md는 매 세션 항상 로드. 워크플로우별 긴 지시는 Skills로 옮겨서 호출될 때만 로드
+- 큰 파일 통째 Read ❌ → grep/find로 필요한 부분만
 
 ## 세션 이어가기
 
@@ -64,6 +86,12 @@
 - **세션 ID로 이어가기**: `claude --resume [session-id]`
 - 세션 ID 확인: `/sessions` 또는 세션 시작 시 터미널에 표시됨
 - 팁: 작업이 길어질 것 같으면 세션 시작할 때 메모해두세요
+
+## 체크포인트 & 복구
+
+- **Escape 더블탭** 또는 `/rewind` — 잘못된 방향 가면 체크포인트로 복원 (대화+코드 둘 다)
+- `/clear` 하기 전에 **`/rename`** — 이름 붙여두면 나중에 `/resume`에서 정확히 찾음
+- 작업 단위로 `/clear` → `/rename` → 다음 작업. 한 세션에 무한히 쌓지 않기
 
 ## 프롬프트 팁
 
