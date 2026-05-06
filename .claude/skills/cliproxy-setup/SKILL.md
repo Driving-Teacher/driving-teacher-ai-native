@@ -6,8 +6,12 @@ description: cliproxy 풀에 내 Claude Code/Hermes 연결. "/cliproxy-setup" �
 # cliproxy 셋업 — 팀 풀에 내 Claude Code/Hermes 붙이기
 
 > 회사 Teams 좌석 8개를 cliproxy 풀로 묶어서 라운드로빈으로 같이 쓰는 시스템.
-> 이 스킬은 **클라이언트(내 PC) 환경변수 셋업**만 다룬다.
-> 풀에 OAuth 등록 자체는 발표 라이브에서 1번 진행됨 (승아 진행).
+>
+> **연결은 두 단계:**
+> - ① 풀에 OAuth 등록 — 호스트(승아)가 회사 메일로 1인당 1회 등록 (발표 라이브 시 진행됨)
+> - ② **클라이언트 환경변수 셋업** — 이 스킬이 처리하는 부분
+>
+> 인증 방식은 풀에서 발급받은 `sk-...` 토큰을 슬랙 DM으로 받아 자기 PC에 박는 형태.
 
 ---
 
@@ -88,14 +92,25 @@ PowerShell 재시작.
 
 ## Block 3: 검증 (~1분)
 
-새 터미널에서:
+**새 터미널 / 새 PowerShell** 에서 환경변수 박혔는지 확인:
+
+### Mac / Linux
 
 ```bash
 echo $ANTHROPIC_BASE_URL
 # → https://rr-proxy-vm.tail7f1c29.ts.net 가 출력되어야 함
 ```
 
-Claude Code로 한 줄 호출 테스트:
+### Windows (PowerShell)
+
+```powershell
+echo $env:ANTHROPIC_BASE_URL
+# → https://rr-proxy-vm.tail7f1c29.ts.net 가 출력되어야 함
+```
+
+→ 출력이 비어있으면 새 셸 안 띄운 것. 터미널/PowerShell 완전히 종료 후 다시 열기.
+
+### Claude Code 한 줄 호출
 
 ```bash
 claude
@@ -121,8 +136,9 @@ claude
 
 ### 환경변수가 안 박힘
 
-- 새 터미널에서만 적용됨. 이미 켜둔 터미널은 `source ~/.zshrc` 또는 재시작
-- Mac shell이 zsh가 아닐 수 있음. `echo $SHELL`로 확인 후 맞는 파일에 추가
+- **Mac/Linux**: 새 터미널에서만 적용. 이미 켜둔 터미널은 `source ~/.zshrc` 또는 재시작
+- **Mac shell이 zsh가 아닐 수 있음**: `echo $SHELL`로 확인 후 맞는 파일(`~/.bashrc` 등)에 추가
+- **Windows**: PowerShell **완전히 종료 후 다시 열기** (탭만 닫으면 안 됨). VSCode 사용 시 VSCode 자체 재시작 필요. `setx` 또는 `[System.Environment]::SetEnvironmentVariable` 둘 중 하나만 써도 OK
 
 ### 모델 이름 에러 (`unknown provider`)
 

@@ -15,6 +15,59 @@ description: AI Native Camp Week 1 실습. Claude Code 체험 → MCP 연결 →
 > **절대 한 번에 여러 Block을 진행하지 않는다.**
 > 하나의 Block이 완료될 때까지 다음 Block을 시작하지 않는다.
 > 사용자의 응답을 기다린 후에만 진행한다.
+> **막히면 5분 이상 붙잡지 않고 다음으로** — 호스트(승아)에게 슬랙 #ai-native-camp DM.
+
+---
+
+## Block 0: 사전 점검 (~2분)
+
+> 박주영처럼 Claude Code 처음 켜는 분이라면 이 Block부터.
+
+### 1. 환경 확인
+
+```json
+AskUserQuestion({
+  "questions": [{
+    "question": "현재 환경 알려주세요.",
+    "header": "OS/도구",
+    "options": [
+      {"label": "Mac, 터미널에서 claude 실행 중", "description": "표준 흐름"},
+      {"label": "Windows, PowerShell에서 claude 실행 중", "description": "OS 분기 활성화"},
+      {"label": "VSCode 확장에서 Claude Code 사용 중", "description": "터미널이 VSCode 안에 있음"},
+      {"label": "터미널 켜본 적 없음", "description": "호스트에게 도움 요청 필요"}
+    ],
+    "multiSelect": false
+  }]
+})
+```
+
+마지막 옵션이면 "호스트에게 화면 공유 요청" 안내 후 일시 정지.
+
+### 2. claude 명령어 동작 확인
+
+```bash
+claude --version
+```
+
+→ `2.0.0` 이상이면 OK. 미만이거나 명령어 없음 → 슬랙 #ai-native-camp 에 OS와 함께 보고. 호스트가 화면 공유로 도움.
+
+### 3. 작업 폴더 확인
+
+박주영이 어느 폴더에서 시작할지 정함:
+
+- **Mac/Linux**: `~/Documents/driving-teacher-day1` (호스트가 사전 안내)
+- **Windows**: `%USERPROFILE%\Documents\driving-teacher-day1`
+
+```bash
+mkdir -p ~/Documents/driving-teacher-day1 && cd ~/Documents/driving-teacher-day1
+```
+
+(Windows PowerShell)
+```powershell
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\Documents\driving-teacher-day1"; cd "$env:USERPROFILE\Documents\driving-teacher-day1"
+```
+
+→ 이 폴더 안에 Block 1의 `output/` 도 자동 생성됨.
 
 ---
 
@@ -55,7 +108,8 @@ AskUserQuestion({
 
 4. 선택한 업무를 실행하되, **파일을 직접 생성**해서 결과를 저장한다.
    (이것이 ChatGPT와의 차이 — 답변을 복사할 필요 없이 파일이 바로 생긴다)
-   - 파일은 `output/` 폴더에 저장
+   - 파일은 `output/` 폴더에 저장 (Claude가 폴더 없으면 자동 생성)
+   - 실패 시 `mkdir -p output` (Mac/Linux) / `mkdir output` (Windows PowerShell) 수동 생성 후 재시도
    - **반드시 예시 데이터임을 명시**한다 ("이건 실제 데이터가 아니라 예시입니다. 실제 데이터를 쓰려면 다음 단계인 MCP 연결이 필요해요.")
 
 5. 결과를 보여주고 "파일이 바로 생겼죠?"라고 설명.
@@ -78,7 +132,7 @@ Claude Code에는 기억 시스템이 있습니다. 3가지예요.
 - "이제 새 세션을 열어도 Claude가 여러분을 기억합니다."
 - **핵심 메시지**: "ChatGPT는 매번 처음부터 설명해야 하지만, Claude Code는 기억합니다. 이게 'AI가 출근한 것'의 의미예요."
 
-7. 퀴즈로 핵심을 확���한다:
+7. 퀴즈로 핵심을 확인한다:
 
 ```json
 AskUserQuestion({
@@ -193,6 +247,38 @@ API 키를 발급받으면 **한 마디만 안내한다**:
 > 기술적 설명(.env, .gitignore 등)은 하지 않는다. 비개발자에게 혼란만 준다.
 > `claude mcp add` 명령어가 키를 안전하게 저장한다는 것만 전달하면 충분.
 
+### claude mcp add 실제 명령어 형식
+
+서비스별 정확한 호출. 새 터미널에서 실행:
+
+```bash
+# Notion
+claude mcp add notion --env NOTION_API_KEY=<발급받은_키> -- npx -y @modelcontextprotocol/server-notion
+
+# Slack (Slack Bot Token + Team ID 필요)
+claude mcp add slack --env SLACK_BOT_TOKEN=<토큰> --env SLACK_TEAM_ID=<팀ID> -- npx -y @modelcontextprotocol/server-slack
+
+# Tavily 웹 검색
+claude mcp add tavily --env TAVILY_API_KEY=<키> -- npx -y @modelcontextprotocol/server-tavily
+
+# Google Drive
+claude mcp add gdrive -- npx -y @modelcontextprotocol/server-gdrive
+# → 첫 호출 시 OAuth 브라우저 자동 열림
+```
+
+연결 후 검증:
+
+```bash
+claude mcp list
+# → 방금 추가한 서비스가 ✅ 표시되어야 함
+```
+
+**Windows (PowerShell)** — 동일하지만 줄바꿈 `\` 대신 한 줄로:
+
+```powershell
+claude mcp add notion --env NOTION_API_KEY=<키> -- npx -y @modelcontextprotocol/server-notion
+```
+
 ### 막혔을 때 대안 경로
 
 연결이 안 되면 (권한 없음, API 키 발급 불가 등) **바로 대안을 제시**한다:
@@ -304,7 +390,11 @@ AskUserQuestion({
 4. 선택한 스킬의 SKILL.md를 **사용자와 대화하면서** 만든다:
    - "이 스킬이 어떤 입력을 받으면 좋을까요?"
    - "출력 형식은 어떻게 하면 좋을까요?"
-   - `.claude/skills/` 아래에 실제 파일을 생성
+   - 파일 생성 경로 (절대 경로):
+     - **Mac/Linux**: `~/.claude/skills/<스킬이름>/SKILL.md` (전역) 또는 `<현재폴더>/.claude/skills/<스킬이름>/SKILL.md` (프로젝트)
+     - **Windows**: `%USERPROFILE%\.claude\skills\<스킬이름>\SKILL.md` (전역)
+   - **추천**: 처음엔 전역 (`~/.claude/skills/`) — 어느 폴더에서든 호출 가능
+   - 폴더 없으면 자동 생성. 안 되면 `mkdir -p ~/.claude/skills/<스킬이름>` 수동
 
 5. 만든 스킬을 **바로 테스트**한다:
    - 실제로 실행해보고 결과를 확인
@@ -338,9 +428,55 @@ AskUserQuestion({
 다음 주에는 이 스킬을 실전에 써보고, 팀원들과 공유합니다.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📝 숙제는 /homework 으로 확인하세요!
+다음 단계 (이 명령어가 안 보이면 슬랙 #ai-native-camp DM):
 
-💡 7개 기능 전체를 더 배우고 싶다면:
-   /claude-code-guide
+📝 /homework — Day별 숙제
+💡 /claude-code-guide — 7개 기능 가이드
+🔧 /tips — 팀 꿀팁 모음
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+명령어 안 보이면 호스트(승아)에게 슬랙으로 화면 캡처 공유.
 ```
+
+---
+
+## 트러블슈팅
+
+### Block 1 — 파일 저장 실패
+
+- `output/` 폴더 권한 문제 → `chmod u+w .` (Mac/Linux) 후 재시도
+- 디스크 풀 → `df -h` (Mac/Linux) / `Get-PSDrive` (Windows)로 용량 확인
+- Auto Memory가 안 잡힌 것 같으면 → 새 세션 (`exit` 후 `claude` 재실행) 후 "내 이름 기억해?" 물어보기
+
+### Block 2 — MCP 연결 실패
+
+- **API 키 발급 불가** (회사 Admin 권한 필요) → 개인 워크스페이스로 먼저 (예: 개인 Notion). 캠프 끝나고 회사 권한 받으면 다시
+- **`claude mcp add` 명령어 미인식** → Claude Code 버전 2.0 이상인지 (`claude --version`)
+- **연결됐는데 데이터 못 읽음** → `claude mcp list` 로 ✅ 확인. 빨간색이면 키 오류
+- **5분 이상 막혔다** → 그냥 다음으로. MCP는 숙제로
+
+### Block 3 — 스킬 파일 생성 실패
+
+- 경로 못 찾음 → 위에 박힌 절대 경로 그대로 복붙
+- 권한 문제 (Mac/Linux) → `~/.claude/` 폴더 권한 확인 (`ls -la ~/.claude`)
+- Windows에서 `%USERPROFILE%` 안 풀림 → `$env:USERPROFILE` 사용
+
+### 어디서든 — 막혔을 때 에스컬레이션
+
+1. **5분 자체 시도** — 위 트러블슈팅 따라하기
+2. **옆 페어/같은 OS 사용자 페어** — 같이 보기
+3. **슬랙 `#ai-native-camp`** — 화면 캡처 + 에러 메시지 함께 공유
+4. **호스트(승아) DM** — 그래도 안 되면 직접
+
+---
+
+## 호스트(승아) 메모
+
+- 박주영 (신규) 또는 캠프 못 받은 분이 첫 호출하는 스킬
+- **첫 호출 시 호스트가 옆에 붙어있는 게 안전** — 발표 직후 5.15 핸즈온 동안 박주영 페어로
+- Block 0 사전 점검에서 "터미널 켜본 적 없음" 응답 → 즉시 화면 공유 + 함께 진행
+- Block 2 MCP 연결은 **회사 도구 권한 문제로 막힐 가능성 가장 큼** — 사전에 박주영 개인 노션/Tavily 키 발급 안내
+- 막힌 사람 처리 3순위:
+  1. 같은 OS 페어
+  2. 슬랙 #ai-native-camp 공유
+  3. 호스트 화면 공유
