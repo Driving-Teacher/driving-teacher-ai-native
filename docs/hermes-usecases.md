@@ -1,10 +1,24 @@
 # Hermes Agent 유스케이스 가이드
 
-> AI Native Camp Week 3 팀원용 — 슬랙 봇한테 뭘 시킬 수 있는지 총정리
+> 운전선생 전 팀원용 — 슬랙 봇한테 뭘 시킬 수 있는지 총정리
 
 Hermes는 슬랙 DM으로 AI에게 업무를 요청하는 에이전트입니다.
 터미널을 열 필요 없이, 슬랙에서 자연어로 대화하면 됩니다.
 이 문서는 "뭘 시켜야 할지 모르겠다"는 분들을 위한 실전 레시피입니다.
+
+> 📝 **새 유스케이스 추가하려면**: 이 파일 직접 편집 → PR 또는 슬랙 #ai-native-camp 에 텍스트로 공유
+
+---
+
+## 🌱 처음이라면 — 이 3개부터 (Quickstart)
+
+신규 팀원/캠프 못 받은 분은 **아래 3개만 먼저** 슬랙에서 봇에게 던져보세요. 5분 안에 Hermes가 어떤 도구인지 체감합니다.
+
+1. `@hermes-bot 오늘 할 일 정리하고 우선순위 매겨줘`
+2. `@hermes-bot [긴 문서 붙여넣기] 한 줄로 요약해줘`
+3. `@hermes-bot 고객한테 [상황] 답변 초안 써줘`
+
+이 3개가 익숙해지면 아래 카테고리(직무별 시나리오) 로 넘어가세요.
 
 ---
 
@@ -553,6 +567,10 @@ users 테이블에서 이번 달 가입한 유저 수 알려줘.
 
 ### MCP 설정 방법 (참고)
 
+> ⚠️ **MCP 지원 상태**: Hermes의 MCP 통합은 현재 **수동 설정 필요** 상태입니다. 막히면 슬랙 #ai-native-camp 에 문의.
+
+> 🚨 **보안 경고**: 아래 예시의 토큰은 **플레이스홀더**입니다. 실제 토큰을 이 파일에 직접 박지 마세요 — 이 파일은 git 추적 중입니다. 실제 설정은 본인 PC의 `~/.hermes/config.json` (git 추적 X) 에만 박으세요.
+
 `~/.hermes/config.json`에 아래 형태로 추가:
 
 ```json
@@ -562,14 +580,14 @@ users 테이블에서 이번 달 가입한 유저 수 알려줘.
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-github"],
       "env": {
-        "GITHUB_TOKEN": "ghp_..."
+        "GITHUB_TOKEN": "<YOUR_GITHUB_TOKEN_HERE>"
       }
     },
     "notion": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-notion"],
       "env": {
-        "NOTION_API_KEY": "ntn_..."
+        "NOTION_API_KEY": "<YOUR_NOTION_KEY_HERE>"
       }
     }
   }
