@@ -16,6 +16,11 @@ has_command() {
 add_windows_paths() {
   # winget/node installers update Windows PATH, but the current Git Bash session
   # often does not see it until the terminal is reopened.
+  local windows_apps="/c/Users/${USERNAME:-$USER}/AppData/Local/Microsoft/WindowsApps"
+  if [[ -d "$windows_apps" ]]; then
+    export PATH="$windows_apps:$PATH"
+  fi
+
   if [[ -d "/c/Program Files/nodejs" ]]; then
     export PATH="/c/Program Files/nodejs:$PATH"
   fi
@@ -30,9 +35,13 @@ add_windows_paths() {
 }
 
 require_winget() {
+  add_windows_paths
+
   if ! has_command winget.exe; then
     echo "winget.exe를 찾을 수 없습니다."
-    echo "Microsoft Store에서 'App Installer'를 업데이트한 뒤 Git Bash를 다시 열어주세요."
+    echo "아래 둘 중 하나로 해결해주세요."
+    echo "  1. Microsoft Store에서 'App Installer'를 설치/업데이트한 뒤 Git Bash 다시 열기"
+    echo "  2. Windows 설정 > 앱 > 고급 앱 설정 > 앱 실행 별칭에서 'Windows Package Manager Client' 켜기"
     exit 1
   fi
 }
