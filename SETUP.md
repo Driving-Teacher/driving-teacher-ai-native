@@ -71,21 +71,27 @@ npm i -g @openai/codex
 
 ### Windows
 
-이미 이 레포를 받은 상태면 PowerShell에서 아래 한 줄로 설치:
+이미 이 레포를 받은 상태면 **Git Bash**에서 아래 한 줄로 설치:
+
+```bash
+bash scripts/setup-windows-codex.sh
+```
+
+PowerShell을 쓰는 분은 이걸로도 됩니다:
 
 ```powershell
 .\scripts\setup-windows-codex.ps1
 ```
 
-레포를 아직 받기 전이면 PowerShell을 열고 수동 설치:
+레포를 아직 받기 전이면 Git Bash에서 수동 설치:
 
-```powershell
-winget install OpenJS.NodeJS.LTS
+```bash
+winget.exe install OpenJS.NodeJS.LTS
 ```
 
-설치 후 PowerShell을 **껐다가 다시 열고**:
+설치 후 Git Bash를 **껐다가 다시 열고**:
 
-```powershell
+```bash
 npm i -g @openai/codex
 ```
 
@@ -257,7 +263,13 @@ PowerShell을 **관리자 권한**으로 열고:
 
 이 스크립트는 Claude Code, Node.js, Python을 설치합니다.
 
-Codex로 참여하는 분은 대신:
+Codex로 참여하는 분은 대신 Git Bash에서:
+
+```bash
+bash scripts/setup-windows-codex.sh
+```
+
+PowerShell을 쓰면:
 
 ```powershell
 .\scripts\setup-windows-codex.ps1
