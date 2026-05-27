@@ -1,7 +1,49 @@
 # 사전 준비 가이드
 
-> 캠프 시작 전에 아래 순서대로 해주세요. 10분이면 됩니다.
+> 캠프 시작 전에 아래 순서대로 해주세요. macOS 10분 / Windows는 WSL 설치 포함 30분.
 > 막히면 슬랙 #ai-native-camp에서 물어봐주세요! 봇이 도와드립니다.
+
+---
+
+## Step 0: OS 확인 (Windows는 WSL 필수)
+
+**macOS** → 바로 Step 1로.
+
+**Windows** → 아래 WSL(Ubuntu)을 먼저 설치하고, **이후 모든 단계를 Ubuntu 터미널 안에서** 진행합니다.
+
+> ⚠️ **왜 WSL이 필수인가**: Zeude의 스킬 자동 동기화(`company-setup`·`kb`·`graphify` 등 회사 표준 스킬)는 shim이 담당하는데, 이 shim은 **Mac/Linux 빌드만** 있습니다. 네이티브 Windows에선 텔레메트리(모니터링)는 되지만 **스킬 자동 동기화가 안 됩니다.** WSL(=Linux) 안에서 돌리면 Mac과 동일하게 전부 작동합니다.
+
+### WSL 설치
+
+1. **PowerShell을 관리자 권한으로** 엽니다 (시작 메뉴 → "PowerShell" → 우클릭 → "관리자로 실행")
+2. 설치:
+
+```powershell
+wsl --install
+```
+
+3. **재부팅**
+4. 재부팅 후 Ubuntu 창이 자동으로 뜨면 → **사용자 이름 + 비밀번호** 설정 (비밀번호는 입력해도 화면에 안 보이는 게 정상)
+   - Ubuntu 창이 안 뜨면: 시작 메뉴에서 **"Ubuntu"** 검색 → 실행
+5. 이제부터 **이 Ubuntu 터미널** 안에서 아래 Step들의 **macOS 명령**을 따라가면 됩니다 (git만 apt로 설치 — Step 2 참고).
+
+> 이미 WSL Ubuntu가 깔려 있으면 Ubuntu 터미널만 열고 Step 1로.
+
+### WSL(Ubuntu) 터미널 켜는 법
+
+다음부터 **Claude Code 작업은 항상 Ubuntu 터미널에서** 합니다 (네이티브 PowerShell/CMD ❌ — 거기선 설치한 claude·스킬이 안 보임).
+
+- **제일 쉬움**: Windows 키 → `Ubuntu` 타이핑 → 엔터
+- **Windows Terminal**: 상단 탭 `∨` → Ubuntu 선택 (매번 귀찮으면 Settings → Default profile을 Ubuntu로)
+- **아무 터미널에서**: `wsl` 입력 → 현재 창이 Ubuntu로 전환
+- **VSCode 쓰면**: "WSL" 확장 설치 → 좌하단 `><` → "Connect to WSL" (터미널·Claude Code 확장이 전부 WSL에서 돌아감, 추천)
+
+확인:
+```bash
+uname -a    # Linux ... 라고 나오면 WSL 정상
+```
+
+> `wsl`이 "명령을 찾을 수 없음" → WSL 미설치. 위 'WSL 설치'부터.
 
 ---
 
@@ -28,24 +70,22 @@ git --version
 - 버전이 나오면 → **이미 설치됨, Step 3으로**
 - "xcode-select" 팝업이 뜨면 → **"설치" 클릭** 후 완료될 때까지 대기 (5분)
 
-### Windows
+### Windows (WSL Ubuntu)
 
-PowerShell을 엽니다. (시작 메뉴에서 "PowerShell" 검색)
+**Ubuntu 터미널 안에서** 실행합니다 (PowerShell 아님).
 
-```powershell
+```bash
 git --version
 ```
 
 - 버전이 나오면 → **이미 설치됨, Step 3으로**
 - 에러가 나오면 → 아래 실행:
 
-```powershell
-winget install Git.Git
+```bash
+sudo apt update && sudo apt install -y git
 ```
 
-설치 후 PowerShell을 **껐다가 다시 열고** `git --version`으로 확인.
-
-> `winget`도 안 되면? → https://git-scm.com/download/win 에서 다운로드 → 설치 (다음 다음 다음)
+> 비밀번호를 물으면 WSL 설치 때 만든 비밀번호 입력 (화면에 안 보이는 게 정상).
 
 ---
 
@@ -59,18 +99,30 @@ cd driving-teacher-ai-native
 bash scripts/setup-mac.sh
 ```
 
-### Windows
+### Windows (WSL Ubuntu)
 
-PowerShell을 **관리자 권한**으로 엽니다.
-(시작 메뉴에서 "PowerShell" 검색 → 우클릭 → "관리자로 실행")
+**Ubuntu 터미널 안에서** 아래를 순서대로 실행합니다. (`setup-mac.sh`는 macOS 전용이라 WSL에선 아래 명령을 직접 씁니다.)
 
-```powershell
+```bash
+# 1) 레포 받기
 git clone https://github.com/Driving-Teacher/driving-teacher-ai-native.git
 cd driving-teacher-ai-native
-.\scripts\setup-windows.ps1
+
+# 2) Claude Code 설치
+curl -fsSL https://claude.ai/install.sh | bash
+
+# 3) Node.js 설치 (fnm)
+curl -fsSL https://fnm.vercel.app/install | bash
+source ~/.bashrc
+fnm install --lts
+
+# 4) Python (보통 Ubuntu에 기본 포함, 없으면)
+sudo apt install -y python3
 ```
 
-> 실행 권한 에러가 나면: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` 입력 후 재시도
+설치 후 Ubuntu 터미널을 **껐다가 다시 열어** PATH를 반영합니다.
+
+> 💡 TODO(운영): 위 WSL 단계를 자동화하는 `scripts/setup-wsl.sh`를 추가하면 Windows 입사자도 한 줄로 끝납니다.
 
 ### 세팅이 설치하는 것
 
@@ -86,7 +138,7 @@ cd driving-teacher-ai-native
 
 ## Step 4: Claude 로그인
 
-스크립트 완료 후, 터미널/PowerShell을 **껐다가 다시 열고**:
+설치 완료 후, 터미널(Mac) / Ubuntu 터미널(WSL)을 **껐다가 다시 열고**:
 
 ```bash
 claude
@@ -97,6 +149,7 @@ claude
 3. 터미널로 돌아오면 자동으로 인증 완료
 
 > 브라우저가 안 열리면 `c` 키를 눌러 URL을 복사하고 직접 열어주세요.
+> (WSL은 Windows 기본 브라우저가 열립니다. 안 열리면 URL 복사 방식 사용.)
 
 ---
 
@@ -169,9 +222,10 @@ python --version    # Windows
 ## 빠른 셋업 시퀀스 (전체 요약)
 
 ```
+Step 0: (Windows만) wsl --install → 재부팅 → 이후 Ubuntu 터미널에서 진행
 Step 1: Claude Teams 초대 수락 (메일)
-Step 2: git 설치
-Step 3: bash scripts/setup-mac.sh (또는 setup-windows.ps1)
+Step 2: git 설치 (Mac: 자동 / WSL: sudo apt install -y git)
+Step 3: Mac: bash scripts/setup-mac.sh / WSL: claude.ai·fnm 수동 설치
 Step 4: claude 로그인
 Step 5: 버전 확인 4개
 Step 6: /zeude-setup           ← 모니터링 + 스킬 자동 동기화
@@ -179,7 +233,7 @@ Step 7: /company-setup         ← 회사 폴더 + 레포
 Step 8: /camp-onboarding       ← 4주 통수강 시작
 ```
 
-총 30~40분. 막히면 #ai-native-camp.
+Mac 30~40분 / Windows는 WSL 설치 포함 50분~1시간. 막히면 #ai-native-camp.
 
 ---
 
@@ -187,13 +241,14 @@ Step 8: /camp-onboarding       ← 4주 통수강 시작
 
 | 증상 | 해결 |
 |------|------|
+| `wsl --install`이 안 됨 (Windows) | PowerShell을 **관리자 권한**으로 실행했는지 확인. 그래도 안 되면 Windows 업데이트 후 재시도 |
+| (Windows) 스킬이 안 뜸 / `/company-setup` 없음 | 네이티브 Windows(PowerShell)에서 돌린 경우. **WSL Ubuntu 안에서** Step 2부터 다시 (shim이 Linux에서만 동기화) |
 | `git clone`이 안 됨 | git 미설치. Step 2부터 다시 |
-| `claude`를 못 찾음 | 터미널/PowerShell **껐다 다시 열기** |
-| `node`를 못 찾음 | 터미널 **껐다 다시 열기**. macOS에서 안 되면 `source ~/.zshrc` |
+| `claude`를 못 찾음 | 터미널 **껐다 다시 열기**. WSL은 `source ~/.bashrc` |
+| `node`를 못 찾음 | 터미널 **껐다 다시 열기**. macOS는 `source ~/.zshrc`, WSL은 `source ~/.bashrc` |
 | 로그인이 안 됨 | Teams 초대를 수락했는지 확인 (Step 1) |
 | 브라우저가 안 열림 | `c` 키 눌러서 URL 복사 → 브라우저에서 직접 열기 |
-| 스크립트 실행 권한 에러 (Windows) | `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` 후 재시도 |
-| `/zeude-setup` 후에도 스킬이 안 보임 | Claude Code 새 창. 또는 `claude --version` 한번 호출해서 sync trigger |
+| `/zeude-setup` 후에도 스킬이 안 보임 | Claude Code 새 창. 또는 `claude --version` 한번 호출해서 sync trigger. (Windows는 WSL인지 먼저 확인) |
 | `/company-setup` clone 403 | driving-teacher-bot org 멤버 아님 → 슬랙에 GitHub username 보고 |
 | zeude credentials 잃어버림 | 슬랙에서 새 초대 링크 요청 (호스트가 `/zeude-invite 1`로 발급) |
 
