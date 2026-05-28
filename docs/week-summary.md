@@ -47,7 +47,7 @@ Claude를 더 잘 쓰는 법은 **공동 경험** 속에서 배운다. 숙제 �
 
 ### 기억할 개념 3개
 1. **CLAUDE.md 200줄 규칙** — Claude가 모를 것만 넣고, "왜"를 담으면 결과 좋아짐
-2. **knowledge-base 전략** — 내 스킬을 `driving-teacher-knowledge-base`에 push → 팀 전원 즉시 사용
+2. **Zeude managed 전략** — 내 스킬을 `Zeude 대시보드 > Skills 탭 > 스킬등록` (모든 멤버 admin, 셀프 서비스) → 팀 전원 다음 `/zeude-setup` sync 때 자동 수신. *(옛 가르침: `knowledge-base` 레포에 push했었지만 지금은 Zeude managed가 표준. KB 레포는 KB 노션 데이터를 다루는 스킬만 — [README "스킬 살림터"](../README.md#스킬-살림터--어디에-뭘-두나) 참고)*
 3. **Git 3줄 세트** — `git pull` → `git add . && git commit -m "..."` → `git push`
 
 ### 핵심 액션
