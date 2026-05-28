@@ -137,7 +137,7 @@ AI Native **=** AI가 있다는 전제로 업무/경험을 재설계하는 것
 
 | 살림터 | 안에 두는 것 | 언제 보이나 | 배포 방식 |
 |--------|-------------|-------------|-----------|
-| **Zeude managed (글로벌 `~/.claude/skills/`)** | 회사 전체가 어디서든 쓰는 표준 스킬 (`company-setup`, `graphify`, `kb-graph`, `camp-onboarding`, `ds-apply`, `dt-prd-mirror`, `github-guide` 등 14개) | 모든 폴더에서 항상 | 운영자가 큐레이션 → `/zeude-setup` 한 번에 자동 동기화 |
+| **Zeude managed (글로벌 `~/.claude/skills/`)** | 회사 전체가 어디서든 쓰는 표준 스킬 (`company-setup`, `graphify`, `kb-graph`, `camp-onboarding`, `ds-apply`, `dt-prd-mirror`, `github-guide` 등 14개) | 모든 폴더에서 항상 | **Zeude 대시보드 > Skills 탭 > 스킬등록** (모든 멤버 admin, 셀프 서비스) → 팀 전원 `/zeude-setup` 다음 sync 때 자동 수신 |
 | **KB 레포 `.claude/skills/`** | **KB 노션 데이터를 다루는** 스킬만 (`kb`) | `driving-teacher-knowledge-base` 안에서 claude 켤 때 | KB 레포에 PR |
 | **ai-native 레포 `.claude/commands/` & `.claude/skills/`** | 캠프/Zeude/Hermes **인프라 + 캠프 진행용** 스킬 (`zeude-setup`, `zeude-invite`, `hermes-*`, day1~day4 등) | `driving-teacher-ai-native` 안에서 claude 켤 때 | ai-native 레포에 PR |
 | (개인) `~/.claude/skills/` 직접 | 본인 실험용 | 본인 머신만 | 배포 안 함 |
@@ -147,7 +147,7 @@ AI Native **=** AI가 있다는 전제로 업무/경험을 재설계하는 것
 ```
 이 스킬을 만든다 →
  (1) 다른 사람도 어디서든 쓸까?
-     YES → 운영자(승아)에게 Zeude managed 등록 요청
+     YES → Zeude 대시보드 > Skills 탭 > 스킬등록 (셀프, 모든 멤버 admin)
  (2) KB 노션 데이터를 보는 스킬인가?
      YES → KB 레포 .claude/skills/ 에 PR
  (3) 캠프/zeude/hermes 인프라 관련인가?
