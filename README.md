@@ -126,8 +126,37 @@ AI Native **=** AI가 있다는 전제로 업무/경험을 재설계하는 것
 | **슬랙** | 소통 + #ai-native-camp + 숙제 공유 | 항상 |
 | **Claude Code** | AI 도구 — 스킬 제작, 업무 자동화 | Week 1~ |
 | **MCP** | Slack/Notion/채널톡 등 연결 | Week 1~ |
-| **Zeude** | 팀 AI 사용 모니터링 | Week 2~ |
+| **Zeude** | 팀 AI 사용 모니터링 + **회사 표준 스킬 자동 동기화** | Week 2~ |
 | **OpenClaw** | 항상 켜진 AI (Telegram/Discord) | Week 3~ |
+
+## 스킬 살림터 — 어디에 뭘 두나
+
+> 팀원들이 "스킬은 어디다 두지? KB에 push? ai-native에 push? Zeude?" 헷갈리지 않도록 명시.
+
+스킬은 **3-tier**로 갈립니다. 기준은 "이 스킬을 누가, 어디서 써야 의미가 있나?".
+
+| 살림터 | 안에 두는 것 | 언제 보이나 | 배포 방식 |
+|--------|-------------|-------------|-----------|
+| **Zeude managed (글로벌 `~/.claude/skills/`)** | 회사 전체가 어디서든 쓰는 표준 스킬 (`company-setup`, `graphify`, `kb-graph`, `camp-onboarding`, `ds-apply`, `dt-prd-mirror`, `github-guide` 등 14개) | 모든 폴더에서 항상 | 운영자가 큐레이션 → `/zeude-setup` 한 번에 자동 동기화 |
+| **KB 레포 `.claude/skills/`** | **KB 노션 데이터를 다루는** 스킬만 (`kb`) | `driving-teacher-knowledge-base` 안에서 claude 켤 때 | KB 레포에 PR |
+| **ai-native 레포 `.claude/commands/` & `.claude/skills/`** | 캠프/Zeude/Hermes **인프라 + 캠프 진행용** 스킬 (`zeude-setup`, `zeude-invite`, `hermes-*`, day1~day4 등) | `driving-teacher-ai-native` 안에서 claude 켤 때 | ai-native 레포에 PR |
+| (개인) `~/.claude/skills/` 직접 | 본인 실험용 | 본인 머신만 | 배포 안 함 |
+
+### "새 스킬 만들었는데 어디다?" — 의사결정 트리
+
+```
+이 스킬을 만든다 →
+ (1) 다른 사람도 어디서든 쓸까?
+     YES → 운영자(승아)에게 Zeude managed 등록 요청
+ (2) KB 노션 데이터를 보는 스킬인가?
+     YES → KB 레포 .claude/skills/ 에 PR
+ (3) 캠프/zeude/hermes 인프라 관련인가?
+     YES → ai-native 레포 .claude/commands|skills/ 에 PR
+ (4) 일단 나만 쓸 거 / 실험 단계
+     → ~/.claude/skills/ 에 두기 (검증되면 위 (1)~(3)으로)
+```
+
+> ⚠️ **옛 가르침 정정**: 캠프 W2에서 "스킬을 `driving-teacher-knowledge-base`에 push해서 팀에 공유"라고 했지만, **회사 전체 배포는 Zeude managed가 표준**입니다. KB 레포 `.claude/skills/`는 KB 데이터를 다루는 스킬만 두세요 (그래서 지금 거기엔 `kb` 하나만 있음).
 
 ## 비전
 
