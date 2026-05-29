@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Native Camp — 4주 엑기스</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+  @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #1C1C1C;
+    --fg: #F6F6F3;
+    --accent: #FFD547;
+    --accent2: #4F7DFF;
+    --red: #FF7439;
+    --green: #1AC569;
+    --dim: #6B6B6B;
+    --surface: #2A2929;
+    --line: #3A3838;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Pretendard Variable', 'Pretendard', sans-serif;
+    --display: 'Syncopate', sans-serif;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    overflow: hidden;
+  }
+
+  .deck { width: 100vw; height: 100vh; position: relative; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8vh 10vw;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide.active .reveal { animation: slideUp 0.7s ease forwards; }
+  .slide.active .reveal-delay-1 { animation-delay: 0.15s; }
+  .slide.active .reveal-delay-2 { animation-delay: 0.3s; }
+  .slide.active .reveal-delay-3 { animation-delay: 0.45s; }
+  .slide.active .reveal-delay-4 { animation-delay: 0.6s; }
+  .slide.active .reveal-delay-5 { animation-delay: 0.75s; }
+  .slide.active .reveal-delay-6 { animation-delay: 0.9s; }
+  .slide.active .reveal-delay-7 { animation-delay: 1.05s; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal { opacity: 0; }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 6vw, 6.5rem);
+    font-weight: 700; text-transform: uppercase;
+    line-height: 1.05; letter-spacing: -0.03em;
+  }
+  h2 {
+    font-size: clamp(2rem, 4.5vw, 5rem);
+    font-weight: 900; line-height: 1.15; letter-spacing: -0.02em;
+  }
+  h3 {
+    font-size: clamp(1.2rem, 2vw, 2.2rem);
+    font-weight: 700; line-height: 1.3;
+  }
+  p, li {
+    font-size: clamp(0.9rem, 1.5vw, 1.35rem);
+    line-height: 1.6; font-weight: 300;
+  }
+
+  .accent { color: var(--accent); }
+  .accent2 { color: var(--accent2); }
+  .red { color: var(--red); }
+  .green { color: var(--green); }
+  .dim { color: var(--dim); }
+  .bold { font-weight: 700; }
+  .mono { font-family: var(--mono); }
+
+  .big-quote {
+    font-family: var(--sans);
+    font-size: clamp(1.8rem, 4vw, 4.5rem);
+    font-weight: 800; line-height: 1.3; max-width: 92%;
+  }
+  .big-quote::before { content: '\201C'; color: var(--accent); font-size: 1.5em; line-height: 0; vertical-align: -0.15em; margin-right: 0.05em; }
+  .big-quote::after  { content: '\201D'; color: var(--accent); font-size: 1.5em; line-height: 0; vertical-align: -0.15em; margin-left: 0.05em; }
+
+  .big-number {
+    font-family: var(--display);
+    font-size: clamp(4rem, 10vw, 10rem);
+    font-weight: 700; color: var(--accent); line-height: 1;
+  }
+
+  /* ── Stage Flow ── */
+  .stage-flow { display: flex; flex-direction: column; gap: 0; }
+  .stage { display: flex; align-items: flex-start; gap: 2rem; padding: 1.3rem 0; border-left: 3px solid var(--dim); padding-left: 2rem; position: relative; }
+  .stage::before { content: ''; position: absolute; left: -8px; top: 1.6rem; width: 13px; height: 13px; border-radius: 50%; background: var(--dim); }
+  .stage.current { border-left-color: var(--accent); }
+  .stage.current::before { background: var(--accent); box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(255,213,71,0.3); }
+  .stage-num { font-family: var(--mono); font-size: clamp(0.8rem,1.2vw,1.1rem); color: var(--dim); min-width: 2rem; padding-top: 0.2rem; }
+  .stage.current .stage-num { color: var(--accent); }
+  .stage-content h3 { font-size: clamp(1.1rem,2vw,1.8rem); margin-bottom: 0.3rem; }
+  .stage-content p { font-size: clamp(0.85rem,1.3vw,1.15rem); color: var(--dim); font-weight: 300; }
+  .stage.current .stage-content h3 { color: var(--fg); }
+
+  /* ── Terminal ── */
+  .terminal { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 0; max-width: 100%; width: 100%; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.5); }
+  .terminal-bar { background: #2a2a2a; padding: 0.7rem 1.1rem; display: flex; gap: 0.5rem; align-items: center; }
+  .terminal-bar .ttl { margin-left: 0.6rem; font-family: var(--mono); font-size: 0.8rem; color: var(--dim); }
+  .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .terminal-dot.red { background: #ff5f57; } .terminal-dot.yellow { background: #ffbd2e; } .terminal-dot.green { background: #28ca41; }
+  .terminal-body { padding: 1.1rem 1.4rem 1.3rem; font-family: var(--mono); font-size: clamp(0.78rem,1.15vw,1rem); line-height: 1.85; }
+  .terminal-prompt { color: var(--accent); }
+  .terminal-cmd { color: var(--fg); }
+  .terminal-comment { color: var(--dim); }
+
+  /* ── Hierarchy ── */
+  .hierarchy { list-style: none; margin: 0.8rem 0; }
+  .hierarchy li { padding: 0.4rem 0; padding-left: 2rem; position: relative; font-size: clamp(0.9rem,1.4vw,1.25rem); }
+  .hierarchy li::before { content: ''; position: absolute; left: 0; top: 50%; width: 8px; height: 2px; background: var(--accent); }
+  .hierarchy li.last::before { background: var(--accent2); width: 12px; height: 3px; }
+
+  /* ── Flow arrow row ── */
+  .flow-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin: 1.5rem 0; }
+  .flow-chip { font-family: var(--mono); font-weight: 700; font-size: clamp(0.85rem,1.6vw,1.4rem); padding: 0.5em 0.9em; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+  .flow-chip.hl { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 24px rgba(255,213,71,0.18); }
+  .flow-arrow { color: var(--dim); font-family: var(--mono); }
+
+  /* ── Two column ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.4rem 1.6rem; }
+  .panel.win { border-color: rgba(79,125,255,0.45); }
+  .panel h3 { margin-bottom: 0.6rem; }
+  .panel .lead { color: var(--dim); font-size: 0.95rem; margin-bottom: 0.8rem; }
+
+  /* ── Cards row ── */
+  .cards { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-top: 1.2rem; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.2rem 1.3rem; }
+  .card .ico { font-family: var(--mono); color: var(--accent); font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+  .card h4 { font-size: 1.15rem; font-weight: 800; margin-bottom: 0.3rem; }
+  .card p { font-size: 0.9rem; color: var(--dim); }
+
+  /* ── Table ── */
+  .tbl { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: clamp(0.82rem,1.25vw,1.1rem); }
+  .tbl th, .tbl td { text-align: left; padding: 0.7rem 1rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .tbl th { font-family: var(--mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); font-weight: 700; }
+  .tbl td:first-child { color: var(--fg); font-weight: 700; }
+  .tbl tr:last-child td { border-bottom: none; }
+
+  /* ── Ladder ── */
+  .ladder { display: grid; gap: 0.8rem; margin-top: 1.2rem; }
+  .rung { display: grid; grid-template-columns: auto 1fr; gap: 1.3rem; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 1.5rem; }
+  .rung.r2 { border-color: var(--accent); }
+  .rung .lv { font-family: var(--display); font-weight: 700; color: var(--accent); font-size: clamp(1.3rem,2.5vw,2rem); }
+  .rung .t strong { display: block; font-size: clamp(1rem,1.8vw,1.5rem); }
+  .rung .t span { font-size: clamp(0.82rem,1.2vw,1.05rem); color: var(--dim); }
+
+  /* ── Callout ── */
+  .callout { border-radius: 12px; padding: 1rem 1.3rem; margin-top: 1.3rem; font-size: clamp(0.85rem,1.3vw,1.15rem); font-weight: 400; }
+  .callout.warn { background: rgba(255,116,57,0.1); border: 1px solid rgba(255,116,57,0.4); }
+  .callout.warn strong { color: var(--red); }
+  .callout.info { background: rgba(79,125,255,0.1); border: 1px solid rgba(79,125,255,0.4); }
+  .callout.info strong { color: var(--accent2); }
+
+  /* ── Do-chip (직접 해보기) ── */
+  .do-row { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; margin-top: 1.8rem; }
+  .do-row .lbl { font-family: var(--mono); font-size: 0.8rem; color: var(--dim); letter-spacing: 0.05em; }
+  .do-chip { font-family: var(--mono); font-weight: 700; font-size: clamp(0.78rem,1.1vw,0.98rem); color: var(--accent); background: rgba(255,213,71,0.08); border: 1px solid rgba(255,213,71,0.4); border-radius: 8px; padding: 0.35em 0.7em; }
+
+  /* ── Skill showcase grid ── */
+  .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+  .skill-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 1.3rem; }
+  .skill-card .cmd { font-family: var(--mono); font-weight: 700; color: var(--accent); font-size: clamp(0.88rem,1.35vw,1.12rem); margin-bottom: 0.3rem; }
+  .skill-card p { font-size: 0.88rem; color: var(--dim); }
+
+  /* ── tag / progress / counter / noise ── */
+  .tag { display: inline-block; font-family: var(--mono); font-size: clamp(0.85rem,1.2vw,1.1rem); font-weight: 700; letter-spacing: 0.05em; margin-bottom: 1.5rem; }
+  .tag .num { color: var(--accent); margin-right: 0.3em; }
+  .tag .sep { color: var(--dim); margin-right: 0.5em; }
+  .tag .label { color: #888; }
+
+  .progress { position: fixed; bottom: 0; left: 0; height: 3px; background: var(--accent); transition: width 0.4s ease; z-index: 100; }
+  .counter { position: fixed; bottom: 1.6rem; right: 2.4rem; font-family: var(--mono); font-size: 0.85rem; color: var(--dim); z-index: 100; }
+  .hint { position: fixed; bottom: 1.6rem; left: 2.4rem; font-family: var(--mono); font-size: 0.75rem; color: var(--dim); z-index: 100; }
+  .noise { position: fixed; inset: 0; pointer-events: none; z-index: 99; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+  .spacer { height: 1.5rem; } .spacer-sm { height: 0.7rem; }
+  .sub { font-size: clamp(1rem,2vw,1.6rem); color: #888; font-weight: 300; }
+
+  .slide.scrollable { overflow-y: auto; justify-content: flex-start; padding-top: 6vh; padding-bottom: 5vh; }
+
+  @media (max-width: 768px) {
+    .slide { padding: 6vh 7vw; }
+    .two-col, .cards { grid-template-columns: 1fr; }
+    .stage { gap: 1rem; padding-left: 1.2rem; }
+    .hint { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+<div class="progress" id="progress"></div>
+<div class="counter" id="counter"></div>
+<div class="hint">← → 또는 클릭으로 이동</div>
+
+<div class="deck" id="deck">
+
+  <!-- ═══ 1. 타이틀 ═══ -->
+  <div class="slide active">
+    <div class="tag reveal"><span class="num">●</span><span class="sep">—</span><span class="label">4 Weeks, One Deck</span></div>
+    <h1 class="reveal reveal-delay-1">AI Native<br><span class="accent">Camp</span></h1>
+    <div class="spacer"></div>
+    <p class="sub reveal reveal-delay-2">4주를 하나로 — <span class="bold" style="color:var(--fg)">엑기스만</span></p>
+    <div class="spacer-sm"></div>
+    <p class="dim reveal reveal-delay-3 mono">도구는 바뀐다. 사고방식은 안 바뀐다.</p>
+  </div>
+
+  <!-- ═══ 2. 시작 전에 — 지금 돌려놓기 ═══ -->
+  <div class="slide scrollable">
+    <div class="tag reveal"><span class="num">⚡</span><span class="sep">—</span><span class="label">START FIRST</span></div>
+    <h2 class="reveal reveal-delay-1">시작 전에 — <span class="accent">지금</span> 돌려놓으세요</h2>
+    <p class="sub reveal reveal-delay-1" style="margin-top:0.6rem">설치가 오래 걸립니다. 먼저 걸어두고, 설명은 그동안 진행합니다.</p>
+    <div class="spacer"></div>
+    <div class="two-col reveal reveal-delay-2">
+      <div class="panel win">
+        <h3 class="accent2">🪟 Windows — 지금 바로</h3>
+        <p class="lead">WSL(Ubuntu) 설치 + 재부팅이 제일 오래 걸림. 먼저 시작!</p>
+        <div class="terminal">
+          <div class="terminal-bar"><span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span><span class="ttl">PowerShell (관리자)</span></div>
+          <div class="terminal-body">
+            <div><span class="terminal-comment"># ① 관리자 PowerShell에서</span></div>
+            <div><span class="terminal-prompt">PS&gt;</span> <span class="terminal-cmd">wsl --install</span></div>
+            <div><span class="terminal-comment"># ② 재부팅 → Ubuntu 사용자/비번 설정</span></div>
+            <div><span class="terminal-comment"># ③ Ubuntu에서 Claude Code 설치 + 로그인</span></div>
+            <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">curl -fsSL https://claude.ai/install.sh | bash</span></div>
+            <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">claude</span></div>
+            <div><span class="terminal-comment"># ④ 헤르메스는 스킬이 알아서 설치</span></div>
+            <div><span class="terminal-prompt">&gt;</span> <span class="terminal-cmd accent">/day3-hermes</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>🍎 macOS</h3>
+        <p class="lead">한 줄이면 끝. 따라오면서 같이.</p>
+        <div class="terminal">
+          <div class="terminal-bar"><span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span><span class="ttl">Terminal</span></div>
+          <div class="terminal-body">
+            <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">git clone …driving-teacher-ai-native</span></div>
+            <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">bash scripts/setup-mac.sh</span></div>
+            <div><span class="terminal-prompt">$</span> <span class="terminal-cmd">claude</span> <span class="terminal-comment"># → /day3-hermes</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="callout warn reveal reveal-delay-3"><strong>왜 지금?</strong> Windows는 Ubuntu(WSL) 설치 + 재부팅이 수십 분. 지금 걸어두지 않으면 Hermes까지 못 갑니다. 자세한 절차는 <span class="mono">SETUP.md</span>.</div>
+  </div>
+
+  <!-- ═══ 3. 레벨 체크 — 같이 이야기 ═══ -->
+  <div class="slide scrollable">
+    <div class="tag reveal"><span class="num">👋</span><span class="sep">—</span><span class="label">LEVEL CHECK</span></div>
+    <h2 class="reveal reveal-delay-1">잠깐 — <span class="accent">어디쯤</span>이세요?</h2>
+    <p class="sub reveal reveal-delay-1" style="margin-top:0.6rem">정답 없음. 솔직하게. 오늘의 속도와 깊이를 여기에 맞춥니다.</p>
+    <div class="cards reveal reveal-delay-2">
+      <div class="card"><div class="ico">LV 0</div><h4>🐣 웹 챗만</h4><p>ChatGPT·제미나이 정도 써봤다</p></div>
+      <div class="card"><div class="ico">LV 1</div><h4>🖥 터미널 AI</h4><p>Claude Code 켜서 시켜는 봤다</p></div>
+      <div class="card"><div class="ico">LV 2</div><h4>🛠 직접 빌드</h4><p>CLAUDE.md·스킬 만들어봤다</p></div>
+      <div class="card"><div class="ico">LV 3</div><h4>🚀 자동화</h4><p>Hermes·cron·재설계까지 가봤다</p></div>
+    </div>
+    <div class="callout info reveal reveal-delay-3"><strong>같이 이야기해봐요</strong> — ① 지금 손이 제일 많이 가는 반복 업무 1개? · ② AI한테 시켜본 것 중 제일 잘 됐던 것 / 황당했던 것? · ③ 오늘 딱 하나만 가져간다면?</div>
+  </div>
+
+  <!-- ═══ 4. AI Native란 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">01</span><span class="sep">—</span><span class="label">왜 하는가</span></div>
+    <div class="big-quote reveal reveal-delay-1">안 해도 되는 일을 발견하고, <span class="accent">제거</span>하는 것</div>
+    <div class="spacer"></div>
+    <ul class="hierarchy reveal reveal-delay-2">
+      <li>AI Native <span class="dim">≠</span> ChatGPT 잘 쓰기</li>
+      <li>AI Native <span class="dim">≠</span> 기존 업무에 AI 붙이기</li>
+      <li class="last">AI Native <span class="accent">=</span> AI가 있다는 전제로 <span class="bold">업무를 재설계</span></li>
+    </ul>
+  </div>
+
+  <!-- ═══ 4. 대체되는 건 AI가 아니다 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">02</span><span class="sep">—</span><span class="label">왜 지금</span></div>
+    <div class="big-quote reveal reveal-delay-1">AI가 당신을 대체하는 게 아니라,<br><span class="accent">AI를 쓰는 사람</span>에게 대체된다</div>
+    <div class="spacer"></div>
+    <p class="sub reveal reveal-delay-2">"이런 것까지 되는구나"를 아는 것 — <span class="bold" style="color:var(--fg)">Unknown Unknowns 제거</span>가 진짜 역량.</p>
+  </div>
+
+  <!-- ═══ 5. 운이 아니라 시스템 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">03</span><span class="sep">—</span><span class="label">어떻게 안정적으로</span></div>
+    <h2 class="reveal reveal-delay-1">운이 아니라 <span class="accent">시스템</span>으로</h2>
+    <p class="sub reveal reveal-delay-1" style="margin-top:0.6rem">매번 새로 운에 맡기지 말고, 매번 같은 품질이 나오게 고정.</p>
+    <div class="flow-row reveal reveal-delay-2">
+      <span class="flow-chip">Model</span><span class="flow-arrow">→</span>
+      <span class="flow-chip">Context</span><span class="flow-arrow">→</span>
+      <span class="flow-chip">Agent</span><span class="flow-arrow">→</span>
+      <span class="flow-chip hl">Harness · 조종석</span>
+    </div>
+    <p class="dim reveal reveal-delay-3">비결정적(랜덤) → 결정적(매번 같은 결과). Harness가 그 조종석.</p>
+  </div>
+
+  <!-- ═══ 6. 핵심 4개 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">04</span><span class="sep">—</span><span class="label">핵심 도구 4</span></div>
+    <h2 class="reveal reveal-delay-1">이 4개가 전부의 시작</h2>
+    <div class="cards reveal reveal-delay-2">
+      <div class="card"><div class="ico">RUN</div><h4>Claude Code</h4><p>AI가 내 컴퓨터에서 직접 실행</p></div>
+      <div class="card"><div class="ico">MEMORY</div><h4>CLAUDE.md</h4><p>AI에게 주는 매뉴얼 — "왜"를 담는다</p></div>
+      <div class="card"><div class="ico">SKILL</div><h4>Skill</h4><p>반복을 매번 같은 품질로</p></div>
+      <div class="card"><div class="ico">MCP</div><h4>MCP</h4><p>노션·슬랙·웹 등 외부 도구 연결</p></div>
+    </div>
+    <div class="do-row reveal reveal-delay-3"><span class="lbl">🛠 직접 해보기</span><span class="do-chip">/day1-onboarding</span></div>
+  </div>
+
+  <!-- ═══ 7. 잘 쓰는 사람들의 비결 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">05</span><span class="sep">—</span><span class="label">비결</span></div>
+    <h2 class="reveal reveal-delay-1">잘 쓰는 사람들의 <span class="accent">비결</span></h2>
+    <div class="spacer"></div>
+    <ul class="hierarchy reveal reveal-delay-2">
+      <li><span class="bold">CLAUDE.md</span> — AI가 모를 것만, "무엇"보다 <span class="accent">"왜"</span>를 담는다</li>
+      <li><span class="bold">스킬은 키우는 것</span> — 만든다 → 써본다 → "모호한 부분 알려줘" → 깎는다</li>
+      <li class="last"><span class="bold">에러로 배운다</span> — 막히면 에러 메시지를 그대로 AI에게</li>
+    </ul>
+    <div class="do-row reveal reveal-delay-3"><span class="lbl">🛠 직접 해보기</span><span class="do-chip">/day2-mcp</span><span class="do-chip">/day2-practice</span></div>
+  </div>
+
+  <!-- ═══ 8. 혼자가 아니라 같이 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">06</span><span class="sep">—</span><span class="label">팀</span></div>
+    <div class="big-quote reveal reveal-delay-1">없으면 만들고,<br>만들면 <span class="accent">공유</span>한다</div>
+    <div class="spacer"></div>
+    <p class="sub reveal reveal-delay-2">잘 쓰는 법은 혼자가 아니라 <span class="bold" style="color:var(--fg)">공동 경험</span> 속에서 배운다. 내게 되면, 팀도 되게.</p>
+  </div>
+
+  <!-- ═══ 9. 스킬 살림터 ═══ -->
+  <div class="slide scrollable">
+    <div class="tag reveal"><span class="num">07</span><span class="sep">—</span><span class="label">공유 위치</span></div>
+    <h2 class="reveal reveal-delay-1">스킬, 어디다 두나</h2>
+    <p class="sub reveal reveal-delay-1" style="margin-top:0.5rem">"이 스킬을 누가, 어디서 써야 의미 있나?"로 가른다.</p>
+    <table class="tbl reveal reveal-delay-2">
+      <thead><tr><th>살림터</th><th>두는 것</th><th>배포</th></tr></thead>
+      <tbody>
+        <tr><td>Zeude (글로벌)</td><td>회사 전체가 어디서든 쓰는 표준 스킬</td><td>대시보드 &gt; Skills 탭 &gt; 등록 (셀프)</td></tr>
+        <tr><td>KB 레포</td><td>KB 노션 데이터를 다루는 스킬만</td><td>KB 레포에 PR</td></tr>
+        <tr><td>ai-native 레포</td><td>캠프·Zeude·Hermes 인프라 스킬</td><td>ai-native 레포에 PR</td></tr>
+        <tr><td>개인 ~/.claude</td><td>본인 실험용</td><td>배포 안 함</td></tr>
+      </tbody>
+    </table>
+    <div class="callout info reveal reveal-delay-3"><strong>정정:</strong> 예전엔 "KB 레포에 push해서 공유"였지만, 회사 전체 배포는 이제 <strong>Zeude managed</strong>가 표준입니다.</div>
+  </div>
+
+  <!-- ═══ 10. 항상 켜진 AI ═══ -->
+  <div class="slide scrollable">
+    <div class="tag reveal"><span class="num">08</span><span class="sep">—</span><span class="label">항상 켜진 AI</span></div>
+    <h2 class="reveal reveal-delay-1">터미널을 벗어나 — <span class="accent">Hermes</span></h2>
+    <div class="two-col reveal reveal-delay-2">
+      <div class="panel"><h3>Claude Code</h3><p class="lead">정밀 수술. 내 컴퓨터 앞에 앉아서.</p></div>
+      <div class="panel"><h3 class="accent">Hermes</h3><p class="lead">항상 옆의 비서. 슬랙에서, 자동으로. 쓸수록 내 패턴을 배운다.</p></div>
+    </div>
+    <ul class="hierarchy reveal reveal-delay-3" style="margin-top:1.2rem">
+      <li><span class="bold">자가학습</span> — 대화할수록 점점 정확</li>
+      <li><span class="bold">cron</span> — "매일 9시에 ___" 한 문장으로 예약</li>
+      <li class="last"><span class="bold">멀티에이전트</span> — 봇끼리 협력, 사람은 최종 확인</li>
+    </ul>
+    <div class="callout warn reveal reveal-delay-4"><strong>설치는 한 번:</strong> API 키·Slack 연결까지 아래 스킬이 다 안내합니다. (Windows는 START FIRST에서 깐 WSL 위에서)</div>
+    <div class="do-row reveal reveal-delay-5"><span class="lbl">🛠 직접 해보기</span><span class="do-chip">/day3-hermes</span></div>
+  </div>
+
+  <!-- ═══ 11. AI는 "그거"를 모른다 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">09</span><span class="sep">—</span><span class="label">한계 = 컨텍스트</span></div>
+    <div class="big-quote reveal reveal-delay-1">AI는 <span class="accent">"그거"</span>를 모른다</div>
+    <div class="spacer"></div>
+    <p class="sub reveal reveal-delay-2">"내 일정 정리해줘" — 사람은 알아듣지만 AI는 날짜·타임존·캘린더ID를 모른다.</p>
+    <div class="spacer-sm"></div>
+    <p class="reveal reveal-delay-3"><span class="bold accent2">안 되는 건 대개 무능이 아니라 컨텍스트 부재.</span> 컨텍스트는 사람이 준다.</p>
+  </div>
+
+  <!-- ═══ 12. Harness vs Skill ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">10</span><span class="sep">—</span><span class="label">도구는 외부, 색은 우리 것</span></div>
+    <h2 class="reveal reveal-delay-1">Harness <span class="dim">vs</span> Skill</h2>
+    <div class="two-col reveal reveal-delay-2">
+      <div class="panel"><h3 class="dim">엔진·차체 (Harness)</h3><p class="lead">Claude Code · Hermes · Ouroboros</p><p>외부에서 가져온다. 우리가 만들지 않는다.</p></div>
+      <div class="panel" style="border-color:var(--accent)"><h3 class="accent">운전 가이드 (Skill·맥락)</h3><p class="lead">매뉴얼 · 스킬 · 컨텍스트</p><p>우리 색. 도구에 우리 맥락을 입히는 데 집중.</p></div>
+    </div>
+  </div>
+
+  <!-- ═══ 13. 회사 색 두 자리 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">11</span><span class="sep">—</span><span class="label">회사 색 채우기</span></div>
+    <h2 class="reveal reveal-delay-1">우리 색을 채울 두 자리</h2>
+    <div class="stage-flow reveal reveal-delay-2" style="margin-top:1.2rem">
+      <div class="stage current"><div class="stage-num">KB</div><div class="stage-content"><h3>회사 매뉴얼</h3><p>한 번 물으면 끝 — 사람 대신 AI가 답하는 SSOT (<span class="mono">/kb</span>)</p></div></div>
+      <div class="stage current"><div class="stage-num">OURO</div><div class="stage-content"><h3>Ouroboros</h3><p>복잡한 일의 명세 — 모호함을 명확함으로 자동 변환, 계속 돌아간다</p></div></div>
+    </div>
+    <p class="dim reveal reveal-delay-3" style="margin-top:1rem">한 번 묻기(CC·Hermes) vs 계속 돌아가기(Ouroboros).</p>
+  </div>
+
+  <!-- ═══ 14. 성장 사다리 ═══ -->
+  <div class="slide scrollable">
+    <div class="tag reveal"><span class="num">12</span><span class="sep">—</span><span class="label">성장 경로</span></div>
+    <h2 class="reveal reveal-delay-1">사다리는 안 변한다</h2>
+    <div class="ladder reveal reveal-delay-2">
+      <div class="rung"><span class="lv">L1</span><span class="t"><strong>AI한테 시킬 수 있다</strong><span>개인 생산성 ↑ — 먼저 익숙해진다</span></span></div>
+      <div class="rung r2"><span class="lv">L2</span><span class="t"><strong>안 해도 되는 일을 발견한다</strong><span>업무 제거 — 핵심</span></span></div>
+      <div class="rung"><span class="lv">L3</span><span class="t"><strong>AI 전제 프로세스를 만든다</strong><span>팀 운영 방식 변화</span></span></div>
+    </div>
+    <div class="callout info reveal reveal-delay-3"><strong>순서가 중요</strong> — 도구를 못 쓰는데 "재설계하라"면 망상이 나온다. L1에 충분히 익숙해진 다음 L2.</div>
+  </div>
+
+  <!-- ═══ 15. 선언 ═══ -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">13</span><span class="sep">—</span><span class="label">선언</span></div>
+    <div class="big-quote reveal reveal-delay-1"><span class="accent">_____</span> 제거하고,<br>그 시간에 <span class="accent">_____</span> 하겠다</div>
+    <div class="spacer"></div>
+    <p class="sub reveal reveal-delay-2">선언만 박지 말고 <span class="bold" style="color:var(--fg)">1주 실천</span> → 회고. 빈칸은 본인 업무로.</p>
+    <div class="do-row reveal reveal-delay-3"><span class="lbl">🛠 직접 해보기</span><span class="do-chip">/day4-retro</span></div>
+  </div>
+
+  <!-- ═══ 16. 우리가 만든 스킬 쇼케이스 ═══ -->
+  <div class="slide scrollable">
+    <div class="tag reveal"><span class="num">14</span><span class="sep">—</span><span class="label">없으면 만들고, 만들면 공유</span></div>
+    <h2 class="reveal reveal-delay-1">우리가 실제로 <span class="accent">만든</span> 스킬들</h2>
+    <p class="sub reveal reveal-delay-1" style="margin-top:0.5rem">캠프는 말이 아니라 증거로 — 팀이 직접 만들어 쓰는 것들.</p>
+    <div class="skill-grid reveal reveal-delay-2">
+      <div class="skill-card"><div class="cmd">/claude-code-guide</div><p>Claude Code 7개 기능(Memory·Skill·MCP·Subagent·Team·Hook·Plugin)을 설명→실행→퀴즈로</p></div>
+      <div class="skill-card"><div class="cmd">/think-deeper</div><p>기획·의사결정 전에 깊이 생각하는 구조화 워크플로우</p></div>
+      <div class="skill-card"><div class="cmd">/compound</div><p>작업 중 인사이트를 문서로 축적 — 지식 베이스를 복리로</p></div>
+      <div class="skill-card"><div class="cmd">/content-digest</div><p>아티클·영상·PDF·트윗을 퀴즈 우선 학습으로 정리</p></div>
+      <div class="skill-card"><div class="cmd">/experiment-share</div><p>Hackle 실험 결과 조회·비교·슬랙 공유</p></div>
+      <div class="skill-card"><div class="cmd">/team-assemble</div><p>복잡한 일을 전문가 역할로 쪼개 병렬 실행</p></div>
+      <div class="skill-card"><div class="cmd">/tips</div><p>팀 꿀팁 모음 — 쌓인 노하우를 한 번에</p></div>
+    </div>
+    <div class="callout info reveal reveal-delay-3"><strong>처음이라면 <span class="mono">/claude-code-guide</span>부터.</strong> 7개 기능을 직접 만져보며 익힌다.</div>
+  </div>
+
+  <!-- ═══ 17. 닫는 말 ═══ -->
+  <div class="slide">
+    <div class="big-quote reveal reveal-delay-1">AI Native는 도구를 잘 쓰는 게 아니라,<br><span class="accent">안 해도 되는 일을 발견하고 제거</span>하는 것</div>
+    <div class="spacer"></div>
+    <p class="dim mono reveal reveal-delay-2">도구는 바뀐다. 이 문장은 안 바뀐다.</p>
+  </div>
+
+</div>
+
+<script>
+  const deck = document.getElementById('deck');
+  const slides = deck.querySelectorAll('.slide');
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  let current = 0;
+
+  function goTo(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides[current].classList.remove('active');
+    slides[current].querySelectorAll('.reveal').forEach(el => {
+      el.style.animation = 'none'; el.offsetHeight; el.style.animation = ''; el.style.opacity = '0';
+    });
+    current = n;
+    slides[current].classList.add('active');
+    slides[current].scrollTop = 0;
+    progress.style.width = ((current / (slides.length - 1)) * 100) + '%';
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'Home') goTo(0);
+    if (e.key === 'End') goTo(slides.length - 1);
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { diff > 0 ? goTo(current + 1) : goTo(current - 1); }
+  });
+
+  deck.addEventListener('click', (e) => {
+    if (e.target.closest('a')) return;
+    if (e.clientX > window.innerWidth / 2) goTo(current + 1); else goTo(current - 1);
+  });
+
+  goTo(0);
+</script>
+
+</body>
+</html>
