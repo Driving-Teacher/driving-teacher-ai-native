@@ -31,3 +31,6 @@ node_modules/
 
 # Experiment snapshots (per-user)
 .claude/experiment-data/
+
+# 필기파헤치기 로컬 문제 덤프 (per-user, Firestore export)
+.pilgi-cache/
