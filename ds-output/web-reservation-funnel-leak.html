@@ -46,9 +46,9 @@ code{background:#F6F6F3;padding:0 .25rem;border-radius:4px;font-size:.92em}
 <!-- ░░ KPI: 이탈 지표 ░░ -->
 <section class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
   <div class="card p-4">
-    <div class="text-xs text-slate-500 font-semibold">① 광고→본서비스 진입</div>
-    <div class="kpi text-2xl font-extrabold text-slate-400 mt-1">측정 불가<sup class="fn">[24]</sup></div>
-    <div class="src mt-1">academyAbrId 크로스도메인 사각지대</div>
+    <div class="text-xs text-slate-500 font-semibold">① 직영홈피 온라인예약→본서비스</div>
+    <div class="kpi text-2xl font-extrabold text-amber mt-1">8,526→619<sup class="fn">[26]</sup></div>
+    <div class="src mt-1">클릭 대비 본서비스 도착 7.3%(크로스도메인 손실)</div>
   </div>
   <div class="card p-4">
     <div class="text-xs text-slate-500 font-semibold">② 상세→장바구니 이탈</div>
@@ -110,6 +110,55 @@ code{background:#F6F6F3;padding:0 .25rem;border-radius:4px;font-size:.92em}
     </div>
   </div>
   <p class="src mt-4">※ 직영 6곳 = 뉴삼성(수원신화성, 본거지)·뉴강남·신일·한백·동송·왜관. 구글애즈 직영 광고는 <b>뉴삼성 단독</b>(계정 5819228711) 집행<sup class="fn">[25]</sup>, 나머지 5곳은 미집행/타채널.</p>
+</section>
+
+<!-- ░░ 누수 ⓪ 진입: 직영홈피→본서비스 ░░ -->
+<section class="card p-6 mb-8">
+  <h2 class="mb-1">누수 ⓪ 진입 — 직영홈피→본서비스 (사각지대 부분 해소)</h2>
+  <p class="text-sm text-slate-600 mb-5">"측정 불가"였던 진입 구간을 <b>뉴삼성 직영홈피 GA4(509098790)</b>로 직접 측정 — BQ엔 없지만 GA4 Data API로 조회<sup class="fn">[26]</sup>. 광고(Cross-network=PMax)/오가닉은 구분되나, 본서비스 결제 1:1 귀속은 여전히 academyAbrId 필요.</p>
+  <div class="grid md:grid-cols-2 gap-4">
+    <!-- 직영홈피 진입 퍼널 -->
+    <div>
+      <div class="text-xs text-slate-500 font-semibold mb-2">직영홈피(뉴삼성) → 본서비스 진입 깔때기</div>
+      <div class="space-y-2">
+        <div class="flex items-center gap-2"><span class="text-xs w-28 text-slate-600">홈피 방문</span><div class="funnel-bar bg-brand" style="width:100%">104,590 <span class="font-normal">(광고 85,112)</span></div></div>
+        <div class="flex items-center gap-2"><span class="text-xs w-28 text-slate-600">온라인예약 클릭</span><div class="funnel-bar bg-brand/70" style="width:16%">8,526 <span class="font-normal">8.2%</span></div></div>
+        <div class="flex items-center gap-2"><span class="text-xs w-28 text-slate-600">본서비스 도착</span><div class="funnel-bar bg-red" style="width:8%;min-width:90px">619 <span class="font-normal">클릭의 7.3%</span></div></div>
+      </div>
+      <p class="text-xs mt-3 bg-red/5 rounded-lg p-2 leading-relaxed"><b class="text-red">크로스도메인 손실:</b> 온라인예약 8,526번 눌렀는데 본서비스엔 619만 도착(7.3%). 광고로 데려와 홈피 버튼까지 눌렸어도 본서비스 진입에서 대량 유실<sup class="fn">[26]</sup>.</p>
+    </div>
+    <!-- 상담 vs 예약 + 진성 -->
+    <div>
+      <div class="text-xs text-slate-500 font-semibold mb-2">직영홈피 CTA: 온라인예약 vs 상담신청<sup class="fn">[27]</sup></div>
+      <table>
+        <thead><tr><th></th><th>유저</th><th>광고비중</th></tr></thead>
+        <tbody>
+          <tr><td>🟦 온라인예약 <span class="src">driving_teacher_click</span></td><td>8,526</td><td>89%</td></tr>
+          <tr><td>🟧 상담신청 <span class="src">inquiry_leave</span></td><td>379</td><td>43%</td></tr>
+        </tbody>
+      </table>
+      <p class="text-xs mt-2 bg-emerald/5 rounded-lg p-2 leading-relaxed"><b style="color:#138a47">진성도(실결제 전환율, 내부DB)<sup class="fn">[28]</sup>:</b> 온라인예약 경로(<code>drivingteacher-reservation</code>) <b>59.9%</b> ≫ 아웃바운드콜 6.3% · 네이버부킹 2.9%. <b>온라인예약이 결제완료의 76%(449/587)를 만드는 진성 본류.</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 뉴삼성 페이지 유입루트 비교 ░░ -->
+<section class="card p-6 mb-8">
+  <h2 class="mb-1">뉴삼성 본서비스 페이지 — 직영홈피 경유 vs 그 외 루트<sup class="fn">[30]</sup></h2>
+  <p class="text-sm text-slate-600 mb-4">뉴삼성 학원 페이지(<code>academy_id=ev8fq…</code>)를 본 사람을 유입 루트로 나눠 예약 진행 비교 (GA4 335, 유니크 유저).</p>
+  <table>
+    <thead><tr><th>루트</th><th>페이지 도달</th><th>상세조회<br><span class="src">view_item</span></th><th>예약정보 입력<br><span class="src">add_shipping_info</span></th><th>도달→예약정보</th></tr></thead>
+    <tbody>
+      <tr class="font-bold" style="background:#F2EEFE"><td>① 뉴삼성웹 경유</td><td>1,887</td><td>194</td><td>1,714</td><td><span class="chip bg-emerald/15" style="color:#138a47">91%</span></td></tr>
+      <tr><td>② 그 외 루트(오가닉·직접)</td><td>6,781</td><td>5,088</td><td>2,041</td><td><span class="chip bg-red/15 text-red">30%</span></td></tr>
+    </tbody>
+  </table>
+  <p class="src mt-1">※ 상세조회(view_item)와 예약정보(add_shipping_info)의 역전에 주목 — 뉴삼성웹 경유는 상세조회 194만 거치고 예약정보 1,714로 <b>곧장 booking 페이지 직행</b>. 그외는 상세조회 5,088로 둘러보다 예약정보 2,041만 진행.</p>
+  <div class="grid md:grid-cols-2 gap-3 mt-4">
+    <div class="bg-slate-50 rounded-xl p-3 text-sm leading-relaxed"><b>볼륨은 "그 외"가 78%.</b> 뉴삼성 페이지 도달자 대부분(6,781)은 직영홈피가 아니라 <b>본서비스 안에서 네이버검색·직접으로 뉴삼성을 스스로 찾아옴.</b> 직영홈피 경유는 1,887명(22%).</div>
+    <div class="bg-emerald/5 rounded-xl p-3 text-sm leading-relaxed"><b style="color:#138a47">질은 "직영홈피 경유"가 압도.</b> 도달→예약정보 <b>91% vs 30%(3배)</b>. 직영홈피 거쳐 온 사람은 booking 직행 = "예약 작정하고 온" 초진성. ⚠️ 실결제는 GA4 purchase가 booking 직행을 우회하므로 내부DB(59.9%)로 봐야 함.</div>
+  </div>
+  <p class="text-sm leading-relaxed mt-3 bg-amber/5 border-l-4 border-amber p-3 rounded">💡 <b>볼륨 레버 = 본서비스 내 오가닉 발견</b>(5,088명이 뉴삼성을 스스로 찾음), <b>질 레버 = 직영홈피 경유</b>(예약정보 67%). 상충 아닌 보완 — 단 직영홈피 경유의 가치는 GA4가 아니라 내부DB로 측정해야 안 깎인다.</p>
 </section>
 
 <!-- ░░ 누수① 본서비스 퍼널 ░░ -->
