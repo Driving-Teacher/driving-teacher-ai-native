@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>운전선생 — 직영 웹 예약 퍼널, 어디서 새는가 (이탈 진단·출처검증)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<script>
+tailwind.config={theme:{extend:{fontFamily:{sans:['Pretendard','sans-serif']},colors:{
+ink:'#242523',brand:'#5A3FF3',amber:'#FF8339',emerald:'#1FCF6A',red:'#FF5C5D',
+slate:{50:'#FBFBF8',100:'#F6F6F3',200:'#F1F1EE',300:'#E4E4E1',400:'#C1C2BF',500:'#A3A3A0',600:'#797A77',700:'#656563',800:'#464644',900:'#242523'}}}}}
+</script>
+<style>
+body{font-family:'Pretendard',sans-serif;color:#242523;background:#FBFBF8;-webkit-font-smoothing:antialiased}
+.card{background:#fff;border-radius:18px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.kpi{font-variant-numeric:tabular-nums}
+table{border-collapse:collapse;width:100%}th,td{padding:.45rem .6rem;text-align:right;font-size:.8rem;font-variant-numeric:tabular-nums}th:first-child,td:first-child{text-align:left}
+thead th{font-size:.68rem;text-transform:uppercase;color:#797A77;border-bottom:2px solid #E4E4E1}
+tbody tr:nth-child(even){background:#FBFBF8}
+.chip{display:inline-block;font-size:.7rem;font-weight:800;padding:.12rem .5rem;border-radius:100px}
+.funnel-bar{height:40px;border-radius:8px;display:flex;align-items:center;color:#fff;font-weight:800;font-size:.82rem;padding-left:.7rem;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:70px}
+.layer-tag{font-size:.62rem;font-weight:800;padding:.1rem .45rem;border-radius:6px}
+.flow-box{border-radius:14px;padding:.9rem 1rem;text-align:center;font-weight:700;font-size:.82rem;line-height:1.35}
+.flow-arrow{font-size:1.4rem;color:#C1C2BF;font-weight:800;text-align:center}
+h2{font-size:1.15rem;font-weight:800}
+.src{font-size:.66rem;color:#A3A3A0}
+sup.fn{color:#5A3FF3;font-weight:800;font-size:.62em;vertical-align:super;margin-left:1px}
+.appx-row{border-bottom:1px solid #F1F1EE}
+.appx-row td{vertical-align:top;font-size:.74rem;text-align:left;padding:.55rem .6rem}
+code{background:#F6F6F3;padding:0 .25rem;border-radius:4px;font-size:.92em}
+.tagm{display:inline-block;font-size:.6rem;font-weight:800;padding:.05rem .4rem;border-radius:5px}
+.defbox{font-size:.72rem;line-height:1.5;color:#656563}
+.defbox b{color:#242523}
+</style>
+</head>
+<body>
+<div class="max-w-5xl mx-auto px-5 py-9">
+
+<!-- ░░ 표지 ░░ -->
+<header class="mb-8">
+  <div class="chip bg-brand/10 text-brand mb-3">직영학원 웹 예약 퍼널 · 이탈 진단</div>
+  <h1 class="text-3xl font-extrabold leading-tight">웹 예약 퍼널, 어디서 새는가<br><span class="text-red">상세→장바구니 76.6% 증발</span>, <span class="text-red">상담의 80%가 결제 전 이탈</span></h1>
+  <p class="text-slate-600 mt-3 text-sm leading-relaxed">목적 = "예약하러 들어온 사람이 <b>어느 단계에서 어떻게 빠져나가는가</b>". 직영 6곳 택소노미 기반, GA4·Hackle·Airbridge·Google Ads·내부DB 5개 소스 실측 교차, 기간 <b>2026-03-01 ~ 05-31</b><sup class="fn">[1]</sup>.<br>모든 수치에 각주를 달고 하단 <a href="#appendix" class="text-brand underline">출처·계산식 부록</a>에서 소스·산식을 검증함.</p>
+</header>
+
+<!-- ░░ KPI: 이탈 지표 ░░ -->
+<section class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+  <div class="card p-4">
+    <div class="text-xs text-slate-500 font-semibold">① 광고→본서비스 진입</div>
+    <div class="kpi text-2xl font-extrabold text-slate-400 mt-1">측정 불가<sup class="fn">[24]</sup></div>
+    <div class="src mt-1">academyAbrId 크로스도메인 사각지대</div>
+  </div>
+  <div class="card p-4">
+    <div class="text-xs text-slate-500 font-semibold">② 상세→장바구니 이탈</div>
+    <div class="kpi text-2xl font-extrabold text-red mt-1">76.6%<sup class="fn">[19]</sup></div>
+    <div class="src mt-1">view_item 40,566 → 9,487 (GA4)<sup class="fn">[18]</sup></div>
+  </div>
+  <div class="card p-4">
+    <div class="text-xs text-slate-500 font-semibold">③ 상담→결제완료</div>
+    <div class="kpi text-2xl font-extrabold text-red mt-1">20.6%<sup class="fn">[14]</sup></div>
+    <div class="src mt-1">상담 2,856 → 결제완료 587 (내부DB)</div>
+  </div>
+  <div class="card p-4">
+    <div class="text-xs text-slate-500 font-semibold">④ 결제 직전→완료</div>
+    <div class="kpi text-2xl font-extrabold mt-1" style="color:#138a47">84.1%<sup class="fn">[22]</sup></div>
+    <div class="src mt-1">여긴 안 샘 — 끝까지 가면 닫힘</div>
+  </div>
+</section>
+
+<!-- ░░ 한눈 결론: 누수 흐름 ░░ -->
+<section class="card p-6 mb-8">
+  <h2 class="mb-4">한눈에 보는 결론 — 예약 퍼널 누수 흐름</h2>
+  <div class="space-y-3">
+    <div class="flex gap-3 items-start">
+      <span class="chip bg-slate-300 text-slate-700 shrink-0 mt-0.5">진입</span>
+      <p class="text-sm leading-relaxed"><b>직영 광고·랜딩 → 본서비스 진입 구간이 통째로 안 보인다.</b> 직영 홈피→drivingteacher.co.kr는 <code>academyAbrId</code>로만 연결되는데 전용 컬럼이 없어 <b>측정 불가</b><sup class="fn">[24]</sup> — 광고비가 예약으로 이어지는지 추적 불능. <span class="text-red font-bold">최대 사각지대.</span></p>
+    </div>
+    <div class="flex gap-3 items-start">
+      <span class="chip bg-red/15 text-red shrink-0 mt-0.5">웹 ①</span>
+      <p class="text-sm leading-relaxed"><b>본서비스 상세→장바구니에서 76.6% 증발</b>(view_item 40,566 → add_to_cart 9,487)<sup class="fn">[19]</sup>. 학원 상세를 보고도 예약 담기로 넘기는 비율 23%뿐 — <b>예약 퍼널 최대 단일 누수.</b> 단 장바구니 이후는 살아있음(결제시작하면 84% 완료<sup class="fn">[22]</sup>).</p>
+    </div>
+    <div class="flex gap-3 items-start">
+      <span class="chip bg-red/15 text-red shrink-0 mt-0.5">상담 ②</span>
+      <p class="text-sm leading-relaxed"><b>직영 상담 2,856건 중 결제완료는 587건(20.6%)</b><sup class="fn">[14]</sup> — 80%가 결제 전 이탈. 특히 <b>예약 성공 처리 1,098건 ≈ 예약 실패 1,036건</b>(거의 1:1)<sup class="fn">[16]</sup>으로, 상담 이후 클로징 단계가 두 번째 큰 누수. 이 구간은 광고·웹 퍼널엔 안 잡히고 내부DB에만 보임.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 2레이어 구조도 ░░ -->
+<section class="card p-6 mb-8">
+  <h2 class="mb-1">퍼널 구조 — 두 도메인에 걸쳐 있다</h2>
+  <p class="text-sm text-slate-600 mb-5">직영 홈피(마케팅 랜딩)엔 결제·가입이 없다. 버튼 클릭으로 본서비스에 넘기고, 그 경계가 곧 측정 암흑 구간.</p>
+  <div class="grid md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-2 items-center">
+    <div class="flow-box bg-amber/10" style="color:#9a4a17">
+      <div class="layer-tag bg-amber text-white inline-block mb-1">랜딩</div><br>
+      직영 홈피<br><span class="text-xs font-normal">예: 뉴삼성 web<br>GA4 477 · 픽셀5종 · Google Ads</span>
+      <div class="text-xs mt-2 font-normal">상담폼·전화·온라인예약 클릭</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box bg-red/10" style="color:#b32a2b">
+      <div class="layer-tag bg-red text-white inline-block mb-1">경계 ⚠</div><br>
+      academyAbrId<br><span class="text-xs font-normal">크로스도메인 부착<br>utm=direct_academy_homepage</span>
+      <div class="text-xs mt-2 font-bold">측정 불가 = 사각지대<sup class="fn">[24]</sup></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box bg-brand/10" style="color:#3c27b0">
+      <div class="layer-tag bg-brand text-white inline-block mb-1">본서비스</div><br>
+      drivingteacher.co.kr<br><span class="text-xs font-normal">GA4 335 · Airbridge · Hackle</span>
+      <div class="text-xs mt-2 font-normal">view_item → add_to_cart<br>→ purchase(실결제)</div>
+    </div>
+  </div>
+  <p class="src mt-4">※ 직영 6곳 = 뉴삼성(수원신화성, 본거지)·뉴강남·신일·한백·동송·왜관. 구글애즈 직영 광고는 <b>뉴삼성 단독</b>(계정 5819228711) 집행<sup class="fn">[25]</sup>, 나머지 5곳은 미집행/타채널.</p>
+</section>
+
+<!-- ░░ 누수① 본서비스 퍼널 ░░ -->
+<section class="card p-6 mb-8">
+  <h2 class="mb-1">누수 ① 본서비스 예약 퍼널 — 상세→장바구니에서 76.6% 이탈</h2>
+  <p class="text-sm text-slate-600 mb-5"><code>analytics_335020101</code> (GA4) · 본서비스 전체(직영분 분리 불가, academyAbrId 사각지대) · users 기준 · 2026-03~05<sup class="fn">[18]</sup></p>
+  <div class="space-y-2">
+    <div class="flex items-center gap-3"><span class="text-xs w-32 text-slate-600 font-semibold">상품 상세 view_item</span><div class="funnel-bar bg-brand" style="width:100%">40,566</div></div>
+    <div class="flex items-center gap-3"><span class="text-xs w-32 text-slate-600 font-semibold">장바구니 add_to_cart</span><div class="funnel-bar bg-brand/80" style="width:23.4%">9,487 <span class="font-normal ml-1">23.4%</span></div></div>
+    <div class="flex items-center gap-3"><span class="text-xs w-32 text-slate-600 font-semibold">결제정보 add_payment_info</span><div class="funnel-bar bg-brand/65" style="width:16%">6,496</div></div>
+    <div class="flex items-center gap-3"><span class="text-xs w-32 text-slate-600 font-semibold">결제시작 begin_checkout</span><div class="funnel-bar bg-brand/50" style="width:5%">2,046</div></div>
+    <div class="flex items-center gap-3"><span class="text-xs w-32 text-slate-600 font-semibold">실결제 purchase</span><div class="funnel-bar bg-emerald" style="width:4.24%;min-width:120px">1,721 <span class="font-normal ml-1">상세 대비 4.24%</span></div></div>
+  </div>
+  <div class="grid grid-cols-3 gap-3 mt-5 text-center">
+    <div class="bg-red/5 rounded-xl p-3"><div class="kpi text-xl font-extrabold text-red">76.6%<sup class="fn">[19]</sup></div><div class="text-xs text-slate-500 mt-1">상세→장바구니 이탈<br>(최대 단일 누수)</div></div>
+    <div class="bg-slate-50 rounded-xl p-3"><div class="kpi text-xl font-extrabold">18.1%<sup class="fn">[21]</sup></div><div class="text-xs text-slate-500 mt-1">장바구니→결제<br>(의향 후 전환)</div></div>
+    <div class="bg-emerald/5 rounded-xl p-3"><div class="kpi text-xl font-extrabold" style="color:#138a47">84.1%<sup class="fn">[22]</sup></div><div class="text-xs text-slate-500 mt-1">결제시작→완료<br>(끝까지 가면 닫힘)</div></div>
+  </div>
+  <p class="src mt-3">해석: 누수는 <b>퍼널 앞단(상세→담기)</b>에 몰려 있고 결제 마지막은 튼튼함. 즉 "상세페이지에서 예약 의향을 못 만드는 것"이 핵심. 교차검증: Hackle 단기 차트도 결제 직전→완료 22.0%·22.7%로 재현<sup class="fn">[23]</sup>.</p>
+</section>
+
+<!-- ░░ 누수② 직영 상담→결제 (내부DB) ░░ -->
+<section class="card p-6 mb-8">
+  <h2 class="mb-1">누수 ② 직영 상담→결제 — 80%가 결제 전 이탈</h2>
+  <p class="text-sm text-slate-600 mb-2"><code>driving_teacher_dw.homepage_inquiry_flat</code> · 직영 6곳 · 2026-03~05 (광고·웹 퍼널엔 안 잡히는 정답값)<sup class="fn">[14][15]</sup></p>
+  <!-- 정의 박스 -->
+  <div class="defbox bg-slate-100 rounded-lg p-3 mb-4">
+    <b>📖 이 표의 용어 정의 (출처: 내부DB <code>homepage_inquiry_flat</code>)</b><br>
+    · <b>상담</b> = 예약 문의·신청 접수 레코드 1건 (홈페이지·전화·네이버 등으로 들어온 직영 예약 문의). <code>COUNT(*)</code><sup class="fn">[14]</sup><br>
+    · <b>결제완료</b> = <code>paymentcompleted = TRUE</code> 인 건 = 예약금·수강료 <b>실결제까지 완료</b><sup class="fn">[9]</sup><br>
+    · <b>전환율</b> = 결제완료 ÷ 상담
+  </div>
+  <table>
+    <thead><tr><th>직영 학원</th><th>상담</th><th>결제완료</th><th>전환율</th></tr></thead>
+    <tbody>
+      <tr><td>뉴강남</td><td>998</td><td>225</td><td><span class="chip bg-emerald/15" style="color:#138a47">22.5%</span></td></tr>
+      <tr><td>뉴삼성 (수원신화성·본거지)</td><td>925</td><td>153</td><td>16.5%</td></tr>
+      <tr><td>신일</td><td>638</td><td>131</td><td>20.5%</td></tr>
+      <tr><td>한백</td><td>139</td><td>64</td><td><span class="chip bg-emerald/15" style="color:#138a47">46.0%</span></td></tr>
+      <tr><td>동송</td><td>133</td><td>9</td><td><span class="chip bg-red/15 text-red">6.8%</span></td></tr>
+      <tr><td>왜관</td><td>23</td><td>5</td><td>21.7%</td></tr>
+      <tr class="font-bold"><td>합계</td><td>2,856</td><td>587</td><td>20.6%</td></tr>
+    </tbody>
+  </table>
+  <div class="grid md:grid-cols-2 gap-3 mt-5">
+    <div class="bg-slate-50 rounded-xl p-4">
+      <div class="text-xs text-slate-500 font-semibold mb-2">예약 status 분포 — 실패가 성공만큼<sup class="fn">[16]</sup></div>
+      <div class="space-y-1.5">
+        <div class="flex items-center gap-2"><span class="text-xs w-20 text-slate-500">예약 성공</span><div class="funnel-bar bg-emerald" style="width:100%">1,098</div></div>
+        <div class="flex items-center gap-2"><span class="text-xs w-20 text-slate-500">예약 실패</span><div class="funnel-bar bg-red" style="width:94%">1,036</div></div>
+        <div class="flex items-center gap-2"><span class="text-xs w-20 text-slate-500">상담 전</span><div class="funnel-bar bg-slate-400" style="width:48%">523</div></div>
+        <div class="flex items-center gap-2"><span class="text-xs w-20 text-slate-500">예약 취소</span><div class="funnel-bar bg-amber" style="width:16%">181</div></div>
+      </div>
+    </div>
+    <div class="bg-slate-50 rounded-xl p-4">
+      <div class="text-xs text-slate-500 font-semibold mb-2">상담 유입 source — 본류는 웹셀프가 아닌 전화<sup class="fn">[17]</sup></div>
+      <div class="space-y-1.5">
+        <div class="flex items-center gap-2"><span class="text-xs w-28 text-slate-500">아웃바운드 콜</span><div class="funnel-bar bg-brand" style="width:100%">1,343 · 47%</div></div>
+        <div class="flex items-center gap-2"><span class="text-xs w-28 text-slate-500">웹예약 경유</span><div class="funnel-bar bg-brand/70" style="width:56%">750 · 26%</div></div>
+        <div class="flex items-center gap-2"><span class="text-xs w-28 text-slate-500">아웃바운드(DT)</span><div class="funnel-bar bg-brand/50" style="width:20%">269</div></div>
+        <div class="flex items-center gap-2"><span class="text-xs w-28 text-slate-500">네이버부킹</span><div class="funnel-bar bg-emerald/70" style="width:18%">243</div></div>
+      </div>
+    </div>
+  </div>
+  <p class="text-sm leading-relaxed mt-4 bg-amber/5 border-l-4 border-amber p-3 rounded">💡 직영 예약의 클로징은 <b>웹 셀프서비스가 아니라 영업 아웃바운드 콜(47%)</b>이 한다. "웹 예약 퍼널"의 전환은 웹에서 끝나지 않고 콜로 이어지며, <b>예약 실패 1,036건</b>이 콜·클로징 단계에서 발생하는 진짜 누수다.
+    <span class="block defbox mt-2 pt-2 border-t border-amber/30">※ <b>예약 성공(status) ≠ 결제완료.</b> "예약 성공" 1,098건은 예약 절차상 성공 처리일 뿐, 실제 결제(paymentcompleted=TRUE)까지 간 건 587건. 즉 예약 성공으로 잡힌 건도 상당수가 결제 전 빠짐 — status와 실결제를 구분해 봐야 함.</span></p>
+</section>
+
+<!-- ░░ 참고: 광고 전환 데이터 해석 주의 ░░ -->
+<section class="card p-6 mb-8">
+  <h2 class="mb-1">참고 — 광고 전환 데이터, 그대로 믿으면 안 되는 이유</h2>
+  <p class="text-sm text-slate-600 mb-5">위 이탈을 "광고 전환 리포팅"으로 보려 할 때의 함정. 뉴삼성(구글애즈 5819228711)은 <b>수강생 모집</b>과 <b>강사 채용</b>이 한 계정에 섞여 있다<sup class="fn">[12]</sup>.</p>
+  <div class="grid md:grid-cols-2 gap-4 mb-4">
+    <div class="border-2 border-brand/30 rounded-xl p-4">
+      <div class="chip bg-brand/10 text-brand mb-2">🎓 수강생 모집 (always-on pmax)</div>
+      <div class="text-xs text-slate-500 mb-2">광고비 <b>34,717,289원</b><sup class="fn">[2]</sup> / 클릭 152,646<sup class="fn">[3]</sup></div>
+      <table>
+        <tbody>
+          <tr><td>kakao_inquiry_click <span class="src">채팅 진입 클릭</span></td><td class="text-amber font-bold">868.0<sup class="fn">[4]</sup></td></tr>
+          <tr><td>inquiry_leave <span class="src">폼 제출(실리드)</span></td><td class="font-bold" style="color:#138a47">182.5<sup class="fn">[4]</sup></td></tr>
+          <tr><td>phone_call <span class="src">050 실통화</span></td><td>165.2<sup class="fn">[4]</sup></td></tr>
+        </tbody>
+      </table>
+      <div class="mt-2 text-xs bg-brand/5 rounded-lg p-2">수강모집 CAC = 34,717,289 ÷ 실결제 153 = <b class="text-red">약 226,910원</b><sup class="fn">[10]</sup> (분모는 전채널 실결제라 광고전용 CAC는 더 높을 수 있음)</div>
+    </div>
+    <div class="border-2 border-amber/30 rounded-xl p-4">
+      <div class="chip bg-amber/15 mb-2" style="color:#9a4a17">🧑‍🏫 강사 채용 (recruit)</div>
+      <div class="text-xs text-slate-500 mb-2">광고비 <b>1,579,626원</b><sup class="fn">[2]</sup> / 랜딩 <code>/company/instructor</code><sup class="fn">[12]</sup></div>
+      <table>
+        <tbody>
+          <tr><td>instructor_apply_online_click <span class="src">강사 지원 클릭</span></td><td class="font-bold">978.6<sup class="fn">[4]</sup></td></tr>
+          <tr><td>instructor_apply_phone_click <span class="src">강사 지원 전화</span></td><td>814.6<sup class="fn">[4]</sup></td></tr>
+        </tbody>
+      </table>
+      <p class="text-xs mt-3 leading-relaxed bg-amber/5 rounded-lg p-2"><b>수강 퍼널과 무관.</b> 구글애즈 전환 1·2위(979·815)가 강사 채용인데 카테고리가 SIGNUP이라, 목적을 안 가르면 "수강 전환"으로 오인된다.</p>
+    </div>
+  </div>
+  <div class="bg-slate-50 rounded-xl p-4 text-sm leading-relaxed">
+    <b class="text-red">두 가지 함정:</b> ① 전환 최상위 <code>instructor_apply</code>(979·815)는 <b>강사 채용</b>이라 수강 퍼널에서 빼야 함<sup class="fn">[12]</sup>. ② 수강 모집 전환에서도 <code>kakao_inquiry_click</code> 868은 채팅 진입 <u>클릭</u>일 뿐, 단단한 폼 리드는 <code>inquiry_leave</code> 182.5뿐<sup class="fn">[A]</sup>. <b>광고 라벨만 보고 "전환 1,793건"으로 입찰을 최적화하면 채용·클릭을 수강 매출로 착각</b>하게 된다. → 이탈 진단의 기준값은 광고 리포팅이 아니라 내부DB 실결제(누수②)·GA4 퍼널(누수①)이어야 한다.
+  </div>
+</section>
+
+<!-- ░░ 누수 우선순위 ░░ -->
+<section class="card p-6 mb-8">
+  <h2 class="mb-4">누수 우선순위 & 권장 조치</h2>
+  <table>
+    <thead><tr><th>누수 지점</th><th class="!text-center">심각도</th><th class="!text-left">근거</th><th class="!text-left">조치</th></tr></thead>
+    <tbody>
+      <tr><td>① 광고·랜딩→본서비스 진입 (academyAbrId)</td><td class="!text-center"><span class="chip bg-red text-white">HIGH</span></td><td class="!text-left text-slate-600">진입 자체 측정 불가<sup class="fn">[24]</sup></td><td class="!text-left text-slate-600">academyAbrId를 GA4 335 user_property/이벤트 파라미터로 적재 + Airbridge에 파싱컬럼 추가</td></tr>
+      <tr><td>② 상담→결제 (예약 실패 1,036)</td><td class="!text-center"><span class="chip bg-red text-white">HIGH</span></td><td class="!text-left text-slate-600">성공 1,098 ≈ 실패 1,036, 상담의 80% 이탈<sup class="fn">[14][16]</sup></td><td class="!text-left text-slate-600">failreason 분석 → 콜·일정·차량 캐파 등 클로징 병목 규명</td></tr>
+      <tr><td>③ 본서비스 상세→장바구니</td><td class="!text-center"><span class="chip bg-red text-white">HIGH</span></td><td class="!text-left text-slate-600">76.6% 이탈 (40,566→9,487)<sup class="fn">[19]</sup></td><td class="!text-left text-slate-600">상세페이지 예약 CTA·가격/일정 가시성 A/B (Hackle 실험)</td></tr>
+      <tr><td>광고 전환 라벨 혼입 (해석 오류)</td><td class="!text-center"><span class="chip bg-amber text-white">MID</span></td><td class="!text-left text-slate-600">채용(979)·클릭(868)이 수강 전환에 섞임<sup class="fn">[12][4]</sup></td><td class="!text-left text-slate-600">recruit 캠페인 분리, kakao클릭 "의향" 강등, 수강 KPI는 inquiry_leave·실결제 기준</td></tr>
+      <tr><td>계측 공백</td><td class="!text-center"><span class="chip bg-amber text-white">MID</span></td><td class="!text-left text-slate-600">Hackle 직영 미전송·온보딩 이벤트키 불일치</td><td class="!text-left text-slate-600">온보딩은 Airbridge raw로 대체. 직영 RD는 google_ads native VIEW로 우회 확보</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ░░ 출처·계산식 부록 ░░ -->
+<section class="card p-6 mb-4" id="appendix">
+  <h2 class="mb-1">📋 출처·계산식 부록 (각주 검증)</h2>
+  <p class="text-sm text-slate-600 mb-4">모든 수치는 <code>drivingteacher-eeb82</code> BigQuery 실쿼리 결과(SA <code>bigquery@…</code> 키, 2026-06-05 조회). <span class="tagm bg-brand/10 text-brand">측정</span>=쿼리 직접조회, <span class="tagm bg-amber/15" style="color:#9a4a17">계산</span>=측정값 산식, <span class="tagm bg-slate-200 text-slate-600">주의</span>=해석 한계.</p>
+  <table>
+    <tbody>
+      <tr class="appx-row"><td class="font-bold text-brand">[1]</td><td><span class="tagm bg-brand/10 text-brand">측정</span> <b>분석기간</b> 2026-03-01~05-31. 광고/내부DB는 <code>DATE(createdat\|segments_date) BETWEEN</code>, GA4는 <code>_TABLE_SUFFIX BETWEEN '20260301' AND '20260531'</code>.</td></tr>
+      <tr class="appx-row"><td class="font-bold text-brand">[2]</td><td><span class="tagm bg-brand/10 text-brand">측정</span> <b>뉴삼성 광고비(목적별).</b> <code>ads_CampaignBasicStats_5819228711</code> <code>SUM(metrics_cost_micros)/1e6</code>를 캠페인명으로 분리: 🎓수강생모집(always-on pmax) <b>34,717,289원</b> / 🧑‍🏫강사채용(recruit) <b>1,579,626원</b> / 합계 36,296,915원. ⚠️ 초안 1.09억은 <code>ads_Campaign</code>(일자스냅샷) JOIN fan-out 오류였고 AccountBasicStats=CampaignBasicStats 교차일치로 정정.</td></tr>
+      <tr class="appx-row"><td class="font-bold text-brand">[3]</td><td><span class="tagm bg-brand/10 text-brand">측정</span> <b>클릭(목적별).</b> 수강모집 152,646 / 강사채용 32,830 / 합계 185,476 · 노출 6,617,815.</td></tr>
+      <tr class="appx-row"><td class="font-bold text-brand">[4]</td><td><span class="tagm bg-brand/10 text-brand">측정</span> <b>광고 전환 — 캠페인 목적별 분해.</b> <code>ads_CampaignConversionStats_5819228711</code> <code>SUM(metrics_conversions)</code>를 campaign_id→캠페인명 매핑으로 분리. <b>🎓수강모집[SUBMIT_LEAD_FORM]</b>: kakao_inquiry_click 868.0(채팅 진입 클릭)·inquiry_leave 182.5(폼 제출, 단단한 리드)·phone_call 165.2. <b>🧑‍🏫강사채용[SIGNUP]</b>: instructor_apply_online_click 978.6·instructor_apply_phone_click 814.6. 소수=구글애즈 분수전환(attribution) 정상.</td></tr>
+      <tr class="appx-row"><td class="font-bold text-brand">[9]</td><td><span class="tagm bg-brand/10 text-brand">측정</span> <b>결제완료 정의 = <code>paymentcompleted = TRUE</code>.</b> <code>homepage_inquiry_flat</code>의 paymentcompleted는 BOOLEAN. 직영6곳 기간내 TRUE=587·FALSE=1·NULL=2,268. 뉴삼성 단독 TRUE=153. ⚠️ 초안의 588/154는 <code>IS NOT NULL</code>로 세어 FALSE 1건이 섞인 값 → TRUE 기준 587/153으로 정정.</td></tr>
+      <tr class="appx-row"><td class="font-bold" style="color:#9a4a17">[10]</td><td><span class="tagm bg-amber/15" style="color:#9a4a17">계산</span> <b>수강모집 CAC 약 226,910원</b> = 수강모집 광고비 [2] 34,717,289 ÷ 뉴삼성 실결제 [9] 153. ⚠️ 분모 153은 전채널 실결제라 광고전용 CAC는 이보다 높을 수 있음(academyAbrId 사각지대[24]로 광고기여분 분리 불가).</td></tr>
+      <tr class="appx-row"><td class="font-bold text-slate-500">[12]</td><td><span class="tagm bg-brand/10 text-brand">측정</span> <b>캠페인 목적 분리 근거.</b> <code>ads_Ad_5819228711.ad_group_ad_ad_final_urls</code> = <code>https://www.suwonnewsamsung.co.kr/company/instructor?...utm_campaign=newsamsung_recruit_..._apply</code> → instructor_apply는 강사 <b>채용</b>(/company/instructor, recruit 캠페인). always-on pmax(inquiry-all-event)만 수강생 모집. ⚠️ 초안이 instructor_apply를 수강 예약으로 오인한 것은 무효.</td></tr>
+      <tr class="appx-row"><td class="font-bold text-brand">[14]</td><td><span class="tagm bg-brand/10 text-brand">측정</span> <b>상담 정의 + 상담→결제완료.</b> <b>상담</b>=<code>homepage_inquiry_flat</code> 레코드 1건(직영 예약 문의·신청 접수, 홈피·전화·네이버 등 유입), academyid IN (6곳 화이트리스트) 기간내 <code>COUNT(*)</code>=2,856. <b>결제완료</b>=<code>COUNTIF(paymentcompleted=TRUE)</code>=587. 전환율 20.6%.</td></tr>
+      <tr class="appx-row"><td class="font-bold text-brand">[15]</td><td><span class="tagm bg-brand/10 text-brand">측정</span> <b>학원별 상담/결제완료(TRUE).</b> [14] 동쿼리 GROUP BY academyid. 뉴강남998/225·뉴삼성925/153·신일638/131·한백139/64·동송133/9·왜관23/5.</td></tr>
+      <tr class="appx-row"><td class="font-bold text-brand">[16]</td><td><span class="tagm bg-brand/10 text-brand">측정</span> <b>status 분포.</b> [14] 동조건 GROUP BY status: 예약성공 1,098·예약실패 1,036·상담전 523·예약취소 181·예약금수납대기 18 (합 2,856). ⚠️ status는 결제완료와 별개 필드 — 예약성공 1,098 중 paymentcompleted=TRUE는 일부.</td></tr>
+      <tr class="appx-row"><td class="font-bold text-brand">[17]</td><td><span class="tagm bg-brand/10 text-brand">측정</span> <b>source 분포.</b> [14] 동조건 GROUP BY source: outbound-call 1,343(47.0%)·drivingteacher-reservation 750(26.3%)·outbound-drivingteacher-call 269·naver-booking 243·etc 216·기타.</td></tr>
+      <tr class="appx-row"><td class="font-bold text-brand">[18]</td><td><span class="tagm bg-brand/10 text-brand">측정</span> <b>본서비스 GA4 퍼널(users).</b> <code>analytics_335020101.events_*</code>, <code>COUNT(DISTINCT user_pseudo_id) GROUP BY event_name</code>: session_start 223,715·view_item 40,566·add_to_cart 9,487·add_payment_info 6,496·begin_checkout 2,046·purchase 1,721. (본서비스 전체, 직영분 분리 불가)</td></tr>
+      <tr class="appx-row"><td class="font-bold" style="color:#9a4a17">[19]</td><td><span class="tagm bg-amber/15" style="color:#9a4a17">계산</span> <b>상세→장바구니 이탈 76.6%</b> = 1 − (9,487 ÷ 40,566).</td></tr>
+      <tr class="appx-row"><td class="font-bold" style="color:#9a4a17">[21]</td><td><span class="tagm bg-amber/15" style="color:#9a4a17">계산</span> <b>장바구니→결제 18.1%</b> = 1,721 ÷ 9,487.</td></tr>
+      <tr class="appx-row"><td class="font-bold" style="color:#9a4a17">[22]</td><td><span class="tagm bg-amber/15" style="color:#9a4a17">계산</span> <b>결제시작→완료 84.1%</b> = 1,721 ÷ 2,046.</td></tr>
+      <tr class="appx-row"><td class="font-bold text-brand">[23]</td><td><span class="tagm bg-brand/10 text-brand">측정</span> <b>Hackle 교차검증.</b> Hackle MCP analytics-chart-detail: 차트30746(구매퍼널, 3일) 장바구니→구매 22.0%, 차트33441(add_payment_info>purchase, 30일) 22.7%. 기간/전환창 상이 → 보조 검증용.</td></tr>
+      <tr class="appx-row"><td class="font-bold text-slate-500">[24]</td><td><span class="tagm bg-slate-200 text-slate-600">주의</span> <b>academyAbrId 사각지대.</b> <code>MKT.airbridge_rawdata_web</code> 스키마에 academyAbrId 전용컬럼 부재(Channel/Shared_Channel만). GA4 477009899는 분석기간 events 25행 스텁(page_view/session_start/first_visit만) → 랜딩→본서비스 1:1 귀속 측정 불가.</td></tr>
+      <tr class="appx-row"><td class="font-bold text-brand">[25]</td><td><span class="tagm bg-brand/10 text-brand">측정</span> <b>구글애즈 직영=뉴삼성 단독.</b> <code>ads_CampaignBasicStats_5819228711</code> 캠페인명 전부 <code>newsamsung_*</code>(pmax inquiry-all 3종 + recruit dg apply 1종).</td></tr>
+      <tr><td class="font-bold text-slate-500">[A]</td><td><span class="tagm bg-slate-200 text-slate-600">주의</span> <b>광고 inquiry_leave(182.5) vs 내부DB 상담(925, 뉴삼성) 직접비교 부적절.</b> 광고는 유료채널 경유분만 포착, 내부DB는 전채널(아웃바운드콜 47% 포함). academyAbrId 적재 전엔 광고→상담 귀속 불가.</td></tr>
+    </tbody>
+  </table>
+  <p class="src mt-4 pt-3 border-t border-slate-200">운전선생 성장팀 · 분석기간 2026-03-01~05-31 · 생성·검증 2026-06-05 · 소스 5종 실측 교차 (GA4 335020101 · Hackle MCP · Airbridge rawdata_web · Google Ads Data Transfer 5819228711 · driving_teacher_dw)</p>
+</section>
+
+</div>
+</body>
+</html>
