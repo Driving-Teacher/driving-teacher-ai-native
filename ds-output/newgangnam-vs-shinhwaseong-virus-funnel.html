@@ -732,6 +732,34 @@
     <p class="caveat">⚠️ <b>성사율은 소스마다 다르게 잡힌다</b> — orders_flat(STEP 4) 신화성 64~72% vs ERP 확정→도착 80%(정의·"방문 등록 대기" 처리 차이). 본 결론의 "확정 후 도착은 양쪽 비슷"은 ERP 레벨매칭 기준이며, 두 소스 대사는 후속 확인 과제다.</p>
   </section>
 
+  <!-- 다음 단계 · 실험 -->
+  <section>
+    <div class="step-no"><span class="dot">▶</span> 다음 단계 · 실험</div>
+    <h2>UX를 원복하고, 뉴강남식 구조로 최적화 테스트를 돌린다</h2>
+    <p class="body">이 분석의 결론을 실제로 검증하는 실행안이다 — <b>① 6/11 채널톡 히어로 개편을 "예약직결"(뉴강남식)로 원복</b>하고, <b>② 그 위에서 온라인예약 중간 퍼널 또는 상담신청 완료를 A/B로 최적화</b>해, 뉴강남에서 본 <b>"신호↑ = 예약↑ 동반 상승"</b>이 신화성에서도 재현되는지 확인한다.</p>
+    <div class="lever">
+      <div class="card2" style="background:#f8fbff; border-color:#bfdbfe">
+        <span class="tag" style="background:var(--ng)">트랙 A</span>
+        <h4>온라인예약 직결</h4>
+        <p>히어로 채널톡 → <b>예약직결</b>(위치·과정 소구) + 중간 퍼널(크로스도메인·일정선택) 마찰 제거. 광고 신호 = add_payment_info(하드). 뉴강남 자가예약 대응.</p>
+      </div>
+      <div class="card2" style="border-color:#fecaca">
+        <span class="tag">트랙 B</span>
+        <h4>상담신청 완료 강화</h4>
+        <p>채팅(오픈만) → <b>상담신청 폼</b>(성함·전화 제출) + 콜 클로징(폼→확정 21%) 개선. 광고 신호 = 상담신청완료(하드, 뉴강남 동일).</p>
+      </div>
+    </div>
+    <div class="callout ok">
+      <div class="icon">🎯</div>
+      <div>
+        <h3>성공 기준 = 동반 상승 · 선결 = 광고 귀속</h3>
+        <p><b>성공</b>: 하드 신호↑ <b>그리고</b> 실제 예약(ERP)↑ 가 함께 움직이면(위 캡스톤 차트를 실험 전후 재측정) 뉴강남 플로우 재현. <b>선결(1번 게이트)</b>: 하드 액션 광고 귀속이 현재 0 → 보조 전환으로 켜 관측 중, 0을 넘어야 신호 최적화를 측정할 수 있다.</p>
+      </div>
+    </div>
+    <p class="body" style="margin-top:16px">📎 상세 설계(가설·트랙·지표·일정)는 별도 실험 명세서:
+      <a href="suwon-newgangnam-structure-test-spec.html" style="color:var(--step); font-weight:700; text-decoration:underline">수원신화성 → 뉴강남 구조 이식 실험 명세 ↗</a></p>
+  </section>
+
   <footer>
     출처 ·
     <span class="src">GA4 driving_teacher_click 주별 (신화성 509098790 / 뉴강남 471868600)</span>
