@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수원신화성 → 뉴강남 구조 이식 실험 명세</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+  :root{ --ng:#2563eb; --sh:#e11d48; --ink:#111827; --sub:#6b7280;
+    --line:#e5e7eb; --bg:#f8fafc; --card:#fff; --ok:#10b981; --warn:#f59e0b; --bad:#ef4444; --step:#4f46e5; }
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{font-family:'Pretendard',-apple-system,sans-serif; background:var(--bg); color:var(--ink);
+    line-height:1.68; word-break:keep-all; text-wrap:pretty; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:920px; margin:0 auto; padding:48px 24px 80px}
+  .kicker{display:inline-block; font-size:13px; font-weight:700; letter-spacing:.03em;
+    color:var(--step); background:#eef2ff; padding:5px 12px; border-radius:999px; margin-bottom:16px}
+  h1{font-size:29px; font-weight:800; letter-spacing:-.02em; line-height:1.3; text-wrap:balance}
+  .lede{margin-top:14px; font-size:16px; color:var(--sub); max-width:730px}
+  .meta{margin-top:16px; font-size:13px; color:var(--sub)} .meta b{color:var(--ink)}
+  section{background:var(--card); border:1px solid var(--line); border-radius:18px;
+    padding:28px 30px; margin-top:22px; box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .step-no{display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:800;
+    color:var(--step); letter-spacing:.03em; margin-bottom:8px}
+  .step-no .dot{width:22px; height:22px; border-radius:50%; background:var(--step); color:#fff;
+    display:grid; place-items:center; font-size:12px}
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:2px 0 6px; text-wrap:balance}
+  .sec-sub{font-size:15px; color:var(--sub); margin-bottom:18px}
+  p.body{font-size:15px; margin:13px 0} p.body b{font-weight:700}
+  table{width:100%; border-collapse:collapse; margin-top:8px; font-size:14.5px; table-layout:fixed}
+  th,td{padding:11px 12px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+  th:first-child,td:first-child{width:122px}
+  thead th{font-size:12.5px; font-weight:700; color:var(--sub); background:#f9fafb}
+  tbody tr:last-child td{border-bottom:none}
+  .ng{color:var(--ng); font-weight:700} .sh{color:var(--sh); font-weight:700} .bad{color:var(--bad); font-weight:700}
+  .callout{display:flex; gap:14px; border-radius:14px; padding:17px 19px; margin-top:18px}
+  .callout.ok{background:#ecfdf5; border:1px solid #a7f3d0} .callout.warn{background:#fffbeb; border:1px solid #fde68a}
+  .callout .icon{font-size:26px; line-height:1}
+  .callout h3{font-size:16.5px; font-weight:800; margin-bottom:5px}
+  .callout.ok h3{color:#065f46} .callout.ok p{color:#065f46; font-size:14.5px}
+  .callout.warn h3{color:#92400e} .callout.warn p{color:#78350f; font-size:14.5px}
+  .callout b{font-weight:800}
+  .takeaways{list-style:none; margin-top:6px}
+  .takeaways li{position:relative; padding:10px 0 10px 30px; border-bottom:1px dashed var(--line); font-size:15px}
+  .takeaways li:last-child{border-bottom:none}
+  .takeaways li .n{position:absolute; left:0; top:9px; width:20px; height:20px; border-radius:50%;
+    background:var(--step); color:#fff; font-size:11px; font-weight:800; display:grid; place-items:center}
+  .takeaways b{font-weight:800}
+  .caveat{margin-top:18px; font-size:13px; color:var(--sub); background:#f9fafb;
+    border-left:3px solid var(--line); padding:13px 16px; border-radius:0 8px 8px 0} .caveat b{color:var(--ink)}
+  .pill{display:inline-block; font-size:11.5px; font-weight:800; color:#fff; padding:3px 10px; border-radius:999px}
+  .pill.a{background:var(--ng)} .pill.b{background:var(--sh)}
+  footer{margin-top:36px; font-size:12.5px; color:var(--sub); text-align:center; line-height:1.9}
+  .src{display:inline-block; background:#f1f5f9; border-radius:6px; padding:2px 8px; margin:2px; font-size:12px}
+  @media(max-width:600px){th:first-child,td:first-child{width:90px} .wrap{padding:32px 16px 60px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="kicker">실험 명세 · 2026-06-16</span>
+    <h1>수원신화성 → 뉴강남 구조 이식 실험<br>"긍정 플로우가 재현되는가"</h1>
+    <p class="lede">신화성 홈피·광고 구조를 뉴강남식(예약직결 CTA + 하드 신호)으로 바꿨을 때, 뉴강남에서 입증된 <b>"신호↑ = 실제 예약↑ 동반 상승"</b> 플로우가 신화성에서도 재현되는지 검증한다.</p>
+    <p class="meta">대상 · <b>수원신화성(ev8fq)</b> / 벤치마크 · <b>뉴강남</b> · 도구 <b>Hackle A/B</b></p>
+  </header>
+
+  <!-- 배경 -->
+  <section>
+    <div class="step-no"><span class="dot">0</span> 배경 · 왜 이 실험인가</div>
+    <h2>뉴강남은 "동반", 신화성은 "디커플"</h2>
+    <table>
+      <thead><tr><th>구분</th><th class="ng">뉴강남 (긍정 플로우)</th><th class="sh">신화성 (현재)</th></tr></thead>
+      <tbody>
+        <tr><td>히어로 CTA</td><td>온라인예약 직결</td><td>채널톡(채팅)</td></tr>
+        <tr><td>PMax 신호</td><td>상담신청완료·예약 (하드)</td><td>채팅 오픈 (소프트)</td></tr>
+        <tr><td>결과</td><td class="ng">신호↑ → 예약 동반↑</td><td class="bad">신호만 폭주, 예약 디커플</td></tr>
+      </tbody>
+    </table>
+    <p class="body">→ 구조를 바꾸면 <b>디커플이 풀리는가</b>가 이 실험의 검증 대상이다.</p>
+  </section>
+
+  <!-- 가설 -->
+  <section>
+    <div class="step-no"><span class="dot">1</span> 가설</div>
+    <h2>하드 신호·예약직결로 바꾸면 디커플이 풀린다</h2>
+    <p class="body">신화성 구조를 뉴강남식(예약직결 CTA + 하드 액션 최적화)으로 전환하면, <b>광고가 키운 신호와 실제 예약(ERP)이 함께 움직이고(co-move)</b>, 채팅 의존이 줄며 예약당 비용이 개선된다.</p>
+  </section>
+
+  <!-- 두 트랙 -->
+  <section>
+    <div class="step-no"><span class="dot">2</span> 두 트랙 (택1 또는 병행)</div>
+    <h2>온라인예약 직결 vs 상담신청 완료 강화</h2>
+    <table>
+      <thead><tr><th>항목</th><th><span class="pill a">트랙 A</span> 온라인예약 직결</th><th><span class="pill b">트랙 B</span> 상담신청 완료 강화</th></tr></thead>
+      <tbody>
+        <tr><td>UX 변경</td><td>히어로 CTA: 채널톡 → <b>온라인예약 직결</b>(위치·과정 소구)</td><td>채팅(오픈만) → <b>상담신청 폼</b>(성함·전화 제출) 유도</td></tr>
+        <tr><td>중간 퍼널 최적화</td><td>크로스도메인 핸드오프 + 예약폼 일정선택 마찰 제거(후기·가격·일정 인라인)</td><td>폼→확정 <b>콜 클로징 21% 병목</b> 개선(빠른 콜백·접촉률)</td></tr>
+        <tr><td>광고 신호</td><td>PMax → <b>add_payment_info</b>(하드)</td><td>PMax → <b>상담신청완료</b>(하드, 뉴강남 동일)</td></tr>
+        <tr><td>뉴강남 대응</td><td>운전선생 자가예약 (성사 81%)</td><td>inquiry_leave 진성 리드</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 성공 기준 -->
+  <section>
+    <div class="step-no"><span class="dot">3</span> 성공 기준 · 동반 상승</div>
+    <h2>"신호↑ AND 예약↑"이 함께 와야 성공</h2>
+    <div class="callout ok">
+      <div class="icon">✅</div>
+      <div>
+        <h3>재현(긍정)</h3>
+        <p>하드 신호(결제정보·상담신청완료)↑ <b>그리고</b> 실제 예약(ERP)↑ 가 <b>함께</b> 움직인다 → 디커플 해소 = 뉴강남 플로우 재현. (이 분석의 "동반 vs 비동반" 캡스톤 차트를 실험 전후로 재측정)</p>
+      </div>
+    </div>
+    <div class="callout warn">
+      <div class="icon">❌</div>
+      <div>
+        <h3>실패</h3>
+        <p>신호만 오르고 ERP 예약은 정체 → 현 디커플 지속, 구조 변경 무효. 다른 레버(콜 커버리지·네이버) 재검토.</p>
+      </div>
+    </div>
+    <p class="body"><b>보조지표</b> · 채팅 의존도↓ · 콜 클로징율(트랙 B) · 예약당 비용 · 온라인예약 성사율.</p>
+  </section>
+
+  <!-- 측정 -->
+  <section>
+    <div class="step-no"><span class="dot">4</span> 측정 · 설계</div>
+    <h2>무엇을 어디서 보나</h2>
+    <table>
+      <thead><tr><th>레벨</th><th>지표</th><th>소스</th></tr></thead>
+      <tbody>
+        <tr><td>입구</td><td>예약직결 클릭 / 상담신청 폼 진입</td><td>GA4 509 (suwon 호스트)</td></tr>
+        <tr><td>하드 신호</td><td>add_to_cart · add_payment_info</td><td>GA4 335 booking (academy_id=ev8fq)</td></tr>
+        <tr><td>실제 예약</td><td>온라인예약·상담 예약성공</td><td>ERP homepage_inquiry_flat</td></tr>
+        <tr><td>주지표</td><td><b>신호 ↔ 예약 상관(co-move)</b></td><td>위 3종 주별 결합</td></tr>
+      </tbody>
+    </table>
+    <p class="body">도구 = <b>Hackle A/B</b>. 기간·표본은 입구 트래픽 기준 산정(검정력 확보 후 확정).</p>
+  </section>
+
+  <!-- 선결조건 -->
+  <section>
+    <div class="step-no"><span class="dot">5</span> 선결조건 · 1번 게이트</div>
+    <h2>광고 귀속이 0이면 신호 최적화를 측정할 수 없다</h2>
+    <div class="callout warn">
+      <div class="icon">🚧</div>
+      <div>
+        <h3>하드 액션 광고 귀속 = 현재 0건</h3>
+        <p>add_payment_info·add_to_cart는 GA4·구글애즈에 등록됐으나 <b>광고 귀속 0</b>(6/16 보조 전환으로 켜 관측 시작). <b>이 숫자가 0을 넘는 게 1번 게이트</b> — 넘지 못하면 크로스도메인 gclid 전달부터 고쳐야 하고, 신호 최적화 실험은 그 뒤다.</p>
+      </div>
+    </div>
+    <p class="caveat">측정(GA4/BQ에 이벤트 보임)과 광고 귀속(구글애즈가 PMax 클릭에 귀속)은 다르다. 측정은 됐으나 귀속은 0인 상태가 현재다.</p>
+  </section>
+
+  <!-- 권고 순서 -->
+  <section>
+    <div class="step-no"><span class="dot">★</span> 권고 실행 순서</div>
+    <h2>귀속 확보 → 트랙 B → 트랙 A</h2>
+    <ul class="takeaways">
+      <li><span class="n">1</span><b>귀속 데이터 확보</b> — 보조 전환 모니터링 결과 확인(0을 넘는가). 안 넘으면 gclid 크로스도메인 수리 선행.</li>
+      <li><span class="n">2</span><b>트랙 B 먼저(상담신청 완료)</b> — 뉴강남에서 검증된 하드 신호이고, 신화성 콜 클로징(21%)이 최대 병목이라 레버가 크다. UX 변경(채팅→폼)도 가볍다.</li>
+      <li><span class="n">3</span><b>트랙 A 후속(온라인예약 직결)</b> — 크로스도메인·일정선택 UX 의존도가 커 준비가 더 필요하다.</li>
+    </ul>
+    <p class="caveat"><b>출처</b> · 본 명세의 수치 근거 = 동반/비동반 분석(뉴강남 vs 신화성 광고 신호·퍼널·타겟 비교 HTML). 귀속 0·하드액션 볼륨·콜클로징 21%는 GA4·BQ·구글애즈 실측.</p>
+  </section>
+
+  <footer>
+    출처 ·
+    <span class="src">GA4 509098790 / 335020101 (academy_id=ev8fq)</span>
+    <span class="src">BQ homepage_inquiry_flat · 335 booking 이벤트</span>
+    <span class="src">구글애즈 5819228711 전환액션(gads API)</span><br>
+    수원신화성 ev8fqjckrB7wpRXjm4wC · 작성 2026-06-16
+  </footer>
+
+</div>
+</body>
+</html>
