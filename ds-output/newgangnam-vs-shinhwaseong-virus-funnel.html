@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>뉴강남 vs 수원신화성 — 온라인예약 버튼 퍼널 분석</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+  :root{
+    --ng:#2563eb; --sh:#e11d48; --ink:#111827; --sub:#6b7280;
+    --line:#e5e7eb; --bg:#f8fafc; --card:#ffffff;
+    --clean:#10b981; --virus:#f59e0b; --bad:#ef4444; --step:#4f46e5;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{
+    font-family:'Pretendard',-apple-system,sans-serif; background:var(--bg); color:var(--ink);
+    line-height:1.68; word-break:keep-all; text-wrap:pretty; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:48px 24px 80px}
+
+  header.top{margin-bottom:8px}
+  .kicker{display:inline-block; font-size:13px; font-weight:700; letter-spacing:.03em;
+    color:var(--step); background:#eef2ff; padding:5px 12px; border-radius:999px; margin-bottom:16px}
+  h1{font-size:30px; font-weight:800; letter-spacing:-.02em; line-height:1.3; text-wrap:balance}
+  .lede{margin-top:14px; font-size:16px; color:var(--sub); max-width:720px}
+  .meta{margin-top:16px; font-size:13px; color:var(--sub)}
+  .meta b{color:var(--ink)}
+
+  section{background:var(--card); border:1px solid var(--line); border-radius:18px;
+    padding:30px 32px; margin-top:22px; box-shadow:0 1px 3px rgba(0,0,0,.04)}
+
+  .step-no{display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:800;
+    color:var(--step); letter-spacing:.03em; margin-bottom:8px}
+  .step-no .dot{width:22px; height:22px; border-radius:50%; background:var(--step); color:#fff;
+    display:grid; place-items:center; font-size:12px}
+  h2{font-size:22px; font-weight:800; letter-spacing:-.01em; margin:2px 0 6px; text-wrap:balance}
+  .sec-sub{font-size:15px; color:var(--sub); margin-bottom:22px}
+  p.body{font-size:15px; margin:14px 0}
+  p.body b{font-weight:700}
+
+  /* 용어 */
+  .glossary{display:grid; gap:0}
+  .term{display:grid; grid-template-columns:200px 1fr; gap:18px; padding:14px 0; border-bottom:1px solid var(--line)}
+  .term:last-child{border-bottom:none}
+  .term .k{font-weight:800; font-size:15px}
+  .term .k small{display:block; font-weight:500; color:var(--sub); font-size:12.5px; margin-top:3px; font-family:ui-monospace,monospace}
+  .term .d{font-size:14.5px; color:#374151}
+  @media(max-width:600px){.term{grid-template-columns:1fr; gap:4px}}
+
+  table{width:100%; border-collapse:collapse; margin-top:6px; font-size:14.5px}
+  th,td{padding:11px 13px; text-align:right; border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{font-size:12.5px; font-weight:700; color:var(--sub); background:#f9fafb}
+  tbody tr:last-child td{border-bottom:none}
+  .clean{color:var(--clean)} .virus{color:var(--virus)} .bad{color:var(--bad)}
+  .ng{color:var(--ng); font-weight:700} .sh{color:var(--sh); font-weight:700}
+  .big{font-size:16px; font-weight:800}
+  .row-clean{background:#ecfdf5} .row-virus{background:#fffbeb}
+  .win-tag{font-weight:700}
+
+  .bars{margin-top:20px; display:grid; gap:14px}
+  .barrow{display:grid; grid-template-columns:150px 1fr 56px; align-items:center; gap:14px}
+  .barlabel{font-size:13px; color:var(--sub)}
+  .barlabel b{display:block; color:var(--ink); font-size:13.5px}
+  .track{background:#f1f5f9; border-radius:8px; height:28px; overflow:hidden}
+  .fill{height:100%; border-radius:8px; display:flex; align-items:center; padding-left:10px;
+    color:#fff; font-size:12px; font-weight:700; white-space:nowrap}
+  .barval{font-size:13.5px; font-weight:800; text-align:right}
+
+  .callout{display:flex; gap:15px; border-radius:14px; padding:18px 20px; margin-top:22px}
+  .callout.warn{background:#fffbeb; border:1px solid #fde68a}
+  .callout.ok{background:#ecfdf5; border:1px solid #a7f3d0}
+  .callout .icon{font-size:28px; line-height:1}
+  .callout h3{font-size:17px; font-weight:800; margin-bottom:5px}
+  .callout.warn h3{color:#92400e} .callout.warn p{color:#78350f; font-size:14.5px}
+  .callout.ok h3{color:#065f46} .callout.ok p{color:#065f46; font-size:14.5px}
+  .callout b{font-weight:800}
+
+  .lever{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:10px}
+  @media(max-width:560px){.lever{grid-template-columns:1fr}}
+  .card2{border:1px solid var(--line); border-radius:14px; padding:20px; background:#fafafa}
+  .card2 .tag{font-size:12px; font-weight:700; color:#fff; background:var(--sh);
+    padding:3px 10px; border-radius:999px; display:inline-block; margin-bottom:10px}
+  .card2 h4{font-size:16px; font-weight:800; margin-bottom:2px}
+  .card2 .num{font-size:25px; font-weight:800; color:var(--sh); margin:6px 0}
+  .card2 p{font-size:13.5px; color:var(--sub)}
+
+  .takeaways{list-style:none; margin-top:6px}
+  .takeaways li{position:relative; padding:10px 0 10px 28px; border-bottom:1px dashed var(--line); font-size:15px}
+  .takeaways li:last-child{border-bottom:none}
+  .takeaways li::before{content:"→"; position:absolute; left:2px; color:var(--step); font-weight:800}
+  .takeaways b{font-weight:800}
+
+  .caveat{margin-top:20px; font-size:13px; color:var(--sub); background:#f9fafb;
+    border-left:3px solid var(--line); padding:13px 16px; border-radius:0 8px 8px 0}
+  .caveat b{color:var(--ink)}
+  footer{margin-top:36px; font-size:12.5px; color:var(--sub); text-align:center; line-height:1.9}
+  .src{display:inline-block; background:#f1f5f9; border-radius:6px; padding:2px 8px; margin:2px; font-size:12px}
+
+  /* 핵심 질문 박스 */
+  .qsec{background:linear-gradient(180deg,#eef2ff 0%,#ffffff 60%); border:1px solid #c7d2fe}
+  .qbox{display:grid; gap:0; margin-top:8px}
+  .qa{display:grid; grid-template-columns:34px 1fr; gap:14px; padding:18px 0; border-bottom:1px solid var(--line)}
+  .qa:last-child{border-bottom:none}
+  .qa .qnum{width:30px; height:30px; border-radius:9px; background:var(--step); color:#fff;
+    display:grid; place-items:center; font-size:14px; font-weight:800}
+  .qa .q{font-size:16.5px; font-weight:800; color:var(--ink); line-height:1.45; margin-bottom:7px; text-wrap:balance}
+  .qa .a{font-size:14.5px; color:#374151}
+  .qa .a .verdict{display:inline-block; font-weight:800; color:#fff; background:var(--step);
+    padding:1px 9px; border-radius:6px; font-size:13px; margin-right:6px; vertical-align:1px}
+  .qa .a .verdict.no{background:var(--clean)}
+  .qa .a b{font-weight:800; color:var(--ink)}
+  @media(max-width:600px){.qa{grid-template-columns:1fr; gap:8px}}
+
+  /* 신호 비교표 — 칸 폭 통일 + PMax 집중 칸 박스 */
+  .sigtable{table-layout:fixed}
+  .sigtable th,.sigtable td{text-align:center; padding:9px 4px; font-size:13.5px}
+  .sigtable th:first-child,.sigtable td:first-child{text-align:left; width:64px; font-size:13px}
+  .colfocus-sh{background:#fff1f2; border-left:2px solid var(--sh); border-right:2px solid var(--sh)}
+  .colfocus-ng{background:#eff6ff; border-left:2px solid var(--ng); border-right:2px solid var(--ng)}
+  .sigtable thead tr:last-child th.colfocus-sh{border-top:2px solid var(--sh)}
+  .sigtable thead tr:last-child th.colfocus-ng{border-top:2px solid var(--ng)}
+  .sigtable tbody tr:last-child td.colfocus-sh{border-bottom:2px solid var(--sh)}
+  .sigtable tbody tr:last-child td.colfocus-ng{border-bottom:2px solid var(--ng)}
+  .focustag{display:block; font-size:10px; font-weight:800; letter-spacing:.02em}
+  .focustag.sh{color:var(--sh)} .focustag.ng{color:var(--ng)}
+
+  /* 액션 플랜 강조 */
+  .actions{margin-top:14px; display:grid; gap:12px}
+  .act{display:grid; grid-template-columns:auto 1fr; gap:15px; align-items:start;
+    padding:16px 18px; border:1px solid var(--line); border-radius:13px; background:#fafafa}
+  .act .pri{font-size:11.5px; font-weight:800; color:#fff; padding:4px 11px; border-radius:999px; white-space:nowrap}
+  .act .pri.p1{background:var(--bad)} .act .pri.p2{background:var(--step)} .act .pri.p3{background:#94a3b8}
+  .act h4{font-size:15.5px; font-weight:800; margin-bottom:4px; line-height:1.4}
+  .act p{font-size:13.5px; color:#4b5563}
+  .act p b{color:var(--ink); font-weight:700}
+  @media(max-width:560px){.act{grid-template-columns:1fr; gap:8px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <span class="kicker">분석 · 2026-06-16 저녁 작업</span>
+    <h1>뉴강남 vs 수원신화성<br>온라인예약 버튼 퍼널 분석</h1>
+    <p class="lede">두 학원의 "온라인예약 버튼"이 실제 예약·성사로 얼마나 이어지는지 같은 잣대로 비교했다. 겉보기 숫자를 그대로 믿지 않고, 측정이 오염된 구간부터 걷어냈다.</p>
+    <p class="meta">데이터 · <b>GA4</b>(홈피 버튼 클릭) + <b>orders_flat</b>(플랫폼 예약·도착) · 2026년 1~6월 초</p>
+  </header>
+
+  <!-- 핵심 질문 -->
+  <section class="qsec">
+    <h2>이 분석이 답하는 3가지 질문</h2>
+    <p class="sec-sub">슬랙 결제 알림("퍼널정보: external-link-select")에서 시작된 의문을, 추론 없이 전 단계 실측으로 검증한 결과다.</p>
+    <div class="qbox">
+      <div class="qa">
+        <div class="qnum">Q1</div>
+        <div>
+          <div class="q">신화성이 정말 뉴강남보다 그렇게(8~24배) 비효율인가?</div>
+          <div class="a"><span class="verdict no">측정 착시</span><b>겉보기 격차의 대부분은 착시다.</b> PMax가 "버튼 클릭"을 전환 목표로 삼아 분모만 4.2배 부풀렸을 뿐, 실제 예약은 그대로. 같은 잣대로 보면 — 클릭→예약(깨끗 구간) <b>2.2배</b>, 예약 확정→도착은 오히려 <b>비슷(온라인 80% vs 상담 88%)</b>. 닫을 격차는 부풀린 분모가 아니라 그 너머에 있다.</div>
+        </div>
+      </div>
+      <div class="qa">
+        <div class="qnum">Q2</div>
+        <div>
+          <div class="q">그럼 진짜 문제는 무엇인가?</div>
+          <div class="a"><span class="verdict">신호가 문제</span><b>PMax가 키우는 신호가 다르다.</b> 신화성=<b>채팅(소프트·깔때기 상단)</b>, 뉴강남=<b>상담신청 완료(하드·폼 제출)</b>. 신화성은 채팅만 누적 50배 폭주하는데 실제 예약은 따로 논다(디커플). "복합이냐"가 아니라 <b>지배 신호가 하드냐 소프트냐</b>가 갈림길이다.</div>
+        </div>
+      </div>
+      <div class="qa">
+        <div class="qnum">Q3</div>
+        <div>
+          <div class="q">그럼 신화성은 무엇을 해야 하나?</div>
+          <div class="a"><span class="verdict">네이버+하드신호</span>수원 타겟은 <b>네이버(발견 78%)·위치 중심</b>이라 가격으론 뉴강남을 못 이긴다. → ① <b>네이버(플레이스·SA) 강화</b>(CPC0·자기 엣지) ② <b>PMax를 하드 액션(결제정보)으로 최적화</b>(단 현재 광고 귀속 0 → 활성화·검증 선행) ③ <b>콜 클로징 복구</b>(상담 폼→예약 21% 병목).</div>
+        </div>
+      </div>
+    </div>
+    <p class="caveat"><b>검증 원칙</b> · 모든 숫자는 추론이 아니라 GA4·BQ·구글애즈 직접 실측이다. 검증 중 나온 중간 추정("예약클릭 반토막"=실은 6/11 측정 단절, "온라인 62% vs 상담 19%"=레벨 다른 부당 비교 등)은 실측과 어긋나 <b>전부 정정</b>했다.</p>
+  </section>
+
+  <!-- 용어 -->
+  <section>
+    <h2>먼저, 용어 정리</h2>
+    <p class="sec-sub">이 문서에서 쓰는 4개 단어의 정확한 뜻</p>
+    <div class="glossary">
+      <div class="term">
+        <div class="k">버튼 클릭<small>driving_teacher_click</small></div>
+        <div class="d">학원 홈페이지 곳곳에 있는 <b>"온라인 예약" 버튼을 누른 횟수</b>. 누르면 운전선생 플랫폼 예약 페이지로 넘어간다. (퍼널의 입구)</div>
+      </div>
+      <div class="term">
+        <div class="k">예약<small>orders_flat · external-link-select</small></div>
+        <div class="d">위 경로로 넘어가 운전선생 플랫폼에서 <b>실제로 만들어진 예약 주문 1건</b>. 즉 버튼 클릭의 결과물.
+          <br><span style="color:var(--sub); font-size:13px">※ 단, 이 "예약"에는 홈피 버튼 외에 네이버플레이스 예약링크·상담 후 발송 링크도 일부 섞여 있어, 아래 "클릭→예약 비율"은 정확한 깔때기가 아니라 <b>근사 지표</b>다.</span></div>
+      </div>
+      <div class="term">
+        <div class="k">성사(도착)<small>state = Arrival</small></div>
+        <div class="d">예약한 사람이 <b>실제로 학원에 방문(도착)해 수업이 성사</b>된 것. 취소·환불·노쇼(no-show)는 성사로 치지 않는다.</div>
+      </div>
+      <div class="term">
+        <div class="k">오염 구간<small>"바이러스"</small></div>
+        <div class="d">신화성이 광고(PMax)로 버튼 클릭을 늘리려 최적화하면서, <b>예약 의사가 약한 클릭이 잔뜩 섞여 들어온 기간</b>. 이 기간 숫자는 부풀려져 있어 그대로 비교하면 안 된다.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 현황 -->
+  <section>
+    <div class="step-no"><span class="dot">현</span> 출발점 · 현황</div>
+    <h2>"신화성이 뉴강남보다 한참 비효율"이라는 겉보기 숫자</h2>
+    <p class="body">슬랙 결제 알림에서 시작된 질문: 비슷한 광고비를 쓰는데 신화성 예약 효율이 훨씬 나빠 보인다. 온라인예약 버튼 클릭 중 실제 예약으로 이어진 비율(전체 기간)을 그냥 계산하면 —</p>
+    <table>
+      <thead><tr><th></th><th class="ng">뉴강남</th><th class="sh">수원신화성</th><th>겉보기 격차</th></tr></thead>
+      <tbody>
+        <tr><td>버튼 클릭 → 예약 비율 (전체)</td><td class="big ng">5.5%</td><td class="big bad">0.7%</td><td class="big">약 8배</td></tr>
+      </tbody>
+    </table>
+    <p class="body">특정 기간만 보면 격차가 <b>24배</b>까지 벌어진다. 그런데 이 숫자를 그대로 믿어도 될까? — 이걸 검증하는 게 오늘 작업이다.</p>
+  </section>
+
+  <!-- STEP 1 -->
+  <section>
+    <div class="step-no"><span class="dot">1</span> STEP 1</div>
+    <h2>버튼 클릭 수부터 비교 — 신화성이 압도적으로 많다</h2>
+    <p class="sec-sub">하루 평균 "온라인 예약" 버튼 클릭 횟수</p>
+    <div class="bars">
+      <div class="barrow">
+        <div class="barlabel">뉴강남</div>
+        <div class="track"><div class="fill" style="width:13%; background:var(--ng)">15~60건/일</div></div>
+        <div class="barval ng">적음</div>
+      </div>
+      <div class="barrow">
+        <div class="barlabel">수원신화성</div>
+        <div class="track"><div class="fill" style="width:100%; background:var(--sh)">150~350건/일</div></div>
+        <div class="barval sh">5~8배</div>
+      </div>
+    </div>
+    <p class="body">신화성 버튼 클릭이 뉴강남의 <b>5~8배</b>나 많다. 클릭은 훨씬 많은데 예약 비율은 훨씬 낮다 — 뭔가 이상하다. <b>클릭 자체가 부풀려진 게 아닌지</b> 의심이 들었다.</p>
+  </section>
+
+  <!-- STEP 2 -->
+  <section>
+    <div class="step-no"><span class="dot">2</span> STEP 2</div>
+    <h2>클릭 추이를 보니 — 4월 중순부터 급증한다</h2>
+    <p class="sec-sub">신화성 버튼 클릭 주별 추이로 "오염 시작점"을 찾았다</p>
+    <table>
+      <thead><tr><th>구간</th><th>기간</th><th>신화성 클릭/주</th><th>상태</th></tr></thead>
+      <tbody>
+        <tr class="row-clean"><td><span class="win-tag clean">① 깨끗</span></td><td>1~2월</td><td>약 337건</td><td class="clean">광고 확장 前 · 자연 유입</td></tr>
+        <tr><td><span class="win-tag">② 전환기</span></td><td>3~4월 초</td><td>약 660건</td><td>증가 시작</td></tr>
+        <tr class="row-virus"><td><span class="win-tag virus">③ 오염</span></td><td>4월 중순~6월 초</td><td>약 1,415건</td><td class="virus">광고(PMax) 확장 · 클릭 4.2배</td></tr>
+      </tbody>
+    </table>
+    <p class="body">광고가 버튼 클릭을 "전환 목표"로 삼아 최적화하기 시작하면서, <b>4월 중순부터 클릭이 4.2배로 불었다</b>. 이게 의심하던 "오염(바이러스)"의 정체다. 그래서 <b>오염 전(깨끗) 구간과 오염 구간을 나눠서 비교</b>하기로 했다.</p>
+    <p class="caveat">뉴강남은 이 버튼을 광고 목표로 쓰지 않는다 → <b>전 구간 오염 없는 기준선</b>으로 쓸 수 있다. (6월 10일 이후는 도메인 연결 변경으로 측정이 깨져 분석에서 제외)</p>
+  </section>
+
+  <!-- 경로 (예약 숫자 전) -->
+  <section>
+    <div class="step-no"><span class="dot">↳</span> 예약 숫자를 보기 전에 · 전체 경로</div>
+    <h2>"버튼 클릭 → 예약"은 사실 4단계를 거친다</h2>
+    <p class="sec-sub">버튼을 누른다고 바로 예약이 되는 게 아니다. 중간에 <b>external 링크가 열리고 → 플랫폼 예약폼을 작성</b>하는 두 단계가 더 있다. 그런데 이 데이터셋에서 <b>측정되는 건 양 끝(클릭·예약)뿐</b>이다.</p>
+    <div class="bars">
+      <div class="barrow">
+        <div class="barlabel"><b>① 버튼 클릭</b>driving_teacher_click</div>
+        <div class="track"><div class="fill" style="width:100%; background:var(--step)">측정됨 · 퍼널 입구</div></div>
+        <div class="barval">측정</div>
+      </div>
+      <div class="barrow">
+        <div class="barlabel"><b>② external 링크 열림</b>플랫폼 예약페이지 진입</div>
+        <div class="track"><div class="fill" style="width:100%; background:#cbd5e1; color:#475569">크로스도메인 · 이 데이터셋에선 측정 끊김</div></div>
+        <div class="barval" style="color:#94a3b8">?</div>
+      </div>
+      <div class="barrow">
+        <div class="barlabel"><b>③ 예약폼 작성</b>과정·일정 선택</div>
+        <div class="track"><div class="fill" style="width:100%; background:#cbd5e1; color:#475569">크로스도메인 · 측정 끊김</div></div>
+        <div class="barval" style="color:#94a3b8">?</div>
+      </div>
+      <div class="barrow">
+        <div class="barlabel"><b>④ 예약 완료</b>orders_flat · external-link-select</div>
+        <div class="track"><div class="fill" style="width:100%; background:var(--sh)">측정됨 · 퍼널 결과</div></div>
+        <div class="barval sh">측정</div>
+      </div>
+    </div>
+    <p class="body">그래서 다음 장의 <b>"클릭 → 예약" 비율</b>은 ②③을 건너뛴 <b>①→④ 통산 전환율</b>이다. 가운데가 안 보이니, 낮은 전환율이 "링크가 안 열려서"인지 "예약폼에서 이탈해서"인지는 이 표만으론 못 가른다. (막대 폭은 단계를 나타낼 뿐, 비율이 아니다)</p>
+    <p class="caveat">가운데 ②③ 구간은 <b>별도 데이터(에어브릿지 AB웹·플랫폼 예약퍼널)</b>로 따로 재구성돼 있고, 거기선 <b>일정 선택 단계에서 큰 절벽</b>이 관측된다. 이 문서는 양 끝(클릭·예약)만 다룬다.</p>
+  </section>
+
+  <!-- 상담사 유도 비중 -->
+  <section>
+    <div class="step-no"><span class="dot">%</span> 그 클릭, 누가 누르게 했나</div>
+    <h2>"상담사가 링크를 보내 누르게 한" 비중은 소수다</h2>
+    <p class="sec-sub">external 예약이 상담 콜 뒤 발송된 링크(상담사 유도)인지, 고객이 스스로 누른 자가예약인지 — <b>뉴강남 external 예약 기준</b> 실측</p>
+    <table>
+      <thead><tr><th>구분</th><th>비중</th><th>근거</th></tr></thead>
+      <tbody>
+        <tr><td>상담사 유도 (콜 후 링크 발송)</td><td class="big">약 6%+</td><td>링크예약 705명 중 상담신청 기록 보유 43명 (무기록 콜 감안 시 다소↑)</td></tr>
+        <tr class="row-clean"><td>순수 자가예약 (스스로 클릭)</td><td class="big clean">약 90%+</td><td>나머지 94%는 상담 기록 없음</td></tr>
+      </tbody>
+    </table>
+    <div class="bars">
+      <div class="barrow">
+        <div class="barlabel">영업시간 외 예약<b>(상담사 부재 18~08시)</b></div>
+        <div class="track"><div class="fill" style="width:35%; background:var(--clean)">35%</div></div>
+        <div class="barval clean">35%</div>
+      </div>
+      <div class="barrow">
+        <div class="barlabel">└ 그중 심야</div>
+        <div class="track"><div class="fill" style="width:11%; background:#34d399">11%</div></div>
+        <div class="barval" style="color:#059669">11%</div>
+      </div>
+      <div class="barrow">
+        <div class="barlabel">주말 예약</div>
+        <div class="track"><div class="fill" style="width:16%; background:var(--clean)">16%</div></div>
+        <div class="barval clean">16%</div>
+      </div>
+    </div>
+    <div class="callout ok">
+      <div class="icon">🙋</div>
+      <div>
+        <h3>대부분은 고객이 스스로 누른 자가예약</h3>
+        <p>상담사가 끼어든 흔적(상담 기록)은 <b>약 6%</b>뿐이고, 예약의 <b>35%가 상담사 부재 시간대(영업외·새벽)</b>에 일어났다. 즉 이 버튼은 <b>상담사가 밀어주는 통로가 아니라 고객이 스스로 쓰는 통로</b>다. → 버튼 자체의 전환력(랜딩·예약폼)을 키우는 게 핵심이지, 상담사 푸시로 해결될 문제가 아니다.</p>
+      </div>
+    </div>
+    <p class="caveat"><b>유의</b> · 위 수치는 <b>뉴강남 external 예약 기준</b> 실측이다. 6%는 상담신청 기록이 남은 비중으로, 무기록 인바운드 콜까지 치면 실제 상담사 관여는 그보다 높을 수 있다. 다만 예약의 35%가 영업외 시간대라 자가서비스가 본류임은 확실. "1차 콜 후 예약금 링크 발송"은 <b>직영(신화성)에 문서화된 프로세스</b>라 신화성은 비중이 더 클 수 있으나, 신화성 단독 정량화는 아직 안 됐다.</p>
+  </section>
+
+  <!-- STEP 3 -->
+  <section>
+    <div class="step-no"><span class="dot">3</span> STEP 3</div>
+    <h2>구간을 나눠 "클릭 → 예약" 비율 비교</h2>
+    <p class="sec-sub">같은 구간끼리 비교하면 격차가 확 줄어든다</p>
+    <table>
+      <thead><tr><th>구간</th><th class="ng">뉴강남</th><th class="sh">수원신화성</th><th>격차</th></tr></thead>
+      <tbody>
+        <tr class="row-clean"><td><span class="clean">① 깨끗 (1~2월)</span></td><td>클릭 5,992 → 예약 261 · <span class="big ng">4.4%</span></td><td>클릭 2,696 → 예약 53 · <span class="big sh">2.0%</span></td><td class="big">2.2배</td></tr>
+        <tr><td>② 전환기</td><td>4.8%</td><td>0.9%</td><td>5.3배</td></tr>
+        <tr class="row-virus"><td><span class="virus">③ 오염 (4월중순~)</span></td><td><span class="big ng">10.0%</span></td><td>클릭 12,740 → 예약 53 · <span class="big bad">0.4%</span></td><td class="big bad">24배</td></tr>
+      </tbody>
+    </table>
+
+    <div class="bars">
+      <div class="barrow">
+        <div class="barlabel"><b>신화성 클릭</b>4.2배 폭증</div>
+        <div class="track"><div class="fill" style="width:24%; background:var(--clean)">337/주 (깨끗)</div></div>
+        <div class="barval clean"></div>
+      </div>
+      <div class="barrow">
+        <div class="barlabel"></div>
+        <div class="track"><div class="fill" style="width:100%; background:var(--virus)">1,415/주 (오염)</div></div>
+        <div class="barval virus"></div>
+      </div>
+      <div class="barrow">
+        <div class="barlabel"><b>신화성 실제 예약</b>거의 그대로</div>
+        <div class="track"><div class="fill" style="width:55%; background:#94a3b8">6.6건/주 (깨끗)</div></div>
+        <div class="barval" style="color:#64748b"></div>
+      </div>
+      <div class="barrow">
+        <div class="barlabel"></div>
+        <div class="track"><div class="fill" style="width:49%; background:#94a3b8">5.9건/주 (오염)</div></div>
+        <div class="barval" style="color:#64748b"></div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="icon">🦠</div>
+      <div>
+        <h3>겉보기 24배의 대부분은 "측정 착시"였다</h3>
+        <p>클릭이 <b>4.2배 늘어나는 동안 실제 예약은 한 건도 안 늘었다</b>(주 6.6→5.9건). 비율이 폭락한 건 분모(클릭)만 광고로 부풀려졌기 때문. <b>오염을 걷어낸 깨끗한 구간에서 실제 격차는 2.2배</b>다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 4 -->
+  <section>
+    <div class="step-no"><span class="dot">4</span> STEP 4</div>
+    <h2>그럼 "예약 → 성사"도 오염됐을까? — 아니다</h2>
+    <p class="sec-sub">일단 예약한 사람이 실제 학원에 도착(성사)하는 비율은 구간과 무관하게 안정적이다</p>
+    <table>
+      <thead><tr><th>구간</th><th class="ng">뉴강남</th><th class="sh">수원신화성</th><th>격차</th></tr></thead>
+      <tbody>
+        <tr class="row-clean"><td><span class="clean">① 깨끗</span></td><td>예약 261 → 성사 206 · <span class="big ng">78.9%</span></td><td>예약 53 → 성사 34 · <span class="big sh">64.2%</span></td><td class="big">14.7%p</td></tr>
+        <tr><td>② 전환기</td><td>82.6%</td><td>70.3%</td><td>12.3%p</td></tr>
+        <tr class="row-virus"><td><span class="virus">③ 오염</span></td><td>84.0%</td><td>71.7%</td><td>12.3%p</td></tr>
+      </tbody>
+    </table>
+    <div class="callout ok">
+      <div class="icon">🛡️</div>
+      <div>
+        <h3>오염은 "클릭" 단계에서 멈춘다</h3>
+        <p>클릭→예약은 부풀려져도, <b>예약→성사는 오염 구간에서 오히려 더 높다</b>(신화성 64%→72%). 광고가 데려온 의사 약한 클릭은 <b>예약 단계에서 알아서 걸러져</b> 주문까지 가지 않는다. 그래서 예약한 사람들의 질은 늘 일정하다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 광고 신호 차이 -->
+  <section>
+    <div class="step-no"><span class="dot">신</span> 한 단계 더 · 광고 신호</div>
+    <h2>같은 PMax인데 왜 갈렸나 — "키운 신호"가 정반대였다</h2>
+    <p class="sec-sub">두 학원 다 신호를 복합(<b>상담신청 완료</b>=폼에 성함·전화 제출 + <b>채팅</b>=채팅창 열기 + 예약)으로 썼다. 갈린 건 <b>그 묶음 안에서 PMax가 실제로 키운 신호</b>다 — 아래 표에서 <b>박스 친 칸</b>이 각 학원 PMax가 집중한 곳이다.</p>
+
+    <table class="sigtable">
+      <thead>
+        <tr><th rowspan="2">주(2026)</th><th class="sh" colspan="3">수원신화성 · 채팅 최적화</th><th class="ng" colspan="3">뉴강남 · 상담신청완료 최적화</th></tr>
+        <tr><th>상담신청<br>완료</th><th class="colfocus-sh">채팅 🎯<span class="focustag sh">PMax 집중</span></th><th>예약</th><th class="colfocus-ng">상담신청<br>완료 🎯<span class="focustag ng">PMax 집중</span></th><th>채팅</th><th>예약</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>01-05</td><td>12</td><td class="colfocus-sh sh">11</td><td>7</td><td class="colfocus-ng ng">35</td><td>6</td><td>16</td></tr>
+        <tr><td>03-09</td><td>15</td><td class="colfocus-sh sh">37</td><td>2</td><td class="colfocus-ng ng">15</td><td>4</td><td>5</td></tr>
+        <tr><td>04-13</td><td>13</td><td class="colfocus-sh sh">65</td><td>0</td><td class="colfocus-ng ng">11</td><td>2</td><td>2</td></tr>
+        <tr><td>05-11</td><td>11</td><td class="colfocus-sh sh">105</td><td>0</td><td class="colfocus-ng ng">18</td><td>0</td><td>3</td></tr>
+        <tr><td>06-01</td><td>4</td><td class="colfocus-sh sh">200</td><td>0</td><td class="colfocus-ng ng">13</td><td>1</td><td>5</td></tr>
+        <tr class="row-virus"><td><b>06-08</b></td><td class="bad"><b>0</b></td><td class="colfocus-sh sh big">1,612</td><td class="bad">1</td><td class="colfocus-ng ng">22</td><td>0</td><td>6</td></tr>
+        <tr><td>06-15</td><td class="bad">0</td><td class="colfocus-sh sh">385</td><td>0</td><td class="colfocus-ng ng">4</td><td>0</td><td>2</td></tr>
+      </tbody>
+    </table>
+    <p class="body"><b>신화성</b>은 채팅이 PMax 연료를 받아 주 11 → 1,612로 폭주하는 동안, 정작 <b>상담신청 완료는 6~15에 묶였다가 6월엔 0으로 사망</b>하고 예약도 0행진을 했다. 키운 신호(채팅)와 사업 성과(상담신청 완료·예약)가 완전히 따로 논다. <b>뉴강남</b>은 상담신청 완료가 줄곧 견조했고, 채팅은 작아서 5월에 죽어도 아무 영향이 없었다.</p>
+
+    <p class="sec-sub" style="margin-top:24px">2026 누적 — 키운 신호 vs 가치 신호 (막대 폭 = 건수, 같은 척도)</p>
+    <div class="bars">
+      <div class="barrow">
+        <div class="barlabel sh"><b>신화성 채팅</b>PMax가 키운 신호</div>
+        <div class="track"><div class="fill" style="width:100%; background:var(--sh)">3,220건</div></div>
+        <div class="barval sh">3,220</div>
+      </div>
+      <div class="barrow">
+        <div class="barlabel"><b>신화성 상담신청 완료</b>정작 가치 있는 신호</div>
+        <div class="track"><div class="fill" style="width:7.3%; background:#fca5a5">234</div></div>
+        <div class="barval">234</div>
+      </div>
+      <div class="barrow">
+        <div class="barlabel ng"><b>뉴강남 상담신청 완료</b>PMax가 키운 신호 = 가치</div>
+        <div class="track"><div class="fill" style="width:14.5%; background:var(--ng)">468건</div></div>
+        <div class="barval ng">468</div>
+      </div>
+      <div class="barrow">
+        <div class="barlabel"><b>뉴강남 채팅</b>작은 보조 신호</div>
+        <div class="track"><div class="fill" style="width:2%; background:#93c5fd">64</div></div>
+        <div class="barval">64</div>
+      </div>
+    </div>
+    <p class="body">신화성은 <b>클릭 24.5만 개</b>를 사서 상담신청 완료 234·예약 66을 얻었다. 뉴강남은 <b>클릭 5.6만 개(4.4배 적게)</b>로 상담신청 완료 468(2배)·예약 173(2.6배)을 얻었다.</p>
+
+    <div class="callout warn">
+      <div class="icon">🎯</div>
+      <div>
+        <h3>"복합 3개"가 문제가 아니라, "지배 신호"가 문제였다</h3>
+        <p>둘 다 복합 신호다. 그런데 신화성은 묶음 안에서 <b>채팅(소프트)이 상담신청 완료의 13배로 지배</b>해, PMax가 그 채팅에만 연료를 부었다. 뉴강남은 <b>상담신청 완료(하드)가 채팅의 7배로 지배</b>해, 키운 게 곧 가치였다. PMax는 <b>지배 신호가 하드(폼제출)냐 소프트(채팅 오픈)냐</b>에 따라 정반대로 학습한다.</p>
+      </div>
+    </div>
+    <p class="caveat">⚠️ 6/08 채팅 1,612는 직전 주(200)의 8배라 일부 추적 증폭이 섞였을 수 있다. 다만 같은 주 상담신청 완료·예약이 동시에 0으로 간 <b>디커플 방향성</b>은 명확하다. (출처 · NEWSAMSUNG / NEWDRIVER Paid_RD 2026, google 채널, 에어브릿지 귀속)</p>
+  </section>
+
+  <!-- 동반 vs 비동반 캡스톤 -->
+  <section>
+    <div class="step-no"><span class="dot">⚖</span> 결정적 비교 · 신호 ↔ 성과</div>
+    <h2>광고 신호 옆에 실제 예약을 붙이면 — 동반이냐, 따로 노느냐</h2>
+    <p class="sec-sub">각 학원의 <b>왼쪽 = PMax가 키운 신호 1개</b>(🎯 박스), 오른쪽 = 그 결과인 <b>온라인예약·상담신청 실제 성공</b>(ERP). 신호와 성과가 같이 움직이는지 본다.</p>
+    <table class="sigtable">
+      <thead>
+        <tr><th rowspan="2">주</th><th class="sh" colspan="3">수원신화성</th><th class="ng" colspan="3">뉴강남</th></tr>
+        <tr>
+          <th class="colfocus-sh">채팅<br>(키운 신호)🎯<span class="focustag sh">PMax 집중</span></th><th>온라인<br>예약✓</th><th>상담<br>신청✓</th>
+          <th class="colfocus-ng">상담완료<br>(키운 신호)🎯<span class="focustag ng">PMax 집중</span></th><th>온라인<br>예약✓</th><th>상담<br>신청✓</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>01-05</td><td class="colfocus-sh sh">11</td><td>9</td><td>17</td><td class="colfocus-ng ng">35</td><td>53</td><td>25</td></tr>
+        <tr><td>02-02</td><td class="colfocus-sh sh">23</td><td>12</td><td>12</td><td class="colfocus-ng ng">30</td><td>37</td><td>28</td></tr>
+        <tr><td>03-09</td><td class="colfocus-sh sh">37</td><td>10</td><td>7</td><td class="colfocus-ng ng">15</td><td>18</td><td>11</td></tr>
+        <tr><td>04-06</td><td class="colfocus-sh sh">58</td><td>18</td><td>6</td><td class="colfocus-ng ng">18</td><td>21</td><td>22</td></tr>
+        <tr><td>04-27</td><td class="colfocus-sh sh">85</td><td>6</td><td>2</td><td class="colfocus-ng ng">20</td><td>19</td><td>6</td></tr>
+        <tr><td>05-11</td><td class="colfocus-sh sh">105</td><td>7</td><td>4</td><td class="colfocus-ng ng">18</td><td>20</td><td>9</td></tr>
+        <tr><td>05-25</td><td class="colfocus-sh sh">116</td><td>9</td><td>2</td><td class="colfocus-ng ng">15</td><td>20</td><td>9</td></tr>
+        <tr><td>06-01</td><td class="colfocus-sh sh">200</td><td>13</td><td>1</td><td class="colfocus-ng ng">13</td><td>24</td><td>10</td></tr>
+        <tr class="row-virus"><td><b>06-08</b></td><td class="colfocus-sh sh big">1,612</td><td>9</td><td class="bad">0</td><td class="colfocus-ng ng">22</td><td>27</td><td>11</td></tr>
+      </tbody>
+    </table>
+
+    <div class="lever" style="margin-top:22px">
+      <div class="card2" style="border-color:#fecaca">
+        <span class="tag">수원신화성</span>
+        <h4>비동반 — 신호만 폭주</h4>
+        <div class="num">채팅 ×146</div>
+        <p>키운 신호(채팅)는 11 → 1,612로 치솟는데, 온라인예약은 9 → 9 제자리, 상담신청은 17 → 0 사망. <b>신호와 성과가 완전히 따로 논다.</b></p>
+      </div>
+      <div class="card2" style="border-color:#bfdbfe; background:#f8fbff">
+        <span class="tag" style="background:var(--ng)">뉴강남</span>
+        <h4>동반 — 같이 오르내림</h4>
+        <div class="num" style="color:var(--ng)">전부 ↘ 동조</div>
+        <p>키운 신호(상담완료) 35 → 13~22, 온라인예약 53 → 27, 상담신청 25 → 11이 <b>같은 비율로 함께 하락</b>. 신호가 진짜 수요를 대변한다.</p>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="icon">⚖️</div>
+      <div>
+        <h3>같은 표를 두 번 읽으면 결론이 보인다</h3>
+        <p><b>신화성</b>은 박스 친 칸(채팅)만 수직 상승하고 옆의 실제 성과는 바닥에 깔린다 — <b>신호가 성과와 끊긴 "비동반".</b> <b>뉴강남</b>은 박스 친 칸(상담완료)과 옆의 온라인예약·상담신청이 <b>같은 모양으로 오르내린다 — "동반".</b> 하드 신호(폼 제출)는 진짜 수요와 묶여 있어 성과가 따라오고, 소프트 신호(채팅 오픈)는 혼자 부풀 수 있다.</p>
+      </div>
+    </div>
+    <p class="caveat">⚠️ 왼쪽 "키운 신호"는 <b>광고 귀속(Paid_RD, google)</b>, 오른쪽 온라인예약·상담신청 성공은 <b>ERP 전체</b>다. 모집단이 달라 <b>절대 수가 아니라 "함께 움직이는지(추세)"</b>를 비교한다. (출처 · NEWSAMSUNG/NEWDRIVER Paid_RD · homepage_inquiry_flat status='예약 성공')</p>
+  </section>
+
+  <!-- ERP 실제 예약 두 경로 -->
+  <section>
+    <div class="step-no"><span class="dot">실</span> 광고 밖 진실 · ERP 실측</div>
+    <h2>그래서 실제 예약은? — 광고가 미는 경로는 '콜 관문'에서 샌다</h2>
+    <p class="sec-sub">신화성 ERP(예약 원장)에서 두 경로를 본다. <b>온라인 예약</b>(스스로 플랫폼 예약) vs <b>상담 신청</b>(폼 작성 → 상담사 콜로 예약). 광고(채팅)가 미는 건 상담 신청 쪽이다. ⚠️단 두 경로는 퍼널 깊이가 다르니 같은 레벨로 맞춰 봐야 한다.</p>
+    <table class="sigtable">
+      <thead>
+        <tr><th rowspan="2">주(2026)</th><th class="ng" colspan="2">온라인 예약 (자가)</th><th class="sh" colspan="2">상담 신청 (콜 클로징)</th></tr>
+        <tr><th>예약생성</th><th>성사</th><th>폼리드</th><th>성사</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>01-05</td><td>15</td><td class="ng">9</td><td>42</td><td class="sh">17</td></tr>
+        <tr><td>01-19</td><td>14</td><td class="ng">13</td><td>53</td><td class="sh">21</td></tr>
+        <tr><td>03-09</td><td>19</td><td class="ng">10</td><td>41</td><td>7</td></tr>
+        <tr><td>04-06</td><td>29</td><td class="ng">18</td><td>40</td><td class="bad">6</td></tr>
+        <tr><td>05-04</td><td>20</td><td class="ng">11</td><td>44</td><td class="bad">2</td></tr>
+        <tr><td>06-01</td><td>20</td><td class="ng">13</td><td>22</td><td class="bad">1</td></tr>
+        <tr><td>06-08*</td><td>12</td><td class="ng">9</td><td>7</td><td class="bad">0</td></tr>
+      </tbody>
+    </table>
+    <p class="body" style="font-weight:700; margin-top:8px">같은 레벨로 맞춰 본 퍼널 (전 기간, status 분해)</p>
+    <table class="sigtable">
+      <thead><tr><th>단계</th><th class="ng">온라인 예약 (자가)</th><th class="sh">상담 신청 (콜)</th></tr></thead>
+      <tbody>
+        <tr><td>① 입구</td><td>예약생성 326</td><td>폼리드 847</td></tr>
+        <tr class="row-virus"><td>② 입구→예약확정</td><td>326→251<br>77% (자동·콜 없음)</td><td class="bad"><b>847→180<br>21% (콜 클로징)</b></td></tr>
+        <tr class="row-clean"><td>③ 예약확정→성사(도착)</td><td><b>251→202<br>80%</b></td><td><b>180→158<br>88%</b></td></tr>
+      </tbody>
+    </table>
+    <div class="callout warn">
+      <div class="icon">🪤</div>
+      <div>
+        <h3>"상담 19%"는 채널이 나쁜 게 아니라 '콜 클로징' 관문 탓</h3>
+        <p>겉보기 온라인 62% vs 상담 19%는 <b>레벨이 다른 비교</b>다(온라인 "예약생성"은 뒷단계, 상담 "폼리드"는 앞단계). 같은 레벨(③ 예약확정→도착)으로 보면 <b>온라인 80% ≈ 상담 88%</b> — 닫힌 고객은 양쪽 다 잘 오고, 오히려 상담이 약간 높다. 격차의 정체는 <b>② 입구→확정</b>: 온라인은 주문이 자동 확정(77%)이지만, 상담은 <b>상담사 콜로 닫아야 해 21%만 통과</b>(79%가 콜 단계에서 증발 = 콜 커버리지 병목·운영 문제). <b>즉 광고가 '콜로 닫는 경로'로 사람을 몰면 대부분 못 닫힌다 — 콜 안 거치는 자가예약이 구조적으로 유리한 이유.</b></p>
+      </div>
+    </div>
+    <p class="caveat"><b>* 최근 2~3주 주의</b> · 예약성공은 리드 생성 뒤 며칠~몇 주 뒤 발생해 6월 수치는 과소 집계다. 콜 클로징(②)이 병목이라는 결론은 1~5월 성숙 구간에서도 동일. (출처 · homepage_inquiry_flat, academyId=ev8fq, status 분해: 성공/실패/취소/대기. 예약확정=성공+취소+대기)</p>
+  </section>
+
+  <!-- 온라인 예약 경로 성장여지 -->
+  <section>
+    <div class="step-no"><span class="dot">↑</span> 처방 깊이보기 · 온라인 예약 경로</div>
+    <h2>클릭을 더 모으는 게 아니라 — 허수는 줄이고, 진성 단계 전환을 높이는 문제다</h2>
+    <p class="sec-sub">홈피 온라인예약 클릭(driving_teacher_click)은 <b>PMax가 부풀린 저의도(허수)가 다수</b>다. 클릭 수를 KPI로 쫓을 게 아니라, 허수는 줄이고 <b>진성 유저가 거치는 단계의 전환율</b>을 봐야 한다.</p>
+
+    <table>
+      <thead><tr><th>단계</th><th>규모(월)</th><th>해석</th></tr></thead>
+      <tbody>
+        <tr class="row-virus"><td><b>① 온라인예약 클릭</b> (홈피)</td><td class="big">약 7,000</td><td class="bad">다수가 PMax 저의도(허수)</td></tr>
+        <tr><td>② 크로스도메인 진입·일정선택</td><td>—</td><td>즉시이탈 70.6% + 일정선택 절벽 — 허수가 걸러지는 구간</td></tr>
+        <tr class="row-clean"><td><b>③ ERP 실제 온라인 예약</b></td><td class="big">약 60</td><td>진성 <b>~1%</b>만 도달</td></tr>
+      </tbody>
+    </table>
+    <p class="body">클릭 7,000 중 60건만 예약이 된다. 단 이 증발의 큰 부분은 <b>"고쳐야 할 누수"가 아니라 PMax가 부풀린 허수가 걸러지는 것</b>이다 — 하드 신호로 최적화하면 <b>클릭 수는 줄어드는 게 정상</b>이고 그게 맞는 방향. 진짜 레버는 클릭 수가 아니라 ⓐ 허수를 줄이는 <b>하드 액션 최적화</b> + ⓑ 진성 유저가 거치는 <b>단계별 전환율</b>(일정선택 절벽 등)이다.</p>
+
+    <p class="sec-sub" style="margin-top:22px">🚨 6/11 개편 — 히어로가 채널톡으로 (단, 측정 단절 겹침)</p>
+    <p class="body">일별로 보면 변화는 <b>6/11에 칼같이</b> 일어난다 — 그날부터 <b>채팅(consult_cta_click 신규 + kakao)이 급증</b>하고, 동시에 <b>예약클릭(dtc) 측정이 끊긴다</b>. consult_cta_click은 개편으로 새로 깔린 이벤트다.</p>
+    <table class="sigtable">
+      <thead><tr><th>일자</th><th class="ng">예약클릭(dtc)</th><th class="sh">채팅(kakao+consult)</th></tr></thead>
+      <tbody>
+        <tr><td>6/10 (개편 전)</td><td class="ng">253</td><td>52</td></tr>
+        <tr class="row-virus"><td>6/12 (개편 후)</td><td class="bad">1</td><td class="sh big">1,295</td></tr>
+      </tbody>
+    </table>
+    <div class="callout warn">
+      <div class="icon">↩️</div>
+      <div>
+        <h3>채팅 경로로 의도가 이동 — 단 "예약클릭 반토막"은 단정 불가</h3>
+        <p>개편으로 히어로가 채널톡이 되며 <b>채팅 의도가 급증</b>한 건 실재한다. 채팅→상담은 콜 클로징(21%) 관문이 있는 경로라 우려 지점이다. 다만 같은 6/11에 <b>dtc 측정도 끊겨(일 253→1)</b> "예약클릭이 줄었다"는 <b>측정으로 입증할 수 없다</b>(측정 단절과 실제 변화가 겹침). → 결론: <b>채팅 비중↑는 사실, 예약클릭 감소폭은 미확정.</b></p>
+      </div>
+    </div>
+
+    <p class="sec-sub" style="margin-top:22px; font-weight:700; color:var(--ink)">예약 퍼널 단계 — 정의와 볼륨 (신화성 ev8fq, 주 기준)</p>
+    <table>
+      <thead><tr><th>단계</th><th>이벤트</th><th>뜻</th><th>주 볼륨</th></tr></thead>
+      <tbody>
+        <tr><td>상세 조회</td><td>view_item</td><td>학원·수강 과정 상세를 봄 (퍼널 입구)</td><td>~900</td></tr>
+        <tr><td>폼 초기</td><td>add_shipping_info</td><td>폼 초반 입력 — 일찍 발화·의도 약함(허수성)</td><td>~900</td></tr>
+        <tr><td>장바구니</td><td>add_to_cart</td><td>수강 항목을 담음 (과정 선택)</td><td>~120</td></tr>
+        <tr class="row-clean"><td>결제정보</td><td>add_payment_info</td><td><b>결제 정보 입력 — 구매 직전(진성 신호)</b></td><td>~60</td></tr>
+        <tr><td>결제 시작</td><td>begin_checkout</td><td>결제 진입</td><td>~24</td></tr>
+        <tr class="row-clean"><td>결제 완료</td><td>purchase</td><td><b>예약 확정</b></td><td>~14</td></tr>
+      </tbody>
+    </table>
+    <p class="body">깔때기: 상세 ~900 → 장바구니 ~120 → 결제정보 ~60 → 결제 완료 ~14. <b>add_to_cart·add_payment_info는 구매 깔때기 안쪽</b>이라 채팅(깔때기 상단)과 달리 실제 예약과 직결돼 신호로 의미가 있다. (단, 아래 광고 귀속 선결 필요)</p>
+
+    <div class="callout ok">
+      <div class="icon">🎯</div>
+      <div>
+        <h3>방향은 "진성 액션 최적화" — 단, 먼저 광고 귀속을 살려야 한다</h3>
+        <p>레버는 다리 UX를 손보는 것보다 — <b>PMax 최적화 기준을 소프트 클릭이 아니라 "이탈하지 않는 진성 유저의 하드 액션"(장바구니·결제정보)으로 바꾸는 것</b>이다. 그러면 PMax가 ① 채팅·저의도 클릭 펌핑을 멈추고 ② 실제 결제까지 가는 트래픽을 학습한다.</p>
+      </div>
+    </div>
+    <div class="callout warn">
+      <div class="icon">⚠️</div>
+      <div>
+        <h3>"측정"은 됐지만 "광고 귀속"은 아직 0 — 선결 과제</h3>
+        <p>하드 액션은 GA4/BQ에서 보이고(장바구니 주 100~150 · 결제정보 주 50~75, ev8fq 실측), 구글애즈에도 <b>전환 액션으로 등록</b>돼 있다(suwon_booking_payment·cart). <b>그러나 셋 다 HIDDEN 상태에 광고 귀속 0건</b>이다 — 같은 도메인 kakao는 30일 2,434건 잡히는데, 다른 도메인(booking)의 payment·cart·purchase·reservation은 모두 0. 즉 <b>측정 ≠ 광고 귀속.</b> 신호로 쓰려면 ① HIDDEN→활성·카운트 포함 ② 크로스도메인 gclid 귀속이 booking 도메인까지 가는지 검증(0이라는 건 미전달 신호) ③ 귀속 수가 주 30~50 넘는지 확인 후 Primary 승격 — 이 순서가 선행돼야 한다.</p>
+      </div>
+    </div>
+    <ul class="takeaways" style="margin-top:20px">
+      <li>🥇 <b>PMax를 하드 액션에 최적화</b>: 채팅(소프트) → <b>add_payment_info(주~60)·add_to_cart(주~120)</b>. 구매 깔때기 안쪽이라 디커플이 구조적으로 안 생기고, 이탈 안 하는 진성 유저를 사오게 학습한다.</li>
+      <li>🥇 <b>6/11 채팅 히어로 재검토</b>: 개편으로 히어로가 채널톡(콜 의존·콜클로징 21% 관문)이 됐다 → 예약직결 비중 회복 검토(뉴강남 모델). ⚠️예약클릭 감소폭은 측정 단절로 미확정.</li>
+      <li>🥈 <b>상담 신청 콜 커버리지 복구</b>: 78.7% 미접촉 실패 → 접촉률↑(접촉 시 73% 성공). 단 이건 운영 레버.</li>
+    </ul>
+    <p class="caveat">출처 · 클릭=GA4 509098790(suwon 호스트 필터) / 실제 예약=homepage_inquiry_flat / 하드 액션=335 booking 이벤트(6/10 크로스도메인 연결, academy_id=ev8fq 필터). ⚠️클릭(509)과 예약(ERP)은 식별자가 달라 1%는 정밀 전환율이 아니라 <b>규모 대비</b> 추정.</p>
+  </section>
+
+  <!-- 타겟 이해 (별도 강조) -->
+  <section class="qsec">
+    <div class="step-no"><span class="dot">◎</span> 타겟 이해 · 누가·어떻게 오나</div>
+    <h2>잠깐 — 수원 타겟은 이렇게 움직인다</h2>
+    <p class="sec-sub">퍼널·신호를 넘어, 합격 고객 설문과 실제 유입이 보여주는 <b>타겟 행태</b>. 액션은 결국 이 사람들에게 맞춰야 한다. (직영 합격자 설문 + ERP 실측)</p>
+
+    <p class="body" style="font-weight:700; margin-bottom:2px">① 어떻게 알게 됐나 — 설문</p>
+    <div class="bars">
+      <div class="barrow"><div class="barlabel">네이버 검색</div><div class="track"><div class="fill" style="width:57%; background:#03c75a">57.1%</div></div><div class="barval">57.1</div></div>
+      <div class="barrow"><div class="barlabel">네이버 지도</div><div class="track"><div class="fill" style="width:21%; background:#03c75a">20.9%</div></div><div class="barval">20.9</div></div>
+      <div class="barrow"><div class="barlabel">길에서</div><div class="track"><div class="fill" style="width:10%; background:#cbd5e1; color:#475569">9.9%</div></div><div class="barval">9.9</div></div>
+      <div class="barrow"><div class="barlabel">카카오맵·구글</div><div class="track"><div class="fill" style="width:7%; background:#cbd5e1; color:#475569">6.6%</div></div><div class="barval">6.6</div></div>
+    </div>
+    <p class="body">발견의 <b>78%가 네이버</b>(검색 57 + 지도 21). 광고로 "처음 인지시키는" 단계가 아니라, 이미 네이버에서 찾아본다.</p>
+
+    <p class="body" style="font-weight:700; margin:18px 0 2px">② 왜 이 학원을 골랐나 — 설문(복수응답)</p>
+    <div class="bars">
+      <div class="barrow"><div class="barlabel">가까운 거리</div><div class="track"><div class="fill" style="width:50%; background:var(--step)">50.5%</div></div><div class="barval">50.5</div></div>
+      <div class="barrow"><div class="barlabel">강사 친절</div><div class="track"><div class="fill" style="width:32%; background:#a5b4fc; color:#3730a3">32%</div></div><div class="barval">32</div></div>
+      <div class="barrow"><div class="barlabel">온라인 후기</div><div class="track"><div class="fill" style="width:27%; background:#a5b4fc; color:#3730a3">26.8%</div></div><div class="barval">26.8</div></div>
+      <div class="barrow"><div class="barlabel">대중교통</div><div class="track"><div class="fill" style="width:25%; background:var(--step)">24.7%</div></div><div class="barval">24.7</div></div>
+      <div class="barrow"><div class="barlabel">지인 추천</div><div class="track"><div class="fill" style="width:19%; background:#cbd5e1; color:#475569">18.6%</div></div><div class="barval">18.6</div></div>
+      <div class="barrow"><div class="barlabel">수강료</div><div class="track"><div class="fill" style="width:17%; background:#cbd5e1; color:#475569">16.5%</div></div><div class="barval">16.5</div></div>
+    </div>
+    <p class="body"><b>위치(가까운 거리 50.5 + 대중교통 24.7)가 결정의 절반 이상.</b> 가격(16.5)은 후순위, 후기(26.8)도 강하다.</p>
+
+    <p class="body" style="font-weight:700; margin:18px 0 2px">③ 실제로 어느 경로로 예약했나 — ERP (예약성공 기준)</p>
+    <div class="bars">
+      <div class="barrow"><div class="barlabel">온라인 예약</div><div class="track"><div class="fill" style="width:33%; background:var(--ng)">33%</div></div><div class="barval">33</div></div>
+      <div class="barrow"><div class="barlabel">네이버예약(플레이스)</div><div class="track"><div class="fill" style="width:27%; background:#03c75a">27%</div></div><div class="barval">27</div></div>
+      <div class="barrow"><div class="barlabel">상담 신청(콜)</div><div class="track"><div class="fill" style="width:26%; background:var(--sh)">26%</div></div><div class="barval">26</div></div>
+    </div>
+
+    <div class="callout ok">
+      <div class="icon">🧭</div>
+      <div>
+        <h3>이런 타겟 행태가 보인다</h3>
+        <ul class="takeaways" style="margin-top:8px">
+          <li><b>네이버에서 찾는다</b> — 발견 78%가 네이버. 인지 광고보다 <b>네이버 장악</b>이 먼저다.</li>
+          <li><b>위치로 고른다</b> — 거리 + 대중교통 75%. "오목천역 2분"이 핵심 카드, 가격은 후순위.</li>
+          <li><b>발견과 예약이 같은 네이버에서 닫힌다</b> — 실예약의 27%가 네이버예약(플레이스). 발견→예약이 한 생태계.</li>
+          <li><b>후기를 보고 결정한다</b> — 26.8%가 온라인 후기. 리뷰가 곧 전환 자산.</li>
+          <li><b>(대비) 강남 타겟은 정반대</b> — 플랫폼 직예약 52% · 네이버 1%. 가격으로 자가예약을 민다.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="body" style="font-weight:700; margin:22px 0 2px">수원 vs 강남 — 타겟 자체가 다르다</p>
+    <table>
+      <thead><tr><th>축</th><th class="sh">수원 (신화성)</th><th class="ng">강남 (뉴강남)</th></tr></thead>
+      <tbody>
+        <tr><td>발견 경로</td><td><b>네이버 78%</b> (검색+지도)</td><td>설문 없음 — 가격검색·플랫폼 추정</td></tr>
+        <tr><td>결정 동인</td><td><b>위치 75%</b> · 후기 27% (가격 후순위)</td><td><b>가격</b> (광고가 최저가 전면)</td></tr>
+        <tr><td>예약 경로</td><td>네이버예약 27% + 온라인 33% (분산)</td><td><b>온라인 직예약 52%</b> (집중) · 네이버 1%</td></tr>
+        <tr><td>한 줄 행태</td><td>네이버서 <b>위치·후기로 결심</b></td><td>가격 비교 후 <b>플랫폼 자가예약</b></td></tr>
+      </tbody>
+    </table>
+    <p class="body">같은 "운전면허 고객"이라도 <b>수원은 네이버·위치 중심, 강남은 가격·플랫폼 중심</b>이다. 그래서 신화성이 강남식 가격 소구를 따라가면 타겟과 어긋난다 — <b>수원 타겟이 쓰는 네이버에서 위치·후기로 잡는 것이 정합.</b></p>
+    <p class="caveat">⚠️ 강남(뉴강남)은 <b>설문이 없어</b> 발견·결정동인은 광고 메시지·ERP 기반 <b>추정</b>이고, 예약 경로만 실측이다. 수원 설문 = 직영 합격자 n≈91~97(기능 설문·복수응답). ERP = homepage_inquiry_flat 예약성공 출처. → <b>수원 타겟은 "네이버에서 위치·후기로 결심하는" 사람.</b></p>
+  </section>
+
+  <!-- 종합 + 액션 -->
+  <section>
+    <div class="step-no"><span class="dot">→</span> 종합 · 메시지·엣지 → 액션</div>
+    <h2>메시지·엣지를 합치면 — 신화성이 할 일</h2>
+    <p class="sec-sub">광고 메시지와 온라인예약 엣지 차이. (타겟 행태·발견·유입은 바로 위 「타겟 이해」 섹션)</p>
+    <table>
+      <thead><tr><th>렌즈</th><th class="ng">뉴강남</th><th class="sh">수원신화성</th></tr></thead>
+      <tbody>
+        <tr><td>광고 메시지</td><td>가격 최저가·3일 (단일 USP)</td><td>위치·합격·대형/소형 (분산), 가격 못 씀</td></tr>
+        <tr><td>온라인예약 엔진</td><td>플랫폼 직예약 (가격이 끈다)</td><td>네이버 플레이스 (발견·위치가 끈다)</td></tr>
+      </tbody>
+    </table>
+    <p class="body">신화성의 강점은 <b>네이버</b>(발견 78% · 실예약 27% · CPC 0 · 성사 51%)인데, 광고 화력은 적자인 <b>Google PMax(채팅 최적화)</b>에 쏠려 있다. 가격으로는 뉴강남을 못 이긴다 — <b>자기 엣지로 싸워야 한다.</b></p>
+
+    <div class="callout ok">
+      <div class="icon">✅</div>
+      <div>
+        <h3>그래서 해야 할 일 (우선순위)</h3>
+        <p>모든 발견이 모이는 하나의 결론 — 가격 모방을 멈추고, 네이버 엣지를 키우고, 광고 신호를 하드로 바꾼다.</p>
+      </div>
+    </div>
+    <div class="actions">
+      <div class="act"><span class="pri p1">1순위 · 즉시·무료</span><div>
+        <h4>네이버 플레이스를 키운다 (자기 엣지)</h4>
+        <p>발견 78% · 실예약 27% · CPC 0 · 성사 51%. <b>뉴강남엔 없는 신화성만의 무기.</b> 리뷰 요청 루틴, 대형면허 노출(현재 공백), 예약 슬롯·정보 보강.</p>
+      </div></div>
+      <div class="act"><span class="pri p1">1순위 · 구조</span><div>
+        <h4>PMax를 진성 하드 액션에 최적화 (귀속 활성화 선행)</h4>
+        <p><b>add_payment_info(주~60)·add_to_cart(주~120)</b>는 GA4 측정·애즈 등록까지 됐으나 <b>현재 HIDDEN·광고 귀속 0건</b>. ① HIDDEN→활성 ② 크로스도메인 gclid 귀속 검증 ③ 주 30~50 확인 후 <b>Primary 승격</b>으로 채팅(소프트)을 대체한다.</p>
+      </div></div>
+      <div class="act"><span class="pri p1">1순위 · 구조</span><div>
+        <h4>6/11 채팅 히어로 재검토</h4>
+        <p>개편으로 히어로가 채널톡(콜 의존 경로·콜클로징 21% 관문)이 됐다 → <b>예약직결 비중 회복</b> 검토(뉴강남 모델 차용). ⚠️예약클릭 감소폭 자체는 6/11 측정 단절로 미확정.</p>
+      </div></div>
+      <div class="act"><span class="pri p2">2순위 · 메시지</span><div>
+        <h4>가격 모방 금지 → 엣지 메시지로</h4>
+        <p>직영 단가로는 최저가 불가. <b>위치(오목천 2분)·대형/소형 전문·자체시험</b>을 전면화하고, 양쪽 다 비어 있는 <b>정서/안심("처음이라 무서워도 괜찮아요")</b>을 선점한다.</p>
+      </div></div>
+      <div class="act"><span class="pri p2">2순위 · 단계 전환</span><div>
+        <h4>진성 유저의 퍼널 단계 전환율 ↑ (클릭 수 아님)</h4>
+        <p>클릭 7,000의 다수는 PMax 허수라 줄어드는 게 정상. 클릭 수를 쫓지 말고 <b>진성 유저가 거치는 단계(크로스도메인 이탈·일정선택 절벽)의 전환율</b>을 올린다. 하드 액션 최적화와 함께 가면 허수↓·진성↑.</p>
+      </div></div>
+      <div class="act"><span class="pri p3">3순위 · 운영</span><div>
+        <h4>상담 신청 콜 커버리지 복구</h4>
+        <p>상담 신청 78.7%가 미접촉으로 실패. 접촉 시 73% 성공. 받은 리드 접촉률을 올린다(광고 밖 운영 레버).</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 인사이트 -->
+  <section>
+    <div class="step-no"><span class="dot">★</span> 한 줄 결론</div>
+    <h2>격차는 "광고 착시"였고, 레버는 신호·채널·콜에 있다</h2>
+    <p class="body">"신화성이 뉴강남보다 8~24배 열등"은 광고가 부풀린 분모가 만든 착시였다. 같은 잣대로 보면 예약 확정 후 도착은 오히려 비슷하고(80% vs 88%), 진짜로 닫을 곳은 셋이다 — ① PMax가 키우는 신호를 소프트(채팅)에서 <b>하드(결제정보)</b>로, ② 수원 타겟이 사는 <b>네이버(플레이스·SA)</b>로 무게를, ③ 상담 경로의 <b>콜 클로징(폼→예약 21%) 병목</b>을. <b>가격으로 뉴강남을 흉내 내는 길이 아니라, 신화성이 이미 가진 엣지(네이버·위치·대형/소형 전문)를 키우는 길</b>이다. (구체 실행은 바로 위 「액션」 참고)</p>
+    <div class="callout warn">
+      <div class="icon">📌</div>
+      <div>
+        <h3>가장 먼저 확인할 한 가지</h3>
+        <p>하드 신호(결제정보·장바구니)는 GA4·구글애즈에 등록됐지만 <b>광고 귀속이 0건</b>이다(오늘 보조 전환으로 켜 관측 시작). <b>며칠 뒤 이 숫자가 0을 넘는지</b>가 — PMax를 진짜 예약 신호로 돌릴 수 있는지의 첫 관문이다.</p>
+      </div>
+    </div>
+    <p class="caveat">⚠️ <b>성사율은 소스마다 다르게 잡힌다</b> — orders_flat(STEP 4) 신화성 64~72% vs ERP 확정→도착 80%(정의·"방문 등록 대기" 처리 차이). 본 결론의 "확정 후 도착은 양쪽 비슷"은 ERP 레벨매칭 기준이며, 두 소스 대사는 후속 확인 과제다.</p>
+  </section>
+
+  <footer>
+    출처 ·
+    <span class="src">GA4 driving_teacher_click 주별 (신화성 509098790 / 뉴강남 471868600)</span>
+    <span class="src">orders_flat · external-link-select · ISO주차</span><br>
+    수원신화성 ev8fqjckrB7wpRXjm4wC · 뉴강남 1yyMKNljZeSCdsTbBp2i · 작성 2026-06-16
+  </footer>
+
+</div>
+</body>
+</html>
