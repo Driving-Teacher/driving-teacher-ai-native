@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수원신화성 직영 대시보드 — 구조 설계안</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16202c; --sub:#5a6776; --line:#e5e9ef; --bg:#f6f8fb; --card:#fff;
+    --brand:#1f6feb; --brand-weak:#eaf2ff;
+    --good:#1a9d6b; --good-weak:#e6f6ef;
+    --warn:#d9822b; --warn-weak:#fdf3e7;
+    --bad:#d64545; --bad-weak:#fcebeb;
+    --ga4:#7b61ff; --ga4-weak:#f0ecff;
+    --erp:#1f6feb; --erp-weak:#eaf2ff;
+    --sheet:#1a9d6b; --sheet-weak:#e6f6ef;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:Pretendard,-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.7;
+    word-break:keep-all;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 24px 80px}
+  header.top{margin-bottom:40px}
+  .kicker{display:inline-block;background:var(--brand-weak);color:var(--brand);
+    font-weight:700;font-size:13px;padding:5px 12px;border-radius:999px;letter-spacing:.02em}
+  h1{font-size:30px;font-weight:800;margin:16px 0 8px;letter-spacing:-.02em}
+  .lead{color:var(--sub);font-size:16px;max-width:760px}
+  .meta{margin-top:14px;font-size:13px;color:var(--sub)}
+  .meta b{color:var(--ink)}
+  section{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:28px 28px 24px;margin:18px 0;box-shadow:0 1px 2px rgba(20,32,44,.03)}
+  h2{font-size:20px;font-weight:800;margin:0 0 4px;letter-spacing:-.01em}
+  h2 .num{color:var(--brand);margin-right:8px}
+  .sec-sub{color:var(--sub);font-size:14px;margin:0 0 20px}
+  h3{font-size:15px;font-weight:700;margin:22px 0 10px}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:6px 0}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:12px;color:var(--sub);font-weight:700;background:#fafbfd}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px;white-space:nowrap}
+  .p-ga4{background:var(--ga4-weak);color:var(--ga4)}
+  .p-erp{background:var(--erp-weak);color:var(--erp)}
+  .p-sheet{background:var(--sheet-weak);color:var(--sheet)}
+  .p-good{background:var(--good-weak);color:var(--good)}
+  .p-warn{background:var(--warn-weak);color:var(--warn)}
+  .p-bad{background:var(--bad-weak);color:var(--bad)}
+
+  /* 퍼널 다이어그램 — 고정폭 트랙 안에 채움막대 */
+  .funnel{display:flex;flex-direction:column;gap:0;margin:8px 0 4px}
+  .layer-label{font-size:12px;font-weight:800;letter-spacing:.03em;margin:18px 0 8px;
+    display:flex;align-items:center;gap:8px;color:#33414f}
+  .layer-label .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+  .step{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:12px;
+    border:1px solid var(--line);background:#fff}
+  .track{width:120px;height:28px;background:#eef1f5;border-radius:6px;flex-shrink:0;overflow:hidden}
+  .track i{display:block;height:100%;border-radius:6px}
+  .step .body{flex:1;min-width:0}
+  .step .name{font-weight:700;font-size:14px}
+  .step .src{font-size:11px;color:var(--sub)}
+  .step .val{font-weight:800;font-variant-numeric:tabular-nums;font-size:15px;white-space:nowrap}
+  .step .conv{font-size:11px;color:var(--sub);white-space:nowrap;width:64px;text-align:right;flex-shrink:0}
+  .arrow{display:flex;justify-content:center;align-items:center;height:20px;color:#aab4c0;font-size:12px}
+  .arrow.bad{color:var(--bad);font-weight:700}
+  .seam{margin:12px 0;padding:11px 14px;border:1px dashed var(--good);background:var(--good-weak);
+    border-radius:10px;font-size:13px;color:#0f7a52}
+  .seam b{color:#0a5c3d}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){
+    .grid2{grid-template-columns:1fr}
+    .track{width:72px}
+    .step{gap:10px;padding:11px 12px}
+  }
+  .def{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:#fff}
+  .def h4{margin:0 0 6px;font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .def p{margin:4px 0;font-size:13.5px;color:#3a4756}
+  .formula{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;background:#f3f5f8;
+    padding:6px 9px;border-radius:7px;color:#33414f;margin-top:8px;display:block;word-break:break-all}
+  .note{font-size:12.5px;color:var(--warn);margin-top:8px}
+  .callout{border-left:4px solid var(--bad);background:var(--bad-weak);padding:14px 18px;
+    border-radius:0 10px 10px 0;margin:14px 0;font-size:14px}
+  .callout.b-warn{border-color:var(--warn);background:var(--warn-weak)}
+  .callout.b-good{border-color:var(--good);background:var(--good-weak)}
+  .callout b{font-weight:800}
+  ul.tight{margin:8px 0;padding-left:20px}
+  ul.tight li{margin:5px 0;font-size:14px}
+  .foot{color:var(--sub);font-size:12.5px;margin-top:28px;text-align:center}
+  .tag-axis{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .tag-axis span{background:#f0f3f7;border:1px solid var(--line);border-radius:7px;padding:4px 10px;font-size:12.5px}
+
+  /* 필터 바 목업 */
+  .filterbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#fafbfd;
+    border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .fb-label{font-size:12px;font-weight:800;color:var(--sub)}
+  .fb{background:#fff;border:1px solid var(--line);border-radius:9px;padding:7px 12px;font-size:13px;color:#33414f}
+  .fb b{color:var(--brand)}
+  .fb-opt{display:block;font-size:11px;color:var(--sub);margin-top:2px}
+  /* 펼침 블록 목업 */
+  .exp{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:6px}
+  .exp-head{background:var(--brand-weak);color:#1a3a6b;font-weight:700;font-size:14px;padding:12px 16px;
+    display:flex;align-items:center;gap:10px}
+  .exp-total{font-weight:600;font-size:12.5px;color:var(--sub);margin-left:auto}
+  .exp-body{padding:6px 16px 12px}
+  .exp-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}
+  .exp-row:last-child{border-bottom:none}
+  .exp-ch{width:130px;flex-shrink:0;font-size:13px;font-weight:600}
+  .track.sm{width:90px;height:18px}
+  .exp-v{font-size:12.5px;color:var(--good);font-weight:700;width:74px;text-align:right}
+  .exp-bad{font-size:12.5px;color:var(--bad);font-weight:700;width:74px;text-align:right}
+  @media(max-width:760px){.exp-ch{width:90px}.track.sm{width:54px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <span class="kicker">설계 검토안 · 확정 전</span>
+  <h1>수원신화성 직영 대시보드 — 구조도 &amp; 의미 정의</h1>
+  <p class="lead">예약·결제·도착·상담·이탈·웹방문을 한 화면에서 보고, 유입 채널·일/주/월·목표 대비로 분기해 문제를 짚기 위한 대시보드의 <b>설계 골격</b>입니다. 아래 구조와 정의를 확정한 뒤 실제 빌드에 들어갑니다.</p>
+  <p class="meta">대상 <b>수원신화성(뉴삼성, academyid ev8fq)</b> · 형태 <b>합의=HTML 명세 → 운영=Streamlit(실시간·필터·광고효율)</b> · 숫자는 모두 <b>이번 검증 실측</b>(ERP 전기간, GA4 최근 28일, 시트 2026 월별, 구글애즈 30일)</p>
+  <div class="callout b-good" style="margin-top:14px">
+    <b>2단계로 진행.</b> 이 HTML은 <b>구조·정의 합의용 명세</b>입니다(팀 댓글로 확정). 확정 후 <b>운영은 Streamlit</b>으로 — 로드 시 BQ 라이브 쿼리라 자동 갱신, 채널 필터·펼침이 네이티브. 기존 dt-platform-dashboard Streamlit 인프라를 재사용합니다. ※ "실시간"의 천장은 소스 동기화 주기(구글애즈 BQ·시트·ERP는 일 단위 배치, GA4 방문만 분 단위).
+  </div>
+</header>
+
+<!-- 1. 소스 맵 -->
+<section>
+  <h2><span class="num">01</span>데이터 소스 맵</h2>
+  <p class="sec-sub">현황마다 출처가 다릅니다. 색으로 구분합니다 —
+    <span class="pill p-ga4">GA4 웹</span> <span class="pill p-erp">ERP 리드</span> <span class="pill p-sheet">시트(NeoStudents)</span></p>
+  <table>
+    <thead><tr><th>현황</th><th>출처</th><th>판정 기준</th><th>주의</th></tr></thead>
+    <tbody>
+      <tr><td>웹 방문 · CTA · 첫 퍼널 · 상담신청 완료</td>
+          <td><span class="pill p-ga4">GA4 suwon</span></td>
+          <td>속성 509098790, hostName=suwon.drivingteacher.co.kr</td>
+          <td>직영웹 채널만 커버</td></tr>
+      <tr><td>상담 · 예약(성공/실패/취소)</td>
+          <td><span class="pill p-erp">homepage_inquiry_flat</span></td>
+          <td>academyid=ev8fq, status 필드</td>
+          <td>온라인 리드 전 채널</td></tr>
+      <tr><td>결제</td>
+          <td><span class="pill p-erp">ERP paymentcompleted</span></td>
+          <td>paymentcompleted=TRUE</td>
+          <td>직영은 오프라인 클로징 많음 → 하한선</td></tr>
+      <tr><td><b>도착(입학생)</b></td>
+          <td><span class="pill p-erp">erp_neo_students_flat</span> <span class="pill p-sheet">시트</span></td>
+          <td>academyid=ev8fq · BQ 1차 + 시트 교차검증</td>
+          <td>월 BQ≈시트 (±5%)</td></tr>
+      <tr><td>온라인 / 오프라인 경로</td>
+          <td><span class="pill p-erp">입학생 ↔ 리드 매칭</span></td>
+          <td>전화번호 매칭 — 일치=온라인, 미일치=오프라인</td>
+          <td>온라인 41%는 하한(번호 기준)</td></tr>
+      <tr><td>목표 / 예측</td>
+          <td><span class="pill p-sheet">공유 시트</span></td>
+          <td>입학생 예측 모델(베이스라인×상향율)</td>
+          <td>세그먼트별</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 2. 구조도 -->
+<section>
+  <h2><span class="num">02</span>전체 구조도 — 2층 퍼널</h2>
+  <p class="sec-sub">위층은 <b>온라인 퍼널</b>(웹 행동 → ERP 리드), 아래층은 <b>도착/입학 실적</b>(시트). 두 층은 "상담신청 완료"에서 한 번 만나고, 최종 도착에서 다시 만납니다.</p>
+
+  <div class="funnel">
+    <div class="layer-label"><span class="dot" style="background:var(--ga4)"></span>① 온라인 앞단 — GA4 웹 (직영웹 채널 · 최근 28일)</div>
+
+    <div class="step"><div class="track"><i style="width:100%;background:var(--ga4)"></i></div>
+      <div class="body"><div class="name">예약/상담 페이지 방문</div><div class="src">GA4 세션 (홈 "/" 중심, 전용 예약페이지 없음)</div></div>
+      <div class="val">69,186</div><div class="conv">기준</div></div>
+    <div class="arrow">▼ 8.0%</div>
+    <div class="step"><div class="track"><i style="width:42%;background:var(--ga4)"></i></div>
+      <div class="body"><div class="name">상담·예약 CTA 클릭</div><div class="src">consult_cta_click 3,025 + driving_teacher_click 5,398</div></div>
+      <div class="val">8,423</div><div class="conv">8.0%</div></div>
+    <div class="arrow bad">▼ 1.4% · 최대 절벽</div>
+    <div class="step" style="border-color:var(--bad)"><div class="track"><i style="width:14%;background:var(--bad)"></i></div>
+      <div class="body"><div class="name">첫 퍼널 진행 = 폼 시작</div><div class="src">GA4 form_start (홈 다이얼로그 폼 열림)</div></div>
+      <div class="val">114</div><div class="conv">1.4%</div></div>
+    <div class="arrow">▼ 61%</div>
+    <div class="step"><div class="track"><i style="width:10%;background:var(--ga4)"></i></div>
+      <div class="body"><div class="name">상담신청 완료</div><div class="src">GA4 inquiry_leave (성함·전화 제출)</div></div>
+      <div class="val">70</div><div class="conv">61%</div></div>
+  </div>
+
+  <div class="seam">🔗 <b>이음새 정합 검증</b> — GA4 상담신청 완료 <b>70</b> ≈ ERP 상담신청 채널 신규리드 <b>83</b> (같은 28일, 같은 자릿수) → 웹 앞단과 ERP가 여기서 연결됩니다.</div>
+
+  <div class="funnel">
+    <div class="layer-label"><span class="dot" style="background:var(--erp)"></span>② ERP 본체 — 전 채널 합류 (homepage_inquiry_flat, 전기간 누적)</div>
+    <div class="step"><div class="track"><i style="width:100%;background:var(--erp)"></i></div>
+      <div class="body"><div class="name">상담신청 완료 = 리드 생성</div><div class="src">상담신청·운전선생·네이버예약·전화·채널톡·방문연수 합류</div></div>
+      <div class="val">2,073</div><div class="conv">리드</div></div>
+    <div class="arrow">▼ 분기</div>
+    <div class="step"><div class="track"><i style="width:35%;background:var(--good)"></i></div>
+      <div class="body"><div class="name">예약 성공</div><div class="src">status='예약 성공'</div></div>
+      <div class="val">730</div><div class="conv">35.2%</div></div>
+    <div class="step" style="margin-top:8px;border-color:var(--bad)"><div class="track"><i style="width:63%;background:var(--bad)"></i></div>
+      <div class="body"><div class="name">예약 실패 · 취소</div><div class="src">실패 1,094 (52.8%) + 취소 205 (9.9%)</div></div>
+      <div class="val">1,299</div><div class="conv">62.7%</div></div>
+  </div>
+
+  <div class="funnel">
+    <div class="layer-label"><span class="dot" style="background:var(--sheet)"></span>③ 도착 / 입학 실적 — BQ erp_neo_students_flat (시트 교차검증)</div>
+    <div class="step"><div class="track"><i style="width:100%;background:var(--sheet)"></i></div>
+      <div class="body"><div class="name">실제 현장 도착(입학생)</div><div class="src">academyid=ev8fq · BQ 월 245~338 ≈ 시트 도착 239~324 (정합)</div></div>
+      <div class="val">월 245~338</div><div class="conv">BQ·시트</div></div>
+    <div class="arrow">▼ 입학생↔리드 전화매칭으로 분해</div>
+    <div class="step"><div class="track"><i style="width:41%;background:var(--erp)"></i></div>
+      <div class="body"><div class="name">└ 온라인 경유 입학</div><div class="src">ERP 온라인 리드와 전화 일치</div></div>
+      <div class="val">40.9%</div><div class="conv">581명</div></div>
+    <div class="step" style="margin-top:8px"><div class="track"><i style="width:59%;background:var(--warn)"></i></div>
+      <div class="body"><div class="name">└ 오프라인 입학 (워크인·순수 전화)</div><div class="src">ERP 온라인 리드에 기록 없음</div></div>
+      <div class="val">59.1%</div><div class="conv">841명</div></div>
+  </div>
+
+  <div class="callout b-good">
+    <b>온라인 / 오프라인이 도출됩니다 — 도착의 41%만 온라인 경유.</b><br>
+    2026 입학생 1,422명을 ERP 온라인 리드와 전화번호로 매칭 → <b>온라인 581명(40.9%) · 오프라인 841명(59.1%)</b>. 온라인 퍼널(①②)이 도착의 ~40%를 설명하고, 나머지 60%는 워크인·순수 전화입니다. ※ 매칭이 번호 기준이라 온라인 41%는 하한값.
+  </div>
+</section>
+
+<!-- 3. 의미 정의 -->
+<section>
+  <h2><span class="num">03</span>현황·지표 의미 정의</h2>
+  <p class="sec-sub">각 박스가 "무엇을, 어떻게 세는가". 정의를 먼저 합의해야 숫자 해석이 어긋나지 않습니다.</p>
+  <div class="grid2">
+    <div class="def"><h4><span class="pill p-ga4">방문</span>예약/상담 페이지 방문</h4>
+      <p>직영웹(suwon.dt)에 들어온 세션. 전용 예약 페이지가 없어 홈("/")이 사실상 진입점입니다.</p>
+      <span class="formula">GA4 sessions · hostName=suwon.drivingteacher.co.kr</span></div>
+
+    <div class="def"><h4><span class="pill p-ga4">첫 퍼널</span>폼 시작</h4>
+      <p>상담 다이얼로그 폼을 실제로 연 사람. CTA 클릭(8,423)과 폼 시작(114) 사이 1.4%가 가장 큰 누수입니다.</p>
+      <span class="formula">GA4 event = form_start</span></div>
+
+    <div class="def"><h4><span class="pill p-ga4">상담신청 완료</span>진성 제출</h4>
+      <p>성함·전화를 남긴 진성 리드. ERP 신규 리드와 자릿수가 맞아 이음새로 씁니다.</p>
+      <span class="formula">GA4 inquiry_leave ≈ ERP 신규 리드</span>
+      <p class="note">⚠ generate_lead는 3건뿐(미점화) → 쓰지 않음</p></div>
+
+    <div class="def"><h4><span class="pill p-erp">예약 성공</span>예약 확정</h4>
+      <p>ERP에서 예약이 확정된 리드. 채널 무관 합산입니다.</p>
+      <span class="formula">homepage_inquiry_flat.status = '예약 성공'</span></div>
+
+    <div class="def"><h4><span class="pill p-bad">이탈(고민)</span>예약 실패 · 취소</h4>
+      <p>상담까지 왔으나 결심 못 하고 빠진 풀. '상담 전' 상태는 3건뿐이라 측정축이 아니며, <b>실패(1,094)</b>가 실질 이탈입니다.</p>
+      <span class="formula">status IN ('예약 실패','예약 취소')</span>
+      <p class="note">⚠ 실패 사유의 84.6%(926건) 미기록 · 채널톡 봇 고민단계는 BQ에 없음</p></div>
+
+    <div class="def"><h4><span class="pill p-erp">결제</span>온라인 결제 완료</h4>
+      <p>온라인 결제 완료 플래그. 직영은 전화·현장 클로징이 많아 이 수치는 하한선입니다.</p>
+      <span class="formula">paymentcompleted = TRUE</span></div>
+
+    <div class="def" style="grid-column:1/-1"><h4><span class="pill p-erp">도착(입학생)</span>실제 현장 도착·등록 + 온/오프 분해</h4>
+      <p><b>예약자 중 실제로 학원 현장에 도착해 등록한 분.</b> 최종 성과 지표이자 목표 대비의 기준입니다. BQ <code>erp_neo_students_flat</code>(academyid=ev8fq)에서 직접 집계하며 시트(NeoStudents)와 ±5%로 정합 → <b>BQ 1차·시트 교차검증</b>. 입학생을 ERP 온라인 리드와 전화로 매칭해 <b>온라인 경유(40.9%) vs 오프라인 워크인(59.1%)</b>까지 분해합니다. 세그먼트=성인신규·성인특수·평월고3·제휴고3.</p>
+      <span class="formula">erp_neo_students_flat (academyid=ev8fq, practiceenrolldate) · 온/오프 = homepage_inquiry_flat 전화 JOIN</span></div>
+  </div>
+</section>
+
+<!-- 4. 분기축 -->
+<section>
+  <h2><span class="num">04</span>분기축 — 채널 · 시간 · 목표 대비</h2>
+  <div class="grid2">
+    <div>
+      <h3>유입 채널 (koreanchannel)</h3>
+      <div class="tag-axis">
+        <span>상담신청(직영웹)</span><span>운전선생(플랫폼)</span><span>네이버 예약</span>
+        <span>직접 전화</span><span>네이버 플레이스 전화</span><span>채널톡</span><span>방문연수 상담</span>
+      </div>
+      <p style="font-size:13px;color:var(--sub);margin-top:10px">채널마다 시작점이 다릅니다. 웹 앞단(GA4)은 직영웹 전용이고, 나머지는 ERP '상담신청 완료'에서 합류합니다.</p>
+    </div>
+    <div>
+      <h3>시간 단위 · 목표 대비</h3>
+      <ul class="tight">
+        <li><b>일 / 주 / 월</b> 토글 — createdat 기준 집계</li>
+        <li><b>목표 라인</b> 오버레이 — 시트 입학생 예측(베이스라인×상향율)</li>
+        <li><b>차이(델타)</b> — 실측 − 예측, 시트의 "실측−예측 차이" 열과 동일 정의</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>채널별 예약 실패율 — 직영웹이 최대 누수 (전기간)</h3>
+  <table>
+    <thead><tr><th>채널</th><th class="num">리드</th><th class="num">실패율</th><th>판정</th></tr></thead>
+    <tbody>
+      <tr><td>상담신청(직영웹)</td><td class="num">1,159</td><td class="num">76.5%</td><td><span class="pill p-bad">최대 볼륨·최악</span></td></tr>
+      <tr><td>방문연수 상담</td><td class="num">16</td><td class="num">93.8%</td><td><span class="pill p-bad">소량·블랙홀</span></td></tr>
+      <tr><td>직접 전화</td><td class="num">49</td><td class="num">46.9%</td><td><span class="pill p-warn">중간</span></td></tr>
+      <tr><td>운전선생(플랫폼)</td><td class="num">425</td><td class="num">20.2%</td><td><span class="pill p-good">양호</span></td></tr>
+      <tr><td>네이버 예약</td><td class="num">321</td><td class="num">19.9%</td><td><span class="pill p-good">양호</span></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px;color:var(--sub)">같은 학원인데 채널 따라 실패율이 4배 차이. 기록된 실패 사유 1위는 <b>부재·연락두절</b>(접촉 실패) → 콜커버리지가 병목입니다.</p>
+</section>
+
+<!-- 5. 인터랙션 모델 -->
+<section>
+  <h2><span class="num">05</span>인터랙션 모델 — 전체 ↔ 채널 분해 + 필터</h2>
+  <p class="sec-sub">기본은 <b>전체 합산</b>으로 보고, 각 현황 블록을 <b>펼치면 채널별로 분해</b>됩니다. 같은 기준(채널·세그먼트·기간)을 <b>상단 글로벌 필터</b>로도 걸 수 있습니다. 두 방식은 보완 관계 — 펼침은 "한 지표를 채널로 쪼개 보기", 필터는 "전체를 한 채널·세그먼트로 좁혀 보기".</p>
+
+  <h3>① 상단 글로벌 필터 바 (전체 대시보드 재계산)</h3>
+  <div class="filterbar">
+    <span class="fb-label">필터</span>
+    <span class="fb">기간 · <b>월</b> ▾ <span class="fb-opt">일 / 주 / 월</span></span>
+    <span class="fb">채널 · <b>전체</b> ▾ <span class="fb-opt">직영웹 / 운전선생 / 네이버 / 전화 / 채널톡 / 방문연수</span></span>
+    <span class="fb">세그먼트 · <b>전체</b> ▾ <span class="fb-opt">성인신규 / 성인특수 / 평월고3 / 제휴고3</span></span>
+  </div>
+
+  <h3>② 현황 블록 — 접힘(전체) → 펼침(채널 분해)</h3>
+  <div class="exp">
+    <div class="exp-head">▾ 예약 현황 <span class="exp-total">전체 2,073리드 · 성공 35.2%</span></div>
+    <div class="exp-body">
+      <div class="exp-row"><span class="exp-ch">상담신청(직영웹)</span>
+        <div class="track sm"><i style="width:23%;background:var(--good)"></i></div>
+        <span class="exp-v">성공 23.5%</span><span class="exp-bad">실패 76.5%</span></div>
+      <div class="exp-row"><span class="exp-ch">운전선생(플랫폼)</span>
+        <div class="track sm"><i style="width:80%;background:var(--good)"></i></div>
+        <span class="exp-v">성공 79.8%</span><span class="exp-bad">실패 20.2%</span></div>
+      <div class="exp-row"><span class="exp-ch">네이버 예약</span>
+        <div class="track sm"><i style="width:80%;background:var(--good)"></i></div>
+        <span class="exp-v">성공 80.1%</span><span class="exp-bad">실패 19.9%</span></div>
+      <div class="exp-row"><span class="exp-ch">직접 전화</span>
+        <div class="track sm"><i style="width:53%;background:var(--warn)"></i></div>
+        <span class="exp-v">성공 53.1%</span><span class="exp-bad">실패 46.9%</span></div>
+    </div>
+  </div>
+  <p style="font-size:12.5px;color:var(--sub);margin-top:8px">예: 닫혀 있을 땐 "예약 성공 35.2%"만 보이지만, 펼치면 <b>직영웹 76.5% 실패 vs 네이버 19.9%</b>처럼 채널 격차가 그 자리에서 드러납니다. 같은 분해를 모든 현황(상담·이탈·결제·도착)에 동일 적용합니다.</p>
+
+  <div class="callout b-good" style="margin-top:16px">
+    <b>구현 메모(빌드 시).</b> 전체↔채널 분해는 데이터를 <b>채널 차원까지 미리 집계</b>해 HTML에 심어두고, 펼침·필터는 브라우저 JS로 표시만 전환 → 리프레시 없이 즉시 동작. 도착·세그먼트는 시트값 기준이라 필터도 시트 정의를 따릅니다.
+  </div>
+</section>
+
+<!-- 6. 목표 대비 -->
+<section>
+  <h2><span class="num">06</span>도착(입학생) 목표 대비 — 시트 실측</h2>
+  <p class="sec-sub">최종 성과층. 2026 월별 도착 실측과 온라인 예약성공의 비중(온라인이 도착에서 차지하는 몫)을 함께 봅니다.</p>
+  <div class="callout b-good">
+    <b>📌 공유 시트 숫자 = 이 "도착(입학)" 항목입니다.</b> 대표님이 공유한 <b>'[직영팀] 2026 입학생 목표 및 예측'</b> 시트에서 —
+    <b>월별 '2026 실측' = 실제 도착(입학)자</b>(대시보드의 도착 막대), <b>'예측 합계' = 목표선</b>입니다.
+    즉 시트의 숫자는 대시보드의 <b>도착·목표 두 항목에만</b> 매핑되며, 리드·예약·웹방문 등 다른 지표와는 무관합니다.
+    (도착 실측은 BQ <code>erp_neo_students_flat</code>와 ±5% 정합 → BQ 1차·시트 교차검증)
+  </div>
+  <table>
+    <thead><tr><th>월</th><th class="num">도착 실측(시트)</th><th class="num">온라인 예약성공</th><th class="num">온라인 비중</th></tr></thead>
+    <tbody>
+      <tr><td>1월</td><td class="num">324</td><td class="num">145</td><td class="num">45%</td></tr>
+      <tr><td>2월</td><td class="num">252</td><td class="num">109</td><td class="num">43%</td></tr>
+      <tr><td>3월</td><td class="num">290</td><td class="num">104</td><td class="num">36%</td></tr>
+      <tr><td>4월</td><td class="num">235</td><td class="num">113</td><td class="num">48%</td></tr>
+      <tr><td>5월</td><td class="num">239</td><td class="num">91</td><td class="num">38%</td></tr>
+      <tr><td>6월(1~16)</td><td class="num">114</td><td class="num">52</td><td class="num">46%</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 7. 광고 효율 -->
+<section>
+  <h2><span class="num">07</span>광고 효율 — 채널별 CAC(도착 기준) + 퍼널 단계별 기여</h2>
+  <p class="sec-sub">우리 퍼널은 <b>도착(입학)까지</b> 잡으므로, 광고비를 얹으면 <b>채널별 진짜 CAC = 광고비 ÷ 실제 입학생</b>이 나옵니다. 광고 플랫폼도, 플랫폼 대시보드도 못 보는 직영만의 결정적 지표입니다.</p>
+
+  <table>
+    <thead><tr><th>채널</th><th>소스</th><th class="num">30일 광고비</th><th>분모(전환 기준)</th></tr></thead>
+    <tbody>
+      <tr><td>구글 (PMax·검색)</td><td><span class="pill p-erp">google_ads BQ · 5819228711</span></td><td class="num">12,676,002원</td><td>실제 입학(도착)</td></tr>
+      <tr><td>네이버 검색광고</td><td><span class="pill p-erp">naver SA API · 4164172</span></td><td class="num">API 집계</td><td>실제 입학(도착)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <b>⚠️ 광고 플랫폼 전환수를 그대로 KPI로 쓰면 안 됩니다.</b> 구글 보고 전환은 30일 <b>672건</b>이지만 <b>약 8할이 문의클릭 허수</b>입니다(구글 기준 CPA ≈ 18,850원은 착시). 분모를 <b>실제 입학(도착)</b>으로 바꿔야 진짜 CAC가 나옵니다.
+  </div>
+
+  <h3>퍼널 단계별 기여 — 광고채널이 어디까지 끌고 오나</h3>
+  <p style="font-size:13.5px;color:#3a4756;margin:4px 0 12px">각 광고채널(구글·네이버)이 <b>방문 → 상담신청 → 예약 → 도착</b> 중 어느 단계까지 기여하는지 단계별 전환·CAC로 본다. 단계마다 귀속 방식·정확도가 다릅니다.</p>
+  <table>
+    <thead><tr><th>단계</th><th>귀속 키</th><th>정확도</th></tr></thead>
+    <tbody>
+      <tr><td>방문 · CTA</td><td>GA4 session source/medium</td><td><span class="pill p-good">정확</span></td></tr>
+      <tr><td>상담신청 · 예약</td><td>ERP koreanchannel / source</td><td><span class="pill p-good">정확</span></td></tr>
+      <tr><td>도착(입학)</td><td>입학생 ↔ 리드 전화매칭</td><td><span class="pill p-warn">추정(하한)</span></td></tr>
+    </tbody>
+  </table>
+  <div class="callout b-warn">
+    <b>3소스 연결이 전제.</b> GA4(광고 유입 세션)·ERP(채널별 리드/예약)·입학생(도착)을 광고 채널 키로 묶어야 단계별 기여가 나옵니다. 방문은 정확하지만 도착 귀속은 전화매칭이라 추정치 — 단계가 내려갈수록 귀속 정확도가 떨어진다는 점을 표기한 채로 봅니다.
+  </div>
+</section>
+
+<!-- 8. 데이터 공백 -->
+<section>
+  <h2><span class="num">08</span>알고 시작해야 할 한계</h2>
+  <div class="callout b-warn">
+    <b>① 온/오프 구분은 전화 매칭 기반 = 추정값.</b> 도착(입학생)은 BQ <code>erp_neo_students_flat</code>로 직접 집계되고 시트와 ±5% 정합합니다. 단 온라인/오프라인 분해는 입학생↔온라인리드 전화번호 매칭이라, 번호 변경·가족번호·표기 차이로 일부 온라인이 오프라인으로 잘못 분류될 수 있습니다(온라인 41%는 하한). ※ 결제 분해에 쓰려던 orders_flat은 학원 식별자가 없어 사용 불가.
+  </div>
+  <div class="callout b-warn">
+    <b>② 이탈 "사유"가 거의 비어 있다.</b> 예약 실패 1,094건 중 사유 기록은 15.4%(168건)뿐입니다. "왜 고민하다 떠났나"는 별도 수집(환불 1클릭 사유·채널톡 봇 로그)이 있어야 채워집니다.
+  </div>
+  <div class="callout b-good">
+    <b>③ 온라인 앞단은 직영웹 채널만.</b> 운전선생·네이버·전화의 앞단(노출·클릭)은 각자 다른 시스템에 있어, 이 대시보드에선 ERP '상담신청 완료'부터 잡힙니다.
+  </div>
+</section>
+
+<p class="foot">설계 검토안 · 수원신화성 직영 대시보드 · 확정 후 단일 HTML + 리프레시 스크립트로 빌드</p>
+
+</div>
+<script src="https://dt-kb.vercel.app/kb-comments.js"></script>
+</body>
+</html>
