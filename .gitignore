@@ -34,3 +34,7 @@ node_modules/
 
 # 필기파헤치기 로컬 문제 덤프 (per-user, Firestore export)
 .pilgi-cache/
+
+# 직영 광고효율 분석 — 내부 CAC·광고비·경쟁(뉴강남) 실측 포함, PUBLIC 레포 커밋 금지
+ds-output/newgangnam-*
+ds-output/*shinhwaseong*
