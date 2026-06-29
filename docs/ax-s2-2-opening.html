@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AX 세션 시즌2 · 2회 — 오프닝</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+  @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body, .slide * { word-break: keep-all; overflow-wrap: break-word; line-break: strict; }
+  h1, h2, .lead, .note { text-wrap: balance; }
+
+  :root {
+    --bg: #1C1C1C;
+    --fg: #F6F6F3;
+    --accent: #C89BFF;
+    --accent2: #FFD547;
+    --red: #FF7439;
+    --green: #1AC569;
+    --dim: #6B6B6B;
+    --surface: #2A2929;
+    --line: #383737;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Pretendard Variable', 'Pretendard', sans-serif;
+    --display: 'Syncopate', sans-serif;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    overflow: hidden;
+  }
+
+  .deck { width: 100vw; height: 100vh; position: relative; }
+
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; height: 4px;
+    background: #2A2929; z-index: 50;
+  }
+  #progress { height: 100%; width: 0; background: var(--accent); transition: width 0.5s ease; }
+  #counter {
+    position: fixed; bottom: 2.4vh; right: 3vw; z-index: 50;
+    font-family: var(--mono); font-size: 0.8rem; color: var(--dim);
+  }
+  .hint {
+    position: fixed; bottom: 2.4vh; left: 3vw; z-index: 50;
+    font-family: var(--mono); font-size: 0.75rem; color: var(--dim);
+  }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 9vh 9vw;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide.scrollable { justify-content: flex-start; overflow-y: auto; }
+
+  .slide.active .reveal { animation: slideUp 0.6s ease forwards; }
+  .reveal-delay-1 { animation-delay: 0.1s; }
+  .reveal-delay-2 { animation-delay: 0.2s; }
+  .reveal-delay-3 { animation-delay: 0.3s; }
+  .reveal-delay-4 { animation-delay: 0.4s; }
+  .reveal-delay-5 { animation-delay: 0.5s; }
+  .reveal { opacity: 0; }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: translateY(0); } }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.2rem, 5.6vw, 5.6rem);
+    font-weight: 700; line-height: 1.06; letter-spacing: -0.02em;
+  }
+  h2 {
+    font-size: clamp(1.8rem, 3.6vw, 3.2rem);
+    font-weight: 800; line-height: 1.15; letter-spacing: -0.02em;
+  }
+  h3 { font-size: clamp(1.05rem, 1.6vw, 1.4rem); font-weight: 700; }
+  p  { font-size: clamp(1rem, 1.5vw, 1.35rem); line-height: 1.6; color: #D8D8D4; }
+
+  .tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--mono); font-size: 0.85rem; color: var(--dim);
+    margin-bottom: 1.6rem;
+  }
+  .tag .num { color: var(--accent); font-weight: 700; }
+  .tag .sep { opacity: 0.5; }
+
+  .bold { font-weight: 800; }
+  .accent { color: var(--accent); }
+  .accent2 { color: var(--accent2); }
+  .green { color: var(--green); }
+  .red { color: var(--red); }
+  .dim { color: var(--dim); }
+  .mono { font-family: var(--mono); }
+
+  .lead { font-size: clamp(1.15rem, 2vw, 1.7rem); color: #CFCFCB; }
+  .spacer { height: 2.4rem; }
+  .spacer-sm { height: 1.2rem; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 16px; padding: 1.5rem 1.6rem;
+  }
+  .card.accent-l { border-color: rgba(200,155,255,0.4); }
+  .label-mono { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.02em; }
+
+  /* timeline */
+  .timeline { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 0.4rem; }
+  .tl-row { display: flex; gap: 1.2rem; align-items: center; }
+  .tl-time {
+    flex: 0 0 5.5rem; text-align: right; font-family: var(--mono);
+    font-weight: 700; color: var(--accent2); font-size: 1rem;
+  }
+  .tl-bar { flex: 0 0 8px; align-self: stretch; background: var(--accent); border-radius: 4px; opacity: 0.55; }
+  .tl-body { flex: 1; padding: 0.5rem 0; }
+  .tl-body .t { font-weight: 700; font-size: clamp(1rem,1.5vw,1.25rem); }
+  .tl-body .d { color: var(--dim); font-size: 0.9rem; margin-top: 0.1rem; }
+
+  .note {
+    border-left: 3px solid var(--accent2); background: rgba(255,213,71,0.07);
+    padding: 1rem 1.3rem; border-radius: 0 12px 12px 0; margin-top: 1rem;
+  }
+  .mic { font-size: 3rem; line-height: 1; }
+</style>
+</head>
+<body>
+
+<div class="topbar"><div id="progress"></div></div>
+<div class="hint">← → 또는 클릭으로 이동</div>
+<div id="counter">1 / 4</div>
+
+<div class="deck" id="deck">
+
+  <!-- 1. Opening -->
+  <div class="slide active">
+    <div class="tag reveal"><span class="num">AI NATIVE</span><span class="sep">—</span><span class="label">시즌 2 · 2회</span></div>
+    <h1 class="reveal reveal-delay-1">해봤으면,<br><span class="accent">나눈다.</span></h1>
+    <div class="spacer-sm"></div>
+    <p class="lead reveal reveal-delay-2">
+      각자 실제로 해본 걸 꺼내놓는 시간이에요.<br>
+      남이 한 걸 보면 <span class="bold accent2">"어, 저것도 되네"</span>가 하나씩 늘어요.
+    </p>
+  </div>
+
+  <!-- 2. 오늘 흐름 -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">00</span><span class="sep">—</span><span class="label">오늘 흐름</span></div>
+    <h2 class="reveal reveal-delay-1">오늘은 딱 한 사례, <span class="accent">제대로 봅니다.</span></h2>
+    <div class="spacer"></div>
+    <div class="timeline">
+      <div class="tl-row reveal reveal-delay-2">
+        <div class="tl-time">사례</div><div class="tl-bar"></div>
+        <div class="tl-body"><div class="t">이희준님이 직접 한 것</div><div class="d">Airbridge 썸네일 417개를 자동으로 바꾼 이야기</div></div>
+      </div>
+      <div class="tl-row reveal reveal-delay-3">
+        <div class="tl-time">곱씹기</div><div class="tl-bar"></div>
+        <div class="tl-body"><div class="t">어떻게 했나, 왜 그렇게 했나</div><div class="d">내 일에도 써먹게 한 번 더 뜯어보기</div></div>
+      </div>
+      <div class="tl-row reveal reveal-delay-4">
+        <div class="tl-time">나눔</div><div class="tl-bar"></div>
+        <div class="tl-body"><div class="t">질문하고, 내 일에 붙여보기</div><div class="d">"이건 나도 되겠는데" 한 줄씩</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 핸드오프 -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">사례</span><span class="sep">—</span><span class="label">실전 공유</span></div>
+    <h2 class="reveal reveal-delay-1">이희준님 — <span class="accent">Airbridge 썸네일 자동화</span></h2>
+    <div class="spacer-sm"></div>
+    <p class="lead reveal reveal-delay-2">
+      손대는 API도 없는 대시보드에서,<br>
+      링크 <span class="bold accent2">417개</span> 썸네일을 손 하나 안 대고 바꿔버렸어요.
+    </p>
+    <div class="spacer"></div>
+    <div class="card accent-l reveal reveal-delay-3" style="display:flex; align-items:center; gap:1.2rem;">
+      <div class="mic">🎤</div>
+      <p style="font-size:1.15rem;">자세한 건 <span class="bold accent">이희준님</span>이 풀어주실게요.</p>
+    </div>
+  </div>
+
+  <!-- 4. Wrap (발표 후 다시 띄우기) -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">정리</span><span class="sep">—</span><span class="label">오늘의 한 조각</span></div>
+    <h2 class="reveal reveal-delay-1">남이 한 걸 보면,<br><span class="accent2">나도 할 수 있는 게 늘어요.</span></h2>
+    <div class="spacer"></div>
+    <p class="lead reveal reveal-delay-2">
+      오늘 본 거 하나, <span class="bold">이번 주에 내 일로 한 번 해보기.</span>
+    </p>
+    <div class="note reveal reveal-delay-3">
+      <p style="font-size:1rem;">다음엔 <span class="bold accent2">당신 차례</span> — 뭐든 AI로 해본 거 있으면 들고 오세요.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const deck = document.getElementById('deck');
+  const slides = deck.querySelectorAll('.slide');
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  let current = 0;
+
+  function goTo(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides[current].classList.remove('active');
+    slides[current].querySelectorAll('.reveal').forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight;
+      el.style.animation = '';
+      el.style.opacity = '0';
+    });
+    current = n;
+    slides[current].classList.add('active');
+    slides[current].scrollTop = 0;
+    progress.style.width = ((current / (slides.length - 1)) * 100) + '%';
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'Home') goTo(0);
+    if (e.key === 'End') goTo(slides.length - 1);
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { diff > 0 ? goTo(current + 1) : goTo(current - 1); }
+  });
+
+  deck.addEventListener('click', (e) => {
+    if (e.target.closest('a')) return;
+    if (e.clientX > window.innerWidth / 2) goTo(current + 1);
+    else goTo(current - 1);
+  });
+
+  goTo(0);
+</script>
+
+</body>
+</html>
