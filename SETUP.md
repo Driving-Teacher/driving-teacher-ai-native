@@ -167,7 +167,7 @@ claude --version
 node --version
 git --version
 python3 --version   # macOS
-python --version    # Windows
+# Windows(WSL)도 python3 입니다 — WSL Ubuntu에는 python 명령이 없습니다
 ```
 
 4개 다 버전이 나오면 설치 완료. 여기까지가 터미널 작업이고, 남은 Step 6~9는 **Claude Code 안에서** 합니다.
@@ -296,7 +296,7 @@ AI Native Camp 4주 세션을 들었던 분이 부분 복습을 원하면:
 Step 0: (Windows만) wsl --install → 재부팅 → 이후 Ubuntu 터미널에서 진행
 Step 1: Claude Teams 초대 수락 (메일)
 Step 2: git 설치 (Mac: 자동 / WSL: sudo apt install -y git)
-Step 3: Mac: bash scripts/setup-mac.sh / WSL: claude.ai·fnm 수동 설치
+Step 3: Mac: bash scripts/setup-mac.sh / Windows(WSL): bash scripts/setup-wsl.sh
 Step 4: claude 로그인
 Step 5: 버전 확인 4개
         ┈┈ 여기까지 터미널. 아래는 Claude Code 안에서 ┈┈
