@@ -255,13 +255,15 @@ bash scripts/setup-mac.sh
 
 ### Windows
 
-PowerShell을 **관리자 권한**으로 열고:
+**WSL Ubuntu 터미널에서** 실행합니다 (PowerShell 아님):
 
-```powershell
-.\scripts\setup-windows.ps1
+```bash
+bash scripts/setup-wsl.sh
 ```
 
-이 스크립트는 Claude Code, Node.js, Python을 설치합니다.
+이 스크립트는 git, Claude Code, Node.js, Python을 설치합니다.
+
+> ⚠️ **네이티브 Windows(PowerShell)에 Claude Code를 깔면 안 됩니다.** Zeude 스킬 자동 동기화가 Mac/Linux 빌드만 있어서 `/ai-onboarding` 같은 회사 스킬이 아예 안 뜹니다. WSL 설치부터는 [`SETUP.md`](./SETUP.md) Step 0 참고.
 
 Codex로 참여하는 분은 대신 Git Bash에서:
 
