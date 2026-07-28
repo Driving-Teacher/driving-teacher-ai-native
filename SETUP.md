@@ -117,38 +117,29 @@ bash scripts/setup-mac.sh
 
 ### Windows (WSL Ubuntu)
 
-**Ubuntu 터미널 안에서** 아래를 순서대로 실행합니다. (`setup-mac.sh`는 macOS 전용이라 WSL에선 아래 명령을 직접 씁니다.)
+**Ubuntu 터미널 안에서** 실행합니다 (PowerShell 아님 — Step 0 참고).
 
 ```bash
-# 1) 레포 받기
 git clone https://github.com/Driving-Teacher/driving-teacher-ai-native.git
 cd driving-teacher-ai-native
-
-# 2) Claude Code 설치
-curl -fsSL https://claude.ai/install.sh | bash
-
-# 3) Node.js 설치 (fnm)
-curl -fsSL https://fnm.vercel.app/install | bash
-source ~/.bashrc
-fnm install --lts
-
-# 4) Python (보통 Ubuntu에 기본 포함, 없으면)
-sudo apt install -y python3
+bash scripts/setup-wsl.sh
 ```
 
-설치 후 Ubuntu 터미널을 **껐다가 다시 열어** PATH를 반영합니다.
+Mac과 똑같이 git·Claude Code·Node.js·Python이 한 번에 깔립니다. 설치 후 Ubuntu 터미널을 **껐다가 다시 열어** PATH를 반영합니다.
 
-> 💡 TODO(운영): 위 WSL 단계를 자동화하는 `scripts/setup-wsl.sh`를 추가하면 Windows 입사자도 한 줄로 끝납니다.
+> 실수로 PowerShell에서 돌리면 스크립트가 **스스로 멈추고** WSL로 안내합니다.
+
 
 ### 세팅이 설치하는 것
 
 | 도구 | 용도 |
 |------|------|
+| **git** | 회사 자료 받기 (WSL만 — Mac은 Xcode CLI Tools로) |
 | **Claude Code** | AI 코딩/업무 도구 |
 | **Node.js** | 플러그인, MCP 서버 |
 | **Python** | 엑셀/데이터 처리, 일부 MCP |
 
-> 이미 설치되어 있으면 자동으로 건너뜁니다.
+> 이미 설치되어 있으면 자동으로 건너뜁니다. 여러 번 돌려도 안전합니다.
 
 ---
 
