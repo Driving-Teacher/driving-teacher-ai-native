@@ -233,7 +233,7 @@ hermes gateway status
 
 ## 호스트(승아) 메모
 
-- 박주영 같은 신입은 Step 0에서 OS 확인 → Mac/WSL/Windows native 분기 명확히
+- 신규 입사자 같은 신입은 Step 0에서 OS 확인 → Mac/WSL/Windows native 분기 명확히
 - **Windows native는 권장 X** — WSL Ubuntu가 훨씬 안정적
 - API 키 발급은 본인 책임. Anthropic 키 받기 어려우면 OpenAI/OpenRouter 추천 (둘 다 카드 등록만)
 - Slack App "Reinstall to Workspace"가 가장 자주 빠뜨리는 부분

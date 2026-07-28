@@ -264,7 +264,7 @@ KB가 업데이트되면? → git pull 만 하면 끝 (Hermes 재시작 불필�
 
 ## 호스트(승아) 메모
 
-- 이 스킬은 **8명 + 박주영 모두 본인 PC에서 실행** → KB 연결을 각자 하게 만드는 게 목적
+- 이 스킬은 **8명 + 신규 입사자 모두 본인 PC에서 실행** → KB 연결을 각자 하게 만드는 게 목적
 - KB repo가 본인 PC에 없으면 Block 1.5에서 clone부터
 - Hermes gateway 재시작이 안 되면 → `hermes gateway logs` 로 디버그
 - **`~/.hermes/skills/domain/driving-teacher-kb/SKILL.md` 는 자동 생성** — 사용자가 손대면 안 됨. KB 검색 로직 변경 시 이 스킬 파일을 직접 수정 후 PR

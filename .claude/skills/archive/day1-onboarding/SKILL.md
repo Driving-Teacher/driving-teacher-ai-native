@@ -21,7 +21,7 @@ description: AI Native Camp Week 1 실습. Claude Code 체험 → MCP 연결 →
 
 ## Block 0: 사전 점검 (~2분)
 
-> 박주영처럼 Claude Code 처음 켜는 분이라면 이 Block부터.
+> 신규 입사자처럼 Claude Code 처음 켜는 분이라면 이 Block부터.
 
 ### 1. 환경 확인
 
@@ -53,7 +53,7 @@ claude --version
 
 ### 3. 작업 폴더 확인
 
-박주영이 어느 폴더에서 시작할지 정함:
+신규 입사자이 어느 폴더에서 시작할지 정함:
 
 - **Mac/Linux**: `~/Documents/driving-teacher-day1` (호스트가 사전 안내)
 - **Windows**: `%USERPROFILE%\Documents\driving-teacher-day1`
@@ -472,10 +472,10 @@ AskUserQuestion({
 
 ## 호스트(승아) 메모
 
-- 박주영 (신규) 또는 캠프 못 받은 분이 첫 호출하는 스킬
-- **첫 호출 시 호스트가 옆에 붙어있는 게 안전** — 발표 직후 5.15 핸즈온 동안 박주영 페어로
+- 신규 입사자 (신규) 또는 캠프 못 받은 분이 첫 호출하는 스킬
+- **첫 호출 시 호스트가 옆에 붙어있는 게 안전** — 발표 직후 5.15 핸즈온 동안 신규 입사자 페어로
 - Block 0 사전 점검에서 "터미널 켜본 적 없음" 응답 → 즉시 화면 공유 + 함께 진행
-- Block 2 MCP 연결은 **회사 도구 권한 문제로 막힐 가능성 가장 큼** — 사전에 박주영 개인 노션/Tavily 키 발급 안내
+- Block 2 MCP 연결은 **회사 도구 권한 문제로 막힐 가능성 가장 큼** — 사전에 신규 입사자 개인 노션/Tavily 키 발급 안내
 - 막힌 사람 처리 3순위:
   1. 같은 OS 페어
   2. 슬랙 #ai-native-camp 공유
