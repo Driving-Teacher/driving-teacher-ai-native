@@ -10,7 +10,7 @@
 ```
 [지금 여기]  0단계 · 설치           ← 이 문서 (첫날 · Step 0~9)
      ↓
-  /ai-onboarding  Step 1           Claude Code가 뭔지 · 방금 친 게 뭐였는지 (15분)
+  /ai-onboarding  Step 1           Claude Code가 뭔지 · 방금 친 게 뭐였는지 (20~25분)
      │
      ├─→ /onboarding      Day 1~9    회사 · 우리 팀 · 옆 팀 · 사람 · 문화   하루 30분
      │
@@ -264,7 +264,9 @@ claude.ai Notion: https://mcp.notion.com/mcp - ✔ Connected
 /ai-onboarding
 ```
 
-방금 친 세 개(`/zeude-setup`·`/company-setup`·`/mcp`)가 각각 뭐였는지, Claude Code가 ChatGPT 웹창과 뭐가 다른지부터 알려줍니다. **15분 정도면 끝나고, 거기까지 하면 회사 온보딩을 시작할 수 있습니다.**
+방금 친 세 개(`/zeude-setup`·`/company-setup`·`/mcp`)가 각각 뭐였는지, Claude Code가 ChatGPT 웹창과 뭐가 다른지부터 알려줍니다. **20~25분이면 끝나고, 거기까지 하면 회사 온보딩을 시작할 수 있습니다.**
+
+중간에 *"요즘 하는 일 중에 이거 AI가 해주면 좋겠다 싶은 것"* 을 하나 물어봅니다. 한 줄로 답해두시면 나중에 그걸 **명령어 하나로 만들어 드립니다.**
 
 ### 온보딩은 두 갈래입니다
 
