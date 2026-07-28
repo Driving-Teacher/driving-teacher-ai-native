@@ -15,7 +15,7 @@
 - 핸드아웃 [4주 솔로 과제 문서](./onboarding-latecomer-4week-solo.md)는 세션 전엔 안 읽음 (세션 후 같이 훑음)
 
 **진행자**
-- Claude Teams + GitHub(`Driving-Teacher` org + `driving-teacher-bot` org) + Slack `#ai-native-camp` + Zeude 초대 발송 완료
+- Claude Teams + GitHub(`Driving-Teacher` org + `driving-teacher-bot` org) + Slack `#ai-native` + Zeude 초대 발송 완료
 - 참여자가 어느 팀(예: 성장팀)이고 핵심 업무 영역(예: CRM 템플릿, 마케팅 리포트)이 뭔지 사전 인지 → **실습 소재로 그의 진짜 업무 1개 미리 픽**
 - 본 아젠다 + 4주 과제 문서 미리 훑고 옴
 
@@ -31,7 +31,7 @@
 | 3. 첫 스킬 만들기 | 25m | 본인 반복 업무 1개를 스킬로 (예: `/crm-copy-review`) — `/superpowers:writing-skills` 활용 | `.claude/skills/<이름>/SKILL.md` 1개 |
 | 4. 팀 인프라 — Zeude & 살림터 | 10m | Zeude 대시보드 본인 사용량 + [README "스킬 살림터" 3-tier](../README.md#스킬-살림터--어디에-뭘-두나) 설명 | 어디다 둘지 안다 |
 | 5. 4주 솔로 과제 핸드오버 | 10m | [`onboarding-latecomer-4week-solo.md`](./onboarding-latecomer-4week-solo.md) 같이 훑고 Week 1만 약속 | 다음 1주 계획 |
-| 6. AI Native 선언 + 마무리 | 5m | "1주 동안 ____는 AI에 맡기고 사람은 검토만" 한 줄 작성 → `#ai-native-camp`에 공유 | 선언 1줄 |
+| 6. AI Native 선언 + 마무리 | 5m | "1주 동안 ____는 AI에 맡기고 사람은 검토만" 한 줄 작성 → `#ai-native`에 공유 | 선언 1줄 |
 
 ---
 
@@ -99,7 +99,7 @@
 [`onboarding-latecomer-4week-solo.md`](./onboarding-latecomer-4week-solo.md) 본인 노트북에서 같이 열고:
 - Week 1 (시켜본다) 항목만 같이 훑음
 - Week 2~4는 시점 되면 본인이 진행
-- 추적 도구: Zeude 대시보드 + Slack `#ai-native-camp` 주 3회 이상 기록
+- 추적 도구: Zeude 대시보드 + Slack `#ai-native` 주 3회 이상 기록
 
 ### 6. AI Native 선언 + 마무리 (5m)
 

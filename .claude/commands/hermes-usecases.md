@@ -9,7 +9,7 @@ allowed-tools: Bash, Read, Grep, AskUserQuestion
 ## 정보
 
 - **Source of truth**: `<repo-root>/docs/hermes-usecases.md` (이 파일은 그 가이드를 카테고리별로 보여주는 wrapper)
-- **유스케이스 추가하려면**: `docs/hermes-usecases.md` 직접 편집 → PR 또는 슬랙 #ai-native-camp 에 공유
+- **유스케이스 추가하려면**: `docs/hermes-usecases.md` 직접 편집 → PR 또는 슬랙 #ai-native 에 공유
 
 ## 진행
 
@@ -32,7 +32,7 @@ done
 
 if [[ -z "$DOC" ]]; then
   echo "❌ docs/hermes-usecases.md 를 찾지 못했습니다." >&2
-  echo "→ 슬랙 #ai-native-camp 에 위치 확인 요청" >&2
+  echo "→ 슬랙 #ai-native 에 위치 확인 요청" >&2
   exit 1
 fi
 echo "📂 가이드 위치: $DOC"
@@ -118,5 +118,5 @@ AskUserQuestion({
 새 유스케이스를 팀에 공유하려면:
 
 1. `docs/hermes-usecases.md` 를 직접 편집 (해당 카테고리 섹션 아래에 추가)
-2. git commit + PR 또는 슬랙 #ai-native-camp 에 텍스트로 공유
+2. git commit + PR 또는 슬랙 #ai-native 에 텍스트로 공유
 3. 호스트가 PR 머지하면 다음 `/hermes-usecases` 호출부터 모두에게 보임

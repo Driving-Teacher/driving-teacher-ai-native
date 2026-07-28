@@ -36,7 +36,7 @@ CLAUDE.md = 내가 직접 적는 매뉴얼 (이 숙제)
 Claude Code에 /think-deeper 를 입력하고,
 질문에 답하면 해결책이 담긴 기획 문서가 나옵니다.
 
-결과를 #ai-native-camp에 공유해주세요.
+결과를 #ai-native에 공유해주세요.
 "이런 문제를 넣었더니 이런 해결책이 나왔다" 정도면 OK.
 
 
@@ -50,7 +50,7 @@ Claude Code에 /think-deeper 를 입력하고,
   - Tavily → "경쟁사 ___에 대해 리서치해줘"
   - 채널톡 → "최근 자주 오는 문의 패턴 분석해줘"
 
-결과를 #ai-native-camp에 공유 — "이런 걸 시켰더니 이렇게 나왔다"
+결과를 #ai-native에 공유 — "이런 걸 시켰더니 이렇게 나왔다"
 
   ⚠️ 실습에서 MCP 연결 못 했다면 → 먼저 연결부터!
   Claude Code에 "노션 MCP 연결해줘" 라고 시키면 됩니다.
@@ -63,5 +63,5 @@ Claude Code에 /think-deeper 를 입력하고,
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⏰ 마감: 다음 세션 전까지
-📍 공유: 슬랙 #ai-native-camp
+📍 공유: 슬랙 #ai-native
 ```
