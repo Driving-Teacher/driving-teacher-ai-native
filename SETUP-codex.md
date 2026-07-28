@@ -1,7 +1,7 @@
 # 사전 준비 가이드 - Codex 버전
 
 > 캠프 시작 전에 아래 순서대로 해주세요. 20~30분이면 됩니다.
-> 막히면 슬랙 #ai-native-camp에서 물어봐주세요! 봇이 도와드립니다.
+> 막히면 슬랙 #ai-native에서 물어봐주세요! 봇이 도와드립니다.
 
 ---
 
@@ -150,7 +150,7 @@ Python은 없으면 나중에 필요할 때 설치해도 됩니다.
 
 ## Step 7: Zeude 가입 (모니터링 + 회사 스킬 자동 받기)
 
-슬랙 #ai-native-camp 에서 받은 **Zeude 초대 링크**를 클릭하면 자동으로 가입 + `~/.zeude/credentials`가 생성됩니다.
+슬랙 #ai-native 에서 받은 **Zeude 초대 링크**를 클릭하면 자동으로 가입 + `~/.zeude/credentials`가 생성됩니다.
 
 링크가 안 왔거나 잃어버렸으면 슬랙에 요청.
 
@@ -221,7 +221,7 @@ Step 8: /company-setup         ← 회사 폴더 + 레포
 Step 9: /camp-onboarding       ← 4주 통수강 시작
 ```
 
-총 20~30분. 막히면 #ai-native-camp.
+총 20~30분. 막히면 #ai-native.
 
 ---
 

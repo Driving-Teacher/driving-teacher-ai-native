@@ -5,7 +5,7 @@
 > 지금은 컴퓨터에 아무것도 없는 상태를 가정합니다. 아래를 **위에서부터 순서대로** 따라와주세요.
 > macOS 30~40분 / Windows는 WSL 설치 포함 50분~1시간.
 >
-> 막히면 **5분만** 붙잡고 슬랙 `#ai-native-camp`에 물어봐주세요. 프로그래밍 몰라도 됩니다 — 복붙만 하면 됩니다.
+> 막히면 **5분만** 붙잡고 슬랙 `#ai-native`에 물어봐주세요. 프로그래밍 몰라도 됩니다 — 복붙만 하면 됩니다.
 
 ```
 [지금 여기]  0단계 · 설치           ← 이 문서 (첫날 · Step 0~9)
@@ -188,7 +188,7 @@ Step 6부터는 `/zeude-setup` 처럼 **슬래시(`/`)로 시작하는 것**을 
 
 ## Step 6: Zeude 가입 (모니터링 + 회사 스킬 자동 받기)
 
-슬랙 #ai-native-camp 에서 받은 **Zeude 초대 링크**를 클릭하면 자동으로 가입 + `~/.zeude/credentials` 박힘.
+슬랙 #ai-native 에서 받은 **Zeude 초대 링크**를 클릭하면 자동으로 가입 + `~/.zeude/credentials` 박힘.
 
 링크가 안 왔거나 잃어버렸으면 슬랙에 요청.
 
@@ -308,7 +308,7 @@ Step 9: /ai-onboarding         ← ★ 종착지. Step 1만 하면 /onboarding �
 그다음: /onboarding            ← 회사 온보딩 (Day 1~9 · 하루 30분)
 ```
 
-Mac 30~40분 / Windows는 WSL 설치 포함 50분~1시간. 막히면 #ai-native-camp.
+Mac 30~40분 / Windows는 WSL 설치 포함 50분~1시간. 막히면 #ai-native.
 
 ---
 
