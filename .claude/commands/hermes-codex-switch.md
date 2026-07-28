@@ -12,7 +12,7 @@ Hermes의 default 모델을 **ChatGPT Codex (gpt-5.5)** 로 전환한다.
 > - 회사 표준 모델로 통일 (호스트 환경과 동일)
 >
 > **소요 시간**: ~3분
-> **막히면**: 슬랙 `#ai-native-camp`
+> **막히면**: 슬랙 `#ai-native`
 
 ## 사전 요구사항
 
@@ -193,7 +193,7 @@ hermes gateway status
 기존 OPENAI_API_KEY / ANTHROPIC_API_KEY는 .env에 그대로 둬도 OK
 (model 블록이 우선이라 codex로 라우팅됨)
 
-슬랙 #ai-native-camp 에 보고:
+슬랙 #ai-native 에 보고:
 ✅ Hermes 모델 codex 전환 완료 — [내 이름] / [Mac or Windows]
 ```
 

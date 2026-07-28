@@ -35,7 +35,7 @@ Week 2에서 했던 것 재확인.
 
 - [ ] 터미널에서 `git --version` → 버전 나오면 OK
 - [ ] `gh --version` → 버전 나오면 OK
-- [ ] 안 되면 Slack #ai-native-camp 에 질문
+- [ ] 안 되면 Slack #ai-native 에 질문
 
 ### ✅ 5. 자동화 아이디어 3개 준비 (5분)
 수업 당일 실습에 쓸 내 유스케이스.
@@ -57,7 +57,7 @@ Week 2에서 했던 것 재확인.
 
 ## 막히면
 
-- Slack `#ai-native-camp` 채널에 질문
+- Slack `#ai-native` 채널에 질문
 - 혹은 Claude한테 물어보세요. 설치 에러는 Claude가 다 압니다.
 
 ---

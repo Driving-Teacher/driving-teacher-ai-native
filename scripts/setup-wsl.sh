@@ -17,7 +17,7 @@ FNM_DIR="$HOME/.local/share/fnm"
 BASHRC="$HOME/.bashrc"
 MARK_BEGIN="# >>> 운전선생 setup-wsl >>>"
 MARK_END="# <<< 운전선생 setup-wsl <<<"
-SLACK="#ai-native-camp"
+SLACK="#ai-native"
 NODE_MIN_MAJOR=20
 
 FAILED=()

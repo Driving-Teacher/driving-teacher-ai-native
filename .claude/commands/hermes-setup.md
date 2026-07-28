@@ -7,7 +7,7 @@ allowed-tools: Bash, Read, AskUserQuestion
 Hermes Agent를 내 PC에 설치하고 Slack 봇으로 연결한다.
 
 > **소요 시간**: 처음 셋업 ~30분 (Slack App 만들기 5분 + Hermes 설치/설정 15분 + 테스트 10분)
-> **막히면**: 슬랙 `#ai-native-camp` 에 OS + 어느 Step + 에러 메시지 캡처
+> **막히면**: 슬랙 `#ai-native` 에 OS + 어느 Step + 에러 메시지 캡처
 
 ## 사전 준비
 
@@ -177,7 +177,7 @@ hermes gateway status
 | 봇 응답 옴 | ✅ 성공! Step 6 (주의사항) |
 | "No home channel" | `/sethome` 입력 |
 | 402 에러 | API 크레딧 부족 — OpenAI/OpenRouter 잔액 충전 |
-| 응답 없음 (~30초 대기 후) | `hermes gateway status` 재확인 → 슬랙 #ai-native-camp |
+| 응답 없음 (~30초 대기 후) | `hermes gateway status` 재확인 → 슬랙 #ai-native |
 
 ### Step 6: 주의사항
 
@@ -226,7 +226,7 @@ hermes gateway status
 
 더 많은 유스케이스: /hermes-usecases
 
-막히면 슬랙 #ai-native-camp 에 OS + Step + 에러 메시지 공유.
+막히면 슬랙 #ai-native 에 OS + Step + 에러 메시지 공유.
 ```
 
 ---

@@ -23,7 +23,7 @@ description: Ouroboros 플러그인 설치 + 첫 사용. 인터뷰로 내 일을
 ## STOP PROTOCOL
 
 > 한 단계가 완료될 때까지 다음 단계를 시작하지 않는다.
-> 막히면 Block 6(트러블슈팅)으로 가고, 그래도 안 풀리면 슬랙 `#ai-native-camp`.
+> 막히면 Block 6(트러블슈팅)으로 가고, 그래도 안 풀리면 슬랙 `#ai-native`.
 
 ---
 
@@ -197,7 +197,7 @@ AskUserQuestion({
 
 ## Block 7: 완료 보고 + 마무리
 
-설치 다 끝났으면 슬랙 `#ai-native-camp` 에 이 한 줄 보고:
+설치 다 끝났으면 슬랙 `#ai-native` 에 이 한 줄 보고:
 
 ```
 ✅ /ouroboros-setup 완료 — [내 이름] / [Mac or Windows]
@@ -235,7 +235,7 @@ AskUserQuestion({
 - 5.15 핸즈온 시작 전까지 끝나야 함. 못 끝낸 분 → 페어로 같이
 - **막힌 사람 처리**:
   - 1순위: 같은 OS 사용자 페어로 같이 보기
-  - 2순위: 슬랙 `#ai-native-camp` 에 화면 캡처 + 에러 메시지 공유 → 호스트가 직접 봄
+  - 2순위: 슬랙 `#ai-native` 에 화면 캡처 + 에러 메시지 공유 → 호스트가 직접 봄
   - 3순위: cliproxy 환경변수 충돌 의심 (Block 6의 PATH 진단 같이)
 - Marketplace `Q00/ouroboros` 는 GitHub 공개 repo. 별도 권한 부여 필요 없음
 - Windows 사용자는 **PowerShell 관리자 모드** + **세션 완전 종료**가 함정. 미리 멘트 준비

@@ -8,7 +8,7 @@ Hermes에 운전선생 knowledge-base를 연결해서 슬랙에서 자연어로 
 
 > **소요 시간**: ~5분
 > **결과**: 슬랙에서 `@hermes-bot 우리 회사 [질문]` 보내면 Hermes가 KB 검색해서 답변
-> **막히면**: 슬랙 `#ai-native-camp` 에 OS + Step + 에러 메시지 공유
+> **막히면**: 슬랙 `#ai-native` 에 OS + Step + 에러 메시지 공유
 
 ## 사전 요구사항
 
@@ -169,12 +169,12 @@ grep -ril "[질문 키워드]" "$KB/raw/" 2>/dev/null | head -3
 - raw/[파일명] — [한 줄 요약]
 
 ### 더 깊이 가려면
-- 슬랙 #ai-native-camp 에 추가 질문
+- 슬랙 #ai-native 에 추가 질문
 ```
 
 4. **답이 없으면** 솔직히:
 ```
-❌ KB에 답 없음. 슬랙 #ai-native-camp 에 질문해주세요.
+❌ KB에 답 없음. 슬랙 #ai-native 에 질문해주세요.
 ```
 
 ## 보안
@@ -257,7 +257,7 @@ Claude Code의 /kb 와 동등한 효과 — 슬랙에서도 회사 정보 검색
 
 KB가 업데이트되면? → git pull 만 하면 끝 (Hermes 재시작 불필요).
 
-막히면 슬랙 #ai-native-camp.
+막히면 슬랙 #ai-native.
 ```
 
 ---
@@ -269,4 +269,4 @@ KB가 업데이트되면? → git pull 만 하면 끝 (Hermes 재시작 불필�
 - Hermes gateway 재시작이 안 되면 → `hermes gateway logs` 로 디버그
 - **`~/.hermes/skills/domain/driving-teacher-kb/SKILL.md` 는 자동 생성** — 사용자가 손대면 안 됨. KB 검색 로직 변경 시 이 스킬 파일을 직접 수정 후 PR
 - Windows native에서 막히는 사람 → WSL Ubuntu로 갈아타게 안내
-- 검증 단계 5: 슬랙 #ai-native-camp 에 "✅ Hermes KB 연결 완료 — [내 이름]" 보고 받아서 트래킹
+- 검증 단계 5: 슬랙 #ai-native 에 "✅ Hermes KB 연결 완료 — [내 이름]" 보고 받아서 트래킹
