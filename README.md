@@ -1,8 +1,34 @@
-# 운전선생 AI Native Camp
+# 운전선생 AI Native
 
-> 4주 후, 우리 조직의 업무 방식은 영구적으로 바뀐다.
+> AI가 있다는 전제로 업무를 다시 짠다.
 
-운전선생 팀을 위한 AI Native 전환 캠프.
+운전선생 팀의 AI Native 전환 — **신규 입사자 온보딩**과 **AI Native Camp(시즌1, 완료)** 자료가 함께 있습니다.
+
+---
+
+## 🆕 신규 입사자라면 여기부터
+
+```
+1. 노션 「🤖 AI Native」 페이지         ← 입사 안내에 링크가 있습니다
+2. SETUP.md 를 따라 설치 (첫날 35~65분)
+3. /ai-onboarding                      ← 도구로 일하는 법 (Step 1~13 · 내 속도)
+4. /onboarding                         ← 회사·팀·사람 (Day 1~9 · 하루 30분)
+```
+
+| 트랙 | 부를 때 | 무엇 |
+|---|---|---|
+| **AI 온보딩** | `/ai-onboarding` | Claude Code로 일하는 법 · `CLAUDE.md` · 내 첫 스킬 · Hermes · 선언 |
+| **회사 온보딩** | `/onboarding` | 회사·우리 팀·옆 팀·함께 일하는 사람들·문화·첫 과제 |
+
+두 트랙은 **병행**합니다. `/ai-onboarding` Step 1을 마치면 둘 다 시작할 수 있고, 서로의 진척을 알고 챙깁니다.
+
+- 설치 가이드: **[SETUP.md](SETUP.md)** (Claude Code) / **[SETUP-codex.md](SETUP-codex.md)** (Codex)
+- 설계 근거: [`docs/superpowers/specs/2026-07-28-onboarding-track-split-design.md`](docs/superpowers/specs/2026-07-28-onboarding-track-split-design.md)
+- 막히면 슬랙 `#ai-native`
+
+> 아래 「커리큘럼」부터는 **2026년 4~5월에 진행한 AI Native Camp 시즌1 기록**입니다. 신규 입사자가 통수강할 필요는 없습니다 — 그 내용은 `/ai-onboarding` Step 1~13으로 재편됐습니다. 캠프를 들었던 분의 복습은 `/camp-review`.
+
+---
 
 ## AI Native란?
 
@@ -12,19 +38,11 @@ AI Native **=** AI가 있다는 전제로 업무/경험을 재설계하는 것
 
 > "학생/학원/기사가 지금 하고 있지만 사실 안 해도 되는 일을 발견하고, 제거하는 것"
 
-## 사전 준비
+---
 
-[SETUP.md](SETUP.md) 참고. **캠프 전까지 완료.**
+## 캠프 시즌1 기록 (2026-04~05 · 완료)
 
-```
-1. Claude 계정 가입 → Teams 초대 수락
-2. git 설치 확인
-3. git clone + 세팅 스크립트 실행 (Claude Code, Node.js, Python 한 번에)
-4. claude 로그인
-5. claude --version 스크린샷 슬랙에 공유
-```
-
-## 커리큘럼 (주 1회, 2시간 × 4주)
+### 커리큘럼 (주 1회, 2시간 × 4주)
 
 | Week | 테마 | 결과물 |
 |------|------|--------|
@@ -137,9 +155,9 @@ AI Native **=** AI가 있다는 전제로 업무/경험을 재설계하는 것
 
 | 살림터 | 안에 두는 것 | 언제 보이나 | 배포 방식 |
 |--------|-------------|-------------|-----------|
-| **Zeude managed (글로벌 `~/.claude/skills/`)** | 회사 전체가 어디서든 쓰는 표준 스킬 (`company-setup`, `graphify`, `kb-graph`, `camp-onboarding`, `ds-apply`, `dt-prd-mirror`, `github-guide` 등 14개) | 모든 폴더에서 항상 | **Zeude 대시보드 > Skills 탭 > 스킬등록** (모든 멤버 admin, 셀프 서비스) → 팀 전원 `/zeude-setup` 다음 sync 때 자동 수신 |
+| **Zeude managed (글로벌 `~/.claude/skills/` · `~/.codex/skills/`)** | 회사 전체가 어디서든 쓰는 표준 스킬 (`ai-onboarding`, `onboarding`, `company-setup`, `graphify`, `kb-graph`, `ds-apply`, `dt-prd-mirror`, `github-guide` 등 25개+) | 모든 폴더에서 항상 | **Zeude 대시보드 > Skills 탭 > 스킬등록** (모든 멤버 admin, 셀프 서비스) → 팀 전원 `/zeude-setup` 다음 sync 때 자동 수신. **Claude Code와 Codex 양쪽에 배포됩니다** |
 | **KB 레포 `.claude/skills/`** | **KB 노션 데이터를 다루는** 스킬만 (`kb`) | `driving-teacher-knowledge-base` 안에서 claude 켤 때 | KB 레포에 PR |
-| **ai-native 레포 `.claude/commands/` & `.claude/skills/`** | 캠프/Zeude/Hermes **인프라 + 캠프 진행용** 스킬 (`zeude-setup`, `zeude-invite`, `hermes-*`, day1~day4 등) | `driving-teacher-ai-native` 안에서 claude 켤 때 | ai-native 레포에 PR |
+| **ai-native 레포 `.claude/commands/` & `.claude/skills/`** | Zeude/Hermes **인프라 + 캠프 진행용** 스킬 (`zeude-setup`, `zeude-invite`, `hermes-*`, `day4-retro`, `archive/day1-onboarding` 등) | `driving-teacher-ai-native` 안에서 claude 켤 때 | ai-native 레포에 PR |
 | (개인) `~/.claude/skills/` 직접 | 본인 실험용 | 본인 머신만 | 배포 안 함 |
 
 ### "새 스킬 만들었는데 어디다?" — 의사결정 트리
