@@ -1,11 +1,18 @@
-# 사전 준비 가이드 - Codex 버전
+# 0단계 — 입사 첫날 셋업 (Codex 버전)
 
-> 캠프 시작 전에 아래 순서대로 해주세요. 20~30분이면 됩니다.
-> 막히면 슬랙 #ai-native에서 물어봐주세요! 봇이 도와드립니다.
+> **이 문서가 끝나면 `/ai-onboarding` 한 줄을 칠 수 있습니다.** 거기서부터는 AI가 알아서 안내합니다.
+> 아래를 위에서부터 순서대로 해주세요. 20~30분이면 됩니다.
+>
+> Claude Code로 참여하는 분은 이 문서가 아니라 [`SETUP.md`](./SETUP.md)를 보세요.
+> 막히면 슬랙 `#ai-native`에서 물어봐주세요! 봇이 도와드립니다.
 
 ---
 
-## Step 1: ChatGPT/Codex 계정 확인
+## Step 1: 계정 확인 (ChatGPT + 슬랙)
+
+**둘 다 해주세요.** 아래 Step 7~8에서 슬랙으로 받는 것들이 있어서, 슬랙에 없으면 중간에 멈춥니다.
+
+### 1-1. ChatGPT/Codex
 
 1. ChatGPT 계정으로 로그인할 수 있는지 확인
 2. 회사 ChatGPT Team/Business 초대가 있으면 먼저 수락
@@ -13,6 +20,22 @@
 
 > Codex는 ChatGPT Plus, Pro, Business, Edu, Enterprise 플랜에 포함됩니다.
 > 회사 계정 초대가 안 왔으면 슬랙에서 알려주세요.
+
+### 1-2. 슬랙 `#ai-native` 채널
+
+슬랙 워크스페이스 초대를 수락하고, 채널 목록에서 **`#ai-native`** 를 검색해 참여합니다. 셋업 중 막혔을 때 물어보는 곳입니다.
+
+### 1-3. 여기서 미리 요청해둘 것
+
+Step 7~8에서 필요한데 사람이 발급해주는 것들입니다. **지금 한 번에 요청해두면** 기다리지 않습니다.
+
+```
+#ai-native 에 이렇게 남기면 됩니다:
+
+  오늘 입사한 {이름}입니다! 셋업 시작하는데 두 개 요청드려요 🙏
+  1) Zeude 초대 링크
+  2) GitHub 초대 — 제 아이디는 {github-username} 입니다
+```
 
 ---
 
@@ -163,7 +186,7 @@ Python은 없으면 나중에 필요할 때 설치해도 됩니다.
 이 한 번이 다음을 다 해줍니다:
 
 - 텔레메트리 shim 설치 (Codex 사용 데이터가 팀 대시보드에 자동 기록)
-- 회사 표준 스킬 자동 동기화 (`camp-onboarding`, `camp-review`, `tips` 등)
+- 회사 표준 스킬 자동 동기화 (`ai-onboarding`, `onboarding`, `kb`, `tips` 등) → `~/.codex/skills/` 에 들어갑니다
 - 대시보드 자동 로그인 (`/zeude`로 언제든 재접속)
 
 > `/zeude-setup`이 안 보이면 Codex를 새로 열고 다시 시도해주세요. 그래도 안 되면 슬랙에 알려주세요.
@@ -189,17 +212,61 @@ Codex에서:
 
 ---
 
-## Step 9: 캠프 시작
+## Step 9: 노션 연결
+
+온보딩이 **노션**에서 회사·팀 자료를 읽어오고, 여러분의 진척(`온보딩 진행 · {이름}`)을 노션에 저장합니다. 연결 안 하면 매번 "어디까지 하셨어요?"를 되묻게 됩니다.
+
+**Codex를 끄고 터미널에서** 아래 한 줄:
+
+```bash
+codex mcp add notion --url https://mcp.notion.com/mcp
+```
+
+`Detected OAuth support. Starting OAuth flow…` 가 뜨고 브라우저가 열립니다. **회사 노션 계정**으로 승인하면 `Successfully logged in.` 이 나옵니다. 끝입니다 — 토큰 발급 같은 건 없습니다.
+
+확인:
+
+```bash
+codex mcp list
+```
+
+`notion` 이 `streamable_http` 로 보이면 등록된 것입니다.
+
+> ⚠️ **`auth_status` 로는 로그인 여부를 알 수 없습니다.** 로그인 전에도 `o_auth` 로 표시됩니다(인증 *방식*을 뜻함). 진짜 확인은 Codex를 켜고 `노션에서 "온보딩" 검색해줘` 라고 시켜보는 것입니다.
+
+**안 될 때**
+
+| 증상 | 해결 |
+|------|------|
+| `codex mcp add` 에서 `--url` 을 모르는 옵션이라고 함 | Codex가 구버전입니다. `npm i -g @openai/codex` 로 올린 뒤 재시도 |
+| 승인했는데 노션이 안 읽힘 | `codex mcp login notion` 을 단독으로 다시 실행 (토큰 자동 갱신이 실패하는 사례가 보고돼 있습니다) |
+| `You are a guest, so you cannot connect` | 노션에 **guest**로 초대돼 있습니다. member로 바꿔달라고 슬랙에 요청 |
+| 회사 노션이 아니라 개인 노션으로 승인함 | `codex mcp logout notion` → 다시 `codex mcp login notion` |
+
+---
+
+## Step 10: 시작 🎉
 
 Codex에서:
 
 ```
-/camp-onboarding
+/ai-onboarding
 ```
 
-4주 커리큘럼을 자기주도로 따라가는 안내가 시작됩니다.
+방금 친 명령어들이 각각 뭐였는지부터 알려줍니다. **20~25분이면 끝나고, 거기까지 하면 회사 온보딩도 시작할 수 있습니다.**
 
-캠프 끝나고 부분 복습 원하면:
+### 온보딩은 두 갈래입니다
+
+| | 무엇 | 리듬 |
+|---|---|---|
+| **AI 온보딩** `/ai-onboarding` | 도구로 일하는 법 · 내 첫 스킬 · Hermes · 선언 | Step 1~13 · 내 속도 |
+| **회사 온보딩** `/onboarding` | 회사·우리 팀·옆 팀·사람·문화·첫 과제 | Day 1~9 · 하루 30분 |
+
+`/ai-onboarding` Step 1을 마치면 둘을 병행합니다. 어느 쪽을 먼저 부르든 서로의 진척을 알고 이어줍니다.
+
+> Step 9에서 노션을 붙였으면 진척이 자동 저장됩니다. 안 붙였으면 매번 "어디까지 하셨어요?"를 여쭤보는데, 진행에는 지장이 없습니다.
+
+### 기존 팀원이 캠프 내용을 복습하려면
 
 ```
 /camp-review
@@ -218,10 +285,13 @@ Step 5: codex 로그인
 Step 6: 버전 확인
 Step 7: /zeude-setup           ← 모니터링 + 스킬 자동 동기화
 Step 8: /company-setup         ← 회사 폴더 + 레포
-Step 9: /camp-onboarding       ← 4주 통수강 시작
+Step 9: codex mcp add notion   ← 노션 연결 (터미널에서 · 온보딩 진척 저장소)
+Step 10: /ai-onboarding        ← ★ 종착지. Step 1만 하면 /onboarding 도 시작 가능
+
+그다음: /onboarding            ← 회사 온보딩 (Day 1~9 · 하루 30분)
 ```
 
-총 20~30분. 막히면 #ai-native.
+총 25~35분. 막히면 #ai-native.
 
 ---
 
