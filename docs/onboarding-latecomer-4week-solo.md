@@ -1,5 +1,24 @@
 # 후발 입사자 4주 솔로 AX 과제
 
+> # ⛔ 폐기됨 (2026-07-28)
+>
+> **이 문서를 신규·후발 입사자에게 쓰지 마세요.** 여기 적힌 4주 솔로 과제 모델은 두 갈래 온보딩으로 재편됐고, `/camp-onboarding`은 폐기(Zeude `inactive`)됐습니다.
+>
+> **지금의 경로:**
+> 1. 노션 「🤖 AI Native」 페이지 → [`SETUP.md`](../SETUP.md) 로 설치 (Codex는 [`SETUP-codex.md`](../SETUP-codex.md))
+> 2. **`/ai-onboarding`** — 도구로 일하는 법 (Step 1~13 · 본인 속도)
+> 3. **`/onboarding`** — 회사·팀·사람 (Day 1~9 · 하루 30분)
+>
+> 4주를 스스로 관리할 필요가 없습니다. `/ai-onboarding`이 매번 "오늘 시간 얼마나 있으세요?"를 물어 그만큼만 진행하고 진척을 노션에 저장합니다. 설계 근거는 [`docs/superpowers/specs/2026-07-28-onboarding-track-split-design.md`](./superpowers/specs/2026-07-28-onboarding-track-split-design.md).
+>
+> 아래는 **2026년 6~7월에 실제로 쓰던 방식의 기록**입니다.
+
+---
+
+<details>
+<summary>기록 — 옛 4주 솔로 과제 (펼치기)</summary>
+
+
 > [1-Day AX 온보딩 세션](./onboarding-latecomer-1day.md) 이후, **본인이 혼자 4주에 걸쳐 누적해가는** 자기주도 과제.
 >
 > 캠프 Phase 2 로드맵(L1→L2→L3)을 본인 도메인에 박는 게 목표.
@@ -135,3 +154,5 @@
 ---
 
 > "AI Native는 도구를 잘 쓰는 게 아니라, **안 해도 되는 일을 발견하고 제거**하는 것이다."
+
+</details>

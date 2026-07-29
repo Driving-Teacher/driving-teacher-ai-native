@@ -1,5 +1,23 @@
 # 후발 입사자 1-Day AX 온보딩 — 진행 아젠다
 
+> # ⛔ 폐기됨 (2026-07-28)
+>
+> **이 문서를 신규·후발 입사자에게 쓰지 마세요.** 여기 적힌 4주 캠프 모델은 두 갈래 온보딩으로 재편됐고, `/camp-onboarding`은 폐기(Zeude `inactive`)됐습니다.
+>
+> **지금의 경로:**
+> 1. 노션 「🤖 AI Native」 페이지 → [`SETUP.md`](../SETUP.md) 로 설치 (Codex는 [`SETUP-codex.md`](../SETUP-codex.md))
+> 2. **`/ai-onboarding`** — 도구로 일하는 법 (Step 1~13 · 본인 속도)
+> 3. **`/onboarding`** — 회사·팀·사람 (Day 1~9 · 하루 30분)
+>
+> 진행자가 옆에 붙어 세션을 열 필요가 없습니다. 두 스킬이 진척을 노션에 저장하며 알아서 이어갑니다. 설계 근거는 [`docs/superpowers/specs/2026-07-28-onboarding-track-split-design.md`](./superpowers/specs/2026-07-28-onboarding-track-split-design.md).
+>
+> 아래는 **2026년 6~7월에 실제로 쓰던 방식의 기록**입니다. 그때 무엇을 왜 했는지 참고할 때만 보세요.
+
+---
+
+<details>
+<summary>기록 — 옛 1-Day 세션 아젠다 (펼치기)</summary>
+
 > 캠프(4주)가 끝난 뒤 합류한 멤버를 위한 **압축 1-Day 세션**.
 > 4주 커리큘럼의 핵심을 90~120분에 전달 + 4주 솔로 과제로 핸드오버.
 >
@@ -128,3 +146,5 @@
 - 슬랙에 본인 첫 스킬 + 1주 선언 공유 확인
 - Zeude 대시보드에서 사용량 잡히는지 검증
 - 1주 뒤 30분 체크인 미팅 캘린더 설정 (Week 1 회고용)
+
+</details>
