@@ -212,7 +212,40 @@ Codex에서:
 
 ---
 
-## Step 9: 시작 🎉
+## Step 9: 노션 연결
+
+온보딩이 **노션**에서 회사·팀 자료를 읽어오고, 여러분의 진척(`온보딩 진행 · {이름}`)을 노션에 저장합니다. 연결 안 하면 매번 "어디까지 하셨어요?"를 되묻게 됩니다.
+
+**Codex를 끄고 터미널에서** 아래 한 줄:
+
+```bash
+codex mcp add notion --url https://mcp.notion.com/mcp
+```
+
+`Detected OAuth support. Starting OAuth flow…` 가 뜨고 브라우저가 열립니다. **회사 노션 계정**으로 승인하면 `Successfully logged in.` 이 나옵니다. 끝입니다 — 토큰 발급 같은 건 없습니다.
+
+확인:
+
+```bash
+codex mcp list
+```
+
+`notion` 이 `streamable_http` 로 보이면 등록된 것입니다.
+
+> ⚠️ **`auth_status` 로는 로그인 여부를 알 수 없습니다.** 로그인 전에도 `o_auth` 로 표시됩니다(인증 *방식*을 뜻함). 진짜 확인은 Codex를 켜고 `노션에서 "온보딩" 검색해줘` 라고 시켜보는 것입니다.
+
+**안 될 때**
+
+| 증상 | 해결 |
+|------|------|
+| `codex mcp add` 에서 `--url` 을 모르는 옵션이라고 함 | Codex가 구버전입니다. `npm i -g @openai/codex` 로 올린 뒤 재시도 |
+| 승인했는데 노션이 안 읽힘 | `codex mcp login notion` 을 단독으로 다시 실행 (토큰 자동 갱신이 실패하는 사례가 보고돼 있습니다) |
+| `You are a guest, so you cannot connect` | 노션에 **guest**로 초대돼 있습니다. member로 바꿔달라고 슬랙에 요청 |
+| 회사 노션이 아니라 개인 노션으로 승인함 | `codex mcp logout notion` → 다시 `codex mcp login notion` |
+
+---
+
+## Step 10: 시작 🎉
 
 Codex에서:
 
@@ -231,9 +264,7 @@ Codex에서:
 
 `/ai-onboarding` Step 1을 마치면 둘을 병행합니다. 어느 쪽을 먼저 부르든 서로의 진척을 알고 이어줍니다.
 
-> ⚠️ **Codex는 노션 연결이 아직 준비되지 않았습니다.** Claude Code는 `/mcp` 한 번으로 붙지만 Codex는 설정 방식이 달라서 확인 중입니다.
-> 그동안은 진척이 자동 저장되지 않아서 온보딩을 부를 때마다 **"어디까지 하셨어요?"를 여쭤봅니다.** 진행에는 지장이 없습니다.
-> 자동 저장이 꼭 필요하면 슬랙 `#ai-native` 에 알려주세요.
+> Step 9에서 노션을 붙였으면 진척이 자동 저장됩니다. 안 붙였으면 매번 "어디까지 하셨어요?"를 여쭤보는데, 진행에는 지장이 없습니다.
 
 ### 기존 팀원이 캠프 내용을 복습하려면
 
@@ -254,12 +285,13 @@ Step 5: codex 로그인
 Step 6: 버전 확인
 Step 7: /zeude-setup           ← 모니터링 + 스킬 자동 동기화
 Step 8: /company-setup         ← 회사 폴더 + 레포
-Step 9: /ai-onboarding         ← ★ 종착지. Step 1만 하면 /onboarding 도 시작 가능
+Step 9: codex mcp add notion   ← 노션 연결 (터미널에서 · 온보딩 진척 저장소)
+Step 10: /ai-onboarding        ← ★ 종착지. Step 1만 하면 /onboarding 도 시작 가능
 
 그다음: /onboarding            ← 회사 온보딩 (Day 1~9 · 하루 30분)
 ```
 
-총 20~30분. 막히면 #ai-native.
+총 25~35분. 막히면 #ai-native.
 
 ---
 
