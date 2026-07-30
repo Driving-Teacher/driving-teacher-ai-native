@@ -240,6 +240,15 @@ fi
 # ── 4. Node.js (fnm) ────────────────────────────────────────────
 echo ""
 echo "[ 4/5 ] Node.js 확인..."
+
+# 재실행일 때 이미 깔아둔 fnm 을 먼저 인식한다.
+# 이 스크립트는 비대화형으로 돌아서 우리가 .bashrc 에 넣은 줄이 안 읽힌다 →
+# 그냥 두면 매번 "node 없네" 로 판단해 LTS 를 다시 내려받는다 (해롭진 않지만 느리다).
+if [ -x "$FNM_DIR/fnm" ]; then
+    export PATH="$FNM_DIR:$PATH"
+    eval "$("$FNM_DIR/fnm" env --shell bash)" 2>/dev/null || true
+fi
+
 need_node=1
 if command -v node >/dev/null 2>&1; then
     major="$(node_major || echo 0)"

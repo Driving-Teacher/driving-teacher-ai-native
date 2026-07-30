@@ -8,7 +8,7 @@
 > 막히면 **5분만** 붙잡고 슬랙 `#ai-native`에 물어봐주세요. 프로그래밍 몰라도 됩니다 — 복붙만 하면 됩니다.
 
 ```
-[지금 여기]  0단계 · 설치           ← 이 문서 (첫날 · Step 0~9)
+[지금 여기]  0단계 · 설치           ← 이 문서 (첫날 · Step 0~7)
      ↓
   /ai-onboarding  Step 1           Claude Code가 뭔지 · 방금 친 게 뭐였는지 (20~25분)
      │
@@ -65,7 +65,7 @@ uname -a    # Linux ... 라고 나오면 WSL 정상
 
 ## Step 1: 초대 수락 (Claude Teams + 슬랙)
 
-**둘 다 해주세요.** 아래 Step 6~7에서 슬랙으로 받는 것들이 있어서, 슬랙에 없으면 중간에 멈춥니다.
+**둘 다 해주세요.** 아래 Step 6에서 슬랙으로 받는 것(Zeude 초대 링크)이 있어서, 슬랙에 없으면 중간에 멈춥니다.
 
 ### 1-1. Claude Teams
 
@@ -81,7 +81,7 @@ uname -a    # Linux ... 라고 나오면 WSL 정상
 
 ### 1-3. 여기서 미리 요청해둘 것
 
-Step 6~7에서 필요한데 사람이 발급해주는 것들입니다. **지금 슬랙에 한 번에 요청해두면** 기다리지 않습니다.
+Step 6 이후에 필요한데 사람이 발급해주는 것들입니다. **지금 슬랙에 한 번에 요청해두면** 기다리지 않습니다.
 
 ```
 #ai-native 에 이렇게 남기면 됩니다:
@@ -192,7 +192,7 @@ python3 --version   # macOS
 # Windows(WSL)도 python3 입니다 — WSL Ubuntu에는 python 명령이 없습니다
 ```
 
-4개 다 버전이 나오면 설치 완료. 여기까지가 터미널 작업이고, 남은 Step 6~9는 **Claude Code 안에서** 합니다.
+4개 다 버전이 나오면 설치 완료. 여기까지가 터미널 작업이고, 남은 Step 6~7은 **Claude Code 안에서** 합니다. **두 줄이면 끝납니다.**
 
 ---
 
@@ -204,7 +204,7 @@ Step 6부터는 `/zeude-setup` 처럼 **슬래시(`/`)로 시작하는 것**을 
 2. **나머지는 그냥 한국어로 말하면 됩니다.** 외울 명령어는 없습니다 — "이거 정리해줘" 처럼 말하면 됩니다.
 3. **틀려도 안 부서집니다.** 편하게 하세요. 5분 넘게 막히면 슬랙에.
 
-> 각각이 정확히 뭘 하는 건지는 **Step 9(`/ai-onboarding`)에서 제대로 설명**해드립니다. 지금은 아래 세 개를 순서대로 치면 됩니다.
+> 각각이 정확히 뭘 하는 건지는 **Step 7(`/ai-onboarding`)에서 제대로 설명**해드립니다. 지금은 아래 두 개를 순서대로 치면 됩니다.
 
 ---
 
@@ -225,51 +225,13 @@ Step 6부터는 `/zeude-setup` 처럼 **슬래시(`/`)로 시작하는 것**을 
 - 회사 표준 스킬 자동 동기화 (`ai-onboarding`, `onboarding`, `kb`, `tips` 등 10개+)
 - 대시보드 자동 로그인 (`/zeude`로 언제든 재접속)
 
-> ⚠️ **이걸 먼저 해야 Step 9의 `/ai-onboarding`이 생깁니다.** 회사 스킬은 전부 여기서 받아옵니다. 가입은 1번만.
+> ⚠️ **이걸 먼저 해야 다음 Step의 `/ai-onboarding`이 생깁니다.** 회사 스킬은 전부 여기서 받아옵니다. 가입은 1번만.
 
 > 💡 **회사에 새 스킬을 풀고 싶을 때**: `Zeude 대시보드 > Skills 탭 > 스킬등록`. 모든 멤버 admin이라 셀프 서비스 — 등록하면 팀 전원의 다음 sync에 자동 반영됩니다. (자세한 분류는 [README의 "스킬 살림터"](./README.md#스킬-살림터--어디에-뭘-두나) 참고)
 
 ---
 
-## Step 7: 회사 폴더 + 레포 받기
-
-```
-/company-setup
-```
-
-이 스킬 한 번이:
-- `~/Documents/company-code/` 표준 부모 폴더 생성
-- `driving-teacher-ai-native` (캠프 자료) clone
-- `driving-teacher-knowledge-base` (회사 KB) clone
-
-> private 레포라 GitHub 권한 필요. 안 받아지면 슬랙에 GitHub username 보고 → admin 초대.
-> 이미 다른 곳에 받아둔 게 있으면 자동 감지 후 표준 위치로 이동할지 물어봅니다.
-
----
-
-## Step 8: 노션 연결
-
-온보딩이 **노션**에서 회사·팀 자료를 읽어오고, 여러분의 진척(`온보딩 진행 · {이름}`)을 노션에 저장합니다. 연결 안 하면 매번 "어디까지 하셨어요?"를 되묻게 됩니다.
-
-Claude Code에서:
-
-```
-/mcp
-```
-
-목록에서 **`claude.ai Notion`** 을 고르고 인증(Authenticate)합니다. 브라우저가 열리면 회사 노션 계정으로 승인 → 터미널로 돌아오면 끝.
-
-확인 — 다시 `/mcp`를 쳤을 때 이렇게 보이면 성공:
-
-```
-claude.ai Notion: https://mcp.notion.com/mcp - ✔ Connected
-```
-
-> 회사 노션 계정 초대를 아직 못 받았으면 슬랙에 요청. 노션 없이도 Step 9는 진행되지만, 진척 저장이 안 됩니다.
-
----
-
-## Step 9: 시작 🎉
+## Step 7: 시작 🎉
 
 여기까지 왔으면 설치 끝. 이제 한 줄만 치면 됩니다.
 
@@ -277,7 +239,9 @@ claude.ai Notion: https://mcp.notion.com/mcp - ✔ Connected
 /ai-onboarding
 ```
 
-방금 친 세 개(`/zeude-setup`·`/company-setup`·`/mcp`)가 각각 뭐였는지, Claude Code가 ChatGPT 웹창과 뭐가 다른지부터 알려줍니다. **20~25분이면 끝나고, 거기까지 하면 회사 온보딩을 시작할 수 있습니다.**
+**여러분이 외울 건 여기까지입니다.** 남은 준비(회사 자료 받기·노션 연결)는 `/ai-onboarding`이 안내하거나 대신 해줍니다.
+
+방금 친 `/zeude-setup`이 뭐였는지, Claude Code가 ChatGPT 웹창과 뭐가 다른지부터 알려줍니다. **20~25분이면 끝나고, 거기까지 하면 회사 온보딩을 시작할 수 있습니다.**
 
 중간에 *"요즘 하는 일 중에 이거 AI가 해주면 좋겠다 싶은 것"* 을 하나 물어봅니다. 한 줄로 답해두시면 나중에 그걸 **명령어 하나로 만들어 드립니다.**
 
@@ -302,6 +266,37 @@ claude.ai Notion: https://mcp.notion.com/mcp - ✔ Connected
 
 ---
 
+## 부록 — 막혔을 때 직접 하는 법
+
+**정상 흐름에서는 필요 없습니다.** `/ai-onboarding`이 알아서 안내합니다. 아래는 스킬이 안 뜨거나 중간에 막혔을 때의 탈출구입니다.
+
+### 회사 자료 받기
+
+```
+/company-setup
+```
+
+`~/Documents/company-code/` 아래에 `driving-teacher-ai-native`(캠프·온보딩 자료)와 `driving-teacher-knowledge-base`(회사 KB)를 받아옵니다.
+
+> private 레포라 GitHub 권한 필요. 안 받아지면 슬랙에 GitHub username 보고 → admin 초대.
+> 이미 다른 곳에 받아둔 게 있으면 자동 감지 후 표준 위치로 이동할지 물어봅니다.
+
+### 노션 연결
+
+```
+/mcp
+```
+
+목록에서 **`claude.ai Notion`** 을 고르고 Authenticate → 브라우저에서 **회사 노션 계정**으로 승인. 다시 `/mcp` 를 쳤을 때 이렇게 보이면 성공:
+
+```
+claude.ai Notion: https://mcp.notion.com/mcp - ✔ Connected
+```
+
+> 노션 없이도 온보딩은 진행됩니다. 다만 진척이 저장 안 돼서 매번 "어디까지 하셨어요?"를 되묻습니다.
+
+---
+
 ## 캠프 자료 복습 (기존 팀원용)
 
 AI Native Camp 4주 세션을 들었던 분이 부분 복습을 원하면:
@@ -323,9 +318,7 @@ Step 4: claude 로그인
 Step 5: 버전 확인 4개
         ┈┈ 여기까지 터미널. 아래는 Claude Code 안에서 ┈┈
 Step 6: /zeude-setup           ← 회사 스킬 동기화 + 모니터링 (먼저 해야 나머지가 생김)
-Step 7: /company-setup         ← 회사 폴더 + 레포
-Step 8: /mcp → Notion 연결     ← 온보딩 트래커 저장소
-Step 9: /ai-onboarding         ← ★ 종착지. Step 1만 하면 /onboarding 도 시작 가능
+Step 7: /ai-onboarding         ← ★ 종착지. 남은 준비는 이 스킬이 안내합니다
 
 그다음: /onboarding            ← 회사 온보딩 (Day 1~9 · 하루 30분)
 ```
@@ -352,6 +345,6 @@ Mac 30~40분 / Windows는 WSL 설치 포함 50분~1시간. 막히면 #ai-native.
 | 노션 연결했는데 온보딩이 진척을 못 찾음 | Claude Code 새 창으로 다시 호출. 그래도면 노션에서 온보딩 페이지 접근 권한 요청 |
 | `/ai-onboarding`·`/onboarding`이 없다고 나옴 | Step 6 `/zeude-setup`이 안 끝난 것 (스킬은 Zeude가 동기화). 새 창 후 재시도 |
 | `/kb`가 회사 자료를 못 찾음 | Step 7 `/company-setup`이 안 끝난 것. 다시 실행 |
-| 스킬은 뜨는데 "무슨 뜻인지 모르겠음" | 정상입니다. Step 9 `/ai-onboarding`이 하나씩 설명해줍니다 |
+| 스킬은 뜨는데 "무슨 뜻인지 모르겠음" | 정상입니다. Step 7 `/ai-onboarding`이 하나씩 설명해줍니다 |
 
 그래도 안 되면 **슬랙에 에러 스크린샷** 올려주세요. 도와드립니다!
