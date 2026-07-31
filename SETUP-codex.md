@@ -173,20 +173,44 @@ Python은 없으면 나중에 필요할 때 설치해도 됩니다.
 
 ## Step 7: Zeude 가입 (모니터링 + 회사 스킬 자동 받기)
 
-슬랙 #ai-native 에서 받은 **Zeude 초대 링크**를 클릭하면 자동으로 가입 + `~/.zeude/credentials`가 생성됩니다.
+> # ⚠️ 이 단계는 지금 Codex만으로는 안 됩니다
+>
+> **먼저 읽어주세요.** Zeude(회사 스킬을 자동으로 챙겨주는 시스템)의 설치 프로그램이 현재 **Claude Code가 깔려 있을 것을 요구합니다.** Codex만 있는 컴퓨터에서는 아래처럼 멈춥니다.
+>
+> ```
+> Error: claude not found in PATH. Please install claude first.
+> ```
+>
+> 그리고 `/zeude-setup` 이라는 명령 자체가 Codex 쪽에는 아직 없습니다.
+>
+> **어떻게 하면 되나** — 둘 중 하나입니다.
+>
+> 1. **Claude Code를 같이 깐다** (권장) — [`SETUP.md`](./SETUP.md) 의 Step 3~4를 그대로 하시면 됩니다. Claude Code로 `/zeude-setup` 한 번만 돌리면 스킬이 Codex 쪽(`~/.codex/skills/`)에도 함께 들어옵니다. 이후 작업은 Codex로 계속하셔도 됩니다
+> 2. **슬랙 `#ai-native` 에 문의** — "Codex만 쓰는데 Zeude 셋업이 안 됩니다" 라고 남겨주세요
+>
+> 이 단계를 건너뛰어도 **Step 10까지 갈 수는 있습니다.** 다만 회사 스킬(`/ai-onboarding` 포함)이 안 들어와서 종착지에서 막힙니다. 그래서 1번을 권합니다.
 
-링크가 안 왔거나 잃어버렸으면 슬랙에 요청.
+슬랙 `#ai-native` 에서 받은 **Zeude 초대 링크**를 엽니다. **`zd_` 로 시작하는 긴 글자**가 나오는데, 그 화면을 닫지 마세요 — 곧 붙여넣으라고 물어봅니다. (링크는 **1시간 후 만료**됩니다.)
 
-링크 클릭 후 Codex에서:
+위 1번(Claude Code 병행)을 택했다면, **Claude Code에서** 아래 두 줄:
+
+```bash
+cd ~/Documents/company-code/driving-teacher-ai-native
+claude
+```
+
+그다음 Claude Code 안에서:
 
 ```
 /zeude-setup
 ```
 
+> `cd` 는 "그 폴더로 들어가라" 는 뜻입니다. `/zeude-setup` 이 저 폴더 안에 들어 있어서, 다른 곳에서 켜면 없는 것처럼 보입니다.
+
 이 한 번이 다음을 다 해줍니다:
 
-- 텔레메트리 shim 설치 (Codex 사용 데이터가 팀 대시보드에 자동 기록)
-- 회사 표준 스킬 자동 동기화 (`ai-onboarding`, `onboarding`, `kb`, `tips` 등) → `~/.codex/skills/` 에 들어갑니다
+- 텔레메트리 shim 설치 (사용 데이터가 팀 대시보드에 자동 기록)
+- 회사 표준 스킬 자동 동기화 (`ai-onboarding`, `onboarding`, `tips` 등) → `~/.claude/skills/` 와 `~/.codex/skills/` **양쪽에** 들어갑니다
 - 대시보드 자동 로그인 (`/zeude`로 언제든 재접속)
 
 > `/zeude-setup`이 안 보이면 Codex를 새로 열고 다시 시도해주세요. 그래도 안 되면 슬랙에 알려주세요.
@@ -207,7 +231,7 @@ Codex에서:
 - `driving-teacher-ai-native` (캠프 자료) clone
 - `driving-teacher-knowledge-base` (회사 KB) clone
 
-> private 레포라 GitHub 권한 필요. 안 받아지면 슬랙에 GitHub username 보고 → admin 초대.
+> 둘 중 `driving-teacher-knowledge-base`(회사 KB)는 **비공개 레포**라서 GitHub 권한이 필요합니다. 안 받아지면 슬랙에 GitHub username 보고 → admin이 `Driving-Teacher` 조직에 초대해줍니다.
 > 이미 다른 곳에 받아둔 게 있으면 자동 감지 후 표준 위치로 이동할지 물어봅니다.
 
 ---
