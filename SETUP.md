@@ -132,6 +132,8 @@ sudo apt update && sudo apt install -y git
 ### macOS
 
 ```bash
+mkdir -p ~/Documents/company-code
+cd ~/Documents/company-code
 git clone https://github.com/Driving-Teacher/driving-teacher-ai-native.git
 cd driving-teacher-ai-native
 bash scripts/setup-mac.sh
@@ -142,10 +144,15 @@ bash scripts/setup-mac.sh
 **Ubuntu 터미널 안에서** 실행합니다 (PowerShell 아님 — Step 0 참고).
 
 ```bash
+mkdir -p ~/Documents/company-code
+cd ~/Documents/company-code
 git clone https://github.com/Driving-Teacher/driving-teacher-ai-native.git
 cd driving-teacher-ai-native
 bash scripts/setup-wsl.sh
 ```
+
+> **앞의 두 줄을 빠뜨리지 마세요.** 회사 자료는 전부 `~/Documents/company-code/` 아래에 모읍니다. 다른 곳에 받으면 Step 4의 `cd` 가 "그런 폴더 없음" 으로 실패합니다.
+> `mkdir -p` 는 "그 폴더를 만들어라(이미 있으면 그냥 넘어가라)" 는 뜻이라 여러 번 쳐도 안전합니다.
 
 Mac과 똑같이 git·Claude Code·Node.js·Python이 한 번에 깔립니다. 설치 후 Ubuntu 터미널을 **껐다가 다시 열어** PATH를 반영합니다.
 
