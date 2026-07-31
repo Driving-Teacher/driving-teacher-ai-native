@@ -131,7 +131,7 @@ if grep -qiE "microsoft|wsl" /proc/version 2>/dev/null; then
         /mnt/*)
             echo "  ⚠️  지금 Windows 디스크($PWD)에서 실행 중입니다."
             echo "     느리고 AI가 파일을 잘 못 찾습니다. 레포는 Linux 쪽 홈(~/)에 두세요."
-            echo "     Step 7의 /company-setup 이 ~/Documents/company-code/ 로 알아서 받아옵니다."
+            echo "     나중에 /company-setup 이 ~/Documents/company-code/ 로 알아서 받아옵니다."
             ;;
     esac
 else
@@ -345,10 +345,11 @@ echo "       · 브라우저에 뜬 코드를 복사해서 터미널에 붙여�
 echo "       · 브라우저가 안 열리면 c 키 → URL 복사 → 직접 열기"
 echo "       · 그래도 안 되면:"
 echo "         export BROWSER=\"/mnt/c/Program Files/Google/Chrome/Application/chrome.exe\""
-echo "  3. 버전 확인 4개:"
+echo "  3. 버전 확인 4개 — Claude Code 안이면 먼저 /exit 로 나오세요:"
 echo "       claude --version / node --version / git --version / python3 --version"
-echo "  4. SETUP.md 의 Step 6부터 계속:"
-echo "       /zeude-setup → /company-setup → /mcp → /ai-onboarding"
+echo "  4. 다시 위 두 줄로 Claude Code 를 켜고, 안에서 순서대로: (SETUP.md Step 6~7)"
+echo "       /zeude-setup      ← 회사 스킬 동기화 (이걸 먼저 해야 나머지가 생깁니다)"
+echo "       /ai-onboarding    ← 종착지. 남은 준비는 이 스킬이 안내합니다"
 echo ""
 echo "막히면 5분만 붙잡고 슬랙 $SLACK 에 에러 화면을 올려주세요."
 echo ""
