@@ -9,6 +9,20 @@ echo " 운전선생 AI Native Camp 세팅"
 echo "=============================="
 echo ""
 
+# 레포가 표준 위치에 있는지 확인한다. 여기가 아니면 뒤의 안내(cd ...)가 전부 틀린다.
+STANDARD="$HOME/Documents/company-code/driving-teacher-ai-native"
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+if [ "$REPO_DIR" != "$STANDARD" ]; then
+    echo "  ⚠️  이 레포가 표준 위치에 없습니다."
+    echo "        지금: $REPO_DIR"
+    echo "        표준: $STANDARD"
+    echo "     회사 도구가 표준 위치를 기준으로 동작하므로 옮기는 것을 권합니다."
+    echo "     설치는 그대로 진행합니다. 옮기려면 설치가 끝난 뒤:"
+    echo "        mkdir -p ~/Documents/company-code"
+    echo "        mv \"$REPO_DIR\" ~/Documents/company-code/"
+    echo ""
+fi
+
 # 1. Xcode CLI Tools (git 포함)
 echo "[ 1/4 ] git 확인..."
 if command -v git &> /dev/null; then
