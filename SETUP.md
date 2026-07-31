@@ -175,6 +175,7 @@ Mac과 똑같이 git·Claude Code·Node.js·Python이 한 번에 깔립니다. �
 | **Claude Code** | AI 코딩/업무 도구 |
 | **Node.js** | 플러그인, MCP 서버 |
 | **Python** | 엑셀/데이터 처리, 일부 MCP |
+| **gh** (GitHub CLI) | 비공개 회사 KB 받기 — 나중에 `/company-setup` 이 이걸 씁니다 |
 
 > 이미 설치되어 있으면 자동으로 건너뜁니다. 여러 번 돌려도 안전합니다.
 
