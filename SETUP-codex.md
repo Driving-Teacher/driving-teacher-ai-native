@@ -231,7 +231,7 @@ Codex에서:
 - `driving-teacher-ai-native` (캠프 자료) clone
 - `driving-teacher-knowledge-base` (회사 KB) clone
 
-> 둘 중 `driving-teacher-knowledge-base`(회사 KB)는 **비공개 레포**라서 GitHub 권한이 필요합니다. 안 받아지면 슬랙에 GitHub username 보고 → admin이 `Driving-Teacher` 조직에 초대해줍니다.
+> 둘 중 `driving-teacher-knowledge-base`(회사 KB)는 **비공개 레포**라서 GitHub 권한이 필요합니다. 안 받아지면 슬랙에 GitHub username 보고 → admin이 권한을 줍니다.
 > 이미 다른 곳에 받아둔 게 있으면 자동 감지 후 표준 위치로 이동할지 물어봅니다.
 
 ---
