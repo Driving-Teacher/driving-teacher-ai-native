@@ -9,8 +9,16 @@ echo " 운전선생 AI Native Camp 세팅"
 echo "=============================="
 echo ""
 
+# 이 레포가 실제로 어디에 있는지 기억해둔다.
+# 위치는 자유다 — 다만 마지막 안내에서 "여기로 cd 하세요" 를 정확히 찍어주려면 필요하다.
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# 홈 아래면 ~ 로 줄여서 보여준다 (읽기 쉽고, 복사해도 그대로 동작한다).
+# 치환문에서 물결표를 직접 쓰면 이스케이프가 그대로 찍히므로 변수를 거친다.
+TILDE='~'
+REPO_SHOWN="${REPO_DIR/#$HOME/$TILDE}"
+
 # 1. Xcode CLI Tools (git 포함)
-echo "[ 1/4 ] git 확인..."
+echo "[ 1/5 ] git 확인..."
 if command -v git &> /dev/null; then
     echo "  ✅ git $(git --version | cut -d' ' -f3)"
 else
@@ -21,7 +29,7 @@ else
 fi
 
 # 2. Claude Code
-echo "[ 2/4 ] Claude Code 확인..."
+echo "[ 2/5 ] Claude Code 확인..."
 if command -v claude &> /dev/null; then
     echo "  ✅ Claude Code $(claude --version 2>/dev/null || echo 'installed')"
 else
@@ -36,7 +44,7 @@ else
 fi
 
 # 3. Node.js (fnm)
-echo "[ 3/4 ] Node.js 확인..."
+echo "[ 3/5 ] Node.js 확인..."
 if command -v node &> /dev/null; then
     echo "  ✅ Node.js $(node --version)"
 else
@@ -60,11 +68,31 @@ else
 fi
 
 # 4. Python
-echo "[ 4/4 ] Python 확인..."
+echo "[ 4/5 ] Python 확인..."
 if command -v python3 &> /dev/null; then
     echo "  ✅ Python $(python3 --version | cut -d' ' -f2)"
 else
     echo "  ⚠️  Python이 없습니다. 나중에 필요하면 설치합니다."
+fi
+
+# 5. gh (GitHub CLI) — 비공개 KB 레포를 받으려면 필요하다.
+#    나중에 /company-setup 이 gh 로 clone 하는데, 없으면 거기서 막힌다.
+echo "[ 5/5 ] GitHub CLI(gh) 확인..."
+if command -v gh &> /dev/null; then
+    echo "  ✅ gh $(gh --version | head -1 | cut -d' ' -f3)"
+elif command -v brew &> /dev/null; then
+    echo "  ⏳ gh 설치 중 (brew)..."
+    if brew install gh >/dev/null 2>&1 && command -v gh &> /dev/null; then
+        echo "  ✅ gh $(gh --version | head -1 | cut -d' ' -f3) 설치 완료"
+    else
+        echo "  ⚠️  gh 설치 실패 — 나중에 /company-setup 이 다시 안내합니다."
+    fi
+else
+    echo "  ⚠️  Homebrew가 없어서 gh를 못 깔았습니다."
+    echo "     회사 KB(비공개 레포)를 받을 때 필요합니다. 둘 중 하나로 해결됩니다:"
+    echo "       · Homebrew 설치: https://brew.sh  → 그다음 이 스크립트 재실행"
+    echo "       · 슬랙 #ai-native 에 문의"
+    echo "     지금 당장은 없어도 다음 단계로 넘어갈 수 있습니다."
 fi
 
 echo ""
@@ -72,8 +100,22 @@ echo "=============================="
 echo " 세팅 완료!"
 echo "=============================="
 echo ""
-echo "다음 단계:"
+echo "다음 단계: (SETUP.md Step 4~7)"
 echo "  1. 터미널을 껐다가 다시 열기"
-echo "  2. claude 입력 → 브라우저에서 로그인"
-echo "  3. 슬랙 #ai-native 세팅 스레드에 '완료' 남기기"
+echo "  2. 아래 두 줄 — 첫 줄을 꼭 같이 치세요 (이 두 줄을 그대로 복사하세요)"
+echo ""
+echo "       cd $REPO_SHOWN"
+echo "       claude"
+echo ""
+echo "     (cd = '그 폴더로 들어가라'. 회사 도구가 저 폴더에 들어 있어서,"
+echo "      다른 곳에서 켜면 /zeude-setup 이 없는 것처럼 보입니다."
+echo "      폴더 위치는 본인이 정한 곳 그대로입니다 — 위 경로가 바로 그곳입니다.)"
+echo "     → 브라우저가 열리면 회사 Claude 계정으로 로그인"
+echo "  3. 버전 확인 4개 — Claude Code 안이면 먼저 /exit 로 나오세요:"
+echo "       claude --version / node --version / git --version / python3 --version"
+echo "  4. 다시 위 두 줄로 Claude Code 를 켜고, 안에서 순서대로:"
+echo "       /zeude-setup      ← 회사 스킬 동기화 (이걸 먼저 해야 나머지가 생깁니다)"
+echo "       /ai-onboarding    ← 종착지. 남은 준비는 이 스킬이 안내합니다"
+echo ""
+echo "막히면 5분만 붙잡고 슬랙 #ai-native 에 에러 화면을 올려주세요."
 echo ""
