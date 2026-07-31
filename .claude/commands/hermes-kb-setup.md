@@ -35,6 +35,12 @@ for path in \
   fi
 done
 
+# 위 목록에 없으면 홈 아래를 뒤진다 — 받는 위치는 사람마다 자유다
+if [[ -z "$KB_DIR" ]]; then
+  KB_DIR=$(find "$HOME" -maxdepth 5 -type d -name driving-teacher-knowledge-base \
+             -not -path "*/node_modules/*" 2>/dev/null | head -1)
+fi
+
 if [[ -z "$KB_DIR" ]]; then
   echo "❌ knowledge-base를 찾지 못했습니다."
   echo ""
