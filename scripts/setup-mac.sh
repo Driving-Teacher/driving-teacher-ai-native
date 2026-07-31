@@ -9,19 +9,13 @@ echo " 운전선생 AI Native Camp 세팅"
 echo "=============================="
 echo ""
 
-# 레포가 표준 위치에 있는지 확인한다. 여기가 아니면 뒤의 안내(cd ...)가 전부 틀린다.
-STANDARD="$HOME/Documents/company-code/driving-teacher-ai-native"
+# 이 레포가 실제로 어디에 있는지 기억해둔다.
+# 위치는 자유다 — 다만 마지막 안내에서 "여기로 cd 하세요" 를 정확히 찍어주려면 필요하다.
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-if [ "$REPO_DIR" != "$STANDARD" ]; then
-    echo "  ⚠️  이 레포가 표준 위치에 없습니다."
-    echo "        지금: $REPO_DIR"
-    echo "        표준: $STANDARD"
-    echo "     회사 도구가 표준 위치를 기준으로 동작하므로 옮기는 것을 권합니다."
-    echo "     설치는 그대로 진행합니다. 옮기려면 설치가 끝난 뒤:"
-    echo "        mkdir -p ~/Documents/company-code"
-    echo "        mv \"$REPO_DIR\" ~/Documents/company-code/"
-    echo ""
-fi
+# 홈 아래면 ~ 로 줄여서 보여준다 (읽기 쉽고, 복사해도 그대로 동작한다).
+# 치환문에서 물결표를 직접 쓰면 이스케이프가 그대로 찍히므로 변수를 거친다.
+TILDE='~'
+REPO_SHOWN="${REPO_DIR/#$HOME/$TILDE}"
 
 # 1. Xcode CLI Tools (git 포함)
 echo "[ 1/4 ] git 확인..."
@@ -88,11 +82,14 @@ echo "=============================="
 echo ""
 echo "다음 단계: (SETUP.md Step 4~7)"
 echo "  1. 터미널을 껐다가 다시 열기"
-echo "  2. 아래 두 줄 — 첫 줄을 꼭 같이 치세요"
-echo "       cd ~/Documents/company-code/driving-teacher-ai-native"
+echo "  2. 아래 두 줄 — 첫 줄을 꼭 같이 치세요 (이 두 줄을 그대로 복사하세요)"
+echo ""
+echo "       cd $REPO_SHOWN"
 echo "       claude"
-echo "     (cd = '그 폴더로 들어가라'. 회사 도구가 저 폴더에 있어서,"
-echo "      다른 곳에서 켜면 /zeude-setup 이 없는 것처럼 보입니다.)"
+echo ""
+echo "     (cd = '그 폴더로 들어가라'. 회사 도구가 저 폴더에 들어 있어서,"
+echo "      다른 곳에서 켜면 /zeude-setup 이 없는 것처럼 보입니다."
+echo "      폴더 위치는 본인이 정한 곳 그대로입니다 — 위 경로가 바로 그곳입니다.)"
 echo "     → 브라우저가 열리면 회사 Claude 계정으로 로그인"
 echo "  3. 버전 확인 4개 — Claude Code 안이면 먼저 /exit 로 나오세요:"
 echo "       claude --version / node --version / git --version / python3 --version"

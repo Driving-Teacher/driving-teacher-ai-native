@@ -131,14 +131,12 @@ codex --version
 ## Step 4: 캠프 레포 받기
 
 ```bash
-mkdir -p ~/Documents/company-code
-cd ~/Documents/company-code
 git clone https://github.com/Driving-Teacher/driving-teacher-ai-native.git
 cd driving-teacher-ai-native
 ```
 
-> **앞의 두 줄을 빠뜨리지 마세요.** 회사 자료는 전부 `~/Documents/company-code/` 아래에 모읍니다. 다른 곳에 받으면 뒤에서 `cd` 가 "그런 폴더 없음" 으로 실패합니다.
-> `mkdir -p` 는 "그 폴더를 만들어라(이미 있으면 그냥 넘어가라)" 는 뜻이라 여러 번 쳐도 안전합니다.
+> **어느 폴더에 받든 괜찮습니다.** 터미널을 열면 보통 홈 폴더(`~`)에서 시작하니, 그냥 위 두 줄을 치면 홈 아래에 받아집니다. 따로 정리하고 싶으면 `mkdir -p ~/dev && cd ~/dev` 처럼 원하는 폴더를 먼저 만들고 들어간 뒤 치시면 됩니다.
+> 회사 도구들은 홈 아래를 뒤져서 **알아서 찾습니다.** 다만 지금 받은 이 폴더의 **경로는 기억해두세요** — 뒤에서 `cd` 할 때 씁니다. 잊었으면 그 폴더에서 `pwd` 를 치면 나옵니다.
 
 > 이 레포는 **공개(PUBLIC)** 라서 GitHub 권한 없이도 받아집니다. 그래도 `403`이 나오면 네트워크나 git 설정 문제이니 슬랙에 남겨주세요.
 
@@ -200,7 +198,7 @@ Python은 없으면 나중에 필요할 때 설치해도 됩니다.
 위 1번(Claude Code 병행)을 택했다면, **Claude Code에서** 아래 두 줄:
 
 ```bash
-cd ~/Documents/company-code/driving-teacher-ai-native
+cd <Step 4에서 레포를 받은 경로>
 claude
 ```
 
@@ -232,7 +230,7 @@ Codex에서:
 
 이 스킬 한 번이:
 
-- `~/Documents/company-code/` 표준 부모 폴더 생성
+- 회사 레포들을 한곳에 모을 부모 폴더 생성 (기본값 `~/Documents/company-code/` · 이미 다른 곳에 받아뒀으면 그 자리를 그대로 씁니다)
 - `driving-teacher-ai-native` (캠프 자료) clone
 - `driving-teacher-knowledge-base` (회사 KB) clone
 
