@@ -18,7 +18,7 @@ TILDE='~'
 REPO_SHOWN="${REPO_DIR/#$HOME/$TILDE}"
 
 # 1. Xcode CLI Tools (git 포함)
-echo "[ 1/4 ] git 확인..."
+echo "[ 1/5 ] git 확인..."
 if command -v git &> /dev/null; then
     echo "  ✅ git $(git --version | cut -d' ' -f3)"
 else
@@ -29,7 +29,7 @@ else
 fi
 
 # 2. Claude Code
-echo "[ 2/4 ] Claude Code 확인..."
+echo "[ 2/5 ] Claude Code 확인..."
 if command -v claude &> /dev/null; then
     echo "  ✅ Claude Code $(claude --version 2>/dev/null || echo 'installed')"
 else
@@ -44,7 +44,7 @@ else
 fi
 
 # 3. Node.js (fnm)
-echo "[ 3/4 ] Node.js 확인..."
+echo "[ 3/5 ] Node.js 확인..."
 if command -v node &> /dev/null; then
     echo "  ✅ Node.js $(node --version)"
 else
@@ -68,11 +68,31 @@ else
 fi
 
 # 4. Python
-echo "[ 4/4 ] Python 확인..."
+echo "[ 4/5 ] Python 확인..."
 if command -v python3 &> /dev/null; then
     echo "  ✅ Python $(python3 --version | cut -d' ' -f2)"
 else
     echo "  ⚠️  Python이 없습니다. 나중에 필요하면 설치합니다."
+fi
+
+# 5. gh (GitHub CLI) — 비공개 KB 레포를 받으려면 필요하다.
+#    나중에 /company-setup 이 gh 로 clone 하는데, 없으면 거기서 막힌다.
+echo "[ 5/5 ] GitHub CLI(gh) 확인..."
+if command -v gh &> /dev/null; then
+    echo "  ✅ gh $(gh --version | head -1 | cut -d' ' -f3)"
+elif command -v brew &> /dev/null; then
+    echo "  ⏳ gh 설치 중 (brew)..."
+    if brew install gh >/dev/null 2>&1 && command -v gh &> /dev/null; then
+        echo "  ✅ gh $(gh --version | head -1 | cut -d' ' -f3) 설치 완료"
+    else
+        echo "  ⚠️  gh 설치 실패 — 나중에 /company-setup 이 다시 안내합니다."
+    fi
+else
+    echo "  ⚠️  Homebrew가 없어서 gh를 못 깔았습니다."
+    echo "     회사 KB(비공개 레포)를 받을 때 필요합니다. 둘 중 하나로 해결됩니다:"
+    echo "       · Homebrew 설치: https://brew.sh  → 그다음 이 스크립트 재실행"
+    echo "       · 슬랙 #ai-native 에 문의"
+    echo "     지금 당장은 없어도 다음 단계로 넘어갈 수 있습니다."
 fi
 
 echo ""

@@ -77,7 +77,7 @@ echo "=============================="
 
 # ── 1. 실행 환경 확인 ───────────────────────────────────────────
 echo ""
-echo "[ 1/5 ] 실행 환경 확인..."
+echo "[ 1/6 ] 실행 환경 확인..."
 
 # root 로 돌리면 전부 /root 에 깔려서 본인 셸에선 아무것도 안 보인다
 if [ "$(id -u)" -eq 0 ]; then
@@ -170,7 +170,7 @@ REPO_SHOWN="${REPO_DIR/#$HOME/$TILDE}"
 
 # ── 2. git ──────────────────────────────────────────────────────
 echo ""
-echo "[ 2/5 ] git 확인..."
+echo "[ 2/6 ] git 확인..."
 if command -v git >/dev/null 2>&1; then
     echo "  ✅ git $(git --version | cut -d' ' -f3)"
 else
@@ -185,7 +185,7 @@ fi
 
 # ── 3. Claude Code ──────────────────────────────────────────────
 echo ""
-echo "[ 3/5 ] Claude Code 확인..."
+echo "[ 3/6 ] Claude Code 확인..."
 export PATH="$HOME/.local/bin:$HOME/.claude/bin:$PATH"
 
 # ⚠️ Windows 쪽 claude 를 잡는 함정
@@ -247,7 +247,7 @@ fi
 
 # ── 4. Node.js (fnm) ────────────────────────────────────────────
 echo ""
-echo "[ 4/5 ] Node.js 확인..."
+echo "[ 4/6 ] Node.js 확인..."
 
 # 재실행일 때 이미 깔아둔 fnm 을 먼저 인식한다.
 # 이 스크립트는 비대화형으로 돌아서 우리가 .bashrc 에 넣은 줄이 안 읽힌다 →
@@ -300,7 +300,7 @@ fi
 
 # ── 5. Python ───────────────────────────────────────────────────
 echo ""
-echo "[ 5/5 ] Python 확인..."
+echo "[ 5/6 ] Python 확인..."
 if command -v python3 >/dev/null 2>&1; then
     echo "  ✅ Python $(python3 --version | cut -d' ' -f2)"
 else
@@ -310,6 +310,43 @@ else
     else
         FAILED+=("Python")
         echo "  ❌ Python 설치 실패"
+    fi
+fi
+
+# ── 6. gh (GitHub CLI) ──────────────────────────────────────────
+# 비공개 KB 레포를 받으려면 필요하다. 없으면 나중에 /company-setup 이 거기서 막힌다.
+# 우분투 기본 저장소의 gh 는 낡았거나 아예 없어서 공식 저장소를 등록한다.
+echo ""
+echo "[ 6/6 ] GitHub CLI(gh) 확인..."
+if command -v gh >/dev/null 2>&1; then
+    echo "  ✅ gh $(gh --version | head -1 | cut -d' ' -f3)"
+elif [ "$HAS_SUDO" -eq 0 ]; then
+    echo "  ⚠️  sudo가 없어서 gh를 못 깝니다."
+    echo "     회사 KB(비공개 레포)를 받을 때 필요합니다. 관리자에게 요청하거나 $SLACK 에 문의해주세요."
+else
+    echo "  ⏳ gh 설치 중 (공식 저장소 등록)..."
+    gh_ok=1
+    sudo mkdir -p -m 755 /etc/apt/keyrings || gh_ok=0
+    if [ "$gh_ok" -eq 1 ] && ! curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+         | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null; then
+        gh_ok=0
+    fi
+    if [ "$gh_ok" -eq 1 ]; then
+        sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg || true
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
+            | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null || gh_ok=0
+    fi
+    if [ "$gh_ok" -eq 1 ]; then
+        # 저장소를 새로 등록했으니 목록을 다시 받아야 한다
+        APT_UPDATED=0
+        apt_install gh || true
+    fi
+    if command -v gh >/dev/null 2>&1; then
+        echo "  ✅ gh $(gh --version | head -1 | cut -d' ' -f3) 설치 완료"
+    else
+        # 여기서 죽이지 않는다 — gh 없이도 Step 6까지는 갈 수 있다
+        echo "  ⚠️  gh 설치 실패. 회사 KB(비공개 레포)를 받을 때 필요합니다."
+        echo "     나중에 /company-setup 이 다시 안내하니 지금은 넘어가셔도 됩니다."
     fi
 fi
 

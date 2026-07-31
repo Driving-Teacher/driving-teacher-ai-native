@@ -231,8 +231,11 @@ Codex에서:
 이 스킬 한 번이:
 
 - 회사 레포들을 한곳에 모을 부모 폴더 생성 (기본값 `~/Documents/company-code/` · 이미 다른 곳에 받아뒀으면 그 자리를 그대로 씁니다)
+- **gh(GitHub CLI) 설치 + 로그인** — 회사 KB가 비공개 레포라서 필요합니다. 없으면 스킬이 OS에 맞는 설치 명령을 알려줍니다
 - `driving-teacher-ai-native` (캠프 자료) clone
 - `driving-teacher-knowledge-base` (회사 KB) clone
+
+> Claude Code 쪽은 설치 스크립트가 gh를 미리 깔아주지만, Codex 흐름은 스크립트를 안 거쳐서 여기서 처음 깝니다. 중간에 `gh auth login` 으로 브라우저 로그인을 한 번 하게 됩니다.
 
 > 둘 중 `driving-teacher-knowledge-base`(회사 KB)는 **비공개 레포**라서 GitHub 권한이 필요합니다. 안 받아지면 슬랙에 GitHub username 보고 → admin이 권한을 줍니다.
 > 이미 다른 곳에 받아둔 게 있으면 자동 감지 후 표준 위치로 이동할지 물어봅니다.
