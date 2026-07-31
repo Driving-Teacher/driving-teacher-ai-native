@@ -30,6 +30,12 @@ for path in \
   fi
 done
 
+# 위 목록에 없으면 홈 아래를 뒤진다 — 받는 위치는 사람마다 자유다
+if [[ -z "$DOC" ]]; then
+  DOC=$(find "$HOME" -maxdepth 6 -type f -path "*driving-teacher-ai-native/docs/hermes-usecases.md" \
+          -not -path "*/node_modules/*" 2>/dev/null | head -1)
+fi
+
 if [[ -z "$DOC" ]]; then
   echo "❌ docs/hermes-usecases.md 를 찾지 못했습니다." >&2
   echo "→ 슬랙 #ai-native 에 위치 확인 요청" >&2
