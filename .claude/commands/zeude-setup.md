@@ -15,12 +15,14 @@ Zeude 모니터링 시스템을 셋업한다. shim 바이너리 설치 + OTel �
 2. install.sh 실행 (agent_key를 환경변수로 전달):
 
 ```bash
-ZEUDE_AGENT_KEY="<입력받은키>" bash <(curl -fsS http://34.64.239.89:8080/releases/install.sh)
+ZEUDE_AGENT_KEY="<입력받은키>" bash <(curl -fsS https://ulkqtmqspquxppywajsu.supabase.co/storage/v1/object/public/releases/install.sh)
 ```
 
 > `-f -S` 를 반드시 붙인다. `-s` 만 쓰면 서버가 죽었거나 404일 때 **빈 내용이 bash로 넘어가서 아무것도 안 하고 종료 0** 이 된다 — 설치가 실패했는데 성공한 것처럼 보인다.
 >
-> ⚠️ **알려진 보안 숙제**: 이 URL은 날 IP + 평문 HTTP다. 같은 네트워크에 있는 사람이 내용을 바꿔치기할 수 있고, 그 내용이 `claude` 바이너리를 감싸는 채로 실행된다. `zeude.vercel.app` (이미 HTTPS) 로 옮기는 것이 숙제로 남아 있다.
+> **주소를 임의로 바꾸지 말 것.** 예전에는 `http://34.64.239.89:8080` 이었는데, 평문 HTTP + 날 IP + 무결성 검증이 없어서 같은 네트워크에 있는 사람이 실행파일을 바꿔치기할 수 있었다. 그 파일은 PATH 맨 앞에서 `claude` 를 감싸므로 영향 범위가 전 직원이다. (2026-07-31 에 HTTPS + SHA256 검증으로 옮김)
+>
+> 설치 중 `체크섬 불일치` 가 뜨면 **설치가 중단되는 게 정상이다.** 받은 파일이 예상과 다르다는 뜻이니 사용자에게 슬랙 `#ai-native` 안내만 하고 우회하지 않는다.
 
 이 스크립트가 자동으로 하는 것:
 - 플랫폼 감지 (darwin/linux, amd64/arm64)
