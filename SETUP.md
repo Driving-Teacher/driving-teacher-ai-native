@@ -305,7 +305,7 @@ Claude Code에서:
 
 `~/Documents/company-code/` 아래에 `driving-teacher-ai-native`(캠프·온보딩 자료)와 `driving-teacher-knowledge-base`(회사 KB)를 받아옵니다.
 
-> 둘 중 `driving-teacher-knowledge-base`(회사 KB)는 **비공개 레포**라서 GitHub 권한이 필요합니다. 안 받아지면 슬랙에 GitHub username 보고 → admin이 `Driving-Teacher` 조직에 초대해줍니다.
+> 둘 중 `driving-teacher-knowledge-base`(회사 KB)는 **비공개 레포**라서 GitHub 권한이 필요합니다. 안 받아지면 슬랙에 GitHub username 보고 → admin이 권한을 줍니다.
 > 이미 다른 곳에 받아둔 게 있으면 자동 감지 후 표준 위치로 이동할지 물어봅니다.
 
 ### 노션 연결
@@ -366,7 +366,7 @@ Mac 30~40분 / Windows는 WSL 설치 포함 50분~1시간. 막히면 #ai-native.
 | 로그인이 안 됨 | Teams 초대를 수락했는지 확인 (Step 1) |
 | 브라우저가 안 열림 | `c` 키 눌러서 URL 복사 → 브라우저에서 직접 열기 |
 | `/zeude-setup` 후에도 스킬이 안 보임 | Claude Code 새 창. 또는 `claude --version` 한번 호출해서 sync trigger. (Windows는 WSL인지 먼저 확인) |
-| `/company-setup` clone 403 | 비공개 레포(회사 KB) 권한 없음 → 슬랙에 GitHub username 보고 → `Driving-Teacher` 조직 초대 |
+| `/company-setup` clone 403 | 비공개 레포(회사 KB) 권한 없음 → 슬랙에 GitHub username 보고 |
 | zeude credentials 잃어버림 | 슬랙에서 새 초대 링크 요청 (호스트가 `/zeude-invite 1`로 발급) |
 | `/mcp`에 Notion이 "Needs authentication" | 그 항목 선택 → Authenticate → 브라우저에서 **회사 노션 계정**으로 승인 (개인 계정 아님) |
 | 노션 연결했는데 온보딩이 진척을 못 찾음 | Claude Code 새 창으로 다시 호출. 그래도 안 되면 노션에서 온보딩 페이지 접근 권한 요청 |
