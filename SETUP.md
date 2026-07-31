@@ -167,11 +167,26 @@ Mac과 똑같이 git·Claude Code·Node.js·Python이 한 번에 깔립니다. �
 
 ## Step 4: Claude 로그인
 
-설치 완료 후, 터미널(Mac) / Ubuntu 터미널(WSL)을 **껐다가 다시 열고**:
+설치 완료 후, 터미널(Mac) / Ubuntu 터미널(WSL)을 **껐다가 다시 열고** 아래 **두 줄**을 칩니다.
 
 ```bash
+cd ~/Documents/company-code/driving-teacher-ai-native
 claude
 ```
+
+### ⚠️ 첫 줄(`cd`)을 빠뜨리면 다음 Step에서 막힙니다
+
+`cd`는 **"그 폴더로 들어가라"** 는 뜻입니다 (change directory). 터미널에서는 폴더를 더블클릭으로 여는 게 아니라 이 명령으로 엽니다.
+
+**왜 하필 그 폴더인가** — Claude Code는 **지금 들어와 있는 폴더**에 있는 회사 도구만 알아봅니다. 회사 도구(`/zeude-setup` 등)가 저 폴더 안에 들어 있어서, 다른 곳에서 켜면 **없는 것처럼 보입니다.**
+
+> 옆방에 둔 책과 같습니다. 집에 있긴 한데, 지금 앉은 방에 없으면 못 읽습니다.
+
+**터미널을 껐다 열면 `cd`가 풀립니다.** 새 창은 항상 홈 폴더에서 시작하니까요. Step 3에서 이미 들어갔었지만 **다시 들어가야 합니다.**
+
+앞으로도 **회사 일을 할 때는 이 폴더에서** `claude` 를 켜세요.
+
+### 로그인
 
 1. 브라우저가 자동으로 열립니다
 2. Claude.ai 계정으로 로그인합니다
@@ -191,6 +206,8 @@ git --version
 python3 --version   # macOS
 # Windows(WSL)도 python3 입니다 — WSL Ubuntu에는 python 명령이 없습니다
 ```
+
+> Step 4에서 `claude` 로 들어가 있으면 이 명령들이 안 먹습니다. **`/exit` 를 쳐서 Claude Code를 나온 다음** 위 4개를 확인하세요. 확인이 끝나면 Step 4의 두 줄(`cd` → `claude`)로 다시 들어갑니다.
 
 4개 다 버전이 나오면 설치 완료. 여기까지가 터미널 작업이고, 남은 Step 6~7은 **Claude Code 안에서** 합니다. **두 줄이면 끝납니다.**
 
@@ -214,11 +231,21 @@ Step 6부터는 `/zeude-setup` 처럼 **슬래시(`/`)로 시작하는 것**을 
 
 링크가 안 왔거나 잃어버렸으면 슬랙에 요청.
 
-링크 클릭 후 Claude Code에서:
+링크를 열면 **`zd_` 로 시작하는 긴 글자**가 나옵니다. **그 화면을 닫지 말고** 아래를 진행하세요 — 곧 붙여넣으라고 물어봅니다.
+
+Claude Code에서:
 
 ```
 /zeude-setup
 ```
+
+`zd_...` 를 붙여넣으라고 하면 초대 링크 화면에서 복사해 붙여넣으면 됩니다.
+
+> **`/zeude-setup` 이 목록에 안 뜨나요?** Step 4의 `cd` 를 빠뜨린 겁니다. Claude Code를 나가서(`/exit`) 아래 두 줄을 다시 치세요.
+> ```bash
+> cd ~/Documents/company-code/driving-teacher-ai-native
+> claude
+> ```
 
 이 한 번이 다음을 다 해줍니다:
 - 텔레메트리 shim 설치 (Claude Code 사용 데이터가 팀 대시보드에 자동 기록)
@@ -278,7 +305,7 @@ Step 6부터는 `/zeude-setup` 처럼 **슬래시(`/`)로 시작하는 것**을 
 
 `~/Documents/company-code/` 아래에 `driving-teacher-ai-native`(캠프·온보딩 자료)와 `driving-teacher-knowledge-base`(회사 KB)를 받아옵니다.
 
-> private 레포라 GitHub 권한 필요. 안 받아지면 슬랙에 GitHub username 보고 → admin 초대.
+> 둘 중 `driving-teacher-knowledge-base`(회사 KB)는 **비공개 레포**라서 GitHub 권한이 필요합니다. 안 받아지면 슬랙에 GitHub username 보고 → admin이 `Driving-Teacher` 조직에 초대해줍니다.
 > 이미 다른 곳에 받아둔 게 있으면 자동 감지 후 표준 위치로 이동할지 물어봅니다.
 
 ### 노션 연결
@@ -339,12 +366,15 @@ Mac 30~40분 / Windows는 WSL 설치 포함 50분~1시간. 막히면 #ai-native.
 | 로그인이 안 됨 | Teams 초대를 수락했는지 확인 (Step 1) |
 | 브라우저가 안 열림 | `c` 키 눌러서 URL 복사 → 브라우저에서 직접 열기 |
 | `/zeude-setup` 후에도 스킬이 안 보임 | Claude Code 새 창. 또는 `claude --version` 한번 호출해서 sync trigger. (Windows는 WSL인지 먼저 확인) |
-| `/company-setup` clone 403 | driving-teacher-bot org 멤버 아님 → 슬랙에 GitHub username 보고 |
+| `/company-setup` clone 403 | 비공개 레포(회사 KB) 권한 없음 → 슬랙에 GitHub username 보고 → `Driving-Teacher` 조직 초대 |
 | zeude credentials 잃어버림 | 슬랙에서 새 초대 링크 요청 (호스트가 `/zeude-invite 1`로 발급) |
 | `/mcp`에 Notion이 "Needs authentication" | 그 항목 선택 → Authenticate → 브라우저에서 **회사 노션 계정**으로 승인 (개인 계정 아님) |
-| 노션 연결했는데 온보딩이 진척을 못 찾음 | Claude Code 새 창으로 다시 호출. 그래도면 노션에서 온보딩 페이지 접근 권한 요청 |
+| 노션 연결했는데 온보딩이 진척을 못 찾음 | Claude Code 새 창으로 다시 호출. 그래도 안 되면 노션에서 온보딩 페이지 접근 권한 요청 |
+| **`/zeude-setup`이 없다고 나옴** | **Step 4의 `cd` 를 빠뜨린 것.** `/exit` → `cd ~/Documents/company-code/driving-teacher-ai-native` → `claude` 로 다시 켜기 |
 | `/ai-onboarding`·`/onboarding`이 없다고 나옴 | Step 6 `/zeude-setup`이 안 끝난 것 (스킬은 Zeude가 동기화). 새 창 후 재시도 |
-| `/kb`가 회사 자료를 못 찾음 | Step 7 `/company-setup`이 안 끝난 것. 다시 실행 |
+| Claude Code 안에서 `claude --version` 등이 안 먹음 | 대화창 안이라서 그렇습니다. `/exit` 로 나와서 터미널에서 치세요 |
+| 초대 링크 화면을 닫아버려서 `zd_` 키를 잃음 | 슬랙 `#ai-native` 에 재발급 요청 (링크는 1시간 후 만료됩니다) |
+| `/kb`가 회사 자료를 못 찾음 | `/company-setup`이 안 끝난 것 (`/ai-onboarding` 중간에 실행됩니다). 직접 `/company-setup` 재실행 |
 | 스킬은 뜨는데 "무슨 뜻인지 모르겠음" | 정상입니다. Step 7 `/ai-onboarding`이 하나씩 설명해줍니다 |
 
 그래도 안 되면 **슬랙에 에러 스크린샷** 올려주세요. 도와드립니다!
