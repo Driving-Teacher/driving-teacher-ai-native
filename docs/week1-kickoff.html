@@ -284,6 +284,24 @@
 </head>
 <body>
 
+<!-- ▼ 아카이브 배너 — 이 덱은 더 이상 현행이 아니다.
+     지우지 않고 그대로 두되, 열었을 때 바로 알 수 있게 표시만 한다. -->
+<style>
+  .archive-note {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+    background: #FF7439; color: #1C1C1C;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; font-weight: 700;
+    text-align: center; padding: 0.42rem 1rem; letter-spacing: 0.01em;
+  }
+  .archive-note .sub { font-weight: 400; opacity: 0.78; }
+  /* 배너가 들어온 만큼 원래 요소들을 아래로 민다 */
+  .topbar { top: 27px !important; }
+  .slide { padding-top: calc(9vh + 27px) !important; }
+</style>
+<div class="archive-note">시즌1 기록 · 2026-04~05 &nbsp;·&nbsp; <span class="sub">지금 쓰는 자료는 docs/modules/ 입니다</span></div>
+<!-- ▲ 아카이브 배너 -->
+
+
 <div class="noise"></div>
 <div class="progress" id="progress"></div>
 <div class="counter" id="counter"></div>
@@ -606,8 +624,18 @@
       <div class="roadmap-cell">고도화 스킬 + 모니터링</div>
 
       <div class="roadmap-cell week">3</div>
-      <div class="roadmap-cell">OpenClaw — 항상 켜진 AI</div>
-      <div class="roadmap-cell">Telegram/Discord 연동</div>
+      <!-- 2026-04 발표 당시 계획은 OpenClaw + Telegram/Discord 였다.
+           실제로는 Hermes + 슬랙으로 바뀌었고 week3-kickoff.html 은 그렇게
+           고쳐졌는데, 여기 예고편만 안 고쳐져서 1주차와 3주차가 서로 다른
+           말을 하고 있었다. 계획이 바뀐 것도 기록이라 지우지 않고 병기한다. -->
+      <div class="roadmap-cell">
+        <span style="text-decoration:line-through;opacity:0.45;">OpenClaw</span>
+        Hermes — 항상 켜진 AI
+      </div>
+      <div class="roadmap-cell">
+        <span style="text-decoration:line-through;opacity:0.45;">Telegram/Discord</span>
+        슬랙 연동
+      </div>
 
       <div class="roadmap-cell week">4</div>
       <div class="roadmap-cell">회고 + 선언</div>

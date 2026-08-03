@@ -26,7 +26,27 @@
 - 설계 근거: [`docs/superpowers/specs/2026-07-28-onboarding-track-split-design.md`](docs/superpowers/specs/2026-07-28-onboarding-track-split-design.md)
 - 막히면 슬랙 `#ai-native`
 
+## 세션 발표 자료는 어디에
+
+**[`docs/modules/`](docs/modules/README.md)** — 주제 모듈 5개입니다. 한 회차는 보통 「사례 공유」 하나 + 다른 모듈 하나로 짭니다.
+
+| 모듈 | 분량 | 얼마나 자주 손보나 |
+|---|---|---|
+| 01 왜 AI Native 인가 | 15분 | 거의 안 바뀜 |
+| 02 사례 공유 | 30분 | **매 회 새로 채움** |
+| 03 같이 인프라 세팅 | 40분 | 도구 바뀔 때 |
+| 04 팀 지식 채우기 | 60분 | 거의 안 바뀜 |
+| 05 회고 · 선언 | 40분 | 시즌 마지막 회 |
+
+고칠 때는 `.md` 만 고치고 `python3 scripts/build-deck.py` 를 돌립니다. `.html` 은 구운 결과물이라 직접 고치면 사라집니다.
+
+**도구 사용법은 여기 없습니다.** Claude Code·`CLAUDE.md`·스킬·MCP·플러그인은 `/ai-onboarding` Step 1~13 이 덮습니다. 모듈에는 **모여야만 되는 것**만 남겼습니다.
+
+---
+
 > 아래 「커리큘럼」부터는 **2026년 4~5월에 진행한 AI Native Camp 시즌1 기록**입니다. 신규 입사자가 통수강할 필요는 없습니다 — 그 내용은 `/ai-onboarding` Step 1~13으로 재편됐습니다. 캠프를 들었던 분의 복습은 `/camp-review`.
+>
+> 시즌1·2 덱(`docs/week*-kickoff.html`, `docs/ax-*.html`)은 지우지 않았고, 열면 상단에 아카이브 배너가 뜹니다.
 
 ---
 
@@ -48,7 +68,7 @@ AI Native **=** AI가 있다는 전제로 업무/경험을 재설계하는 것
 |------|------|--------|
 | 1 | **체험 + MCP + 첫 스킬** | 내 첫 스킬 + MCP 연결 |
 | 2 | **실전 적용 + 도구 확장 + Zeude** | 고도화된 스킬 + 팀 공유 + 모니터링 시작 |
-| 3 | **OpenClaw** | 항상 켜진 AI (Telegram/Discord) |
+| 3 | ~~OpenClaw~~ → **Hermes** | 항상 켜진 AI (~~Telegram/Discord~~ → 슬랙) |
 | 4 | **회고 + 선언** | Zeude 데이터 기반 회고 + AI Native 선언 |
 
 ## 팀 구성
@@ -101,9 +121,11 @@ AI Native **=** AI가 있다는 전제로 업무/경험을 재설계하는 것
 
 ---
 
-### Week 3: OpenClaw
+### Week 3: ~~OpenClaw~~ → Hermes
 
-> 터미널 없이 Telegram/Discord로 AI에게 언제든 요청할 수 있는 "항상 켜진 AI"
+> ⚠️ **발표 당시 계획이고 실제로는 달라졌습니다.** OpenClaw 대신 **Hermes**를, Telegram/Discord 대신 **슬랙**을 씁니다. 아래 표는 2026-04 시점의 계획 기록입니다.
+
+> 터미널 없이 슬랙으로 AI에게 언제든 요청할 수 있는 "항상 켜진 AI"
 
 | 시간 | 내용 | 결과물 |
 |------|------|--------|

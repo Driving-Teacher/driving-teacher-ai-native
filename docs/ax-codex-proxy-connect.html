@@ -167,6 +167,24 @@
 </head>
 <body>
 
+<!-- ▼ 아카이브 배너 — 이 덱은 더 이상 현행이 아니다.
+     지우지 않고 그대로 두되, 열었을 때 바로 알 수 있게 표시만 한다. -->
+<style>
+  .archive-note {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+    background: #FF7439; color: #1C1C1C;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; font-weight: 700;
+    text-align: center; padding: 0.42rem 1rem; letter-spacing: 0.01em;
+  }
+  .archive-note .sub { font-weight: 400; opacity: 0.78; }
+  /* 배너가 들어온 만큼 원래 요소들을 아래로 민다 */
+  .topbar { top: 27px !important; }
+  .slide { padding-top: calc(9vh + 27px) !important; }
+</style>
+<div class="archive-note">시즌2에 쓴 덱 · 2026-06~07 &nbsp;·&nbsp; <span class="sub">내용은 docs/modules/ 로 옮겼습니다</span></div>
+<!-- ▲ 아카이브 배너 -->
+
+
 <div class="topbar"><div id="progress"></div></div>
 <div class="hint">← → 또는 클릭으로 이동</div>
 <div id="counter">1 / 9</div>
