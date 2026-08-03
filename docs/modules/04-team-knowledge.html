@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>팀 지식 채우기 — 회사 색은 우리가 칠한다</title>
+<!-- ⚠️ 이 파일은 scripts/build-deck.py 가 만든 결과물이다.
+     고칠 곳은 docs/modules/04-team-knowledge.md 이고, 고친 뒤 다시 굽는다:
+         python3 scripts/build-deck.py
+     여기를 직접 고치면 다음 빌드에 사라진다. -->
+<link rel="stylesheet" href="../deck.css">
+</head>
+<body>
+
+<div class="topbar"><div id="progress"></div></div>
+<div class="hint">← → 또는 클릭으로 이동</div>
+<div id="counter">1 / 8</div>
+
+<div class="deck" id="deck">
+
+<div class="slide">
+  <h1 class="reveal reveal-delay-1">회사 이야기는 AI가 압니다.</h1>
+  <h1 class="reveal reveal-delay-2">팀 이야기만 <span class="accent">아무도 모릅니다.</span></h1>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">00</span><span class="sep">—</span><span class="label">오늘 흐름</span></div>
+  <h2 class="reveal reveal-delay-1">보고 끝나는 게 아니라, <span class="accent">만들고 나갑니다.</span></h2>
+  <div class="timeline reveal reveal-delay-2"><div class="tl-row"><div class="tl-time">20분</div><div class="tl-bar"></div><div class="tl-body"><div class="t">왜 팀이 직접 해야 하나</div><div class="d">신규자 온보딩이 어떻게 굴러가는지</div></div></div><div class="tl-row"><div class="tl-time">30분</div><div class="tl-bar"></div><div class="tl-body"><div class="t">우리 팀 이야기를 AI로 만들기</div><div class="d">각자 노트북으로, 팀 노션에 저장</div></div></div><div class="tl-row"><div class="tl-time">10분</div><div class="tl-bar"></div><div class="tl-body"><div class="t">우리 팀만의 한 가지 자랑</div><div class="d">"여기 들어가고 싶다" 싶은 팀 뽑기</div></div></div></div>
+  <p class="lead reveal reveal-delay-3">오늘 만드는 건 연습용이 아닙니다. <span class="bold">다음에 들어올 사람이 첫 주에 실제로 읽습니다.</span></p>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">01</span><span class="sep">—</span><span class="label">왜</span></div>
+  <h2 class="reveal reveal-delay-1">AI는 <span class="accent">"그거"</span>를 모릅니다.</h2>
+  <p class="reveal reveal-delay-2">"내 일정 좀 봐줘" — 사람은 알아듣지만 AI는 못 알아듣습니다. 어느 캘린더인지, 어느 타임존인지, 오늘이 며칠인지를 사람이 알려줘야 합니다.</p>
+  <p class="lead reveal reveal-delay-3">팀 이야기가 정확히 그렇습니다. 우리 팀이 요즘 뭐에 꽂혀 있는지, 뭘 물어봐야 하는지, 어느 채널에 말을 걸어야 하는지 — <span class="accent">문서 어디에도 없습니다.</span></p>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">02</span><span class="sep">—</span><span class="label">비어 있는 칸</span></div>
+  <h2 class="reveal reveal-delay-1">2주 코스 중 <span class="accent">세 칸</span>이 비어 있습니다.</h2>
+  <div class="timeline reveal reveal-delay-2"><div class="tl-row"><div class="tl-time">Day 1</div><div class="tl-bar"></div><div class="tl-body"><div class="t">회사·근무환경·문화</div><div class="d">이미 채워져 있음</div></div></div><div class="tl-row"><div class="tl-time">Day 2~4</div><div class="tl-bar"></div><div class="tl-body"><div class="t">우리 팀 · 옆 팀</div><div class="d">🧩 비어 있음 — 오늘 채웁니다</div></div></div><div class="tl-row"><div class="tl-time">Day 5~9</div><div class="tl-bar"></div><div class="tl-body"><div class="t">사람들 · AI로 일하기</div><div class="d">이미 채워져 있음</div></div></div></div>
+  <div class="note reveal reveal-delay-3"><p>회사 전체 이야기는 이미 KB 에 있습니다. 팀 단위 이야기만 각 팀이 직접 넣어야 합니다. 대신 써줄 사람이 없어요.</p></div>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">03</span><span class="sep">—</span><span class="label">원칙</span></div>
+  <h2 class="reveal reveal-delay-1">도구는 <span class="accent">외부</span>에서, 색은 <span class="accent2">우리</span>가.</h2>
+  <div class="cards reveal reveal-delay-2"><div class="card"><h3>🚗 자동차 자체</h3><p>엔진·차체 — Claude Code, Hermes, 플러그인. 밖에서 가져다 씁니다. 우리가 만들 이유가 없어요.</p></div><div class="card"><h3>🗺 운전 매뉴얼·네비</h3><p>우리 회사가 어떻게 굴러가는지. 이건 밖에 없습니다. 우리만 압니다.</p></div></div>
+  <p class="lead reveal reveal-delay-3">좋은 도구를 붙이면 AI가 알아서 다 해준다는 건 환상입니다. 채울 자리는 우리 몫으로 남습니다.</p>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">04</span><span class="sep">—</span><span class="label">실습</span></div>
+  <h2 class="reveal reveal-delay-1">이제 <span class="accent">여러분 차례</span>입니다. 30분.</h2>
+  <ul class="bullets reveal reveal-delay-2"><li><span class="bold">① 우리 팀이 뭐 하는 팀인지</span> — 한 문단. 직무 설명 말고, 요즘 실제로 뭘 하는지</li><li><span class="bold">② 첫 주에 꼭 알아야 할 것 3개</span> — 모르면 헤매는 것들</li><li><span class="bold">③ 누구에게 뭘 물어보나</span> — 이름 말고 역할로</li><li><span class="bold">④ 우리 팀 용어</span> — 밖에서는 안 쓰는 말들</li></ul>
+  <pre class="reveal reveal-delay-3"><code>/kb</code></pre>
+  <p class="lead reveal reveal-delay-4">막히면 옆자리와 같이, 그래도 안 되면 손 드세요.</p>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">05</span><span class="sep">—</span><span class="label">더 복잡한 일이라면</span></div>
+  <h2 class="reveal reveal-delay-1">한 번 묻기 vs <span class="accent">계속 돌아가기.</span></h2>
+  <div class="timeline reveal reveal-delay-2"><div class="tl-row"><div class="tl-time">한 번</div><div class="tl-bar"></div><div class="tl-body"><div class="t">Claude Code · Hermes</div><div class="d">묻고, 답 받고, 끝</div></div></div><div class="tl-row"><div class="tl-time">계속</div><div class="tl-bar"></div><div class="tl-body"><div class="t">Ouroboros</div><div class="d">스스로 질문하고 실행하고 검증하고 다시 시도</div></div></div></div>
+  <p class="lead reveal reveal-delay-3">모호한 일을 명확한 명세로 자동 변환합니다. "AI에게 맡기고 싶은데 뭐라고 시켜야 할지 모르겠는 일"이 있으면 이걸 씁니다.</p>
+  <pre class="reveal reveal-delay-4"><code>/ouroboros:interview</code></pre>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">정리</span></div>
+  <h2 class="reveal reveal-delay-1">오늘 채운 그 한 칸, <span class="accent">다음 사람이 첫 주에 읽습니다.</span></h2>
+  <p class="lead reveal reveal-delay-2">온보딩은 문서를 늘리는 일이 아니라, 팀이 자기소개를 한 번 제대로 하는 일입니다.</p>
+</div>
+
+</div>
+
+<script src="../deck.js"></script>
+</body>
+</html>

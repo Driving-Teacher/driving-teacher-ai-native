@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>같이 인프라 세팅 — 혼자 하면 막히는 것들</title>
+<!-- ⚠️ 이 파일은 scripts/build-deck.py 가 만든 결과물이다.
+     고칠 곳은 docs/modules/03-infra-together.md 이고, 고친 뒤 다시 굽는다:
+         python3 scripts/build-deck.py
+     여기를 직접 고치면 다음 빌드에 사라진다. -->
+<link rel="stylesheet" href="../deck.css">
+</head>
+<body>
+
+<div class="topbar"><div id="progress"></div></div>
+<div class="hint">← → 또는 클릭으로 이동</div>
+<div id="counter">1 / 8</div>
+
+<div class="deck" id="deck">
+
+<div class="slide">
+  <h1 class="reveal reveal-delay-1">혼자 하면</h1>
+  <h1 class="reveal reveal-delay-2">막히는 것들.</h1>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">00</span><span class="sep">—</span><span class="label">왜 모여서 하나</span></div>
+  <h2 class="reveal reveal-delay-1">각자 하면, 막힌 데서 <span class="accent">그냥 멈춥니다.</span></h2>
+  <p class="lead reveal reveal-delay-2">설치는 혼자 해도 됩니다. 그런데 안 될 때가 문제예요.</p>
+  <ul class="bullets reveal reveal-delay-3"><li>에러 하나에 막혀서 그날 저녁을 통째로 쓰거나</li><li>그냥 포기하고 원래 방식으로 돌아가거나</li><li>물어보기 민망해서 며칠을 그대로 두거나</li></ul>
+  <p class="reveal reveal-delay-4"><span class="bold">그래서 이건 같이 합니다.</span> 옆에서 화면 보고 5초면 끝나는 것들이라서요.</p>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">01</span><span class="sep">—</span><span class="label">오늘 붙일 것</span></div>
+  <h2 class="reveal reveal-delay-1">셋을 붙입니다.</h2>
+  <div class="cards reveal reveal-delay-2"><div class="card"><h3>📊 Zeude</h3><p>팀 AI 대시보드. 회사 스킬이 자동으로 내 컴퓨터에 들어옵니다.</p></div><div class="card"><h3>💬 Hermes</h3><p>슬랙에서 일하는 봇. 터미널을 안 열어도 시킬 수 있습니다.</p></div><div class="card"><h3>🔄 계정 풀</h3><p>각자 계정을 모아서 돌려 씁니다. 한 명이 한도에 걸려도 안 멈춥니다.</p></div></div>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">02</span><span class="sep">—</span><span class="label">Zeude</span></div>
+  <h2 class="reveal reveal-delay-1">스킬을 <span class="accent">받는</span> 곳이자, 팀이 뭘 하는지 <span class="accent2">보이는</span> 곳.</h2>
+  <ul class="bullets reveal reveal-delay-2"><li>누가 만든 회사 스킬이 다음 sync 때 내 컴퓨터로 자동으로 들어옵니다</li><li>팀 전체가 AI를 얼마나·어디에 쓰는지 한 화면에서 보입니다</li><li>내가 만든 스킬을 전사에 배포하는 것도 여기서 합니다</li></ul>
+  <pre class="reveal reveal-delay-3"><code>/zeude-setup</code></pre>
+  <div class="note reveal reveal-delay-4"><p>예전엔 스킬을 KB 레포에 push 해서 공유한다고 안내했습니다. 지금은 Zeude 가 표준입니다. KB 레포에는 KB 데이터를 다루는 스킬만 둡니다.</p></div>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">03</span><span class="sep">—</span><span class="label">Hermes</span></div>
+  <h2 class="reveal reveal-delay-1">터미널을 안 열어도 <span class="accent">슬랙에서</span> 시킵니다.</h2>
+  <div class="timeline reveal reveal-delay-2"><div class="tl-row"><div class="tl-time">Claude Code</div><div class="tl-bar"></div><div class="tl-body"><div class="t">정밀 수술</div><div class="d">앉아서 같이 파고들 때</div></div></div><div class="tl-row"><div class="tl-time">Hermes</div><div class="tl-bar"></div><div class="tl-body"><div class="t">항상 옆의 비서</div><div class="d">이동 중에, 슬랙에서 한 줄로</div></div></div></div>
+  <ul class="bullets reveal reveal-delay-3"><li>대화할수록 내 업무 패턴을 기억해서 점점 정확해집니다</li><li><code>매일 9시에 ___</code> 한 문장으로 반복 작업을 예약할 수 있습니다</li></ul>
+  <pre class="reveal reveal-delay-4"><code>/hermes-setup</code></pre>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">04</span><span class="sep">—</span><span class="label">계정 풀</span></div>
+  <h2 class="reveal reveal-delay-1">한 명이 막히면 다 막히는 걸, <span class="accent">안 막히게.</span></h2>
+  <div class="cards reveal reveal-delay-2"><div class="card"><h3>계정 하나를 같이 쓰면</h3><p>그 계정이 한도에 걸리는 순간 전원이 멈춥니다.</p></div><div class="card"><h3>계정 여러 개를 풀에 모으면</h3><p>순서대로 돌려 씁니다. 하나가 걸려도 나머지가 받습니다.</p></div></div>
+  <p class="lead reveal reveal-delay-3">비밀번호는 주지 않습니다. OAuth 승인만 하면 끝이고, 언제든 뺄 수 있습니다.</p>
+  <pre class="reveal reveal-delay-4"><code>/cliproxy-connect</code></pre>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">05</span><span class="sep">—</span><span class="label">오늘 순서</span></div>
+  <h2 class="reveal reveal-delay-1">1인 <span class="accent">10분</span> 안쪽. 순서만 따라오세요.</h2>
+  <div class="timeline reveal reveal-delay-2"><div class="tl-row"><div class="tl-time">1</div><div class="tl-bar"></div><div class="tl-body"><div class="t">/zeude-setup</div><div class="d">가입하고 회사 스킬 받기</div></div></div><div class="tl-row"><div class="tl-time">2</div><div class="tl-bar"></div><div class="tl-body"><div class="t">/hermes-setup</div><div class="d">슬랙 봇 설치 + 앱 연결</div></div></div><div class="tl-row"><div class="tl-time">3</div><div class="tl-bar"></div><div class="tl-body"><div class="t">/cliproxy-connect</div><div class="d">계정 풀에 붙기</div></div></div><div class="tl-row"><div class="tl-time">4</div><div class="tl-bar"></div><div class="tl-body"><div class="t">확인</div><div class="d">슬랙에서 봇에게 한 줄 던져보기</div></div></div></div>
+  <div class="note reveal reveal-delay-3"><p>막히면 손 드세요. 혼자 붙잡고 있는 게 오늘 제일 손해입니다.</p></div>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">정리</span></div>
+  <h2 class="reveal reveal-delay-1">한 명의 계정이, <span class="accent">팀의 여유</span>가 됩니다.</h2>
+  <p class="lead reveal reveal-delay-2">오늘 붙인 건 도구가 아니라 바닥입니다. 이 위에서 다음 것들이 돌아갑니다.</p>
+</div>
+
+</div>
+
+<script src="../deck.js"></script>
+</body>
+</html>
