@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AX 세션 — 내 Codex 계정, 같은 풀에</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+  @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #1C1C1C;
+    --fg: #F6F6F3;
+    --accent: #C89BFF;
+    --accent2: #FFD547;
+    --red: #FF7439;
+    --green: #1AC569;
+    --dim: #6B6B6B;
+    --surface: #2A2929;
+    --line: #383737;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Pretendard Variable', 'Pretendard', sans-serif;
+    --display: 'Syncopate', sans-serif;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    overflow: hidden;
+  }
+
+  .deck { width: 100vw; height: 100vh; position: relative; }
+
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; height: 4px;
+    background: #2A2929; z-index: 50;
+  }
+  #progress { height: 100%; width: 0; background: var(--accent); transition: width 0.5s ease; }
+  #counter {
+    position: fixed; bottom: 2.4vh; right: 3vw; z-index: 50;
+    font-family: var(--mono); font-size: 0.8rem; color: var(--dim);
+  }
+  .hint {
+    position: fixed; bottom: 2.4vh; left: 3vw; z-index: 50;
+    font-family: var(--mono); font-size: 0.75rem; color: var(--dim);
+  }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 9vh 9vw;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide.scrollable { justify-content: flex-start; overflow-y: auto; }
+  .slide.scrollable::-webkit-scrollbar { width: 6px; }
+  .slide.scrollable::-webkit-scrollbar-thumb { background: #3a3a3a; border-radius: 3px; }
+
+  .slide.active .reveal { animation: slideUp 0.6s ease forwards; }
+  .reveal-delay-1 { animation-delay: 0.1s; }
+  .reveal-delay-2 { animation-delay: 0.2s; }
+  .reveal-delay-3 { animation-delay: 0.3s; }
+  .reveal-delay-4 { animation-delay: 0.4s; }
+  .reveal-delay-5 { animation-delay: 0.5s; }
+  .reveal-delay-6 { animation-delay: 0.6s; }
+  .reveal-delay-7 { animation-delay: 0.7s; }
+  .reveal { opacity: 0; }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: translateY(0); } }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.2rem, 5.6vw, 5.6rem);
+    font-weight: 700; line-height: 1.06; letter-spacing: -0.02em;
+  }
+  h2 {
+    font-size: clamp(1.8rem, 3.6vw, 3.2rem);
+    font-weight: 800; line-height: 1.15; letter-spacing: -0.02em;
+  }
+  h3 { font-size: clamp(1.05rem, 1.6vw, 1.4rem); font-weight: 700; }
+  p  { font-size: clamp(1rem, 1.5vw, 1.35rem); line-height: 1.6; color: #D8D8D4; }
+
+  .tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--mono); font-size: 0.85rem; color: var(--dim);
+    margin-bottom: 1.6rem;
+  }
+  .tag .num { color: var(--accent); font-weight: 700; }
+  .tag .sep { opacity: 0.5; }
+
+  .bold { font-weight: 800; }
+  .accent { color: var(--accent); }
+  .accent2 { color: var(--accent2); }
+  .green { color: var(--green); }
+  .red { color: var(--red); }
+  .dim { color: var(--dim); }
+  .mono { font-family: var(--mono); }
+
+  .lead { font-size: clamp(1.15rem, 2vw, 1.7rem); color: #CFCFCB; }
+  .spacer { height: 2.4rem; }
+  .spacer-sm { height: 1.2rem; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 16px; padding: 1.5rem 1.6rem;
+  }
+  .card.accent-l { border-color: rgba(200,155,255,0.4); }
+  .card.gold-l { border-color: rgba(255,213,71,0.35); }
+  .label-mono { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.02em; }
+
+  /* step list */
+  .steps { display: flex; flex-direction: column; gap: 0.9rem; margin-top: 0.4rem; }
+  .step {
+    display: flex; gap: 1rem; align-items: flex-start;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 1rem 1.2rem;
+  }
+  .step .n {
+    flex: 0 0 auto; width: 2.1rem; height: 2.1rem; border-radius: 50%;
+    background: var(--accent); color: #1C1C1C; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 1rem;
+  }
+  .step .body { flex: 1; }
+  .step .body .t { font-weight: 700; font-size: clamp(1rem,1.5vw,1.25rem); }
+  .step .body .d { color: var(--dim); font-size: 0.92rem; margin-top: 0.2rem; }
+  .step .body .d code {
+    font-family: var(--mono); color: var(--accent2);
+    background: #211f1a; padding: 0.1rem 0.4rem; border-radius: 5px; font-size: 0.85em;
+  }
+
+  .pill {
+    display: inline-block; font-family: var(--mono); font-size: 0.8rem;
+    color: var(--accent2); border: 1px solid rgba(255,213,71,0.4);
+    border-radius: 999px; padding: 0.2rem 0.7rem;
+  }
+
+  /* timeline */
+  .timeline { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 0.4rem; }
+  .tl-row { display: flex; gap: 1.2rem; align-items: center; }
+  .tl-time {
+    flex: 0 0 5.5rem; text-align: right; font-family: var(--mono);
+    font-weight: 700; color: var(--accent2); font-size: 1rem;
+  }
+  .tl-bar { flex: 0 0 8px; align-self: stretch; background: var(--accent); border-radius: 4px; opacity: 0.55; }
+  .tl-body { flex: 1; padding: 0.5rem 0; }
+  .tl-body .t { font-weight: 700; font-size: clamp(1rem,1.5vw,1.25rem); }
+  .tl-body .d { color: var(--dim); font-size: 0.9rem; margin-top: 0.1rem; }
+
+  .note {
+    border-left: 3px solid var(--accent2); background: rgba(255,213,71,0.07);
+    padding: 1rem 1.3rem; border-radius: 0 12px 12px 0; margin-top: 1rem;
+  }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; align-items: stretch; }
+  .why-bad { border-color: rgba(255,116,57,0.4); }
+  .why-good { border-color: rgba(26,197,105,0.4); }
+  .big-emoji { font-size: 2.4rem; line-height: 1; }
+</style>
+</head>
+<body>
+
+<div class="topbar"><div id="progress"></div></div>
+<div class="hint">← → 또는 클릭으로 이동</div>
+<div id="counter">1 / 9</div>
+
+<div class="deck" id="deck">
+
+  <!-- 0a. Season 2 Title -->
+  <div class="slide active">
+    <div class="tag reveal"><span class="num">AI NATIVE</span><span class="sep">—</span><span class="label">시즌 2</span></div>
+    <h1 class="reveal reveal-delay-1">해봤다.<br><span class="accent">이제 나눌 차례.</span></h1>
+    <div class="spacer-sm"></div>
+    <p class="lead reveal reveal-delay-2">
+      시즌1에서 도구를 깔고 일하는 방식을 다시 봤다면,<br>
+      시즌2는 <span class="bold accent2">각자가 실제로 해본 것</span>을 나눕니다.
+    </p>
+  </div>
+
+  <!-- 0b. S1 -> S2 + why (unknown unknowns) -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">00</span><span class="sep">—</span><span class="label">시즌1 → 시즌2</span></div>
+    <h2 class="reveal reveal-delay-1">배우기에서, <span class="accent">나누기로.</span></h2>
+    <div class="spacer"></div>
+    <div class="grid-2">
+      <div class="card reveal reveal-delay-2">
+        <div class="label-mono dim">SEASON 1 — 출발선에 서기</div>
+        <p style="margin-top:0.6rem; font-size:1.05rem;">
+          도구를 깔고(Claude Code · Hermes · 스킬), 일하는 방식을 다시 본다.
+          <span class="dim">"AI에게 시키기 시작"</span>
+        </p>
+      </div>
+      <div class="card accent-l reveal reveal-delay-3">
+        <div class="label-mono accent">SEASON 2 — 그 길을 걷기</div>
+        <p style="margin-top:0.6rem; font-size:1.05rem;">
+          각자가 <span class="bold">실제로 해본 경험</span>을 공유한다.
+          꼭 '일'이 아니어도 OK — <span class="bold accent2">무엇이든 AI로 해본 것.</span>
+        </p>
+      </div>
+    </div>
+    <div class="note reveal reveal-delay-4">
+      <p style="font-size:1rem;">왜 나누나 — 남이 해낸 걸 보는 순간 <span class="bold accent2">"이런 것까지 되는구나."</span>
+      그게 우리의 <span class="bold">unknown unknown</span>을 줄입니다.
+      <span class="dim">오늘은 — 실전 사례 하나 보고, 다 같이 계정 풀에 붙습니다.</span></p>
+    </div>
+  </div>
+
+  <!-- 0c. 실전 사례 — 썸네일 자동화 (섹션 인트로 / 핸드오프)
+       이 레포는 public 이다. 사례 발표자 실명을 넣지 않는다 (직무로만 표기).
+       발표자는 현장에 있으므로 이름은 말로 소개하면 된다. -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">사례</span><span class="sep">—</span><span class="label">실전 공유</span></div>
+    <h2 class="reveal reveal-delay-1">마케팅 팀 사례 — <span class="accent">썸네일 자동화</span></h2>
+    <div class="spacer-sm"></div>
+    <p class="lead reveal reveal-delay-2">
+      직접 만들어 본 걸 보여드립니다.<br>
+      <span class="dim">"이런 것까지 되는구나" 한 조각 — 오늘의 첫 번째 사례.</span>
+    </p>
+  </div>
+
+  <!-- 1. Title (codex 실습 도입) -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">AX</span><span class="sep">—</span><span class="label">오늘의 실습</span></div>
+    <h1 class="reveal reveal-delay-1">내 Codex 계정,<br><span class="accent">같은 풀에.</span></h1>
+    <div class="spacer-sm"></div>
+    <p class="lead reveal reveal-delay-2">
+      각자의 ChatGPT(Codex) 계정을 <span class="bold accent2">하나의 공용 풀</span>에 모읍니다.<br>
+      한도에 덜 막히고, 같이 더 오래 씁니다. <span class="dim">— 5분이면 끝나요.</span>
+    </p>
+  </div>
+
+  <!-- 2. Why -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">01</span><span class="sep">—</span><span class="label">왜 모으나</span></div>
+    <h2 class="reveal reveal-delay-1">한 명이 막히면, <span class="red">다 막힙니다.</span></h2>
+    <div class="spacer"></div>
+    <div class="why-grid">
+      <div class="card why-bad reveal reveal-delay-2">
+        <div class="big-emoji">🧍</div>
+        <div class="spacer-sm"></div>
+        <h3 class="red">계정 1개로 같이 쓰면</h3>
+        <p style="margin-top:0.5rem; font-size:1.05rem;">
+          그 계정 사용량 한도에 닿는 순간 <span class="bold">전원 멈춤.</span>
+          누가 많이 쓴 시간엔 다른 사람도 다 튕깁니다.
+        </p>
+      </div>
+      <div class="card why-good reveal reveal-delay-3">
+        <div class="big-emoji">👥🔄</div>
+        <div class="spacer-sm"></div>
+        <h3 class="green">계정 여러 개를 풀에 모으면</h3>
+        <p style="margin-top:0.5rem; font-size:1.05rem;">
+          요청이 <span class="bold accent">round-robin</span>으로 계정들에 번갈아 분산.
+          한 계정이 한도를 쳐도 나머지로 자동 우회됩니다.
+        </p>
+      </div>
+    </div>
+    <div class="note reveal reveal-delay-4">
+      <p style="font-size:1rem;">즉, <span class="bold accent2">내 계정 하나</span>를 보태는 게
+      <span class="bold">팀 전체의 여유</span>가 됩니다.</p>
+    </div>
+  </div>
+
+  <!-- 3. What / 안심 -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">02</span><span class="sep">—</span><span class="label">무엇을 하나</span></div>
+    <h2 class="reveal reveal-delay-1">비밀번호는 안 줍니다.<br><span class="accent">OAuth 승인만</span> 하면 끝.</h2>
+    <div class="spacer"></div>
+    <div class="grid-2">
+      <div class="card accent-l reveal reveal-delay-2">
+        <div class="label-mono accent">✅ 이렇게 동작</div>
+        <p style="margin-top:0.6rem; font-size:1.05rem;">
+          본인 ChatGPT 계정으로 <span class="bold">로그인 → 승인</span>하면,
+          풀에 <span class="mono accent2">OAuth 토큰</span>만 저장됩니다. 비번·결제정보는 저장 안 됨.
+        </p>
+      </div>
+      <div class="card gold-l reveal reveal-delay-3">
+        <div class="label-mono accent2">🛟 안심 포인트</div>
+        <p style="margin-top:0.6rem; font-size:1.05rem;">
+          한 번 등록하면 끝. 언제든 <span class="bold">빼달라고</span> 하면 즉시 제거.
+          내 계정 quota만 쓰이고, 내가 쓴 내용은 공유되지 않습니다.
+        </p>
+      </div>
+    </div>
+    <div class="note reveal reveal-delay-4">
+      <p style="font-size:1rem;">⚠️ <span class="bold accent2">URL을 여는 사람의 계정</span>이 등록됩니다 —
+      꼭 <span class="bold">본인 ChatGPT 계정</span>으로 로그인하세요.</p>
+    </div>
+  </div>
+
+  <!-- 4. Steps (attendee-facing) -->
+  <div class="slide scrollable">
+    <div class="tag reveal"><span class="num">03</span><span class="sep">—</span><span class="label">실습 — 이렇게 하면 됩니다</span></div>
+    <h2 class="reveal reveal-delay-1">1인 <span class="accent2">2분</span>. 순서만 따라오세요.</h2>
+    <div class="spacer-sm"></div>
+    <div class="steps">
+      <div class="step reveal reveal-delay-2">
+        <div class="n">1</div>
+        <div class="body">
+          <div class="t">내 차례에 <span class="accent">로그인 URL</span> 받기 <span class="dim">(1인 1개)</span></div>
+          <div class="d">진행자가 한 명씩 링크를 줘요. <code>auth.openai.com/oauth/...</code> 로 시작.</div>
+        </div>
+      </div>
+      <div class="step reveal reveal-delay-3">
+        <div class="n">2</div>
+        <div class="body">
+          <div class="t">본인 <span class="accent">ChatGPT 계정으로 로그인</span></div>
+          <div class="d">링크를 열면 로그인 화면이 떠요. 풀에 넣을 본인 계정으로 로그인하세요.</div>
+        </div>
+      </div>
+      <div class="step reveal reveal-delay-4">
+        <div class="n">3</div>
+        <div class="body">
+          <div class="t"><span class="accent">Authorize</span> 승인</div>
+          <div class="d">권한 허용 버튼을 누르면 됩니다.</div>
+        </div>
+      </div>
+      <div class="step reveal reveal-delay-5">
+        <div class="n">4</div>
+        <div class="body">
+          <div class="t">리다이렉트된 <span class="accent">주소창 URL 전체 복사</span></div>
+          <div class="d"><code>localhost:1455/auth/callback?...</code> 로 이동해요.
+          <span class="bold">페이지가 안 열려도 정상</span> — 주소창 URL을 <span class="bold">끝(<code>state=…</code>)까지</span> 통째로 복사.</div>
+        </div>
+      </div>
+      <div class="step reveal reveal-delay-6">
+        <div class="n">5</div>
+        <div class="body">
+          <div class="t">진행자에게 <span class="accent">DM으로 전달</span></div>
+          <div class="d">복사한 URL을 진행자에게 보내면 끝! 등록은 진행자가 처리합니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Timeline / timebox -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">04</span><span class="sep">—</span><span class="label">진행 시간</span></div>
+    <h2 class="reveal reveal-delay-1">오늘 이 순서로 <span class="accent">진행</span>합니다.</h2>
+    <div class="spacer"></div>
+    <div class="timeline">
+      <div class="tl-row reveal reveal-delay-2">
+        <div class="tl-time">~3분</div><div class="tl-bar"></div>
+        <div class="tl-body"><div class="t">왜 모으는지 · 안심 포인트 설명</div><div class="d">이 장표 1~3</div></div>
+      </div>
+      <div class="tl-row reveal reveal-delay-4">
+        <div class="tl-time">2분/인</div><div class="tl-bar"></div>
+        <div class="tl-body"><div class="t">한 명씩: URL 받기 → 로그인·승인 → URL 전달 → 등록</div><div class="d">로그인 링크는 <span class="bold accent2">1인당 1개</span> · 순서대로 진행</div></div>
+      </div>
+      <div class="tl-row reveal reveal-delay-5">
+        <div class="tl-time">~3분</div><div class="tl-bar"></div>
+        <div class="tl-body"><div class="t">풀 동작 확인</div><div class="d">계정 목록 · 테스트</div></div>
+      </div>
+    </div>
+    <div class="note reveal reveal-delay-6">
+      <p style="font-size:1rem;"><span class="pill">인원 × 2분 + α</span> &nbsp;링크가 1인 1개라 순서대로 — 예: 7명이면 약 20분.</p>
+    </div>
+  </div>
+
+  <!-- 6. Wrap -->
+  <div class="slide">
+    <div class="tag reveal"><span class="num">05</span><span class="sep">—</span><span class="label">정리</span></div>
+    <h2 class="reveal reveal-delay-1">한 명의 계정이,<br><span class="accent2">팀의 여유</span>가 됩니다.</h2>
+    <div class="spacer"></div>
+    <p class="lead reveal reveal-delay-2">
+      등록되면 요청이 풀의 계정들에 <span class="bold accent">자동으로 분산</span>돼요.<br>
+      빼고 싶을 땐 진행자에게 한마디만. <span class="dim">— 그게 전부입니다.</span>
+    </p>
+    <div class="spacer"></div>
+    <p class="reveal reveal-delay-3 dim mono" style="font-size:0.9rem;">
+      준비되셨으면, 진행자가 곧 로그인 URL을 띄울게요. 👀
+    </p>
+  </div>
+
+</div>
+
+<script>
+  const deck = document.getElementById('deck');
+  const slides = deck.querySelectorAll('.slide');
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  let current = 0;
+
+  function goTo(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides[current].classList.remove('active');
+    slides[current].querySelectorAll('.reveal').forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight;
+      el.style.animation = '';
+      el.style.opacity = '0';
+    });
+    current = n;
+    slides[current].classList.add('active');
+    slides[current].scrollTop = 0;
+    progress.style.width = ((current / (slides.length - 1)) * 100) + '%';
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'Home') goTo(0);
+    if (e.key === 'End') goTo(slides.length - 1);
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { diff > 0 ? goTo(current + 1) : goTo(current - 1); }
+  });
+
+  deck.addEventListener('click', (e) => {
+    if (e.target.closest('a')) return;
+    if (e.clientX > window.innerWidth / 2) goTo(current + 1);
+    else goTo(current - 1);
+  });
+
+  goTo(0);
+</script>
+
+</body>
+</html>
