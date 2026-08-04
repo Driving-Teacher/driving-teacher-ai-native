@@ -263,6 +263,24 @@
 </head>
 <body>
 
+<!-- ▼ 아카이브 배너 — 이 덱은 더 이상 현행이 아니다.
+     지우지 않고 그대로 두되, 열었을 때 바로 알 수 있게 표시만 한다. -->
+<style>
+  .archive-note {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+    background: #FF7439; color: #1C1C1C;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; font-weight: 700;
+    text-align: center; padding: 0.42rem 1rem; letter-spacing: 0.01em;
+  }
+  .archive-note .sub { font-weight: 400; opacity: 0.78; }
+  /* 배너가 들어온 만큼 원래 요소들을 아래로 민다 */
+  .topbar { top: 27px !important; }
+  .slide { padding-top: calc(9vh + 27px) !important; }
+</style>
+<div class="archive-note">시즌1 기록 · 2026-04~05 &nbsp;·&nbsp; <span class="sub">지금 쓰는 자료는 docs/deck/ai-native.html 입니다</span></div>
+<!-- ▲ 아카이브 배너 -->
+
+
 <div class="noise"></div>
 <div class="progress" id="progress"></div>
 <div class="counter" id="counter"></div>
@@ -529,10 +547,12 @@
     <div class="spacer-sm"></div>
     <div class="big-number reveal reveal-delay-2">60<span style="font-size:0.4em; color:var(--dim);">min</span></div>
     <div class="spacer-sm"></div>
+    <!-- 이 레포는 public 이다. 조 편성에 실명을 넣지 않는다.
+         조는 현장에서 말로 불러주면 되고, 덱에 남길 이유가 없다. -->
     <ul class="hierarchy reveal reveal-delay-3">
-      <li><span class="accent bold">팀 1</span> — 오석준 + 정재만</li>
-      <li><span class="accent bold">팀 2</span> — 임재현 + 정기흥</li>
-      <li><span class="accent bold">팀 3</span> — 이희준 + 조성진</li>
+      <li><span class="accent bold">팀 1</span> — 2인</li>
+      <li><span class="accent bold">팀 2</span> — 2인</li>
+      <li><span class="accent bold">팀 3</span> — 2인</li>
     </ul>
     <div class="spacer-sm"></div>
     <ul class="hierarchy dim reveal reveal-delay-4">
