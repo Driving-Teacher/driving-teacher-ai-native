@@ -96,23 +96,31 @@ html, body {
   .slide { transition: none; }
 }
 
-/* ---- 타이포 ---- */
+/* ---- 타이포 ----
+   ⚠️ 여기를 줄이면 덱이 "발표자료" 가 아니라 "설명문" 처럼 읽힌다.
+      실제로 한 번 그렇게 만들었다가 되돌렸다. 원인은 셋이었다:
+        · 제목이 작았다 (46px ← 시즌1 덱은 58px)
+        · 본문 굵기가 400 이라 제목과 대비가 약했다 (시즌1 은 300)
+        · 리드 문장이 본문과 같은 크기였다 — 한 문장을 크게 던질
+          자리가 사라져서 전부 같은 톤으로 깔렸다
+      제목/본문 크기 비율을 2배 안팎으로 유지할 것. 그게 슬라이드처럼
+      보이게 하는 핵심이다. */
 h1 {
   font-family: var(--display);
-  font-size: clamp(2.2rem, 5.6vw, 5.6rem);
-  font-weight: 700; line-height: 1.06; letter-spacing: -0.02em;
+  font-size: clamp(2.4rem, 6vw, 6rem);
+  font-weight: 700; line-height: 1.04; letter-spacing: -0.03em;
 }
 h2 {
-  font-size: clamp(1.8rem, 3.6vw, 3.2rem);
-  font-weight: 800; line-height: 1.15; letter-spacing: -0.02em;
+  font-size: clamp(2rem, 4.4vw, 4.2rem);
+  font-weight: 900; line-height: 1.12; letter-spacing: -0.025em;
 }
-h3 { font-size: clamp(1.05rem, 1.6vw, 1.4rem); font-weight: 700; }
-p  { font-size: clamp(1rem, 1.5vw, 1.35rem); line-height: 1.6; color: #D8D8D4; }
+h3 { font-size: clamp(1.1rem, 1.8vw, 1.6rem); font-weight: 700; }
+p  { font-size: clamp(1rem, 1.6vw, 1.45rem); line-height: 1.65; font-weight: 300; color: #D8D8D4; }
 
 .tag {
   display: inline-flex; align-items: center; gap: 0.5rem;
   font-family: var(--mono); font-size: 0.85rem; color: var(--dim);
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.2rem;
 }
 .tag .num { color: var(--accent); font-weight: 700; }
 .tag .sep { opacity: 0.5; }
@@ -125,7 +133,13 @@ p  { font-size: clamp(1rem, 1.5vw, 1.35rem); line-height: 1.6; color: #D8D8D4; }
 .dim { color: var(--dim); }
 .mono { font-family: var(--mono); }
 
-.lead { font-size: clamp(1.15rem, 2vw, 1.7rem); color: #CFCFCB; }
+/* 한 문장을 크게 던지는 자리. 본문과 같은 크기면 존재 이유가 없다.
+   마크다운의 `> 문장` 이 여기로 온다. */
+.lead {
+  font-size: clamp(1.35rem, 2.7vw, 2.5rem);
+  font-weight: 300; line-height: 1.4; letter-spacing: -0.015em;
+  color: #E4E4E0;
+}
 .spacer { height: 2.4rem; }
 .spacer-sm { height: 1.2rem; }
 
@@ -136,7 +150,7 @@ p  { font-size: clamp(1rem, 1.5vw, 1.35rem); line-height: 1.6; color: #D8D8D4; }
 }
 .card.accent-l { border-color: rgba(200, 155, 255, 0.4); }
 .card h3 { margin-bottom: 0.5rem; }
-.card p  { font-size: clamp(0.92rem, 1.2vw, 1.08rem); }
+.card p  { font-size: clamp(0.95rem, 1.3vw, 1.2rem); }
 .label-mono { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.02em; }
 
 /* 카드 여러 장을 가로로. 좁아지면 자동으로 한 줄씩 내려간다. */
@@ -145,22 +159,35 @@ p  { font-size: clamp(1rem, 1.5vw, 1.35rem); line-height: 1.6; color: #D8D8D4; }
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
 }
 
-/* ---- 타임라인 ---- */
-.timeline { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 0.4rem; }
+/* 2×2 사분면. auto-fit 은 넓은 화면에서 4칸을 한 줄로 펴버려서
+   "사분면" 이라는 의미가 사라진다. 그래서 2열로 못 박는다.
+   (Unknown Unknowns 표가 이걸 쓴다) */
+.cards.quad { grid-template-columns: repeat(2, 1fr); }
+.cards.quad .card { padding: 1.2rem 1.3rem; }
+.cards.quad .card h3 { font-size: clamp(1rem, 1.5vw, 1.3rem); }
+.cards.quad .card p  { font-size: clamp(0.9rem, 1.2vw, 1.1rem); }
+/* 강조할 칸 — 사분면에서 "여기가 핵심" 을 가리킬 때 */
+.card.hot { border-color: rgba(200, 155, 255, 0.55); background: rgba(200, 155, 255, 0.07); }
+
+/* ---- 타임라인 ----
+   글자를 키운 뒤로 4~5줄 + 리드 + 강조박스가 한 장에 들어가면 아슬아슬하다.
+   그래서 줄 간격과 안쪽 여백을 조였다. 여기를 다시 늘리면 몇 장이 넘친다
+   — 늘릴 땐 반드시 `python3 scripts/build-deck.py` 후 넘침 검사를 다시. */
+.timeline { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.3rem; }
 .tl-row { display: flex; gap: 1.2rem; align-items: center; }
 .tl-time {
-  flex: 0 0 5.5rem; text-align: right; font-family: var(--mono);
+  flex: 0 0 6.5rem; text-align: right; font-family: var(--mono);
   font-weight: 700; color: var(--accent2); font-size: 1rem;
 }
 .tl-bar { flex: 0 0 8px; align-self: stretch; background: var(--accent); border-radius: 4px; opacity: 0.55; }
-.tl-body { flex: 1; padding: 0.5rem 0; }
-.tl-body .t { font-weight: 700; font-size: clamp(1rem, 1.5vw, 1.25rem); }
-.tl-body .d { color: var(--dim); font-size: 0.9rem; margin-top: 0.1rem; }
+.tl-body { flex: 1; padding: 0.3rem 0; }
+.tl-body .t { font-weight: 700; font-size: clamp(1.05rem, 1.7vw, 1.5rem); }
+.tl-body .d { color: var(--dim); font-size: clamp(0.85rem, 1.1vw, 1.02rem); margin-top: 0.15rem; }
 
 /* ---- 강조 박스 ---- */
 .note {
   border-left: 3px solid var(--accent2); background: rgba(255, 213, 71, 0.07);
-  padding: 1rem 1.3rem; border-radius: 0 12px 12px 0; margin-top: 1rem;
+  padding: 0.85rem 1.2rem; border-radius: 0 12px 12px 0; margin-top: 0.8rem;
 }
 .mic { font-size: 3rem; line-height: 1; }
 
@@ -168,7 +195,8 @@ p  { font-size: clamp(1rem, 1.5vw, 1.35rem); line-height: 1.6; color: #D8D8D4; }
 .bullets { list-style: none; margin-top: 0.6rem; }
 .bullets li {
   position: relative; padding-left: 1.4rem; margin-bottom: 0.7rem;
-  font-size: clamp(1rem, 1.4vw, 1.25rem); line-height: 1.55; color: #D8D8D4;
+  font-size: clamp(1.05rem, 1.75vw, 1.6rem); font-weight: 300;
+  line-height: 1.5; color: #D8D8D4;
 }
 .bullets li::before {
   content: '—'; position: absolute; left: 0; color: var(--accent); font-weight: 700;

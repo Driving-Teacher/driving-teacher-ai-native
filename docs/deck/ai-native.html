@@ -14,7 +14,7 @@
 
 <div class="topbar"><div id="progress"></div></div>
 <div class="hint">← → 또는 클릭으로 이동</div>
-<div id="counter">1 / 49</div>
+<div id="counter">1 / 53</div>
 
 <div class="deck" id="deck">
 
@@ -27,6 +27,14 @@
   <h2 class="reveal reveal-delay-1">이 자리는 <span class="accent">교육이 아닙니다.</span></h2>
   <p class="lead reveal reveal-delay-2">누가 가르쳐주는 게 아니라, 각자 AI와 대화하면서 발견하는 자리입니다.</p>
   <ul class="bullets reveal reveal-delay-3"><li>여기서 드리는 건 <span class="bold">방향</span>과 <span class="bold">도구</span>뿐입니다</li><li>나머지는 각자 직접 해야 합니다</li><li>그래서 노트북을 꼭 열어두세요</li></ul>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">👋</span><span class="sep">—</span><span class="label">LEVEL CHECK</span></div>
+  <h2 class="reveal reveal-delay-1">잠깐 — <span class="accent">어디쯤</span>이세요?</h2>
+  <div class="timeline reveal reveal-delay-2"><div class="tl-row"><div class="tl-time">LV 0</div><div class="tl-bar"></div><div class="tl-body"><div class="t">🐣 웹 챗만</div><div class="d">ChatGPT·제미나이 정도 써봤다</div></div></div><div class="tl-row"><div class="tl-time">LV 1</div><div class="tl-bar"></div><div class="tl-body"><div class="t">🖥 터미널 AI</div><div class="d">Claude Code 켜서 시켜는 봤다</div></div></div><div class="tl-row"><div class="tl-time">LV 2</div><div class="tl-bar"></div><div class="tl-body"><div class="t">🛠 직접 빌드</div><div class="d">CLAUDE.md·스킬 만들어봤다</div></div></div><div class="tl-row"><div class="tl-time">LV 3</div><div class="tl-bar"></div><div class="tl-body"><div class="t">🚀 자동화</div><div class="d">Hermes·cron·재설계까지 가봤다</div></div></div></div>
+  <p class="lead reveal reveal-delay-3">정답 없습니다. 솔직하게. <span class="bold">오늘의 속도와 깊이를 여기에 맞춥니다.</span></p>
+  <div class="note reveal reveal-delay-4"><p>진행하는 사람이 챙길 것 — 손 들게 해서 분포를 보고, LV 0 이 많으면 뒤 섹션을 줄이고 앞을 늘리세요. 이 장을 건너뛰면 누구에게 맞춰야 할지 모른 채 진행하게 됩니다.</p></div>
 </div>
 
 <div class="slide">
@@ -57,8 +65,8 @@
 
 <div class="slide">
   <div class="tag reveal"><span class="num">00</span><span class="sep">—</span><span class="label">가져오는 것 ①</span></div>
-  <h2 class="reveal reveal-delay-1">모른다는 것조차 모르는 자리를 줄입니다.</h2>
-  <ul class="bullets reveal reveal-delay-2"><li><span class="bold">아는 걸 안다</span> — 이미 하고 있는 일</li><li><span class="bold">모르는 걸 안다</span> — 찾아보면 됩니다</li><li><span class="accent">모른다는 것도 모른다</span> — 여기가 문제입니다</li></ul>
+  <h2 class="reveal reveal-delay-1">모른다는 것조차 <span class="accent">모르는 자리</span>를 줄입니다.</h2>
+  <div class="cards quad reveal reveal-delay-2"><div class="card"><h3>아는 것을 아는 것</h3><p><code>Known Knowns</code> — 이미 잘하고 있는 업무.</p></div><div class="card"><h3>모르는 것을 아는 것</h3><p><code>Known Unknowns</code> — 찾아보면 됩니다. 이건 괜찮아요.</p></div><div class="card"><h3>무의식적 능력</h3><p><code>Unknown Knowns</code> — 나도 모르게 하고 있는 것.</p></div><div class="card hot"><h3>모른다는 것도 모르는 것</h3><p><code>Unknown Unknowns</code> — ← 여기를 줄이는 게 핵심입니다.</p></div></div>
   <p class="lead reveal reveal-delay-3">"이런 게 가능한지조차 몰랐다" → "이건 이미 누가 해놨네". 모른다는 걸 알기만 하면, 나머지는 AI한테 물어보면 되니까요.</p>
 </div>
 
@@ -91,8 +99,9 @@
 <div class="slide">
   <div class="tag reveal"><span class="num">01</span><span class="sep">—</span><span class="label">왜 그래야 하나</span></div>
   <h2 class="reveal reveal-delay-1">운이 아니라 <span class="accent">시스템</span>으로.</h2>
-  <div class="timeline reveal reveal-delay-2"><div class="tl-row"><div class="tl-time">01</div><div class="tl-bar"></div><div class="tl-body"><div class="t">Model</div><div class="d">같은 질문에 매번 다른 답</div></div></div><div class="tl-row"><div class="tl-time">02</div><div class="tl-bar"></div><div class="tl-body"><div class="t">Context</div><div class="d">맥락은 맞는데 여전히 들쭉날쭉</div></div></div><div class="tl-row"><div class="tl-time">03</div><div class="tl-bar"></div><div class="tl-body"><div class="t">Agent</div><div class="d">실행까지 하지만, 빈 차 — 어디로 갈지 매번 다름</div></div></div><div class="tl-row"><div class="tl-time">04</div><div class="tl-bar"></div><div class="tl-body"><div class="t">Harness</div><div class="d">세팅된 차. 매번 같은 품질</div></div></div></div>
-  <p class="lead reveal reveal-delay-3">아래로 갈수록 결과가 예측 가능해집니다. 우리가 만들 건 네 번째입니다.</p>
+  <div class="timeline reveal reveal-delay-2"><div class="tl-row"><div class="tl-time">01</div><div class="tl-bar"></div><div class="tl-body"><div class="t">Model</div><div class="d">같은 질문에 매번 다른 답 — 비결정적</div></div></div><div class="tl-row"><div class="tl-time">02</div><div class="tl-bar"></div><div class="tl-body"><div class="t">Context</div><div class="d">내 파일을 읽으니 맥락은 맞는데, 여전히 들쭉날쭉</div></div></div><div class="tl-row"><div class="tl-time">03</div><div class="tl-bar"></div><div class="tl-body"><div class="t">Agent</div><div class="d">실행까지 한다. 근데 <span class="accent2">빈 차</span> — 어디로 갈지 매번 다름</div></div></div><div class="tl-row"><div class="tl-time">04</div><div class="tl-bar"></div><div class="tl-body"><div class="t">Harness</div><div class="d"><span class="accent2">세팅된 차</span> = 조종석. 매번 같은 품질 — 결정적</div></div></div></div>
+  <p class="lead reveal reveal-delay-3">규칙·도구·순서를 미리 앉혀둔 상태를 <span class="accent">조종석</span>이라고 부릅니다. 같은 차라도 세팅이 돼 있으면 매번 같은 데로 갑니다.</p>
+  <div class="note reveal reveal-delay-4"><p>우리가 만들 것은 네 번째입니다. 도구를 하나 더 배우는 게 아니라, <span class="bold">내 조종석을 짜는 것</span>입니다.</p></div>
 </div>
 
 <div class="slide">
@@ -109,6 +118,13 @@
 </div>
 
 <div class="slide">
+  <div class="tag reveal"><span class="num">02</span><span class="sep">—</span><span class="label">왜 이 넷인가</span></div>
+  <h2 class="reveal reveal-delay-1">네 개가 하는 일은 <span class="accent">두 가지</span>뿐입니다.</h2>
+  <div class="cards reveal reveal-delay-2"><div class="card"><h3>🎯 결정화 — 결과를 예측 가능하게</h3><p><span class="bold">CLAUDE.md</span> 는 AI가 나를 기억하게 하고, <span class="bold">Skill</span> 은 매번 같은 품질을 내게 합니다. 들쭉날쭉을 없애는 쪽.</p></div><div class="card"><h3>🔌 확장 — 할 수 있는 걸 늘리기</h3><p><span class="bold">MCP</span> 는 노션·슬랙 같은 외부 도구를 붙입니다. <span class="bold">Subagent·Hook·Plugin</span> 도 이쪽. 손을 늘리는 쪽.</p></div></div>
+  <p class="lead reveal reveal-delay-3">일곱 개를 외울 필요 없습니다. <span class="bold">「들쭉날쭉을 없애는 것」과 「손을 늘리는 것」</span> 두 갈래만 기억하시면 됩니다.</p>
+</div>
+
+<div class="slide">
   <div class="tag reveal"><span class="num">02</span><span class="sep">—</span><span class="label">첫 번째</span></div>
   <h2 class="reveal reveal-delay-1">AI는 <span class="accent">내가 누군지 모릅니다.</span></h2>
   <p class="lead reveal reveal-delay-2">매번 "나는 마케팅 하고, 우리 회사는 운전면허 학원이고…" 를 다시 설명하고 있다면, 그건 매뉴얼이 없다는 뜻입니다.</p>
@@ -120,7 +136,8 @@
   <div class="tag reveal"><span class="num">02</span><span class="sep">—</span><span class="label">두 번째</span></div>
   <h2 class="reveal reveal-delay-1">같은 일을 <span class="accent">매번 같은 품질로.</span></h2>
   <p class="lead reveal reveal-delay-2">좋은 프롬프트를 어제는 잘 썼는데 오늘은 기억이 안 난다 — 그걸 파일로 굳히는 게 스킬입니다.</p>
-  <ul class="bullets reveal reveal-delay-3"><li>반복하는 일을 한 번 정리해두면 다음엔 명령 한 줄</li><li>만드는 법도 AI에게 시키면 됩니다</li><li>남이 만든 걸 먼저 찾는 게 더 빠릅니다 (다음 섹션)</li></ul>
+  <ul class="bullets reveal reveal-delay-3"><li>반복하는 일을 한 번 정리해두면 다음엔 명령 한 줄</li><li>만드는 법도 AI에게 시키면 됩니다 — <code>___를 자동화하는 스킬 만들어줘</code></li><li><span class="bold">스킬을 만들어주는 스킬</span>도 있습니다 — <code>/superpowers:writing-skills</code> 가 구조를 잡고 검증까지 해줍니다</li></ul>
+  <div class="note reveal reveal-delay-4"><p>두 가지만 — <span class="bold">같은 걸 세 번 설명했으면</span> 그건 스킬로 만들 때입니다. 그리고 만든 뒤 AI에게 <span class="bold">「이 스킬 읽고 모호한 부분 알려줘」</span> 를 시키면 품질이 확 올라갑니다.</p></div>
 </div>
 
 <div class="slide">
@@ -155,6 +172,14 @@
   <h2 class="reveal reveal-delay-1">비결은 <span class="accent">안 만드는</span> 겁니다.</h2>
   <p class="lead reveal reveal-delay-2">잘 쓰는 사람들은 더 열심히 만드는 사람이 아니라, <span class="bold">이미 있는 걸 먼저 찾는</span> 사람입니다.</p>
   <ul class="bullets reveal reveal-delay-3"><li>내가 필요한 건 남도 필요했습니다</li><li>찾아보면 대개 누가 만들어 놨습니다</li><li>없을 때만 만듭니다</li></ul>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">03</span><span class="sep">—</span><span class="label">꿀팁</span></div>
+  <h2 class="reveal reveal-delay-1">잘 쓰는 사람들의 <span class="accent">네 가지 습관</span>.</h2>
+  <ul class="bullets reveal reveal-delay-2"><li><span class="bold"><code>CLAUDE.md</code></span> — AI가 모를 것만 넣기. 200줄 넘기지 않기</li><li><span class="bold">스킬</span> — 설명(description)이 제일 중요합니다. <span class="bold">「왜」</span>를 적으면 결과가 좋아집니다</li><li><span class="bold">에러</span> — 에러 메시지를 그대로 붙여넣고 <code>fix</code> 한 마디. 과한 설명은 오히려 방해입니다</li><li><span class="bold">컨텍스트</span> — 대화가 길어지면 <code>/compact</code>, 막히면 <code>/clear</code> 하고 새로 시작</li></ul>
+  <pre class="reveal reveal-delay-3"><code>/tips</code></pre>
+  <div class="note reveal reveal-delay-4"><p>제일 중요한 건 <span class="bold">스스로 계속 찾는 것</span>입니다. 이 말을 하는 지금도 더 좋은 도구가 나오고 있습니다. 내 팁도 <code>/tips</code> 에 보태주세요 — 팀 집단지성입니다.</p></div>
 </div>
 
 <div class="slide">
@@ -319,6 +344,14 @@ git push                          # 올리기</code></pre>
   <h2 class="reveal reveal-delay-1">집단 패턴 말고, <span class="accent">"내가"</span> 어떻게 바뀌었나.</h2>
   <div class="cards reveal reveal-delay-2"><div class="card"><h3>BEFORE — 시작할 때의 나</h3><p>"AI한테 시키면 답이 이상해서 그냥 내가 함" · "터미널 켜본 적 없음" · "가끔 검색용으로만"</p></div><div class="card"><h3>AFTER — 지금의 나</h3><p>"슬랙에 한 줄 던지는 게 먼저" · "스킬 만들어서 반복 업무 자동화" · "팀원이 뭐 만들었는지 보임"</p></div></div>
   <p class="lead reveal reveal-delay-3">한 사람당 1분. 예시는 예시일 뿐이니 자기 말로.</p>
+</div>
+
+<div class="slide">
+  <div class="tag reveal"><span class="num">08</span><span class="sep">—</span><span class="label">성장 경로</span></div>
+  <h2 class="reveal reveal-delay-1"><span class="accent">사다리</span>는 안 변합니다.</h2>
+  <div class="timeline reveal reveal-delay-2"><div class="tl-row"><div class="tl-time">L1</div><div class="tl-bar"></div><div class="tl-body"><div class="t">AI한테 시킬 수 있다</div><div class="d">개인 생산성 ↑ — 먼저 익숙해진다</div></div></div><div class="tl-row"><div class="tl-time">L2</div><div class="tl-bar"></div><div class="tl-body"><div class="t">안 해도 되는 일을 발견한다</div><div class="d">업무 제거 — 여기가 핵심</div></div></div><div class="tl-row"><div class="tl-time">L3</div><div class="tl-bar"></div><div class="tl-body"><div class="t">AI 전제 프로세스를 만든다</div><div class="d">팀 운영 방식이 바뀐다</div></div></div></div>
+  <p class="lead reveal reveal-delay-3"><span class="accent">순서가 중요합니다.</span> 도구를 못 쓰는데 "재설계하라"고 하면 망상이 나옵니다. L1 에 충분히 익숙해진 다음 L2 입니다.</p>
+  <div class="note reveal reveal-delay-4"><p>지금 내가 어디인지만 알면 됩니다. 한 칸씩 올라가는 게 정상이고, 건너뛰려 하면 미끄러집니다.</p></div>
 </div>
 
 <div class="slide">
