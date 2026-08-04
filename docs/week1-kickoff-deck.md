@@ -1,4 +1,4 @@
-> ⚠️ **시즌1 기록 (2026-04)** — 현행 자료가 아닙니다. 지금 쓰는 발표 자료는 [`docs/modules/`](modules/README.md) 에 있습니다.
+> ⚠️ **시즌1 기록 (2026-04)** — 현행 자료가 아닙니다. 지금 쓰는 발표 자료는 [`docs/deck/ai-native.md`](deck/ai-native.md) 에 있습니다.
 >
 > 특히 여기 적힌 "Week 3 — OpenClaw / 텔레그램" 은 실제로는 **Hermes + 슬랙**으로 바뀌었습니다.
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""docs/modules/*.md 를 발표용 HTML 덱으로 굽는다.
+"""docs/deck/*.md 를 발표용 HTML 덱으로 굽는다.
 
 왜 이게 있나
 ------------
@@ -56,7 +56,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-MODULES = ROOT / "docs" / "modules"
+SOURCES = ROOT / "docs" / "deck"
 
 # 한 슬라이드에서 reveal 애니메이션 지연은 6단계까지만 준비돼 있다(deck.css).
 MAX_DELAY = 6
@@ -288,7 +288,7 @@ def build(md_path: Path) -> str:
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{html.escape(title)}</title>
 <!-- ⚠️ 이 파일은 scripts/build-deck.py 가 만든 결과물이다.
-     고칠 곳은 docs/modules/{md_path.name} 이고, 고친 뒤 다시 굽는다:
+     고칠 곳은 docs/deck/{md_path.name} 이고, 고친 뒤 다시 굽는다:
          python3 scripts/build-deck.py
      여기를 직접 고치면 다음 빌드에 사라진다. -->
 <link rel="stylesheet" href="../deck.css">
@@ -315,11 +315,11 @@ def main() -> int:
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     check = "--check" in sys.argv
 
-    if not MODULES.is_dir():
-        print(f"모듈 폴더가 없습니다: {MODULES}", file=sys.stderr)
+    if not SOURCES.is_dir():
+        print(f"덱 소스 폴더가 없습니다: {SOURCES}", file=sys.stderr)
         return 1
 
-    sources = sorted(MODULES.glob("*.md"))
+    sources = sorted(SOURCES.glob("*.md"))
     sources = [p for p in sources if p.name.lower() != "readme.md"]
     if args:
         sources = [p for p in sources if any(a in p.name for a in args)]

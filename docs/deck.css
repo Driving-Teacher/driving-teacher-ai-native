@@ -15,7 +15,7 @@
      바뀌므로, 그 덱들은 인라인 CSS 를 그대로 둔다.
 
    쓰는 법:
-     docs/modules/*.md 를 고치고 `python3 scripts/build-deck.py`.
+     docs/deck/*.md 를 고치고 `python3 scripts/build-deck.py`.
      HTML 을 직접 고치지 말 것 — 다음 빌드에 덮어써진다.
    ============================================================ */
 
