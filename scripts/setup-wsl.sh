@@ -33,6 +33,30 @@ die() {
     exit 1
 }
 
+# sudo 를 못 쓸 때의 안내.
+#
+# 예전에는 "관리자에게 apt install ... 를 요청해주세요" 라고만 했다. 그런데
+# WSL 에서 그 "관리자" 는 본인이다 — 회사 IT가 아니라 자기 비밀번호를 모르는
+# 것이 원인인 경우가 대부분이다. 그래서 실제로 풀 수 있는 방법을 준다.
+no_sudo_help() {
+    echo ""
+    echo "  ⚠️  비밀번호 확인이 안 돼서 프로그램을 깔 수 없습니다."
+    echo ""
+    echo "     WSL 을 처음 설치할 때 정한 비밀번호인데, 기억 안 나는 경우가 많습니다."
+    echo "     그럴 땐 새로 정하면 됩니다. 아래는 우분투 창이 아니라"
+    echo "     ▶ Windows PowerShell 에서 ◀ 칩니다:"
+    echo ""
+    echo "         wsl -u root passwd $USER"
+    echo ""
+    echo "     새 비밀번호를 두 번 입력하면 끝입니다. 그다음 이 창에서 다시:"
+    echo ""
+    echo "         bash scripts/setup-wsl.sh"
+    echo ""
+    echo "  ℹ️  'groups' 를 쳐서 sudo 가 안 보이면 비밀번호 문제가 아닙니다."
+    echo "     그 화면을 슬랙 $SLACK 에 올려주세요."
+    echo ""
+}
+
 # .bashrc 끝에 개행 없이 저장돼 있어도 안전하게 append
 rc_append() {
     printf '\n%s\n' "$1" >> "$BASHRC"
@@ -144,18 +168,52 @@ else
     esac
 fi
 
-if sudo -n true 2>/dev/null || sudo -v 2>/dev/null; then
+# sudo 를 쓸 수 있는지 확인한다.
+#
+# ⚠️ 여기서 `sudo -v` 를 조건문에 바로 넣으면 안 된다. `-v` 는 "확인" 이 아니라
+#    실제로 비밀번호를 묻는 명령이고, 2>/dev/null 로 감싸면 왜 묻는지 설명까지
+#    지워져서 맥락 없는 `Password:` 만 세 번 뜬 뒤 시도 횟수를 다 태운다.
+#    (실제로 그렇게 막힌 사례가 있었다 — WSL 설치 때 정한 비밀번호를 기억하는
+#     사람이 드물다.) 그래서 먼저 왜 묻는지 말하고, 그다음 보이게 묻는다.
+if sudo -n true 2>/dev/null; then
     HAS_SUDO=1
+elif command -v sudo >/dev/null 2>&1 \
+     && id -nG 2>/dev/null | tr ' ' '\n' | grep -qx -e sudo -e admin -e wheel; then
+    echo ""
+    echo "  🔑 프로그램을 깔아야 해서 비밀번호가 한 번 필요합니다."
+    echo "     WSL(우분투)을 처음 설치할 때 정한 비밀번호입니다."
+    echo "     화면에는 아무것도 안 보이는 게 정상입니다 — 그냥 치고 엔터."
+    echo ""
+    if sudo -v; then
+        HAS_SUDO=1
+        echo "  ✅ 확인됐습니다."
+    else
+        HAS_SUDO=0
+        no_sudo_help
+    fi
 else
     HAS_SUDO=0
-    echo "  ⚠️  sudo를 쓸 수 없습니다. apt로 깔아야 하는 단계는 건너뜁니다."
+    no_sudo_help
 fi
 
-# 두 인스톨러의 전제 — 없으면 조용히 실패하므로 미리 챙긴다
+# curl 과 unzip 은 뒤에서 쓰는 두 인스톨러의 전제다.
+#   curl  — Claude Code · fnm 설치 파일을 받는다
+#   unzip — fnm(Node 설치기)이 받은 zip 을 푼다
+# 없으면 조용히 실패하고 원인을 못 찾게 되므로 미리 챙긴다.
 for cmd in curl unzip; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
         echo "  ⏳ $cmd 설치 중..."
-        apt_install "$cmd" ca-certificates || die "$cmd 이 없어서 더 진행할 수 없습니다."
+        if ! apt_install "$cmd" ca-certificates; then
+            echo ""
+            echo "  ❌ $cmd 이 없어서 더 진행할 수 없습니다."
+            echo "     ($cmd 은 Node.js 설치에 반드시 필요합니다 — 건너뛸 수 없습니다)"
+            echo ""
+            echo "     위에 적힌 비밀번호 재설정을 먼저 해주세요."
+            echo "     그게 해결되면 이 스크립트가 나머지를 알아서 깝니다."
+            echo ""
+            echo "  → 안 되면 슬랙 $SLACK 에 이 화면을 그대로 올려주세요."
+            exit 1
+        fi
     fi
 done
 echo "  ✅ curl · unzip 확인"
