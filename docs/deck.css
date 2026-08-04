@@ -1,0 +1,194 @@
+/* ============================================================
+   AI Native 세션 공용 덱 스타일
+   ------------------------------------------------------------
+   왜 이 파일이 생겼나:
+     덱마다 이 CSS 를 200~350줄씩 복붙해서 품고 있었다. 그래서
+     한 줄 고치려면 9개 파일을 열어야 했고, 결국 아무도 안 고쳤다.
+     대신 덱 앞뒤에 "이건 이제 안 씁니다" 쪽지를 붙이는 식으로
+     내용이 갈라졌다. 이 파일은 그 재발을 막으려고 있다.
+
+   색 세대 주의:
+     2026-04 시즌1 덱(week1·week2·essence)은 --accent 가 노랑
+     (#FFD547), --accent2 가 파랑(#4F7DFF)이었다. week3 부터
+     보라(#C89BFF)로 갈아엎었고 파랑은 사라졌다. 이 파일은
+     현행(보라) 기준이다. 시즌1 덱에 이 파일을 물리면 색이
+     바뀌므로, 그 덱들은 인라인 CSS 를 그대로 둔다.
+
+   쓰는 법:
+     docs/deck/*.md 를 고치고 `python3 scripts/build-deck.py`.
+     HTML 을 직접 고치지 말 것 — 다음 빌드에 덮어써진다.
+   ============================================================ */
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* 한글은 어절 중간에서 끊기면 읽기 나쁘다. keep-all 이 그걸 막는다. */
+body, .slide * { word-break: keep-all; overflow-wrap: break-word; line-break: strict; }
+h1, h2, .lead, .note { text-wrap: balance; }
+
+:root {
+  --bg: #1C1C1C;
+  --fg: #F6F6F3;
+  --accent: #C89BFF;
+  --accent2: #FFD547;
+  --red: #FF7439;
+  --green: #1AC569;
+  --dim: #6B6B6B;
+  --surface: #2A2929;
+  --line: #383737;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Pretendard Variable', 'Pretendard', sans-serif;
+  --display: 'Syncopate', sans-serif;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  overflow: hidden;
+}
+
+.deck { width: 100vw; height: 100vh; position: relative; }
+
+/* ---- 크롬(진행바·카운터·힌트) ---- */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; height: 4px;
+  background: #2A2929; z-index: 50;
+}
+#progress { height: 100%; width: 0; background: var(--accent); transition: width 0.5s ease; }
+#counter {
+  position: fixed; bottom: 2.4vh; right: 3vw; z-index: 50;
+  font-family: var(--mono); font-size: 0.8rem; color: var(--dim);
+}
+.hint {
+  position: fixed; bottom: 2.4vh; left: 3vw; z-index: 50;
+  font-family: var(--mono); font-size: 0.75rem; color: var(--dim);
+}
+
+/* ---- 슬라이드 ---- */
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 9vh 9vw;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+.slide.active { opacity: 1; pointer-events: auto; }
+/* 내용이 많아 세로로 넘칠 때. 빌드 스크립트가 자동으로 붙인다. */
+.slide.scrollable { justify-content: flex-start; overflow-y: auto; }
+
+.slide.active .reveal { animation: slideUp 0.6s ease forwards; }
+.reveal-delay-1 { animation-delay: 0.1s; }
+.reveal-delay-2 { animation-delay: 0.2s; }
+.reveal-delay-3 { animation-delay: 0.3s; }
+.reveal-delay-4 { animation-delay: 0.4s; }
+.reveal-delay-5 { animation-delay: 0.5s; }
+.reveal-delay-6 { animation-delay: 0.6s; }
+.reveal { opacity: 0; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: translateY(0); } }
+
+/* 애니메이션을 꺼둔 사람에게는 움직이지 않게. */
+@media (prefers-reduced-motion: reduce) {
+  .slide.active .reveal { animation: none; opacity: 1; }
+  .slide { transition: none; }
+}
+
+/* ---- 타이포 ---- */
+h1 {
+  font-family: var(--display);
+  font-size: clamp(2.2rem, 5.6vw, 5.6rem);
+  font-weight: 700; line-height: 1.06; letter-spacing: -0.02em;
+}
+h2 {
+  font-size: clamp(1.8rem, 3.6vw, 3.2rem);
+  font-weight: 800; line-height: 1.15; letter-spacing: -0.02em;
+}
+h3 { font-size: clamp(1.05rem, 1.6vw, 1.4rem); font-weight: 700; }
+p  { font-size: clamp(1rem, 1.5vw, 1.35rem); line-height: 1.6; color: #D8D8D4; }
+
+.tag {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--mono); font-size: 0.85rem; color: var(--dim);
+  margin-bottom: 1.6rem;
+}
+.tag .num { color: var(--accent); font-weight: 700; }
+.tag .sep { opacity: 0.5; }
+
+.bold { font-weight: 800; }
+.accent { color: var(--accent); }
+.accent2 { color: var(--accent2); }
+.green { color: var(--green); }
+.red { color: var(--red); }
+.dim { color: var(--dim); }
+.mono { font-family: var(--mono); }
+
+.lead { font-size: clamp(1.15rem, 2vw, 1.7rem); color: #CFCFCB; }
+.spacer { height: 2.4rem; }
+.spacer-sm { height: 1.2rem; }
+
+/* ---- 카드 ---- */
+.card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 16px; padding: 1.5rem 1.6rem;
+}
+.card.accent-l { border-color: rgba(200, 155, 255, 0.4); }
+.card h3 { margin-bottom: 0.5rem; }
+.card p  { font-size: clamp(0.92rem, 1.2vw, 1.08rem); }
+.label-mono { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.02em; }
+
+/* 카드 여러 장을 가로로. 좁아지면 자동으로 한 줄씩 내려간다. */
+.cards {
+  display: grid; gap: 1rem; margin-top: 0.4rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+/* ---- 타임라인 ---- */
+.timeline { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 0.4rem; }
+.tl-row { display: flex; gap: 1.2rem; align-items: center; }
+.tl-time {
+  flex: 0 0 5.5rem; text-align: right; font-family: var(--mono);
+  font-weight: 700; color: var(--accent2); font-size: 1rem;
+}
+.tl-bar { flex: 0 0 8px; align-self: stretch; background: var(--accent); border-radius: 4px; opacity: 0.55; }
+.tl-body { flex: 1; padding: 0.5rem 0; }
+.tl-body .t { font-weight: 700; font-size: clamp(1rem, 1.5vw, 1.25rem); }
+.tl-body .d { color: var(--dim); font-size: 0.9rem; margin-top: 0.1rem; }
+
+/* ---- 강조 박스 ---- */
+.note {
+  border-left: 3px solid var(--accent2); background: rgba(255, 213, 71, 0.07);
+  padding: 1rem 1.3rem; border-radius: 0 12px 12px 0; margin-top: 1rem;
+}
+.mic { font-size: 3rem; line-height: 1; }
+
+/* ---- 목록 ---- */
+.bullets { list-style: none; margin-top: 0.6rem; }
+.bullets li {
+  position: relative; padding-left: 1.4rem; margin-bottom: 0.7rem;
+  font-size: clamp(1rem, 1.4vw, 1.25rem); line-height: 1.55; color: #D8D8D4;
+}
+.bullets li::before {
+  content: '—'; position: absolute; left: 0; color: var(--accent); font-weight: 700;
+}
+
+/* ---- 코드 ---- */
+code {
+  font-family: var(--mono); font-size: 0.92em;
+  background: rgba(255, 255, 255, 0.07); padding: 0.12em 0.4em; border-radius: 5px;
+}
+pre {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 1.1rem 1.3rem; margin-top: 1rem; overflow-x: auto;
+}
+pre code { background: none; padding: 0; font-size: clamp(0.82rem, 1.05vw, 1rem); line-height: 1.65; }
+
+/* ---- 아카이브 배너 (시즌1 덱에 붙는 것) ---- */
+.archive-banner {
+  position: fixed; top: 4px; left: 0; right: 0; z-index: 60;
+  background: var(--red); color: #1C1C1C;
+  font-family: var(--mono); font-size: 0.78rem; font-weight: 700;
+  text-align: center; padding: 0.4rem 1rem;
+}

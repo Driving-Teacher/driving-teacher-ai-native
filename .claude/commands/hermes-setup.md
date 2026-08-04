@@ -9,16 +9,45 @@ Hermes Agent를 내 PC에 설치하고 Slack 봇으로 연결한다.
 > **소요 시간**: 처음 셋업 ~30분 (Slack App 만들기 5분 + Hermes 설치/설정 15분 + 테스트 10분)
 > **막히면**: 슬랙 `#ai-native` 에 OS + 어느 Step + 에러 메시지 캡처
 
-## 사전 준비
+## 사전 준비 — 시작 전에 둘 다 받아두세요
 
-팀원에게 미리 안내할 것:
-1. Slack 워크스페이스 admin 권한 (또는 admin이 사전에 App 등록 허용)
-2. **API 키 1개** — 아래 중 하나만:
-   - OpenAI 키 (sk-...) → https://platform.openai.com/api-keys
-   - OpenRouter 키 (sk-or-...) → https://openrouter.ai/keys + 크레딧 $5
-   - Anthropic 키 (sk-ant-...) → https://console.anthropic.com/
+이 둘이 없으면 중간에 멈춥니다. **먼저 요청해두고 시작하세요.**
 
-> 🚨 **API 키는 채팅창에 직접 입력 금지** — `.env` 파일에만 저장. 슬랙 공개 채널 X.
+### ① API 키 — 회사가 줍니다. 직접 발급하지 마세요
+
+슬랙 `#ai-native` 에 이렇게 남기면 됩니다.
+
+```
+Hermes 셋업하려는데 API 키 하나 받을 수 있을까요?
+```
+
+관리자(정승아)가 발급해서 **DM으로** 보내드립니다.
+
+> 🚨 **직접 발급하거나 본인 카드를 등록하지 마세요.** 회사 도구를 깔려고 개인 결제 수단을 쓰는 일은 없습니다. 비용은 회사가 냅니다.
+>
+> 🚨 **받은 키를 슬랙 공개 채널이나 Claude Code 채팅창에 붙여넣지 마세요.** 아래 Step 3에서 `.env` 파일에만 넣습니다. 키는 지갑 비밀번호와 같습니다 — 새면 그 키로 남이 과금을 일으킬 수 있습니다.
+
+### ② Slack App 등록 권한
+
+Hermes 는 슬랙 봇이라 워크스페이스에 App 을 하나 만들어야 합니다. 기본적으로 **admin 만** 만들 수 있습니다.
+
+같은 슬랙 메시지에 이 한 줄을 같이 남기세요.
+
+```
+슬랙 App 등록 권한도 같이 열어주실 수 있을까요?
+```
+
+> 관리자가 권한을 열어주거나, App 을 대신 만들어 토큰 두 개(`xoxb-…` · `xapp-…`)를 DM으로 보내줍니다. 후자면 아래 Step 2를 건너뛰고 Step 3으로 갑니다.
+
+<!-- 관리자(호스트) 참고 — 왜 이렇게 바꿨나
+     예전에는 "API 키 발급은 본인 책임 (카드 등록만 하면 됨)" 이었다.
+     그래서 신규 입사자가 회사 도구를 깔려고 개인 카드를 등록해야 했고,
+     실제로 /ai-onboarding Step 10 에서 그 사실을 미리 안 알려줘서
+     15분쯤 진행한 뒤 결제 화면에서 멈추는 구조였다.
+     Slack admin 권한도 같은 문제였다 — 신입에게 없는데 아무도 안 알려줬다. -->
+
+## 진행
+
 
 ## 진행
 
@@ -97,8 +126,10 @@ cat > ~/.hermes/.env << 'EOF'
 SLACK_BOT_TOKEN=<여기에 xoxb-... 붙여넣기>
 SLACK_APP_TOKEN=<여기에 xapp-... 붙여넣기>
 
-# LLM API 키 (아래 중 하나만, 나머지는 # 주석 처리)
-OPENAI_API_KEY=<sk-... 또는 비워둠>
+# LLM API 키 — 관리자에게 받은 키 하나를 넣는다.
+# 받은 키가 sk-ant- 로 시작하면 세 번째 줄에, sk-or- 면 두 번째 줄에 넣고
+# 나머지 줄은 앞에 # 을 붙여 주석 처리한다. (비워두면 봇이 답을 못 한다)
+OPENAI_API_KEY=<관리자에게 받은 sk-... 키>
 # OPENROUTER_API_KEY=<sk-or-... 키>
 # ANTHROPIC_API_KEY=<sk-ant-... 키>
 
@@ -176,7 +207,8 @@ hermes gateway status
 |---|---|
 | 봇 응답 옴 | ✅ 성공! Step 6 (주의사항) |
 | "No home channel" | `/sethome` 입력 |
-| 402 에러 | API 크레딧 부족 — OpenAI/OpenRouter 잔액 충전 |
+| 402 에러 | 키 크레딧이 떨어진 것. **직접 충전하지 마세요** — 슬랙 `#ai-native` 에 "Hermes 402 에러 납니다" 남기면 관리자가 처리합니다 |
+| 401 · invalid_api_key | 키를 잘못 붙여넣은 것. 앞뒤 공백·따옴표 확인 후 Step 3 다시 |
 | 응답 없음 (~30초 대기 후) | `hermes gateway status` 재확인 → 슬랙 #ai-native |
 
 ### Step 6: 주의사항
@@ -194,9 +226,10 @@ hermes gateway status
    - 자동 시작: hermes gateway install (한 번만)
    - 수동 시작: hermes gateway start
 
-3. 크레딧 관리
-   - OpenAI/OpenRouter 크레딧 떨어지면 402 에러
-   - 잔액 확인: platform.openai.com/usage
+3. 크레딧은 회사가 관리합니다
+   - 402 에러가 나면 크레딧이 떨어진 것
+   - 직접 충전하지 마세요 — 슬랙 #ai-native 에 남기면 됩니다
+   - 비용은 회사가 냅니다
 
 4. Slack App 관련
    - scopes 추가하면 반드시 Reinstall to Workspace
@@ -235,7 +268,12 @@ hermes gateway status
 
 - 신규 입사자 같은 신입은 Step 0에서 OS 확인 → Mac/WSL/Windows native 분기 명확히
 - **Windows native는 권장 X** — WSL Ubuntu가 훨씬 안정적
-- API 키 발급은 본인 책임. Anthropic 키 받기 어려우면 OpenAI/OpenRouter 추천 (둘 다 카드 등록만)
+- **API 키는 관리자가 발급해서 DM으로 준다.** 팀원에게 직접 발급시키지 않는다 —
+  회사 도구를 깔려고 개인 카드를 등록하게 하면 안 되고, 실제로 그게 Step 10
+  이탈 지점이었다. 키를 미리 몇 개 만들어 두면 요청 올 때 바로 준다.
+- **Slack App 등록 권한**도 같이 열어준다. 신입에게는 admin 권한이 없어서
+  Step 2 에서 막힌다. 열어주기 어려우면 App 을 대신 만들어 토큰 두 개
+  (`xoxb-…` · `xapp-…`)를 DM으로 보내고 Step 2 를 건너뛰게 한다.
 - Slack App "Reinstall to Workspace"가 가장 자주 빠뜨리는 부분
 - 막힌 사람 처리:
   1. `hermes gateway status` 출력 + `cat ~/.hermes/.env` 출력 (키 가린 채) 슬랙 공유
