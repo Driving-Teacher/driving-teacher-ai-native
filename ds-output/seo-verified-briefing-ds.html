@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>운전선생 SEO — 검증완료 통합판 (개발자용)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+<script>
+/* 운전선생 디자인 시스템 토큰으로 중앙 매핑 — 마크업 클래스는 그대로, 색만 DS로 */
+tailwind.config={theme:{extend:{
+ fontFamily:{sans:['Pretendard','-apple-system','sans-serif'],mono:['SFMono-Regular','Consolas','Menlo','monospace']},
+ colors:{
+  ink:'#242523', brand:'#5A3FF3',
+  slate:{50:'#FBFBF8',100:'#F6F6F3',200:'#F1F1EE',300:'#E4E4E1',400:'#C1C2BF',500:'#A3A3A0',600:'#797A77',700:'#656563',800:'#464644',900:'#242523'},
+  gray:{50:'#FBFBF8',100:'#F6F6F3',200:'#F1F1EE',300:'#E4E4E1',400:'#C1C2BF',500:'#A3A3A0',600:'#797A77',700:'#656563',800:'#464644',900:'#242523'},
+  emerald:{50:'#E9FCF1',100:'#E9FCF1',300:'#7BE5A8',400:'#43D982',500:'#1FCF6A',600:'#17B85D',700:'#0F8A45',800:'#0C6E37',900:'#0C6E37'},
+  green:{50:'#E9FCF1',100:'#E9FCF1',300:'#7BE5A8',400:'#43D982',500:'#1FCF6A',600:'#17B85D',700:'#0F8A45'},
+  red:{50:'#FFF0F0',100:'#FFF0F0',200:'#FFD1D1',300:'#FF97CA',400:'#FF5C5D',500:'#FF5C5D',600:'#E84A4B',700:'#C83B3C',800:'#9E2E2F',900:'#7A2424'},
+  amber:{50:'#FFF2EB',100:'#FFF2EB',300:'#FFB280',400:'#FF8339',500:'#FF8339',600:'#E06A22',700:'#B8541A'},
+  blue:{50:'#F3F1FE',100:'#F3F1FE',400:'#6F89FB',500:'#5A3FF3',600:'#4A30D8'},
+  sky:{50:'#F0F7FF',100:'#F0F7FF',200:'#A8D2FF',400:'#6F89FB',500:'#0069DC',600:'#0069DC'}
+ }
+}}}
+</script>
+<style>
+ body{font-family:'Pretendard',sans-serif;-webkit-font-smoothing:antialiased;color:#242523}
+ .accent{border-left-width:6px}
+ table{border-collapse:collapse}
+ th,td{padding:.6rem .8rem;text-align:left;vertical-align:top;font-size:.86rem;letter-spacing:-0.02em}
+ thead th{font-weight:700;font-size:.76rem;letter-spacing:.02em;text-transform:uppercase;color:#797A77}
+ tbody tr{border-top:1px solid #F1F1EE}
+ tbody tr:nth-child(even){background:#FBFBF8}
+ code{font-family:'SFMono-Regular',Consolas,monospace;background:#F3F1FE;color:#5A3FF3;padding:.08rem .35rem;border-radius:6px;font-size:.84em;word-break:break-all}
+ pre{background:#242523;color:#E4E4E1;border-radius:12px;padding:1rem;overflow-x:auto;font-family:'SFMono-Regular',Consolas,monospace;font-size:.8rem;line-height:1.55}
+ pre code{background:none;color:inherit;padding:0}
+ .strike{text-decoration:line-through;color:#A3A3A0}
+ .devbox{background:#242523;color:#C1C2BF;border-radius:16px;padding:1.1rem 1.3rem}
+ .devbox b{color:#FFF95C}
+ .tok{color:#FF97CA}
+ .step-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:100px;font-weight:800;font-size:14px}
+ .mode-desktop .dt-title1{font-size:48px;font-weight:700;line-height:1.3;letter-spacing:-1.44px}
+ .mode-desktop .dt-title2{font-size:36px;font-weight:700;line-height:1.3;letter-spacing:-1.08px}
+ @media print{body{background:#fff}}
+</style>
+</head>
+<body class="mode-desktop bg-slate-100 text-ink">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+
+ <!-- HEADER -->
+ <header class="mb-8">
+  <div class="inline-flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full mb-3">✅ 실측 검증 완료 · 개발자용 통합판</div>
+  <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">운전선생 SEO 액션 — 검증 통합판</h1>
+  <p class="text-slate-500 mt-2 text-sm">2026-05-29 · 기존 brief(2026-05-28) + 라이브 HTML 12개 페이지 유형 실측 검증 머지 · GSC 90일</p>
+ </header>
+
+ <!-- TL;DR -->
+ <div class="bg-white rounded-2xl shadow-sm p-6 mb-6 accent border-brand">
+  <h2 class="font-bold text-lg mb-3">📌 핵심 3줄</h2>
+  <ol class="text-slate-700 leading-relaxed space-y-2 list-decimal pl-5 text-sm">
+   <li><b>brief의 절반은 맞고, 일부는 틀렸다.</b> 특히 <b class="text-red-500">"canonical 미표시"는 오류</b> — 전 페이지에 이미 정상 적용돼 있어 <u>해당 개발 작업은 불필요</u>(리소스 절감).</li>
+   <li><b>둘 다 놓친 최대 기회(2026-06-01 재실측 정정):</b> <code>/academy/*</code> <b>학원 상세 2,725페이지</b>는 이미 <code>Product+AggregateRating+Review</code> 스키마를 갖고 있다(별점 리치결과 자격은 이미 확보). 다만 물리 학원에 맞는 <code>DrivingSchool</code>(LocalBusiness)·<code>Course/Offer</code>·주소가 없어 <b class="text-red-500">로컬·지도팩·AI 인용 자격을 못 받는 상태</b> → <code>/explore/*</code>가 이미 만드는 <code>Course/Offer</code> 패턴을 재사용해 <b>타입 전환·보강</b>하면 적은 공수에 큰 가치.</li>
+   <li><b>실행 순서가 핵심:</b> 메타 일괄정비보다 <b class="text-brand">자기잠식 정리(1순위)가 먼저</b>. 안 그러면 메타 효과가 여러 페이지로 분산돼 상쇄된다. 아래는 <b>우선순위 1→2→3 순서</b>로 정리.</li>
+  </ol>
+ </div>
+
+ <!-- 검증 방법 -->
+ <div class="bg-white rounded-xl shadow-sm p-4 mb-8 text-xs text-slate-500">
+  <b class="text-slate-700">검증 방법:</b> 9개 페이지 유형(<code>/</code>, <code>/test</code>, <code>/test/problem</code>, <code>/guide</code>, <code>/blog</code>×3, <code>/explore</code>, <code>/test-centers</code>, <code>/community</code>, <code>/academy</code>, <code>/training</code>)을 Googlebot User-Agent로 직접 fetch → JSON-LD·canonical·robots·title·H1·날짜·FAQ 신호 실측. 자기잠식 30건은 GSC 원본 JSON에서 경쟁 페이지 직접 집계. 사이트맵 2종 HTTP·URL 수 확인.
+ </div>
+
+ <!-- 검증 결과 표 -->
+ <h2 class="text-2xl font-extrabold mb-4">🔬 brief 주장 vs 실측</h2>
+ <div class="bg-white rounded-2xl shadow-sm overflow-hidden mb-8">
+  <table class="w-full">
+   <thead><tr><th>brief 주장</th><th>실측 결과</th><th class="w-24">판정</th></tr></thead>
+   <tbody>
+    <tr><td>블로그 JSON-LD 0/32 누락</td><td>blog 3개 확인 — 스키마 전무</td><td><span class="text-emerald-600 font-bold">✅ 사실</span></td></tr>
+    <tr><td>홈 H1 = "(주)티지소사이어티"</td><td>H1 확인. 단, <code>&lt;title&gt;</code>은 양호("제대로 알면…")</td><td><span class="text-emerald-600 font-bold">✅ 사실</span></td></tr>
+    <tr><td class="strike">canonical 미표시 / 자동주입 로직 부재</td><td><b class="text-red-500">12/12 페이지 전부 self-canonical 정상 존재</b></td><td><span class="text-red-500 font-bold">❌ 오류<br>작업 불필요</span></td></tr>
+    <tr><td class="strike">JSON-LD 0개 (전역)</td><td><code>/explore</code>(5,933p)·<code>/community</code>(335p)·홈은 <b>이미 풍부한 스키마 보유</b>. "0"은 blog·guide·academy·test-centers만 해당</td><td><span class="text-amber-500 font-bold">⚠️ 과장</span></td></tr>
+    <tr><td>캐니벌 최대 7페이지</td><td>실제 최대 <b>6페이지</b>("필기시험 온라인 접수"). 30건 카운트는 정확</td><td><span class="text-amber-500 font-bold">⚠️ 경미</span></td></tr>
+    <tr><td>dateModified·FAQ·저자 byline 부재</td><td>blog/guide에 전부 없음 확인</td><td><span class="text-emerald-600 font-bold">✅ 사실</span></td></tr>
+    <tr><td>robots AI봇 허용 / 사이트맵 OK</td><td><code>Allow: /</code>, 사이트맵 13,262 URL HTTP 200</td><td><span class="text-emerald-600 font-bold">✅ 사실</span></td></tr>
+    <tr><td>비브랜드 98.5% 의존</td><td>방향성 동일(브랜드 클릭 954 / 비브랜드 19,894)</td><td><span class="text-emerald-600 font-bold">✅ 사실</span></td></tr>
+   </tbody>
+  </table>
+ </div>
+
+ <!-- ROI 우선순위 요약 -->
+ <h2 class="text-2xl font-extrabold mb-1">🎯 개발 우선순위 한눈에</h2>
+ <p class="text-sm text-slate-500 mb-4">공수는 Next.js 템플릿 기준 현실 추정 · 가치는 GSC 데이터 근거 · 상세는 아래 1→2→3 순서로.</p>
+ <div class="bg-white rounded-2xl shadow-sm overflow-hidden mb-10">
+  <table class="w-full">
+   <thead><tr><th class="w-10"></th><th>항목</th><th class="w-24">공수</th><th class="w-20">가치</th><th>판단</th></tr></thead>
+   <tbody>
+    <tr><td>🥇</td><td><b>자기잠식 정리</b> (canonical/301, 30건)</td><td>2~4일 + 편집결정</td><td><b class="text-emerald-600">매우높음</b></td><td>즉시 착수 (두 감사 일치)</td></tr>
+    <tr><td>🥈</td><td><b>academy 상세 2,725p — Product→DrivingSchool 전환·보강</b></td><td>1.5~2일</td><td><b class="text-emerald-600">높음</b></td><td>재정의(별점 이미有, 로컬·AI인용 자격 보강)</td></tr>
+    <tr><td>🥉</td><td><b>홈 H1 교체 + blog Article 스키마</b></td><td>0.5일 + 1~2일</td><td>중</td><td>묶어서 진행</td></tr>
+    <tr><td>⛔</td><td class="strike">canonical 자동주입</td><td><b>0일</b></td><td>—</td><td><b class="text-red-500">드롭 — 이미 구현됨</b></td></tr>
+    <tr><td>🔻</td><td>explore LocalBusiness 신규 (brief P1=3일)</td><td><b>~1일로 축소</b></td><td>중</td><td>재스코프 (Course 이미 있음)</td></tr>
+    <tr><td>⏸</td><td>FAQ 스키마 / 저자 entity</td><td>2~5일 + 콘텐츠·결정</td><td>중·낮음</td><td>보류</td></tr>
+    <tr><td>❓</td><td><code>/test/problem/*</code> 4,000 thin 페이지</td><td>noindex 0.5일</td><td>방어적</td><td>의사결정 필요</td></tr>
+   </tbody>
+  </table>
+ </div>
+
+ <!-- 개발자 사전지식 -->
+ <div class="devbox mb-6">
+  <h3 class="font-bold text-base mb-3 text-white">🧠 먼저 (3분): SEO 신호가 왜 코드 문제인가</h3>
+  <p class="text-sm leading-relaxed mb-2">검색엔진·AI 봇은 화면을 "사람처럼" 못 읽는다. 그래서 <b>구조화된 신호</b>를 HTML에 박아줘야 한다:</p>
+  <ul class="text-sm space-y-1.5 list-disc pl-5">
+   <li><b>JSON-LD</b> = "이 페이지는 <span class="tok">기사/강좌/학원</span>, 작성일 X, 가격 Y" 라고 기계가 읽는 라벨. <code>&lt;head&gt;</code>에 <code>&lt;script type="application/ld+json"&gt;</code>로 주입.</li>
+   <li><b>canonical</b> = "같은 내용이 여러 URL일 때 <span class="tok">진짜 대표 URL은 이거</span>" 선언. <span class="text-emerald-300">(✅ 이미 전 페이지 적용 — 손댈 것 없음)</span></li>
+   <li><b>301 redirect</b> = "이 URL은 영구히 저 URL로 이사" → 흩어진 링크 권위를 한 페이지로 합침.</li>
+  </ul>
+  <p class="text-sm mt-3 text-slate-400">핵심: 페이지 유형마다 <b class="text-sky-300">템플릿 1개</b>가 수천 페이지를 찍어낸다 → <b>템플릿 1곳만 고치면 수천 페이지가 동시에 고쳐진다.</b></p>
+ </div>
+
+ <!-- 라우트 파일 레퍼런스 -->
+ <div class="bg-white rounded-2xl shadow-sm p-5 mb-10">
+  <h3 class="font-bold text-base mb-1">📁 실제 라우트 파일 (Next.js Pages Router)</h3>
+  <p class="text-xs text-slate-500 mb-3">라이브 빌드 청크 경로에서 <b>실제 파일명 직접 확인</b>(추정 아님). 스키마는 <code>next/head</code>의 <code>&lt;Head&gt;</code>에서 주입.</p>
+  <div class="overflow-x-auto"><table class="w-full">
+   <thead><tr><th>URL</th><th>라우트 파일</th><th>관련 작업</th></tr></thead>
+   <tbody>
+    <tr><td><code>/explore/recommendation/서울</code></td><td><code>pages/explore/recommendation/[location].tsx</code></td><td><b class="text-emerald-600">스키마 이미 주입 — 복사 원본</b></td></tr>
+    <tr><td><code>/academy/{id}</code></td><td><code>pages/academy/[id].tsx</code></td><td>🥈 2순위</td></tr>
+    <tr><td><code>/blog/{id}</code></td><td><code>pages/blog/[id].tsx</code></td><td>🥇 1순위 · 🥉 3순위</td></tr>
+    <tr><td><code>/</code></td><td><code>pages/index.tsx</code></td><td>🥉 3순위 (H1)</td></tr>
+    <tr><td><code>/test</code></td><td><code>pages/test/index.tsx</code></td><td>🥇 1순위 (내부링크 대상)</td></tr>
+   </tbody>
+  </table></div>
+ </div>
+
+ <!-- ===================== 🥇 1순위 ===================== -->
+ <div class="flex items-center gap-3 mb-4">
+  <span class="step-num bg-emerald-500 text-white">1</span>
+  <h2 class="text-2xl font-extrabold">자기잠식 정리 <span class="text-base font-semibold text-slate-500">— canonical/301</span></h2>
+ </div>
+
+ <!-- 1-A 문제 -->
+ <div class="bg-white rounded-2xl shadow-sm p-6 mb-5 accent border-emerald-500">
+  <div class="flex items-center gap-2 mb-3"><span class="text-xs font-bold text-white bg-emerald-600 px-2.5 py-1 rounded-full">🥇 1순위</span><span class="text-xs text-slate-500">개발 2~4일 + 마케팅 편집결정 · 가치 매우높음</span></div>
+  <h3 class="font-bold text-lg mb-2">문제 — 같은 키워드를 자사 페이지 여러 개가 경쟁</h3>
+  <p class="text-sm text-slate-600 mb-3">Google이 "어느 게 대표인지" 못 정해 순위가 나뉜다. 예: <code>운전면허 필기시험 온라인 접수</code>를 <b>6페이지</b>가 경쟁 → 각자 pos 6~9에서 맴돈다. 총 30개 쿼리에서 발생.</p>
+  <div class="bg-slate-50 rounded-lg p-3 text-xs text-slate-600">
+   <b>승자/패자 데이터는 이미 산출됨</b>(GSC). 30개 쿼리 각각 winner 1개 + losers N개. 마케팅이 "어느 페이지를 살릴지"만 확정하면 됨. <b>단, 자동 winner를 맹신 금지</b> — 아래 케이스 참고.
+  </div>
+ </div>
+
+ <!-- 1-B BEFORE/AFTER 시각화 -->
+ <div class="bg-white rounded-2xl shadow-sm p-6 mb-5">
+  <h3 class="font-bold text-lg mb-1">실측 BEFORE → AFTER (상위 5개 쿼리)</h3>
+  <p class="text-sm text-slate-500 mb-4"><b>실제 GSC 데이터.</b> 한 검색어에 자사 페이지가 <b class="text-red-500">여러 개(빨강)</b> 흩어져 경쟁 → 의도별로 대표를 정리하면 <b class="text-emerald-600">대표 페이지(녹색)</b>가 상위로. AFTER는 보수적 예상치. <span class="text-slate-400">(시험 도구는 별도 유지, 공부법 블로그끼리 통합 — 아래 케이스 참고)</span></p>
+  <svg viewBox="0 0 960 676" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,sans-serif" style="width:100%;height:auto;background:#fff;border-radius:12px">
+<text x="20" y="32" font-size="17" font-weight="800" fill="#242523">자기잠식 BEFORE → AFTER (실측 GSC 데이터 · 정리 시 예상)</text>
+<text x="20" y="52" font-size="12" fill="#797A77">점 = 검색어에 노출되는 자사 페이지 · 가로축 = Google 평균순위(왼쪽=상위) · 원 크기 = 클릭수</text>
+<rect x="224" y="64" width="309.0" height="26" rx="6" fill="#FFF0F0"/>
+<text x="378" y="82" font-size="13" font-weight="700" fill="#E84A4B" text-anchor="middle">BEFORE — 여러 페이지 분산 경쟁</text>
+<rect x="591.0" y="64" width="309.0" height="26" rx="6" fill="#E9FCF1"/>
+<text x="746" y="82" font-size="13" font-weight="700" fill="#1FCF6A" text-anchor="middle">AFTER — 대표 페이지로 정리·상승(예상)</text>
+<line x1="230" y1="126" x2="230" y2="660" stroke="#F1F1EE"/>
+<text x="230" y="120" font-size="9" fill="#A3A3A0" text-anchor="middle">1위</text>
+<line x1="296" y1="126" x2="296" y2="660" stroke="#F1F1EE"/>
+<text x="296" y="120" font-size="9" fill="#A3A3A0" text-anchor="middle">3위</text>
+<line x1="362" y1="126" x2="362" y2="660" stroke="#F1F1EE"/>
+<text x="362" y="120" font-size="9" fill="#A3A3A0" text-anchor="middle">5위</text>
+<line x1="428" y1="126" x2="428" y2="660" stroke="#F1F1EE"/>
+<text x="428" y="120" font-size="9" fill="#A3A3A0" text-anchor="middle">7위</text>
+<line x1="527" y1="126" x2="527" y2="660" stroke="#F1F1EE"/>
+<text x="527" y="120" font-size="9" fill="#A3A3A0" text-anchor="middle">10위</text>
+<line x1="597" y1="126" x2="597" y2="660" stroke="#F1F1EE"/>
+<text x="597" y="120" font-size="9" fill="#A3A3A0" text-anchor="middle">1위</text>
+<line x1="663" y1="126" x2="663" y2="660" stroke="#F1F1EE"/>
+<text x="663" y="120" font-size="9" fill="#A3A3A0" text-anchor="middle">3위</text>
+<line x1="729" y1="126" x2="729" y2="660" stroke="#F1F1EE"/>
+<text x="729" y="120" font-size="9" fill="#A3A3A0" text-anchor="middle">5위</text>
+<line x1="795" y1="126" x2="795" y2="660" stroke="#F1F1EE"/>
+<text x="795" y="120" font-size="9" fill="#A3A3A0" text-anchor="middle">7위</text>
+<line x1="894" y1="126" x2="894" y2="660" stroke="#F1F1EE"/>
+<text x="894" y="120" font-size="9" fill="#A3A3A0" text-anchor="middle">10위</text>
+<line x1="14" y1="230" x2="946" y2="230" stroke="#F1F1EE"/>
+<text x="16" y="180" font-size="13" font-weight="700" fill="#242523">운전면허 필기시험</text>
+<text x="16" y="199" font-size="10.5" fill="#797A77">5개 경쟁 · 1,725 clk</text>
+<line x1="230" y1="184" x2="527.0" y2="184" stroke="#FFD1D1" stroke-width="2"/>
+<line x1="597.0" y1="184" x2="894.0" y2="184" stroke="#7BE5A8" stroke-width="2"/>
+<circle cx="230" cy="184" r="7" fill="#1FCF6A" fill-opacity="0.82" stroke="#fff" stroke-width="1.4"/>
+<text x="230" y="174" font-size="8" fill="#797A77" text-anchor="middle">blog/rx8ro</text>
+<circle cx="245" cy="184" r="7" fill="#FF5C5D" fill-opacity="0.82" stroke="#fff" stroke-width="1.4"/>
+<circle cx="352" cy="184" r="18" fill="#FF5C5D" fill-opacity="0.82" stroke="#fff" stroke-width="1.4"/>
+<text x="352" y="163" font-size="8" fill="#797A77" text-anchor="middle">/test</text>
+<line x1="537" y1="184" x2="581" y2="184" stroke="#A3A3A0" stroke-width="2"/>
+<polygon points="581,179 587,184 581,189" fill="#A3A3A0"/>
+<circle cx="607" cy="184" r="24" fill="#1FCF6A" fill-opacity="0.9" stroke="#fff" stroke-width="2"/>
+<text x="607" y="187" font-size="9" fill="#fff" text-anchor="middle" font-weight="800">1.3위</text>
+<text x="607" y="157" font-size="9" fill="#0F8A45" text-anchor="middle" font-weight="700">/test 소유 · 상위</text>
+<line x1="14" y1="334" x2="946" y2="334" stroke="#F1F1EE"/>
+<text x="16" y="284" font-size="13" font-weight="700" fill="#242523">운전면허 필기</text>
+<text x="16" y="303" font-size="10.5" fill="#797A77">4개 경쟁 · 613 clk</text>
+<line x1="230" y1="288" x2="527.0" y2="288" stroke="#FFD1D1" stroke-width="2"/>
+<line x1="597.0" y1="288" x2="894.0" y2="288" stroke="#7BE5A8" stroke-width="2"/>
+<circle cx="233" cy="288" r="6" fill="#1FCF6A" fill-opacity="0.82" stroke="#fff" stroke-width="1.4"/>
+<text x="233" y="279" font-size="8" fill="#797A77" text-anchor="middle">blog/rx8ro</text>
+<circle cx="319" cy="288" r="18" fill="#FF5C5D" fill-opacity="0.82" stroke="#fff" stroke-width="1.4"/>
+<text x="319" y="267" font-size="8" fill="#797A77" text-anchor="middle">/test</text>
+<circle cx="378" cy="288" r="6" fill="#FF5C5D" fill-opacity="0.82" stroke="#fff" stroke-width="1.4"/>
+<text x="378" y="279" font-size="8" fill="#797A77" text-anchor="middle">blog/oLElZ</text>
+<circle cx="491" cy="288" r="6" fill="#FF5C5D" fill-opacity="0.82" stroke="#fff" stroke-width="1.4"/>
+<text x="491" y="279" font-size="8" fill="#797A77" text-anchor="middle">blog/jmZ4a</text>
+<line x1="537" y1="288" x2="581" y2="288" stroke="#A3A3A0" stroke-width="2"/>
+<polygon points="581,283 587,288 581,293" fill="#A3A3A0"/>
+<circle cx="607" cy="288" r="24" fill="#1FCF6A" fill-opacity="0.9" stroke="#fff" stroke-width="2"/>
+<text x="607" y="291" font-size="9" fill="#fff" text-anchor="middle" font-weight="800">1.3위</text>
+<text x="607" y="261" font-size="9" fill="#0F8A45" text-anchor="middle" font-weight="700">/test 소유</text>
+<line x1="14" y1="438" x2="946" y2="438" stroke="#F1F1EE"/>
+<text x="16" y="388" font-size="13" font-weight="700" fill="#242523">운전면허 필기시험 접수</text>
+<text x="16" y="407" font-size="10.5" fill="#797A77">6개 경쟁 · 224 clk</text>
+<line x1="230" y1="392" x2="527.0" y2="392" stroke="#FFD1D1" stroke-width="2"/>
+<line x1="597.0" y1="392" x2="894.0" y2="392" stroke="#7BE5A8" stroke-width="2"/>
+<circle cx="389" cy="392" r="10" fill="#1FCF6A" fill-opacity="0.82" stroke="#fff" stroke-width="1.4"/>
+<text x="389" y="378" font-size="8" fill="#797A77" text-anchor="middle">blog/gWcej</text>
+<circle cx="372" cy="392" r="7" fill="#FF5C5D" fill-opacity="0.82" stroke="#fff" stroke-width="1.4"/>
+<circle cx="412" cy="392" r="7" fill="#FF5C5D" fill-opacity="0.82" stroke="#fff" stroke-width="1.4"/>
+<circle cx="431" cy="392" r="6" fill="#FF5C5D" fill-opacity="0.82" stroke="#fff" stroke-width="1.4"/>
+<circle cx="455" cy="392" r="6" fill="#FF5C5D" fill-opacity="0.82" stroke="#fff" stroke-width="1.4"/>
+<text x="430" y="414" font-size="8" fill="#A3A3A0" text-anchor="middle">+ 패자 5개 군집</text>
+<line x1="537" y1="392" x2="581" y2="392" stroke="#A3A3A0" stroke-width="2"/>
+<polygon points="581,387 587,392 581,397" fill="#A3A3A0"/>
+<circle cx="640" cy="392" r="14" fill="#1FCF6A" fill-opacity="0.9" stroke="#fff" stroke-width="2"/>
+<text x="640" y="395" font-size="9" fill="#fff" text-anchor="middle" font-weight="800">4.0위</text>
+<text x="640" y="372" font-size="9" fill="#0F8A45" text-anchor="middle" font-weight="700">blog 1개 통합</text>
+<line x1="14" y1="542" x2="946" y2="542" stroke="#F1F1EE"/>
+<text x="16" y="492" font-size="13" font-weight="700" fill="#242523">운전면허 필기시험 모의고사</text>
+<text x="16" y="511" font-size="10.5" fill="#797A77">2개 경쟁 · 434 clk</text>
+<line x1="230" y1="496" x2="527.0" y2="496" stroke="#FFD1D1" stroke-width="2"/>
+<line x1="597.0" y1="496" x2="894.0" y2="496" stroke="#7BE5A8" stroke-width="2"/>
+<circle cx="270" cy="496" r="18" fill="#1FCF6A" fill-opacity="0.82" stroke="#fff" stroke-width="1.4"/>
+<text x="270" y="475" font-size="8" fill="#797A77" text-anchor="middle">/test</text>
+<circle cx="388" cy="496" r="6" fill="#FF5C5D" fill-opacity="0.82" stroke="#fff" stroke-width="1.4"/>
+<text x="388" y="487" font-size="8" fill="#797A77" text-anchor="middle">/test/level</text>
+<line x1="537" y1="496" x2="581" y2="496" stroke="#A3A3A0" stroke-width="2"/>
+<polygon points="581,491 587,496 581,501" fill="#A3A3A0"/>
+<circle cx="617" cy="496" r="24" fill="#1FCF6A" fill-opacity="0.9" stroke="#fff" stroke-width="2"/>
+<text x="617" y="499" font-size="9" fill="#fff" text-anchor="middle" font-weight="800">1.6위</text>
+<text x="617" y="469" font-size="9" fill="#0F8A45" text-anchor="middle" font-weight="700">/test 유지</text>
+<line x1="14" y1="646" x2="946" y2="646" stroke="#F1F1EE"/>
+<text x="16" y="596" font-size="13" font-weight="700" fill="#242523">운전면허 모의고사</text>
+<text x="16" y="615" font-size="10.5" fill="#797A77">2개 경쟁 · 307 clk</text>
+<line x1="230" y1="600" x2="527.0" y2="600" stroke="#FFD1D1" stroke-width="2"/>
+<line x1="597.0" y1="600" x2="894.0" y2="600" stroke="#7BE5A8" stroke-width="2"/>
+<circle cx="270" cy="600" r="18" fill="#1FCF6A" fill-opacity="0.82" stroke="#fff" stroke-width="1.4"/>
+<text x="270" y="579" font-size="8" fill="#797A77" text-anchor="middle">/test</text>
+<circle cx="444" cy="600" r="5" fill="#FF5C5D" fill-opacity="0.82" stroke="#fff" stroke-width="1.4"/>
+<text x="444" y="592" font-size="8" fill="#797A77" text-anchor="middle">/test/level</text>
+<line x1="537" y1="600" x2="581" y2="600" stroke="#A3A3A0" stroke-width="2"/>
+<polygon points="581,595 587,600 581,605" fill="#A3A3A0"/>
+<circle cx="617" cy="600" r="22" fill="#1FCF6A" fill-opacity="0.9" stroke="#fff" stroke-width="2"/>
+<text x="617" y="603" font-size="9" fill="#fff" text-anchor="middle" font-weight="800">1.6위</text>
+<text x="617" y="575" font-size="9" fill="#0F8A45" text-anchor="middle" font-weight="700">/test 유지</text>
+</svg>
+ </div>
+
+ <!-- 1-C 케이스 스터디 (수정된 판정) -->
+ <div class="bg-white rounded-2xl shadow-sm p-6 mb-5 accent border-blue-500">
+  <h3 class="font-bold text-lg mb-1">🔗 케이스 — "운전면허 필기시험" 경쟁 5개 페이지</h3>
+  <p class="text-sm text-slate-500 mb-3">링크 클릭 시 새 탭. <b class="text-red-500">GSC 자동 winner(1.0위 블로그)를 그대로 따르면 안 되는 대표 케이스.</b></p>
+  <div class="overflow-x-auto mb-4"><table class="w-full">
+   <thead><tr><th>순위</th><th>클릭</th><th>노출</th><th>CTR</th><th>페이지 (클릭)</th><th>콘텐츠 성격</th></tr></thead>
+   <tbody>
+    <tr class="bg-blue-50">
+     <td>4.7위</td><td><b>1,695</b></td><td>21,544</td><td><b>7.87%</b></td>
+     <td><a href="https://drivingteacher.co.kr/test" target="_blank" rel="noopener" class="text-brand underline font-bold">/test</a></td>
+     <td>🛠️ <b>시험 문제 풀이 도구</b> (transactional)</td>
+    </tr>
+    <tr><td>1.0위</td><td>10</td><td>729</td><td>1.37%</td><td><a href="https://drivingteacher.co.kr/blog/rx8rouuAtjj5G6XRyd0F" target="_blank" rel="noopener" class="text-brand underline">/blog/rx8rouu…</a></td><td>📝 합격 가이드·꿀팁</td></tr>
+    <tr><td>1.2위</td><td>11</td><td><b>1,543</b></td><td>0.71%</td><td><a href="https://drivingteacher.co.kr/blog/6z7dqXABH3UJ2qFla0zh" target="_blank" rel="noopener" class="text-brand underline">/blog/6z7dq…</a></td><td>📝 25/26 합격 공부법 (노출 최다)</td></tr>
+    <tr><td>1.2위</td><td>5</td><td>205</td><td>2.44%</td><td><a href="https://drivingteacher.co.kr/blog/KFhcci3aKUWe5qNqcrRe" target="_blank" rel="noopener" class="text-brand underline">/blog/KFhcci…</a></td><td>📝 기출 공략·꿀팁</td></tr>
+    <tr><td>1.2위</td><td>4</td><td>350</td><td>1.14%</td><td><a href="https://drivingteacher.co.kr/blog/3OgvRJO6stpTL2DEOlHJ" target="_blank" rel="noopener" class="text-brand underline">/blog/3OgvRJ…</a></td><td>📝 최신 공부법 총정리</td></tr>
+   </tbody>
+  </table></div>
+
+  <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-4">
+   <p class="dt-body1-bold text-slate-900 mb-1">⚖️ 판정: 하나로 묶지 않는다 — 의도가 다른 <span class="text-brand">2개 축으로 분리</span></p>
+   <p class="text-sm text-slate-700"><code>/test</code>는 <b>실제 시험 문제를 푸는 도구</b>이고, 블로그 4개는 <b>합격 공부법 가이드(정보성)</b>다. 콘텐츠 유형·검색의도가 달라 <b class="text-red-500">하나의 canonical로 묶으면 안 된다.</b> GSC가 1.0위 블로그(클릭 10개)를 winner로 찍은 건 함정 — 전체 클릭의 <b>98.3%가 <code>/test</code></b>에 있어, 그대로 <code>/test</code>를 블로그로 301하면 재앙.</p>
+  </div>
+
+  <div class="grid sm:grid-cols-2 gap-3">
+   <div class="border border-emerald-300 bg-emerald-50 rounded-xl p-4">
+    <p class="font-bold text-slate-800 mb-1">① 시험 페이지 <code>/test</code> — <span class="text-emerald-700">그대로 유지</span></p>
+    <p class="text-sm text-slate-700">canonical/301 <b>손대지 않음.</b> 도구 의도("필기시험을 풀어보자")를 단독 소유. 블로그들에서 <b>"지금 모의고사 풀기" 내부링크</b>만 받아 유입 강화.</p>
+    <p class="text-xs text-emerald-700 mt-2">→ 권위 집중되면 4.7위 → 2~3위 기대.</p>
+   </div>
+   <div class="border border-amber-300 bg-amber-50 rounded-xl p-4">
+    <p class="font-bold text-slate-800 mb-1">② 공부법 블로그 4개 → <span class="text-amber-700">1개로 통합</span></p>
+    <p class="text-sm text-slate-700">4개가 거의 같은 "합격 공부법" 글이라 자기들끼리 경쟁. 대표 = <a href="https://drivingteacher.co.kr/blog/6z7dqXABH3UJ2qFla0zh" target="_blank" rel="noopener" class="text-brand underline">6z7dq</a>(노출 1,543 최다). <b>rx8rouu·KFhcci·3OgvRJ → 6z7dq로 301</b>(같은 유형이라 적합).</p>
+    <p class="text-xs text-amber-700 mt-2">→ 정보 의도("공부법/꿀팁") 단독 소유 + /test로 유입.</p>
+   </div>
+  </div>
+  <p class="text-xs text-slate-500 mt-3">결과: <code>/test</code>=도구 의도 · <code>6z7dq</code>=정보 의도. 둘은 <b>서로 다른 페이지로 공존</b>하며 내부링크로 연결. (canonical 통합은 ②번 블로그 그룹 안에서만)</p>
+ </div>
+
+ <!-- 1-D 개발 작업 -->
+ <div class="bg-white rounded-2xl shadow-sm p-6 mb-10">
+  <h3 class="font-bold text-lg mb-2">개발 작업 — 30건에 적용할 2가지 패턴</h3>
+  <p class="text-sm font-semibold text-slate-700 mb-1">패턴 A — 같은 유형 중복: 패자 → 대표로 301 (예: 공부법 블로그 4→1)</p>
+  <pre><code>// next.config.js — 영구 리다이렉트
+async redirects() {
+  return [
+    { source: '/blog/rx8rouuAtjj5G6XRyd0F', destination: '/blog/6z7dqXABH3UJ2qFla0zh', permanent: true },
+    { source: '/blog/KFhcci3aKUWe5qNqcrRe', destination: '/blog/6z7dqXABH3UJ2qFla0zh', permanent: true },
+    { source: '/blog/3OgvRJO6stpTL2DEOlHJ', destination: '/blog/6z7dqXABH3UJ2qFla0zh', permanent: true },
+    // ... 30개 쿼리의 같은-유형 loser 매핑
+  ]
+}</code></pre>
+  <p class="text-sm font-semibold text-slate-700 mb-1 mt-3">패턴 B — 다른 유형(도구 vs 정보): 301 금지, 내부링크로 의도 분리 (예: /test ↔ 블로그)</p>
+  <pre><code><span class="tok">// 블로그 본문 상단/중간에 도구 CTA 내부링크</span>
+&lt;Link href="/test"&gt;👉 지금 운전면허 필기시험 모의고사 풀어보기&lt;/Link&gt;
+<span class="tok">// /test는 canonical 그대로(self). 블로그 제목은 롱테일(공부법/꿀팁)로 차별화.</span></code></pre>
+  <p class="text-xs text-slate-500 mt-3"><b>판단 기준:</b> 콘텐츠 유형이 같고 중복이면 → <b>패턴 A(301)</b>. 유형·의도가 다르면(도구 vs 정보) → <b>패턴 B(내부링크+키워드 분리)</b>. <b class="text-emerald-600">가치:</b> 분산 권위 통합 → 상위 진입, 이후 메타 작업 효과의 전제조건.</p>
+ </div>
+
+ <!-- 1-E 검증된 외부 사례 -->
+ <div class="bg-white rounded-2xl shadow-sm p-6 mb-10 accent border-blue-500">
+  <h3 class="font-bold text-lg mb-1">📚 검증된 외부 사례 — 301 통합이 실제로 통한다</h3>
+  <p class="text-sm text-slate-500 mb-4">아래는 모두 <b>같은 의도/유형끼리 통합</b>한 케이스(= 운전선생 ②번 블로그 4→1 패턴). 수치는 각 출처 보고값이라 보장치가 아니라 <b>기대 범위·방향성</b> 참고용.</p>
+  <div class="overflow-x-auto mb-4"><table class="w-full">
+   <thead><tr><th>사례</th><th>방법</th><th>결과</th><th>운전선생 시사점</th></tr></thead>
+   <tbody>
+    <tr>
+     <td><b>Backlinko</b><br><span class="text-xs text-slate-500">Brian Dean</span></td>
+     <td>잡아먹던 두 글을 <b>301로 통합</b></td>
+     <td><b class="text-emerald-600">클릭 +466%</b> (YoY)</td>
+     <td>"패턴 A(같은 유형 301)" 그대로</td>
+    </tr>
+    <tr class="bg-blue-50">
+     <td><b>Boomtown</b><br><span class="text-xs text-slate-500">Total Equipment Training</span></td>
+     <td><b>트래픽 최다 글을 베이스</b>로 나머지 통합</td>
+     <td>통합 글이 대표로 상승</td>
+     <td>⭐ <b>가장 닮은 케이스</b> — 노출 최다 <code>6z7dq</code>를 대표로 선정한 논리와 동일</td>
+    </tr>
+    <tr>
+     <td><b>Planable</b></td>
+     <td>유사 의도 글 통합 + 약한 URL 301</td>
+     <td><b class="text-emerald-600">오가닉 +176%</b> (6개월)</td>
+     <td>의도 분산 → 통합 시 회복</td>
+    </tr>
+    <tr>
+     <td><b>e-commerce</b><br><span class="text-xs text-slate-500">수제 반지 브랜드</span></td>
+     <td>전략적 콘텐츠 통합</td>
+     <td><b class="text-emerald-600">오가닉 +200%</b> (1개월)</td>
+     <td>단기 효과 가능성</td>
+    </tr>
+    <tr>
+     <td><b>Jason S. Montoya</b></td>
+     <td>700개 글 → 200개로 통합·정리</td>
+     <td>랭킹·트래픽 개선</td>
+     <td>블로그 32편+ 보유 사이트에 시사</td>
+    </tr>
+   </tbody>
+  </table></div>
+  <div class="devbox text-sm mb-3">
+   <b>공통 결론:</b> <b>301 + 콘텐츠 병합</b>이 가장 강력하다. 백링크·권위가 한 URL로 모이고, 합쳐진 글이 더 길고 포괄적이라 체류↑·이탈↓. <b class="text-sky-300">단, 사례 전부 "같은 의도끼리" 통합</b> — 다른 의도를 억지로 301하면 역효과. 이것이 <code>/test</code>(도구)를 통합 대상에서 뺀 우리 판단과 정확히 일치.
+  </div>
+  <p class="text-xs text-slate-500">출처:
+   <a href="https://backlinko.com/keyword-cannibalization" target="_blank" rel="noopener" class="text-brand underline">Backlinko</a> ·
+   <a href="https://www.boomtownig.com/content-optimization-case-study-merging-articles-for-seo-success/" target="_blank" rel="noopener" class="text-brand underline">Boomtown</a> ·
+   <a href="https://orkasocials.com/case-studies/keyword-cannibalization-case-study/" target="_blank" rel="noopener" class="text-brand underline">Orka Socials</a> ·
+   <a href="https://www.sara-taher.com/case-study-impact-of-removing-a-duplicate-page/" target="_blank" rel="noopener" class="text-brand underline">Sara Taher</a> ·
+   <a href="https://searchengineland.com/3-case-studies-duplicate-content-consolidation-286263" target="_blank" rel="noopener" class="text-brand underline">Search Engine Land</a> ·
+   <a href="https://www.jasonscottmontoya.com/business/blogging/689-content-merging-seo-affect" target="_blank" rel="noopener" class="text-brand underline">J. Montoya</a> ·
+   <a href="https://www.amsive.com/insights/seo/core-algorithm-recovery-tactics-content-consolidation-part-1/" target="_blank" rel="noopener" class="text-brand underline">Amsive</a>
+  </p>
+ </div>
+
+ <!-- ===================== 🥈 2순위 ===================== -->
+ <div class="flex items-center gap-3 mb-4">
+  <span class="step-num bg-emerald-500 text-white">2</span>
+  <h2 class="text-2xl font-extrabold">academy 학원 상세 스키마 <span class="text-base font-semibold text-amber-600">— 숨은 최대 ROI</span></h2>
+ </div>
+ <div class="bg-white rounded-2xl shadow-sm p-6 mb-10 accent border-emerald-500">
+  <div class="flex items-center gap-2 mb-3"><span class="text-xs font-bold text-white bg-emerald-600 px-2.5 py-1 rounded-full">🥈 2순위</span><span class="text-xs text-slate-500">개발 1.5~2일 (패턴 재사용) · 가치 높음</span></div>
+  <h3 class="font-bold text-lg mb-2">발견 (2026-06-01 재실측 정정) — 스키마는 있으나 "타입이 어긋나" 로컬·AI 자격을 못 받는다</h3>
+  <p class="text-sm text-slate-600 mb-3"><b class="text-amber-600">⚠️ 이전 브리핑의 "JSON-LD 전무"는 오류.</b> <code>/academy/{id}</code> 상세는 이미 <code>Product</code>+<code>AggregateRating</code>+<code>Review</code> 스키마를 내보낸다(별점 리치결과 자격은 이미 확보). 문제는 <b>물리 학원에 <code>Product</code> 타입을 쓰는 것</b> — 구글 가이드라인상 회색지대이고, 로컬·지도팩·AI 인용에 필요한 <code>DrivingSchool</code>(LocalBusiness 하위)·<code>Course/Offer</code>·주소(<code>PostalAddress</code>)가 빠져 있다. <code>/explore/recommendation/{지역}</code>는 <b>같은 학원 데이터</b>로 <code>Course/Offer</code>를 이미 만드므로 → <b class="text-emerald-600">그 패턴을 상세에 재사용해 <code>Product</code>→<code>DrivingSchool</code>로 전환·보강.</b> "OO운전면허학원" 지역 쿼리는 2차 BM(학원 매칭) 직결.</p>
+  <p class="text-sm font-semibold text-slate-700 mb-1">📁 작업 파일: <code>pages/academy/[id].tsx</code> 의 <code>&lt;Head&gt;</code> · 복사 원본: <code>pages/explore/recommendation/[location].tsx</code></p>
+  <pre><code>// pages/academy/[id].tsx  — explore의 Course 생성 코드를 복사 후 단일 학원으로 축소
+import Head from 'next/head'
+export default function AcademyPage({ academy }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "DrivingSchool",                 <span class="tok">// LocalBusiness 하위 → 지역검색 최적</span>
+    "name": academy.name,
+    "url": `https://drivingteacher.co.kr/academy/${academy.id}`,
+    "image": academy.imageUrl,
+    "address": { "@type": "PostalAddress",
+      "addressLocality": academy.region, "streetAddress": academy.address }, <span class="tok">// explore의 location 재사용</span>
+    "aggregateRating": academy.reviewCount
+      ? { "@type":"AggregateRating", "ratingValue":academy.rating, "reviewCount":academy.reviewCount }
+      : undefined,
+    "makesOffer": academy.courses.map(c =&gt; ({
+      "@type":"Offer", "priceCurrency":"KRW", "price":c.price,
+      "itemOffered": { "@type":"Course", "name":c.name }
+    }))
+  }
+  return (&lt;&gt;
+    &lt;Head&gt;
+      <span class="tok">{/* ↓ 이 한 블록만 추가 */}</span>
+      &lt;script type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} /&gt;
+    &lt;/Head&gt;
+    {/* 기존 화면 그대로 */}
+  &lt;/&gt;)
+}</code></pre>
+
+  <p class="text-sm font-semibold text-slate-700 mt-4 mb-2">📲 검색결과가 이렇게 바뀐다 — "신일 운전면허학원" 검색 예시</p>
+  <div class="grid sm:grid-cols-2 gap-3">
+   <!-- BEFORE -->
+   <div class="border border-red-200 bg-red-50 rounded-xl p-4">
+    <div class="text-xs font-bold text-red-600 mb-2">BEFORE — 평범한 파란 링크</div>
+    <div class="bg-white rounded-lg p-3 border border-slate-200">
+     <div class="text-xs text-slate-600">운전선생</div>
+     <div class="dt-caption1-medium text-slate-500 mb-0.5">drivingteacher.co.kr › academy › 593fEx…</div>
+     <div class="text-blue-600 text-base font-medium" style="color:#1a0dab">신일 운전면허학원 | 운전선생</div>
+     <div class="text-sm text-slate-600">신일 운전면허학원 정보를 확인하세요.</div>
+    </div>
+    <p class="text-xs text-red-700 mt-2">별점(Product)만 있고 가격·과정·로컬 정보 미노출 → 로컬·AI 인용 자격 없음</p>
+   </div>
+   <!-- AFTER -->
+   <div class="border border-emerald-300 bg-emerald-50 rounded-xl p-4">
+    <div class="text-xs font-bold text-emerald-700 mb-2">AFTER — 별점·가격·과정 노출 (리치결과)</div>
+    <div class="bg-white rounded-lg p-3 border border-slate-200">
+     <div class="text-xs text-slate-600">운전선생</div>
+     <div class="dt-caption1-medium text-slate-500 mb-0.5">drivingteacher.co.kr › academy › 신일운전면허학원</div>
+     <div class="text-base font-medium" style="color:#1a0dab">신일 운전면허학원 | 운전선생</div>
+     <div class="text-sm text-slate-700"><span class="text-amber-500 font-bold">★★★★★ 4.6</span> <span class="text-slate-500">(128개 후기)</span> · <b>891,000원</b> · 2종 보통(자동)</div>
+     <div class="text-xs text-slate-500 mt-0.5">📍 경기 고양시 일산동구 · 교육 13시간</div>
+    </div>
+    <p class="text-xs text-emerald-700 mt-2">별점+가격 노출 → CTR 통상 +20~30% · 지도/AI 인용 자격</p>
+   </div>
+  </div>
+
+  <div class="devbox mt-3 text-sm">
+   <b>왜 큰 가치인가:</b> 페이지 수 2,725개 &gt;&gt; 블로그 32편. 상세 페이지는 <b>이미 <code>Product</code> 별점 스키마가 있어 ★별점 자격은 확보</b>했지만, <b>타입이 <code>Product</code>라 로컬/지도팩·AI 인용 자격은 못 받는 중</b>. 데이터(주소/가격/평점)가 DB에 있으면 <b>2일 내 처리</b>. <b class="text-sky-300">전환·보강으로 추가되는 것:</b> ① <code>Course/Offer</code>로 가격·과정 스니펫 보강 ② <code>DrivingSchool</code>+주소로 "내 주변 운전면허학원" 로컬/지도 노출 자격 ③ AI 검색이 학원·가격·평점을 구조화해 인용. <span class="text-amber-300">(별점 CTR 상승은 이미 일부 실현 중일 수 있음 — 순증분은 로컬·AI 자격)</span>
+  </div>
+ </div>
+
+ <!-- ===================== 🥉 3순위 ===================== -->
+ <div class="flex items-center gap-3 mb-4">
+  <span class="step-num bg-amber-400 text-white">3</span>
+  <h2 class="text-2xl font-extrabold">홈 H1 교체 + 블로그 Article 스키마</h2>
+ </div>
+
+ <!-- 3-1 H1 -->
+ <div class="bg-white rounded-2xl shadow-sm p-6 mb-5 accent border-amber-400">
+  <div class="flex items-center gap-2 mb-3"><span class="text-xs font-bold text-white bg-amber-500 px-2.5 py-1 rounded-full">🥉 3-1</span><span class="text-xs text-slate-500">홈 H1 0.5일</span></div>
+  <h3 class="font-bold text-lg mb-2">H1 — 통일? 콘텐츠별? → <span class="text-brand">콘텐츠별 (통일 X)</span></h3>
+  <p class="text-sm text-slate-600 mb-2">H1은 페이지 주제 신호라 페이지마다 달라야 함. 실측 결과 <b>동적 페이지 H1은 이미 콘텐츠별로 잘 생성</b>되고, <b>홈 1곳만 문제</b>:</p>
+  <div class="overflow-x-auto mb-2"><table class="w-full">
+   <thead><tr><th>페이지</th><th>현재 H1</th><th>판정</th></tr></thead>
+   <tbody>
+    <tr><td>/test</td><td>운전면허 필기시험</td><td class="text-emerald-600">✅</td></tr>
+    <tr><td>/guide/driver-test</td><td>운전면허 기능시험 완벽 가이드</td><td class="text-emerald-600">✅</td></tr>
+    <tr><td>/explore</td><td>서울 운전면허학원 베스트 10 (지역 동적)</td><td class="text-emerald-600">✅</td></tr>
+    <tr><td>/academy</td><td>신도림 자동차운전전문학원 (학원명 동적)</td><td class="text-emerald-600">✅</td></tr>
+    <tr><td><b>/ (홈)</b></td><td><b>(주)티지소사이어티</b></td><td class="text-red-500 font-bold">❌ 유일</td></tr>
+   </tbody>
+  </table></div>
+  <p class="text-sm font-semibold text-slate-700 mb-1">📁 작업 파일: <code>pages/index.tsx</code></p>
+  <pre><code>- &lt;h1&gt;(주)티지소사이어티&lt;/h1&gt;
++ &lt;h1&gt;운전면허 필기시험부터 운전연수까지 — 운전선생&lt;/h1&gt;
+  <span class="tok">// 법인명은 footer 사업자정보로 이동</span></code></pre>
+  <p class="text-sm font-semibold text-slate-700 mt-4 mb-2">🤖 Google이 홈을 이렇게 다르게 이해한다</p>
+  <div class="grid sm:grid-cols-2 gap-3">
+   <!-- BEFORE -->
+   <div class="border border-red-200 bg-red-50 rounded-xl p-4">
+    <div class="text-xs font-bold text-red-600 mb-2">BEFORE — 주제 신호 낭비</div>
+    <div class="bg-white rounded-lg p-3 border border-slate-200 text-sm">
+     <div class="text-slate-500 text-xs mb-1">홈 H1</div>
+     <div class="font-bold text-slate-900 mb-2">(주)티지소사이어티</div>
+     <div class="text-xs text-slate-500 mb-1">Google 해석</div>
+     <div class="text-slate-700">"이 페이지 주제 = <b>티지소사이어티</b>"<br><span class="text-red-600">(아무도 검색 안 하는 법인명)</span></div>
+    </div>
+    <p class="text-xs text-red-700 mt-2">홈이 '운전연수'·'운전면허'로 노출되는데 H1은 무관 → 관련성 신호 낭비</p>
+   </div>
+   <!-- AFTER -->
+   <div class="border border-emerald-300 bg-emerald-50 rounded-xl p-4">
+    <div class="text-xs font-bold text-emerald-700 mb-2">AFTER — 검색어와 정렬</div>
+    <div class="bg-white rounded-lg p-3 border border-slate-200 text-sm">
+     <div class="text-slate-500 text-xs mb-1">홈 H1</div>
+     <div class="font-bold text-slate-900 mb-2">운전면허 필기시험부터 운전연수까지 — 운전선생</div>
+     <div class="text-xs text-slate-500 mb-1">Google 해석</div>
+     <div class="text-slate-700">"이 페이지 = <b>운전면허 필기시험·운전연수</b> 종합 서비스"</div>
+    </div>
+    <p class="text-xs text-emerald-700 mt-2">이미 노출되던 head term과 H1 일치 → 관련성 보강 (예: 운전연수 pos 8→6 점진)</p>
+   </div>
+  </div>
+  <p class="text-xs text-slate-500 mt-3">⚠️ <b>솔직한 한계:</b> H1 단독은 <b>보조 신호</b>라 이거 하나로 순위 급등은 없음. 공수 0.5일·리스크 0의 <b>"값싼 정렬 보정"</b>으로, 1·2순위와 함께 홈의 head term 관련성을 받쳐주는 역할.</p>
+  <p class="text-sm text-slate-600 mt-3"><b class="text-amber-600">추가 발견:</b> <code>/blog/0qNC7…</code>는 <code>&lt;h1&gt;</code>이 <b>3개</b>(다른 글은 1개) → blog 템플릿에서 H1 중복 렌더 점검 필요. blog는 "통일"이 아니라 <b>페이지당 H1 1개(=글 제목)</b> 규칙 준수가 핵심.</p>
+ </div>
+
+ <!-- 3-2 blog 스키마 -->
+ <div class="bg-white rounded-2xl shadow-sm p-6 mb-10 accent border-amber-400">
+  <div class="flex items-center gap-2 mb-3"><span class="text-xs font-bold text-white bg-amber-500 px-2.5 py-1 rounded-full">🥉 3-2</span><span class="text-xs text-slate-500">blog 1~2일</span></div>
+  <h3 class="font-bold text-lg mb-2">"블로그 스키마 컴포넌트 신규 추가" = 무슨 뜻?</h3>
+  <p class="text-sm text-slate-600 mb-2"><b>새 기능/페이지가 아니라</b>, explore가 이미 하는 JSON-LD 주입을 blog 템플릿에도 적용하는 것. blog는 현재 스키마 <b>0개</b> → 블록 1개 추가. <b>권장:</b> 공용 컴포넌트 1개를 만들어 blog/academy/guide 공통 재사용.</p>
+  <p class="text-sm font-semibold text-slate-700 mb-1">📁 신규 파일 <code>components/seo/JsonLd.tsx</code> + 사용처 <code>pages/blog/[id].tsx</code></p>
+  <pre><code><span class="tok">// components/seo/JsonLd.tsx — 신규 파일 1개 (전 페이지 재사용)</span>
+import Head from 'next/head'
+export function JsonLd({ data }: { data: object }) {
+  return (
+    &lt;Head&gt;
+      &lt;script type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} /&gt;
+    &lt;/Head&gt;
+  )
+}
+
+<span class="tok">// pages/blog/[id].tsx — 여기에 사용</span>
+&lt;JsonLd data={{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": post.title,
+  "datePublished": post.publishedAt,
+  "dateModified": post.modifiedAt ?? post.publishedAt,  <span class="tok">// ← 수정일 필드 없으면 데이터 쿼리에 추가 = "stale 2024" 해결</span>
+  "image": post.coverImage,
+  "author": { "@type":"Organization", "name":"운전선생" },
+  "publisher": { "@type":"Organization", "name":"운전선생",
+    "logo":{ "@type":"ImageObject", "url":"https://drivingteacher.co.kr/logo.png" } },
+  "mainEntityOfPage": `https://drivingteacher.co.kr/blog/${post.id}`
+}} /&gt;</code></pre>
+  <p class="text-xs text-slate-500 mt-2">💡 공용 컴포넌트 채택 시 explore 인라인 JSON-LD도 나중에 <code>&lt;JsonLd&gt;</code>로 리팩터 → 전 페이지 스키마 한 컴포넌트로 통일.</p>
+ </div>
+
+ <!-- ===================== 기타 ===================== -->
+ <div class="flex items-center gap-3 mb-4">
+  <span class="step-num bg-slate-400 text-white">·</span>
+  <h2 class="text-2xl font-extrabold">그 외 — 드롭 / 재스코프 / 의사결정 / 보류</h2>
+ </div>
+
+ <div class="grid sm:grid-cols-2 gap-4 mb-5">
+  <div class="bg-red-50 border border-red-200 rounded-2xl p-5">
+   <h3 class="font-bold text-red-700 mb-2">⛔ 드롭 — canonical 자동주입</h3>
+   <p class="text-sm text-red-900">brief가 작업으로 잡았으나 <b>실측 12/12 페이지 전부 정상 적용</b>. <b>하지 마라.</b> 절감 리소스를 academy 스키마로.</p>
+  </div>
+  <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5">
+   <h3 class="font-bold text-amber-700 mb-2">🔻 재스코프 — explore LocalBusiness</h3>
+   <p class="text-sm text-amber-900">brief P1(3일)은 신규였으나 explore는 <b>이미 Course/Offer/Organization 보유</b>. <code>provider</code> 보정 + 주소/평점 추가 정도 → <b>~1일</b>.</p>
+  </div>
+ </div>
+
+ <div class="bg-white rounded-2xl shadow-sm p-6 mb-5 accent border-slate-400">
+  <h3 class="font-bold text-lg mb-2">❓ 의사결정 필요 — <code>/test/problem/*</code> 4,000개 thin 페이지</h3>
+  <p class="text-sm text-slate-600 mb-3">개별 퀴즈 문제 4,000개가 <b>H1·스키마 없음·본문 빈약</b>. 문제 지문 때문에 <code>보지</code>(6,364 노출)·<code>원동기</code>(4,129) 등 <b>오염 쿼리로 노출</b>되어 크롤 예산을 먹고 평균 CTR을 깎는다.</p>
+  <div class="grid sm:grid-cols-2 gap-3 text-sm">
+   <div class="border border-slate-200 rounded-lg p-3">
+    <div class="font-semibold mb-1">안 A — noindex (권장)</div>
+    <pre class="!text-xs">&lt;meta name="robots"
+  content="noindex,follow"&gt;</pre>
+    <p class="text-xs text-slate-500 mt-1">크롤 예산 회수·오염 제거. 0.5일.</p>
+   </div>
+   <div class="border border-slate-200 rounded-lg p-3">
+    <div class="font-semibold mb-1">안 B — 자산화</div>
+    <p class="text-xs text-slate-600"><code>QuizQuestion</code> 스키마 + 해설 보강. 4,000p 콘텐츠 필요 → 비용 큼.</p>
+   </div>
+  </div>
+  <p class="text-xs text-slate-500 mt-3">권고: 대부분 <b>noindex</b>, 트래픽 상위 소수만 선별 보강.</p>
+ </div>
+
+ <div class="bg-white rounded-2xl shadow-sm p-6 mb-5">
+  <h3 class="font-bold mb-3">⏸ 보류 (근거·공수 대비 후순위)</h3>
+  <ul class="text-sm text-slate-600 space-y-2 list-disc pl-5">
+   <li><b>FAQ 스키마</b> — 가치 있으나 <b>Q&A 콘텐츠 작성 선행</b> 필요. 콘텐츠 후 컴포넌트화(2~3일).</li>
+   <li><b>저자 entity 시스템</b> — brief가 "GEO veto"로 최우선시했으나 <b>가치 근거 추측성</b> + 공수 4~5일 + 마케팅 결정 필요. blog는 <code>Organization</code> author로 출발 가능하므로 <b>분리·보류</b>.</li>
+  </ul>
+ </div>
+
+ <div class="bg-white rounded-2xl shadow-sm p-6 mb-8">
+  <h3 class="font-bold mb-2">🟢 성능(CWV) — brief의 빈칸 채움</h3>
+  <p class="text-sm text-slate-600 mb-3">brief는 "PageSpeed 쿼터 소진으로 측정 불가"로 비워뒀음. <b>API 키 발급해 측정 완료:</b></p>
+  <table class="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
+   <thead class="bg-slate-50"><tr><th>지표 (실사용자/CrUX)</th><th>값</th><th>판정</th></tr></thead>
+   <tbody>
+    <tr><td>LCP (로딩)</td><td>1.3~1.6s</td><td class="text-emerald-600 font-semibold">✅ Good</td></tr>
+    <tr><td>INP (반응성)</td><td>66~163ms</td><td class="text-emerald-600 font-semibold">✅ Good</td></tr>
+    <tr><td>CLS (레이아웃 흔들림)</td><td>0.10~0.13</td><td class="text-amber-600 font-semibold">⚠️ 경계선</td></tr>
+   </tbody>
+  </table>
+  <p class="text-sm text-slate-600 mt-3"><b>결론:</b> 실사용자 성능 양호. Lighthouse lab(모바일 11)은 낮지만 <b>랭킹엔 실사용자 데이터가 쓰임</b>. <b>CLS만</b> 손보면 됨 — 상단 이미지/배너 <code>width·height</code> 명시, 폰트 <code>font-display:swap</code>, 동적 요소 공간 예약.</p>
+ </div>
+
+ <footer class="text-center text-xs text-slate-400 pb-6">
+  실측 검증: 라이브 HTML 12 페이지 유형 + GSC 90일 원본 + 사이트맵 2종 · 기존 brief(2026-05-28) 위에 머지<br>
+  데이터 출처: NotFair seo-analysis · 감사 로그 ~/.toprank/audit-log/drivingteacher.co.kr.json
+ </footer>
+
+</div>
+</body>
+</html>
