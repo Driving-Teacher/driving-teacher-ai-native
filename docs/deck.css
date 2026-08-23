@@ -80,6 +80,22 @@ html, body {
 /* 내용이 많아 세로로 넘칠 때. 빌드 스크립트가 자동으로 붙인다. */
 .slide.scrollable { justify-content: flex-start; overflow-y: auto; }
 
+/* ---- 블록 사이 여백 ----
+   손으로 쓴 덱은 블록 사이에 <div class="spacer"> 를 직접 끼워 넣었다.
+   마크다운 파이프라인에는 그 장치가 없어서, 위쪽 리셋(* { margin: 0 })
+   때문에 제목과 리드 문장이 0px 로 붙어 있었다(2026-08-23 실측).
+   그래서 슬라이드 자체에 간격을 준다 — 덱마다 spacer 를 심지 않아도 된다. */
+.slide { gap: 1.15rem; }
+
+/* gap 이 생긴 뒤로 블록별 margin 은 이중 여백이 된다. 슬라이드 직계에서만 끈다
+   (카드 안에 들어간 요소의 여백은 그대로 둬야 한다). */
+.slide > .tag { margin-bottom: 0; }
+.slide > .bullets,
+.slide > .timeline,
+.slide > .cards,
+.slide > .note,
+.slide > pre { margin-top: 0; }
+
 .slide.active .reveal { animation: slideUp 0.6s ease forwards; }
 .reveal-delay-1 { animation-delay: 0.1s; }
 .reveal-delay-2 { animation-delay: 0.2s; }
