@@ -77,8 +77,16 @@ html, body {
   transition: opacity 0.5s ease;
 }
 .slide.active { opacity: 1; pointer-events: auto; }
-/* 내용이 많아 세로로 넘칠 때. 빌드 스크립트가 자동으로 붙인다. */
+/* 내용이 많아 세로로 넘칠 때.
+   빌드 스크립트가 블록 개수로 추측해 이 클래스를 붙이지만, 그 추측은
+   틀릴 수 있다 — 실제로 붙지 않은 장이 39px 잘려 있었다(2026-08-23 실측).
+   그래서 아래 .slide 규칙에서 브라우저가 직접 판단하게 해 뒀고,
+   이 클래스는 남은 덱 호환을 위해 그대로 둔다. */
 .slide.scrollable { justify-content: flex-start; overflow-y: auto; }
+
+/* 넘치면 위에서부터 보이고 스크롤된다. 안 넘치면 그대로 가운데.
+   `safe` 가 없으면 가운데 정렬 탓에 넘친 장의 윗부분이 잘려 나간다. */
+.slide { justify-content: safe center; overflow-y: auto; }
 
 /* ---- 블록 사이 여백 ----
    손으로 쓴 덱은 블록 사이에 <div class="spacer"> 를 직접 끼워 넣었다.
