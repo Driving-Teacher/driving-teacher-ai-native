@@ -185,10 +185,17 @@ def render_slide(body: str) -> str:
             continue
 
         # :::card 제목 ... :::  (연달아 쓰면 한 그리드로 묶인다)
-        if stripped.startswith(":::card"):
+        # :::quad 는 2열로 못 박은 사분면. 넓은 화면에서도 2×2 를 유지한다.
+        # 제목 끝에 * 를 붙이면 그 칸이 강조된다 (:::quad 모른다는 것도 모른다*)
+        if stripped.startswith(":::card") or stripped.startswith(":::quad"):
+            kind = "quad" if stripped.startswith(":::quad") else "card"
+            marker = ":::" + kind
             cards = []
-            while i < len(lines) and lines[i].strip().startswith(":::card"):
-                title = lines[i].strip()[len(":::card"):].strip()
+            while i < len(lines) and lines[i].strip().startswith(marker):
+                title = lines[i].strip()[len(marker):].strip()
+                hot = title.endswith("*")
+                if hot:
+                    title = title[:-1].strip()
                 i += 1
                 buf = []
                 while i < len(lines) and lines[i].strip() != ":::":
@@ -197,10 +204,12 @@ def render_slide(body: str) -> str:
                 i += 1  # 닫는 :::
                 head = f"<h3>{inline(title)}</h3>" if title else ""
                 text = " ".join(x.strip() for x in buf if x.strip())
-                cards.append(f'<div class="card">{head}<p>{inline(text)}</p></div>')
+                cls = "card hot" if hot else "card"
+                cards.append(f'<div class="{cls}">{head}<p>{inline(text)}</p></div>')
                 while i < len(lines) and not lines[i].strip():
                     i += 1
-            blocks.append('<div class="cards">' + "".join(cards) + "</div>")
+            wrap = "cards quad" if kind == "quad" else "cards"
+            blocks.append(f'<div class="{wrap}">' + "".join(cards) + "</div>")
             continue
 
         # ```코드```
