@@ -130,7 +130,7 @@ description: 운전선생 회사 knowledge-base 자동 검색. CS/마케팅/기�
 # 운전선생 Knowledge Base 검색
 
 회사 KB는 `$DRIVING_TEACHER_KB_PATH` 환경변수에 박힌 폴더.
-구조: `raw/` 원본 · `docs/` 정리본 · `graph-v2/` 그래프
+구조: `raw/` 원본 · `docs/` 정리본 · `wiki/` AI정리 · `outputs/` AI리포트(YYYY-MM-DD-주제.md) · `graph-v2/` 그래프
 
 ## 사용법
 
@@ -156,13 +156,19 @@ grep -ril "[질문 키워드]" "$KB/docs/" 2>/dev/null | head -5
 
 찾은 파일 1-3개를 `cat` 으로 읽고 관련 섹션 추출.
 
-2. **raw/ 보조 검색** (최신 내용):
+2. **wiki/ + outputs/ 검색** (AI 정리본·분석 리포트):
+
+```bash
+grep -ril "[질문 키워드]" "$KB/wiki/" "$KB/outputs/" 2>/dev/null | head -5
+```
+
+3. **raw/ 보조 검색** (최신 원본):
 
 ```bash
 grep -ril "[질문 키워드]" "$KB/raw/" 2>/dev/null | head -3
 ```
 
-3. **답변 형식**:
+4. **답변 형식**:
 
 ```
 ## 🔍 [질문]
@@ -171,14 +177,13 @@ grep -ril "[질문 키워드]" "$KB/raw/" 2>/dev/null | head -3
 [1-3 문장]
 
 ### 출처
-- docs/[파일명] — [한 줄 요약]
-- raw/[파일명] — [한 줄 요약]
+- docs|wiki|outputs|raw/[파일명] — [한 줄 요약]
 
 ### 더 깊이 가려면
 - 슬랙 #ai-native 에 추가 질문
 ```
 
-4. **답이 없으면** 솔직히:
+5. **답이 없으면** 솔직히:
 ```
 ❌ KB에 답 없음. 슬랙 #ai-native 에 질문해주세요.
 ```
