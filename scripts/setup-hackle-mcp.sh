@@ -7,7 +7,8 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_DIR="$(dirname "$SCRIPT_DIR")"
-MCP_JSON="$REPO_DIR/.mcp.json"
+KEY_DIR="$HOME/.config/hackle-mcp"
+KEY_FILE="$KEY_DIR/api_key"
 SETTINGS_LOCAL="$REPO_DIR/.claude/settings.local.json"
 
 echo "=== Hackle MCP 설정 ==="
@@ -29,34 +30,22 @@ echo ""
 echo "  Hackle 대시보드 → 설정 → API 키에서 확인할 수 있습니다."
 echo "  (팀 슬랙에서 공유받은 키를 붙여넣으세요)"
 echo ""
-read -p "  API Key: " API_KEY
+read -r -s -p "  API Key: " API_KEY
+echo ""
 
 if [ -z "$API_KEY" ]; then
     echo "  ❌ API Key가 입력되지 않았습니다."
     exit 1
 fi
 
-# 3. .mcp.json에 hackle-mcp 추가
+# 3. API Key를 레포 밖 로컬 파일에 저장 (.mcp.json 은 scripts/hackle-mcp.sh 가 이 파일을 읽음)
 echo ""
-echo "[ 3/4 ] Hackle MCP 서버 등록..."
+echo "[ 3/4 ] API Key 로컬 저장..."
 
-if [ ! -f "$MCP_JSON" ]; then
-    echo '{"mcpServers":{}}' > "$MCP_JSON"
-fi
-
-node -e "
-const fs = require('fs');
-const data = JSON.parse(fs.readFileSync('$MCP_JSON', 'utf8'));
-data.mcpServers = data.mcpServers || {};
-data.mcpServers['hackle-mcp'] = {
-  type: 'stdio',
-  command: 'npx',
-  args: ['-y', '@hackle-io/hackle-mcp@latest'],
-  env: { API_KEY: '$API_KEY' }
-};
-fs.writeFileSync('$MCP_JSON', JSON.stringify(data, null, 2) + '\n');
-"
-echo "  ✅ .mcp.json에 hackle-mcp 등록 완료"
+mkdir -p "$KEY_DIR"
+chmod 700 "$KEY_DIR"
+( umask 077 && printf '%s' "$API_KEY" > "$KEY_FILE" )
+echo "  ✅ $KEY_FILE 에 저장 완료 (레포에는 기록하지 않습니다)"
 
 # 4. settings.local.json에서 활성화
 echo "[ 4/4 ] MCP 서버 활성화..."

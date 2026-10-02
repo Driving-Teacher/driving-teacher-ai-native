@@ -39,3 +39,6 @@ node_modules/
 ds-output/newgangnam-*
 ds-output/*shinhwaseong*
 agent-os-slides-1-5-polished.html
+
+# Claude Code 로컬 설정 (per-user)
+.claude/settings.local.json

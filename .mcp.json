@@ -6,11 +6,8 @@
     },
     "hackle-mcp": {
       "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@hackle-io/hackle-mcp@latest"],
-      "env": {
-        "API_KEY": ""
-      }
+      "command": "bash",
+      "args": ["scripts/hackle-mcp.sh"]
     }
   }
 }
