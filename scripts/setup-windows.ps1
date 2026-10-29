@@ -26,7 +26,7 @@ function Install-SetupPackage([string]$Id) {
     if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
         throw 'Install or update App Installer in Microsoft Store, then rerun this script.'
     }
-    & winget install --id $Id --exact --accept-package-agreements --accept-source-agreements
+    & winget install --id $Id --exact --source winget --accept-package-agreements --accept-source-agreements
     if ($LASTEXITCODE -ne 0) { throw "winget failed for $Id (exit $LASTEXITCODE). Reopen PowerShell and retry; ask #ai-native if it persists." }
     Refresh-SetupPath
 }
