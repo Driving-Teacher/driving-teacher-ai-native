@@ -22,7 +22,7 @@
 
 두 트랙은 **병행**합니다. `/ai-onboarding` Step 1을 마치면 둘 다 시작할 수 있고, 서로의 진척을 알고 챙깁니다.
 
-- 설치 가이드: **[SETUP.md](SETUP.md)** (Claude Code) / **[SETUP-codex.md](SETUP-codex.md)** (Codex)
+- 설치 가이드: **[SETUP.md](SETUP.md)** (Claude Code + 회사 CLIProxy, Windows는 WSL 없이 설치 가능)
 - 설계 근거: [`docs/superpowers/specs/2026-07-28-onboarding-track-split-design.md`](docs/superpowers/specs/2026-07-28-onboarding-track-split-design.md)
 - 막히면 슬랙 `#ai-native`
 

@@ -62,8 +62,9 @@ if (-not (Test-SetupTool 'claude')) {
 }
 if (-not (Test-SetupTool 'claude')) { throw 'Claude Code is unavailable. Reopen PowerShell and rerun this script.' }
 Write-Host ''
-Write-Host 'Setup complete. Close and reopen PowerShell, then run:'
+Write-Host 'Setup complete. Configure the company CLIProxy in SETUP.md Step 4 before starting Claude.'
+Write-Host 'Close and reopen PowerShell after configuring it, then run:'
 Write-Host ('cd "' + $repoDir.Replace('`', '``').Replace('$', '`$').Replace('"', '`"') + '"')
 Write-Host 'claude'
-Write-Host 'Sign in, then run /zeude-setup followed by /ai-onboarding.'
+Write-Host 'Verify a Claude reply, then run /zeude-setup and /ai-onboarding.'
 Write-Host 'Zeude credentials are configured separately by /zeude-setup.'

@@ -37,8 +37,10 @@ else
     curl -fsSL https://claude.ai/install.sh | bash
     # PATH에 추가 (현재 셸 + 영구)
     export PATH="$HOME/.local/bin:$HOME/.claude/bin:$PATH"
-    if ! grep -q '.local/bin' "$HOME/.zshrc" 2>/dev/null; then
-        echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.zshrc"
+    SHELL_RC="$HOME/.zshrc"
+    case "${SHELL##*/}" in bash) SHELL_RC="$HOME/.bash_profile" ;; esac
+    if ! grep -q '.local/bin' "$SHELL_RC" 2>/dev/null; then
+        echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$SHELL_RC"
     fi
     echo "  ✅ Claude Code 설치 완료"
 fi
@@ -60,9 +62,11 @@ else
     eval "$("$FNM_DIR/fnm" env)"
     "$FNM_DIR/fnm" install --lts
     # fnm을 셸에 영구 등록
-    if ! grep -q 'fnm env' "$HOME/.zshrc" 2>/dev/null; then
-        echo 'export PATH="$HOME/.local/share/fnm:$PATH"' >> "$HOME/.zshrc"
-        echo 'eval "$(fnm env)"' >> "$HOME/.zshrc"
+    SHELL_RC="$HOME/.zshrc"
+    case "${SHELL##*/}" in bash) SHELL_RC="$HOME/.bash_profile" ;; esac
+    if ! grep -q 'fnm env' "$SHELL_RC" 2>/dev/null; then
+        echo 'export PATH="$HOME/.local/share/fnm:$PATH"' >> "$SHELL_RC"
+        echo 'eval "$(fnm env)"' >> "$SHELL_RC"
     fi
     echo "  ✅ Node.js $(node --version) 설치 완료"
 fi
@@ -102,7 +106,8 @@ echo "=============================="
 echo ""
 echo "다음 단계: (SETUP.md Step 4~7)"
 echo "  1. 터미널을 껐다가 다시 열기"
-echo "  2. 아래 두 줄 — 첫 줄을 꼭 같이 치세요 (이 두 줄을 그대로 복사하세요)"
+echo "  2. SETUP.md Step 4에서 회사 CLIProxy 환경변수를 먼저 설정하기"
+echo "  3. 터미널을 다시 연 뒤 아래 두 줄 실행하기"
 echo ""
 echo "       cd $REPO_SHOWN"
 echo "       claude"
@@ -110,10 +115,10 @@ echo ""
 echo "     (cd = '그 폴더로 들어가라'. 회사 도구가 저 폴더에 들어 있어서,"
 echo "      다른 곳에서 켜면 /zeude-setup 이 없는 것처럼 보입니다."
 echo "      폴더 위치는 본인이 정한 곳 그대로입니다 — 위 경로가 바로 그곳입니다.)"
-echo "     → 브라우저가 열리면 회사 Claude 계정으로 로그인"
-echo "  3. 버전 확인 4개 — Claude Code 안이면 먼저 /exit 로 나오세요:"
+echo "     → Claude에서 짧은 질문에 실제 답변이 오는지 확인하세요"
+echo "  4. 버전 확인 4개 — Claude Code 안이면 먼저 /exit 로 나오세요:"
 echo "       claude --version / node --version / git --version / python3 --version"
-echo "  4. 다시 위 두 줄로 Claude Code 를 켜고, 안에서 순서대로:"
+echo "  5. 다시 위 두 줄로 Claude Code 를 켜고, 안에서 순서대로:"
 echo "       /zeude-setup      ← 회사 스킬 동기화 (이걸 먼저 해야 나머지가 생깁니다)"
 echo "       /ai-onboarding    ← 종착지. 남은 준비는 이 스킬이 안내합니다"
 echo ""
