@@ -15,12 +15,20 @@ function Refresh-SetupPath {
     $env:Path = $parts -join ';'
 }
 function Test-SetupTool([string]$Name, [string[]]$VersionArgs = @('--version')) {
-    $tool = Get-Command $Name -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
-    if (-not $tool) { return $false }
-    $version = & $tool.Source @VersionArgs 2>&1
-    if ($LASTEXITCODE -ne 0) { return $false }
-    Write-Host "[OK] $Name $version"
-    return $true
+    $windowsApps = Join-Path $env:LOCALAPPDATA 'Microsoft\WindowsApps\'
+    $candidates = @(Get-Command $Name -All -CommandType Application -ErrorAction SilentlyContinue)
+    foreach ($tool in $candidates) {
+        if ($Name -eq 'python' -and $tool.Source.StartsWith($windowsApps, [StringComparison]::OrdinalIgnoreCase)) { continue }
+        try {
+            $version = & $tool.Source @VersionArgs 2>&1
+            if ($LASTEXITCODE -ne 0) { continue }
+            Write-Host "[OK] $Name $version"
+            return $true
+        } catch {
+            continue
+        }
+    }
+    return $false
 }
 function Install-SetupPackage([string]$Id) {
     if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
