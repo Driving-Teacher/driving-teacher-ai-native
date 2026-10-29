@@ -19,6 +19,50 @@
 
 > 온보딩은 **회사 온보딩**과 **AI 온보딩** 두 갈래입니다. 이 문서(설치)와 `/ai-onboarding` Step 1까지 하면 둘 다 시작할 수 있고, 그다음부터는 병행합니다.
 
+### 본인 컴퓨터가 아직 없다면
+
+회사에서 허용한 임시 컴퓨터에서도 **Zeude만 건너뛰고 AI 온보딩을 시작**할 수 있습니다. 아래 Step 0~3으로 Git·Claude Code를 설치하세요. Paseo를 쓸 경우 Step 5에서 설치합니다. 임시 컴퓨터에는 Zeude 키를 넣지 않습니다.
+
+이미 회사 CLIProxy가 연결된 컴퓨터라면 그 설정을 그대로 사용합니다. 새로 연결해야 한다면 **Step 4의 영구 설정 대신**, 현재 터미널에서만 유효한 아래 방법을 사용하세요. 셸을 닫으면 키가 적용되지 않습니다.
+
+Mac zsh에서는 `read -r -s "KEY?CLIProxy 키: "; echo`를, Mac bash에서는 `read -r -s -p "CLIProxy 키: " KEY; echo`를 실행한 뒤 다음을 입력합니다:
+
+```bash
+export ANTHROPIC_BASE_URL="https://rr-proxy-vm.tail7f1c29.ts.net"
+export ANTHROPIC_AUTH_TOKEN="$KEY"
+unset KEY
+```
+
+Windows PowerShell에서는 다음을 입력합니다:
+
+```powershell
+$key = Read-Host 'CLIProxy 키' -AsSecureString
+$env:ANTHROPIC_BASE_URL = 'https://rr-proxy-vm.tail7f1c29.ts.net'
+$env:ANTHROPIC_AUTH_TOKEN = [Net.NetworkCredential]::new('', $key).Password
+Remove-Variable key
+```
+
+이 터미널에서 `claude`를 실행해 실제 답변을 확인하세요. Paseo는 터미널의 임시 환경변수를 자동으로 물려받지 않을 수 있으므로, 임시 컴퓨터에서는 먼저 Claude Code 터미널로 학습을 시작하는 편이 확실합니다.
+
+회사 GitHub 접근이 준비되면, **비공개 KB 레포**에서 실제 온보딩 스킬을 직접 실행합니다:
+
+```bash
+gh auth login
+gh repo clone driving-teacher-bot/driving-teacher-knowledge-base
+cd driving-teacher-knowledge-base
+claude
+```
+
+Claude Code 안에서 아래 문장을 **한 번에** 입력하세요. 이 레포 안에는 스킬이 있으므로 `/zeude-setup` 없이 실행됩니다.
+
+```text
+/ai-onboarding 임시 컴퓨터에서 시작합니다. Zeude 설치와 이 컴퓨터의 개인 설정 파일 수정은 건너뛰고 Step 1부터 진행해 주세요. 본인 노션 계정이 확인되면 진척을 저장하고, 아니면 학습 내용만 정리해 주세요.
+```
+
+스킬에는 Zeude를 이미 설치했다고 가정하는 옛 설명이 있을 수 있습니다. 임시 컴퓨터에서는 그 설명과 기기별 설치 활동을 건너뛰고, 학습한 내용과 나중에 할 설치를 구분하세요. 본인 컴퓨터가 도착하면 이 문서의 Step 0~6으로 그 컴퓨터를 설정하고 이어서 진행합니다.
+
+임시 컴퓨터가 다른 사람의 계정이라면 개인 CLIProxy·GitHub·노션 인증을 영구 저장하지 마세요. 작업을 마치면 GitHub에서 로그아웃하고, 내려받은 비공개 레포와 개인 데이터는 컴퓨터 소유자와 함께 정리하세요.
+
 ---
 
 ## Step 0: OS 확인
