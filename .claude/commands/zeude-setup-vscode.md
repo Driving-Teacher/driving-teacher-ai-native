@@ -24,7 +24,8 @@ uname -s
 ```
 
 - `Darwin` — 계속 진행
-- `Linux` / `MINGW*` / `MSYS*` — "현재 macOS 만 지원합니다. Windows/Linux 는 추후 지원 예정" 안내 후 중단
+- `MINGW*` / `MSYS*` / Windows PowerShell — `/zeude-setup-vscode-windows` 절차로 안내한다.
+- `Linux` — 이 macOS LaunchAgent 절차는 적용하지 않고 현재 공식 Linux 확장 연동 지원을 확인한다.
 
 ## 진행
 

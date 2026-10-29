@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zeude Setup"
+  short_description: "Mac·Windows·WSL에서 Zeude와 회사 스킬을 설정합니다"
+  default_prompt: "Use $zeude-setup to install and verify Zeude on this computer."

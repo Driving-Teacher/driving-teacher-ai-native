@@ -6,6 +6,10 @@ allowed-tools: Bash, Read
 
 Zeude 모니터링 시스템을 셋업한다. shim 바이너리 설치 + OTel 텔레메트리 + /zeude 대시보드 스킬까지 전부 포함.
 
+## Windows 플랫폼 분기 (먼저 확인)
+
+Windows PowerShell/CMD/Git Bash이면 `docs/zeude-windows-setup.md`를 읽고 그 절차를 따른다. 공식 `install.ps1`을 PowerShell에서 실행하며 WSL은 필수가 아니다. 아래 Bash 절차는 macOS·Linux·WSL 전용이다. Windows와 WSL의 credentials를 섞지 않는다.
+
 ## 진행
 
 1. 사용자에게 agent_key를 물어본다:

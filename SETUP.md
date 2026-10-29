@@ -3,7 +3,7 @@
 > **이 문서가 끝나면 `/ai-onboarding` 한 줄을 칠 수 있습니다.** 거기서부터는 AI가 알아서 안내합니다.
 >
 > 지금은 컴퓨터에 아무것도 없는 상태를 가정합니다. 아래를 **위에서부터 순서대로** 따라와주세요.
-> macOS 30~40분 / Windows는 WSL 설치 포함 50분~1시간.
+> 설치 시간은 기존 도구와 네트워크 상태에 따라 달라집니다.
 >
 > 막히면 **5분만** 붙잡고 슬랙 `#ai-native`에 물어봐주세요. 프로그래밍 몰라도 됩니다 — 복붙만 하면 됩니다.
 
@@ -21,45 +21,17 @@
 
 ---
 
-## Step 0: OS 확인 (Windows는 WSL 필수)
+## Step 0: OS 확인
 
-**macOS** → 바로 Step 1로.
+**macOS** → 터미널을 열고 Step 1로.
 
-**Windows** → 아래 WSL(Ubuntu)을 먼저 설치하고, **이후 모든 단계를 Ubuntu 터미널 안에서** 진행합니다.
+**Windows** → 시작 메뉴에서 **PowerShell**을 열고 Step 1로. **WSL 설치는 필수가 아닙니다.** Zeude의 Windows용 설치기를 사용합니다.
 
-> ⚠️ **왜 WSL이 필수인가**: Zeude의 스킬 자동 동기화(`company-setup`·`kb`·`graphify` 등 회사 표준 스킬)는 shim이 담당하는데, 이 shim은 **Mac/Linux 빌드만** 있습니다. 네이티브 Windows에선 텔레메트리(모니터링)는 되지만 **스킬 자동 동기화가 안 됩니다.** WSL(=Linux) 안에서 돌리면 Mac과 동일하게 전부 작동합니다.
+### 이미 WSL을 쓰고 있다면 (선택)
 
-### WSL 설치
+기존 WSL2 Ubuntu 환경도 계속 사용할 수 있습니다. 이후 Windows PowerShell 명령 대신 WSL 명령을 따라가세요. 새로 WSL을 선택한다면 관리자 PowerShell에서 `wsl --install` 후 재부팅하고 Ubuntu 사용자 계정을 만듭니다.
 
-1. **PowerShell을 관리자 권한으로** 엽니다 (시작 메뉴 → "PowerShell" → 우클릭 → "관리자로 실행")
-2. 설치:
-
-```powershell
-wsl --install
-```
-
-3. **재부팅**
-4. 재부팅 후 Ubuntu 창이 자동으로 뜨면 → **사용자 이름 + 비밀번호** 설정 (비밀번호는 입력해도 화면에 안 보이는 게 정상)
-   - Ubuntu 창이 안 뜨면: 시작 메뉴에서 **"Ubuntu"** 검색 → 실행
-5. 이제부터 **이 Ubuntu 터미널** 안에서 아래 Step들의 **macOS 명령**을 따라가면 됩니다 (git만 apt로 설치 — Step 2 참고).
-
-> 이미 WSL Ubuntu가 깔려 있으면 Ubuntu 터미널만 열고 Step 1로.
-
-### WSL(Ubuntu) 터미널 켜는 법
-
-다음부터 **Claude Code 작업은 항상 Ubuntu 터미널에서** 합니다 (네이티브 PowerShell/CMD ❌ — 거기선 설치한 claude·스킬이 안 보임).
-
-- **제일 쉬움**: Windows 키 → `Ubuntu` 타이핑 → 엔터
-- **Windows Terminal**: 상단 탭 `∨` → Ubuntu 선택 (매번 귀찮으면 Settings → Default profile을 Ubuntu로)
-- **아무 터미널에서**: `wsl` 입력 → 현재 창이 Ubuntu로 전환
-- **VSCode 쓰면**: "WSL" 확장 설치 → 좌하단 `><` → "Connect to WSL" (터미널·Claude Code 확장이 전부 WSL에서 돌아감, 추천)
-
-확인:
-```bash
-uname -a    # Linux ... 라고 나오면 WSL 정상
-```
-
-> `wsl`이 "명령을 찾을 수 없음" → WSL 미설치. 위 'WSL 설치'부터.
+Windows와 WSL의 프로그램·로그인·스킬·credentials는 별개입니다. 설치부터 실행까지 선택한 환경에서 진행하세요.
 
 ---
 
@@ -108,22 +80,21 @@ git --version
 - 버전이 나오면 → **이미 설치됨, Step 3으로**
 - "xcode-select" 팝업이 뜨면 → **"설치" 클릭** 후 완료될 때까지 대기 (5분)
 
-### Windows (WSL Ubuntu)
+### Windows (PowerShell)
 
-**Ubuntu 터미널 안에서** 실행합니다 (PowerShell 아님).
-
-```bash
+```powershell
 git --version
 ```
 
-- 버전이 나오면 → **이미 설치됨, Step 3으로**
-- 에러가 나오면 → 아래 실행:
+버전이 안 나오면 아래 명령으로 설치하고 PowerShell을 껐다 다시 여세요.
 
-```bash
-sudo apt update && sudo apt install -y git
+```powershell
+winget install --id Git.Git --exact --accept-package-agreements --accept-source-agreements
 ```
 
-> 비밀번호를 물으면 WSL 설치 때 만든 비밀번호 입력 (화면에 안 보이는 게 정상).
+### WSL Ubuntu (선택)
+
+Ubuntu 터미널에서 `git --version`을 확인합니다. 없다면 `sudo apt update && sudo apt install -y git`을 실행하세요.
 
 ---
 
@@ -137,9 +108,17 @@ cd driving-teacher-ai-native
 bash scripts/setup-mac.sh
 ```
 
-### Windows (WSL Ubuntu)
+### Windows (PowerShell)
 
-**Ubuntu 터미널 안에서** 실행합니다 (PowerShell 아님 — Step 0 참고).
+```powershell
+git clone https://github.com/Driving-Teacher/driving-teacher-ai-native.git
+cd driving-teacher-ai-native
+.\scripts\setup-windows.ps1
+```
+
+실행 정책 오류가 나오면 `Set-ExecutionPolicy -Scope Process RemoteSigned`를 실행한 뒤 다시 시도하세요. 회사 정책으로 차단되면 `#ai-native`에 문의해주세요.
+
+### WSL Ubuntu (선택)
 
 ```bash
 git clone https://github.com/Driving-Teacher/driving-teacher-ai-native.git
@@ -154,24 +133,25 @@ bash scripts/setup-wsl.sh
 따로 정리하고 싶으시면 원하는 폴더를 먼저 만들고 들어간 뒤 위 세 줄을 치세요. 예를 들어:
 
 ```bash
-mkdir -p ~/dev && cd ~/dev      # 폴더 이름은 본인 마음대로
+mkdir -p ~/dev && cd ~/dev      # macOS / WSL 예시
+# PowerShell: New-Item -ItemType Directory -Force ~/dev; Set-Location ~/dev
 ```
 
 > **어디에 받든 회사 도구는 알아서 찾습니다.** `/kb`·`/company-setup` 같은 것들이 홈 아래를 뒤져서 찾아냅니다.
 > 하나만 기억하세요 — **`claude` 를 켤 때는 이 폴더 안에 들어와 있어야 합니다.** 그 이유는 Step 4에 있고, **정확한 경로는 설치가 끝나면 화면에 찍어드립니다.** 외울 필요 없습니다.
 >
-> (Windows/WSL 만 예외: `/mnt/c/...` 같은 **Windows 쪽 디스크는 피하세요.** 느리고 AI가 파일을 잘 못 찾습니다. Ubuntu 홈 `~` 아래면 됩니다.)
+> (WSL을 선택한 경우에만 예외: `/mnt/c/...` 같은 **Windows 쪽 디스크는 피하세요.** 느리고 AI가 파일을 잘 못 찾습니다. Ubuntu 홈 `~` 아래면 됩니다.)
 
-Mac과 똑같이 git·Claude Code·Node.js·Python이 한 번에 깔립니다. 설치 후 Ubuntu 터미널을 **껐다가 다시 열어** PATH를 반영합니다.
+선택한 스크립트가 필요한 도구를 설치합니다. 설치 후 사용 중인 터미널을 **껐다가 다시 열어** PATH를 반영합니다.
 
-> 실수로 PowerShell에서 돌리면 스크립트가 **스스로 멈추고** WSL로 안내합니다.
+> PowerShell에서는 `setup-windows.ps1`, Ubuntu에서는 `setup-wsl.sh`를 실행하세요.
 
 
 ### 세팅이 설치하는 것
 
 | 도구 | 용도 |
 |------|------|
-| **git** | 회사 자료 받기 (WSL만 — Mac은 Xcode CLI Tools로) |
+| **git** | 회사 자료 받기 (Mac은 Xcode CLI Tools로) |
 | **Claude Code** | AI 코딩/업무 도구 |
 | **Node.js** | 플러그인, MCP 서버 |
 | **Python** | 엑셀/데이터 처리, 일부 MCP |
@@ -190,7 +170,7 @@ cd <설치가 알려준 경로>
 claude
 ```
 
-터미널(Mac) / Ubuntu 터미널(WSL)을 **껐다가 다시 열고**, 그 두 줄을 **복사해서** 칩니다.
+터미널(Mac) / PowerShell(Windows) / Ubuntu 터미널(WSL)을 **껐다가 다시 열고**, 그 두 줄을 **복사해서** 칩니다.
 
 > **경로를 외우지 마세요.** 사람마다 다릅니다 — Step 3에서 본인이 받은 곳이 찍힙니다.
 > 화면을 이미 닫아버렸으면, 레포 폴더로 들어가서 `pwd` 를 치면 지금 경로가 나옵니다.
@@ -224,8 +204,8 @@ claude
 claude --version
 node --version
 git --version
-python3 --version   # macOS
-# Windows(WSL)도 python3 입니다 — WSL Ubuntu에는 python 명령이 없습니다
+python3 --version   # macOS / WSL
+# Windows PowerShell에서는 대신 python --version
 ```
 
 > Step 4에서 `claude` 로 들어가 있으면 이 명령들이 안 먹습니다. **`/exit` 를 쳐서 Claude Code를 나온 다음** 위 4개를 확인하세요. 확인이 끝나면 Step 4의 두 줄(`cd` → `claude`)로 다시 들어갑니다.
@@ -248,7 +228,7 @@ Step 6부터는 `/zeude-setup` 처럼 **슬래시(`/`)로 시작하는 것**을 
 
 ## Step 6: Zeude 가입 (모니터링 + 회사 스킬 자동 받기)
 
-슬랙 #ai-native 에서 받은 **Zeude 초대 링크**를 클릭하면 자동으로 가입 + `~/.zeude/credentials` 박힘.
+슬랙 #ai-native에서 받은 **Zeude 초대 링크**로 가입하고 설치 안내를 확인합니다. 기존 credentials가 있으면 재사용하며, 없을 때만 발급받은 agent key를 설치기에 입력합니다. 키는 슬랙이나 커밋에 올리지 마세요.
 
 링크가 안 왔거나 잃어버렸으면 슬랙에 요청.
 
@@ -354,10 +334,12 @@ AI Native Camp 4주 세션을 들었던 분이 부분 복습을 원하면:
 ## 빠른 셋업 시퀀스 (전체 요약)
 
 ```
-Step 0: (Windows만) wsl --install → 재부팅 → 이후 Ubuntu 터미널에서 진행
+Step 0: Mac은 터미널 / Windows는 PowerShell (기존 WSL도 선택 가능)
 Step 1: Claude Teams 초대 수락 (메일)
-Step 2: git 설치 (Mac: 자동 / WSL: sudo apt install -y git)
-Step 3: Mac: bash scripts/setup-mac.sh / Windows(WSL): bash scripts/setup-wsl.sh
+Step 2: git 설치 (Mac: Xcode / Windows: winget / WSL: apt)
+Step 3: Mac: bash scripts/setup-mac.sh
+        Windows: .\scripts\setup-windows.ps1
+        WSL 선택 시: bash scripts/setup-wsl.sh
 Step 4: claude 로그인
 Step 5: 버전 확인 4개
         ┈┈ 여기까지 터미널. 아래는 Claude Code 안에서 ┈┈
@@ -367,7 +349,7 @@ Step 7: /ai-onboarding         ← ★ 종착지. 남은 준비는 이 스킬이
 그다음: /onboarding            ← 회사 온보딩 (Day 1~9 · 하루 30분)
 ```
 
-Mac 30~40분 / Windows는 WSL 설치 포함 50분~1시간. 막히면 #ai-native.
+설치 시간은 기존 도구와 네트워크 상태에 따라 달라집니다. 막히면 #ai-native.
 
 ---
 
@@ -376,13 +358,13 @@ Mac 30~40분 / Windows는 WSL 설치 포함 50분~1시간. 막히면 #ai-native.
 | 증상 | 해결 |
 |------|------|
 | `wsl --install`이 안 됨 (Windows) | PowerShell을 **관리자 권한**으로 실행했는지 확인. 그래도 안 되면 Windows 업데이트 후 재시도 |
-| (Windows) 스킬이 안 뜸 / `/company-setup` 없음 | 네이티브 Windows(PowerShell)에서 돌린 경우. **WSL Ubuntu 안에서** Step 2부터 다시 (shim이 Linux에서만 동기화) |
+| (Windows) 스킬이 안 뜸 / `/company-setup` 없음 | `Get-Command claude`로 Zeude shim 경로인지 확인하고 `zeude doctor` 실행. `/zeude-setup`에서 스킬 동기화 확인 |
 | `git clone`이 안 됨 | git 미설치. Step 2부터 다시 |
 | `claude`를 못 찾음 | 터미널 **껐다 다시 열기**. WSL은 `source ~/.bashrc` |
 | `node`를 못 찾음 | 터미널 **껐다 다시 열기**. macOS는 `source ~/.zshrc`, WSL은 `source ~/.bashrc` |
 | 로그인이 안 됨 | Teams 초대를 수락했는지 확인 (Step 1) |
 | 브라우저가 안 열림 | `c` 키 눌러서 URL 복사 → 브라우저에서 직접 열기 |
-| `/zeude-setup` 후에도 스킬이 안 보임 | Claude Code 새 창. 또는 `claude --version` 한번 호출해서 sync trigger. (Windows는 WSL인지 먼저 확인) |
+| `/zeude-setup` 후에도 스킬이 안 보임 | Claude Code 새 창. 또는 `claude --version` 한번 호출해서 sync trigger. (Windows는 `Get-Command claude`로 shim 경로 확인) |
 | `/company-setup` clone 403 | 비공개 레포(회사 KB) 권한 없음 → 슬랙에 GitHub username 보고 |
 | zeude credentials 잃어버림 | 슬랙에서 새 초대 링크 요청 (호스트가 `/zeude-invite 1`로 발급) |
 | `/mcp`에 Notion이 "Needs authentication" | 그 항목 선택 → Authenticate → 브라우저에서 **회사 노션 계정**으로 승인 (개인 계정 아님) |
