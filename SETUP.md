@@ -23,24 +23,7 @@
 
 회사에서 허용한 임시 컴퓨터에서도 **Zeude만 건너뛰고 AI 온보딩을 시작**할 수 있습니다. 아래 Step 0~3으로 Git·Claude Code를 설치하세요. Paseo를 쓸 경우 Step 5에서 설치합니다. 임시 컴퓨터에는 Zeude 키를 넣지 않습니다.
 
-이미 회사 CLIProxy가 연결된 컴퓨터라면 그 설정을 그대로 사용합니다. 새로 연결해야 한다면 **Step 4의 영구 설정 대신**, 현재 터미널에서만 유효한 아래 방법을 사용하세요. 셸을 닫으면 키가 적용되지 않습니다.
-
-Mac zsh에서는 `read -r -s "KEY?CLIProxy 키: "; echo`를, Mac bash에서는 `read -r -s -p "CLIProxy 키: " KEY; echo`를 실행한 뒤 다음을 입력합니다:
-
-```bash
-export ANTHROPIC_BASE_URL="https://rr-proxy-vm.tail7f1c29.ts.net"
-export ANTHROPIC_AUTH_TOKEN="$KEY"
-unset KEY
-```
-
-Windows PowerShell에서는 다음을 입력합니다:
-
-```powershell
-$key = Read-Host 'CLIProxy 키' -AsSecureString
-$env:ANTHROPIC_BASE_URL = 'https://rr-proxy-vm.tail7f1c29.ts.net'
-$env:ANTHROPIC_AUTH_TOKEN = [Net.NetworkCredential]::new('', $key).Password
-Remove-Variable key
-```
+이미 회사 CLIProxy가 연결된 컴퓨터라면 그 설정을 그대로 사용합니다. 새로 연결해야 한다면 담당자에게 **비공개 연결 안내**를 받아 현재 세션에만 설정하세요. 공개 문서에 내부 서버 주소나 키를 적지 않습니다.
 
 이 터미널에서 `claude`를 실행해 실제 답변을 확인하세요. Paseo는 터미널의 임시 환경변수를 자동으로 물려받지 않을 수 있으므로, 임시 컴퓨터에서는 먼저 Claude Code 터미널로 학습을 시작하는 편이 확실합니다.
 
@@ -206,52 +189,7 @@ mkdir -p ~/dev && cd ~/dev      # macOS / WSL 예시
 
 ## Step 4: 회사 CLIProxy 연결
 
-Claude Code는 먼저 설치만 합니다. **개인 Claude 계정 로그인은 필요하지 않습니다.** 아래에서 운영체제에 맞는 방법으로 회사 프록시에 연결한 뒤 `claude`에서 실제 답변이 오는지 확인하세요.
-
-### macOS (zsh 또는 bash)
-
-`echo $SHELL`을 실행하세요. `/bin/zsh`면 첫 번째, `/bin/bash`면 두 번째 명령을 사용합니다. 키는 터미널에 직접 입력하며 화면에 표시되지 않습니다.
-
-**zsh:**
-
-```zsh
-read -r -s "KEY?CLIProxy 키: "; echo
-printf '%s' "$KEY" > ~/.rr-proxy-key; chmod 600 ~/.rr-proxy-key; unset KEY
-touch ~/.zshrc
-printf '\nexport ANTHROPIC_BASE_URL="https://rr-proxy-vm.tail7f1c29.ts.net"\nexport ANTHROPIC_AUTH_TOKEN="$(cat ~/.rr-proxy-key)"\n' >> ~/.zshrc
-```
-
-**bash (Mac 로그인 셸):**
-
-```bash
-read -r -s -p "CLIProxy 키: " KEY; echo
-printf '%s' "$KEY" > ~/.rr-proxy-key; chmod 600 ~/.rr-proxy-key; unset KEY
-touch ~/.bash_profile
-printf '\nexport ANTHROPIC_BASE_URL="https://rr-proxy-vm.tail7f1c29.ts.net"\nexport ANTHROPIC_AUTH_TOKEN="$(cat ~/.rr-proxy-key)"\n' >> ~/.bash_profile
-```
-
-설정 파일에 같은 두 줄이 이미 있다면 다시 추가하지 말고 기존 줄을 확인하세요.
-
-**WSL Ubuntu를 선택했다면:** Ubuntu 터미널에서 아래를 실행하세요. Windows PowerShell에 설정한 환경변수는 WSL에 자동 적용되지 않습니다.
-
-```bash
-read -r -s -p "CLIProxy 키: " KEY; echo
-printf '%s' "$KEY" > ~/.rr-proxy-key; chmod 600 ~/.rr-proxy-key; unset KEY
-touch ~/.bashrc
-printf '\nexport ANTHROPIC_BASE_URL="https://rr-proxy-vm.tail7f1c29.ts.net"\nexport ANTHROPIC_AUTH_TOKEN="$(cat ~/.rr-proxy-key)"\n' >> ~/.bashrc
-```
-
-### Windows (PowerShell)
-
-CLIProxy 키는 개인 메시지로 받은 뒤 PowerShell에서 직접 입력하세요. 사용자 환경변수는 해당 Windows 계정에 평문으로 저장됩니다.
-
-```powershell
-[Environment]::SetEnvironmentVariable('ANTHROPIC_BASE_URL', 'https://rr-proxy-vm.tail7f1c29.ts.net', 'User')
-$key = Read-Host 'CLIProxy 키' -AsSecureString
-$plain = [Net.NetworkCredential]::new('', $key).Password
-[Environment]::SetEnvironmentVariable('ANTHROPIC_AUTH_TOKEN', $plain, 'User')
-Remove-Variable key, plain
-```
+Claude Code는 먼저 설치만 합니다. **개인 Claude 계정 로그인은 필요하지 않습니다.** 담당자에게 받은 **비공개 CLIProxy 연결 안내**를 운영체제에 맞게 따라 하세요. 내부 서버 주소와 키는 공개 문서에 적지 않습니다. WSL을 선택했다면 Windows와 별도 환경이므로 WSL 안에서도 연결해야 합니다.
 
 ### 연결 확인
 
