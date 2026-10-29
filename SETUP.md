@@ -35,15 +35,13 @@ Windows와 WSL의 프로그램·로그인·스킬·credentials는 별개입니�
 
 ---
 
-## Step 1: 초대 수락 (Claude Teams + 슬랙)
+## Step 1: 회사 접속 준비 (CLIProxy + 슬랙)
 
-**둘 다 해주세요.** 아래 Step 6에서 슬랙으로 받는 것(Zeude 초대 링크)이 있어서, 슬랙에 없으면 중간에 멈춥니다.
+회사 Tailscale에 연결하고 슬랙 `#ai-native`에 참여하세요. Claude 개인 계정이나 Claude Teams 초대는 필요하지 않습니다.
 
-### 1-1. Claude Teams
+### 1-1. 회사 CLIProxy 키
 
-1. 메일함에서 **Claude Teams 초대** 메일 확인
-2. **Accept invitation** 클릭 → 끝!
-3. 별도 결제 없음 (회사에서 일괄 결제)
+담당자에게 개인 메시지로 `sk_`가 아닌 **`sk-`로 시작하는 CLIProxy 키**를 받으세요. 이 키는 Claude Code가 회사 AI 서비스를 쓰기 위한 접속 키입니다. 노션·공개 채널·스크린샷에 넣지 마세요.
 
 ### 1-2. 슬랙 `#ai-native` 채널
 
@@ -58,9 +56,10 @@ Step 6 이후에 필요한데 사람이 발급해주는 것들입니다. **지�
 ```
 #ai-native 에 이렇게 남기면 됩니다:
 
-  오늘 입사한 {이름}입니다! 셋업 시작하는데 두 개 요청드려요 🙏
-  1) Zeude 초대 링크
-  2) GitHub 초대 — 제 아이디는 {github-username} 입니다
+  오늘 입사한 {이름}입니다! 셋업 시작하는데 세 개 요청드려요.
+  1) 회사 CLIProxy 키 (개인 DM으로 전달 부탁드립니다)
+  2) Zeude 초대 링크
+  3) GitHub 초대 — 제 아이디는 {github-username} 입니다
 ```
 
 > 초대 메일이 안 왔거나 채널을 못 찾으면 입사 담당자에게 알려주세요.
@@ -161,9 +160,60 @@ mkdir -p ~/dev && cd ~/dev      # macOS / WSL 예시
 
 ---
 
-## Step 4: Claude 로그인
+## Step 4: 회사 CLIProxy 연결
 
-Step 3이 끝나면 화면 마지막에 **칠 두 줄이 그대로 찍혀 있습니다.** 이렇게 생겼습니다:
+Claude Code는 먼저 설치만 합니다. **개인 Claude 계정 로그인은 필요하지 않습니다.** 아래에서 운영체제에 맞는 방법으로 회사 프록시에 연결한 뒤 `claude`에서 실제 답변이 오는지 확인하세요.
+
+### macOS (zsh 또는 bash)
+
+`echo $SHELL`을 실행하세요. `/bin/zsh`면 첫 번째, `/bin/bash`면 두 번째 명령을 사용합니다. 키는 터미널에 직접 입력하며 화면에 표시되지 않습니다.
+
+**zsh:**
+
+```zsh
+read -r -s "KEY?CLIProxy 키: "; echo
+printf '%s' "$KEY" > ~/.rr-proxy-key; chmod 600 ~/.rr-proxy-key; unset KEY
+touch ~/.zshrc
+printf '\nexport ANTHROPIC_BASE_URL="https://rr-proxy-vm.tail7f1c29.ts.net"\nexport ANTHROPIC_AUTH_TOKEN="$(cat ~/.rr-proxy-key)"\n' >> ~/.zshrc
+```
+
+**bash (Mac 로그인 셸):**
+
+```bash
+read -r -s -p "CLIProxy 키: " KEY; echo
+printf '%s' "$KEY" > ~/.rr-proxy-key; chmod 600 ~/.rr-proxy-key; unset KEY
+touch ~/.bash_profile
+printf '\nexport ANTHROPIC_BASE_URL="https://rr-proxy-vm.tail7f1c29.ts.net"\nexport ANTHROPIC_AUTH_TOKEN="$(cat ~/.rr-proxy-key)"\n' >> ~/.bash_profile
+```
+
+설정 파일에 같은 두 줄이 이미 있다면 다시 추가하지 말고 기존 줄을 확인하세요.
+
+**WSL Ubuntu를 선택했다면:** Ubuntu 터미널에서 아래를 실행하세요. Windows PowerShell에 설정한 환경변수는 WSL에 자동 적용되지 않습니다.
+
+```bash
+read -r -s -p "CLIProxy 키: " KEY; echo
+printf '%s' "$KEY" > ~/.rr-proxy-key; chmod 600 ~/.rr-proxy-key; unset KEY
+touch ~/.bashrc
+printf '\nexport ANTHROPIC_BASE_URL="https://rr-proxy-vm.tail7f1c29.ts.net"\nexport ANTHROPIC_AUTH_TOKEN="$(cat ~/.rr-proxy-key)"\n' >> ~/.bashrc
+```
+
+### Windows (PowerShell)
+
+CLIProxy 키는 개인 메시지로 받은 뒤 PowerShell에서 직접 입력하세요. 사용자 환경변수는 해당 Windows 계정에 평문으로 저장됩니다.
+
+```powershell
+[Environment]::SetEnvironmentVariable('ANTHROPIC_BASE_URL', 'https://rr-proxy-vm.tail7f1c29.ts.net', 'User')
+$key = Read-Host 'CLIProxy 키' -AsSecureString
+$plain = [Net.NetworkCredential]::new('', $key).Password
+[Environment]::SetEnvironmentVariable('ANTHROPIC_AUTH_TOKEN', $plain, 'User')
+Remove-Variable key, plain
+```
+
+### 연결 확인
+
+터미널·PowerShell을 완전히 닫고 새로 여세요. Paseo를 쓰면 Paseo도 완전히 종료한 뒤 다시 엽니다. Tailscale 연결을 확인하고, 아래처럼 Claude Code를 실행해 짧은 질문에 **실제 답변이 오는지** 확인하세요. 버전 출력만으로는 프록시 연결을 확인할 수 없습니다.
+
+CLIProxy 환경변수를 설정한 후, Step 3 마지막에 표시된 경로로 들어가 Claude Code를 실행합니다.
 
 ```bash
 cd <설치가 알려준 경로>
@@ -187,14 +237,7 @@ claude
 
 앞으로도 **회사 일을 할 때는 이 폴더에서** `claude` 를 켜세요.
 
-### 로그인
-
-1. 브라우저가 자동으로 열립니다
-2. Claude.ai 계정으로 로그인합니다
-3. 터미널로 돌아오면 자동으로 인증 완료
-
-> 브라우저가 안 열리면 `c` 키를 눌러 URL을 복사하고 직접 열어주세요.
-> (WSL은 Windows 기본 브라우저가 열립니다. 안 열리면 URL 복사 방식 사용.)
+개인 계정 로그인 화면이 나오거나 응답이 실패하면 Step 6으로 넘어가지 말고 CLIProxy 키·환경변수·Tailscale 연결을 확인하세요. WSL을 선택했다면 WSL 안에서 Linux용 셸 설정을 따로 해야 합니다.
 
 ---
 
@@ -335,12 +378,12 @@ AI Native Camp 4주 세션을 들었던 분이 부분 복습을 원하면:
 
 ```
 Step 0: Mac은 터미널 / Windows는 PowerShell (기존 WSL도 선택 가능)
-Step 1: Claude Teams 초대 수락 (메일)
+Step 1: Tailscale 연결 + CLIProxy 키·Zeude 초대 요청
 Step 2: git 설치 (Mac: Xcode / Windows: winget / WSL: apt)
 Step 3: Mac: bash scripts/setup-mac.sh
         Windows: .\scripts\setup-windows.ps1
         WSL 선택 시: bash scripts/setup-wsl.sh
-Step 4: claude 로그인
+Step 4: CLIProxy 환경변수 설정 + 실제 Claude 응답 확인
 Step 5: 버전 확인 4개
         ┈┈ 여기까지 터미널. 아래는 Claude Code 안에서 ┈┈
 Step 6: /zeude-setup           ← 회사 스킬 동기화 + 모니터링 (먼저 해야 나머지가 생김)
@@ -362,8 +405,8 @@ Step 7: /ai-onboarding         ← ★ 종착지. 남은 준비는 이 스킬이
 | `git clone`이 안 됨 | git 미설치. Step 2부터 다시 |
 | `claude`를 못 찾음 | 터미널 **껐다 다시 열기**. WSL은 `source ~/.bashrc` |
 | `node`를 못 찾음 | 터미널 **껐다 다시 열기**. macOS는 `source ~/.zshrc`, WSL은 `source ~/.bashrc` |
-| 로그인이 안 됨 | Teams 초대를 수락했는지 확인 (Step 1) |
-| 브라우저가 안 열림 | `c` 키 눌러서 URL 복사 → 브라우저에서 직접 열기 |
+| Claude가 답변하지 않음 | Tailscale 연결, CLIProxy 키와 Step 4 환경변수 확인. 새 터미널에서 다시 실행 |
+| 개인 Claude 로그인 화면이 나옴 | Step 4의 환경변수가 현재 프로세스에 적용됐는지 확인. 터미널·Paseo를 완전히 재시작 |
 | `/zeude-setup` 후에도 스킬이 안 보임 | Claude Code 새 창. 또는 `claude --version` 한번 호출해서 sync trigger. (Windows는 `Get-Command claude`로 shim 경로 확인) |
 | `/company-setup` clone 403 | 비공개 레포(회사 KB) 권한 없음 → 슬랙에 GitHub username 보고 |
 | zeude credentials 잃어버림 | 슬랙에서 새 초대 링크 요청 (호스트가 `/zeude-invite 1`로 발급) |
