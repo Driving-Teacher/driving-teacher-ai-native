@@ -87,7 +87,7 @@ Hermes를 설치하면 슬랙에서 봇한테 DM으로
 
 2. `/hermes-setup` 실행을 안내한다.
    - Mac 유저: 바로 진행
-   - Windows 유저: WSL 필수 (사전 숙제로 설치했어야 함)
+   - Windows 유저: 이 과거 Hermes 실습은 WSL 기준. 현재 Claude Code·Zeude 설치는 WSL 필수 아님 (SETUP.md 참고)
    - WSL 안 된 사람: Mac 유저랑 페어로 진행하고, 수업 후 별도 해결
 
 3. 셋업 완료 확인:
