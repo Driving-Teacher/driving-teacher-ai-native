@@ -273,6 +273,8 @@ exporters:
 
 ### 5.1 설치 스크립트
 
+Windows 클라이언트는 WSL 없이 공식 `install.ps1`로 설치할 수 있습니다. 회사 운영 환경은 [Windows 설치·검증 가이드](./zeude-windows-setup.md)를 따르세요. 아래 Bash 설치 과정과 경로·권한 설명은 macOS/Linux/WSL용입니다.
+
 ```bash
 curl -fsSL https://YOUR_DASHBOARD_URL/releases/install.sh | \
   ZEUDE_AGENT_KEY=zd_xxx \

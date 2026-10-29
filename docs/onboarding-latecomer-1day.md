@@ -28,7 +28,7 @@
 ## 사전 준비 — 세션 전날까지 완료
 
 **참여자 (입사자)**
-- [`SETUP.md`](../SETUP.md) Step 0~8까지 완료 (macOS 30~40분 / Windows WSL 포함 60분)
+- [`SETUP.md`](../SETUP.md) Step 0~7까지 완료 (Windows는 PowerShell 기본, WSL 선택)
 - `claude --version` 확인 + `/zeude-setup` 끝
 - 핸드아웃 [4주 솔로 과제 문서](./onboarding-latecomer-4week-solo.md)는 세션 전엔 안 읽음 (세션 후 같이 훑음)
 

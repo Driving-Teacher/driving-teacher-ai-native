@@ -3,8 +3,8 @@
 # 실행: WSL Ubuntu 터미널에서  bash scripts/setup-wsl.sh
 #
 # ⚠️ 네이티브 Windows(PowerShell/CMD/Git Bash)에서는 돌아가지 않습니다.
-#    Zeude 스킬 자동 동기화 shim이 Mac/Linux 빌드만 있어서, 네이티브 Windows에
-#    깔면 /ai-onboarding 같은 회사 스킬이 아예 안 뜹니다. (SETUP.md Step 0 참고)
+#    이 파일은 WSL용입니다. 네이티브 Windows에서는
+#    scripts/setup-windows.ps1을 실행하세요. (SETUP.md Step 0 참고)
 #
 # 설계 원칙 — 비개발자가 혼자 돌립니다.
 #   1. 실패를 절대 성공으로 보고하지 않는다. 설치 후 실제로 명령이 있는지 확인한다.

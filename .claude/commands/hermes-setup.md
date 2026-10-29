@@ -4,6 +4,9 @@ description: Hermes Agent 셋업. Slack 봇 + AI 에이전트를 내 PC에 설�
 allowed-tools: Bash, Read, AskUserQuestion
 ---
 
+> **적용 범위:** 아래 WSL 안내는 Hermes 설치 경로에 관한 내용입니다. Claude Code·Zeude의 기본 Windows 설치는 PowerShell을 지원하며 WSL이 필수가 아닙니다. Hermes의 네이티브 Windows 지원은 별도로 확인하고, WSL 전환이 필요하면 기존 Windows 환경과 별개로 설치됨을 안내합니다.
+
+
 Hermes Agent를 내 PC에 설치하고 Slack 봇으로 연결한다.
 
 > **소요 시간**: 처음 셋업 ~30분 (Slack App 만들기 5분 + Hermes 설치/설정 15분 + 테스트 10분)

@@ -4,6 +4,9 @@ description: Hermes(Slack 봇)에 운전선생 knowledge-base 연결. 슬랙에�
 allowed-tools: Bash, Read, Write, AskUserQuestion
 ---
 
+> **적용 범위:** 아래 WSL 안내는 Hermes 설치 경로에 관한 내용입니다. Claude Code·Zeude의 기본 Windows 설치는 PowerShell을 지원하며 WSL이 필수가 아닙니다. Hermes의 네이티브 Windows 지원은 별도로 확인하고, WSL 전환이 필요하면 기존 Windows 환경과 별개로 설치됨을 안내합니다.
+
+
 Hermes에 운전선생 knowledge-base를 연결해서 슬랙에서 자연어로 회사 정보를 검색할 수 있게 한다.
 
 > **소요 시간**: ~5분
