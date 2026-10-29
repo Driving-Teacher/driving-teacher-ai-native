@@ -255,6 +255,12 @@ python3 --version   # macOS / WSL
 
 4개 다 버전이 나오면 설치 완료. 여기까지가 터미널 작업이고, 남은 Step 6~7은 **Claude Code 안에서** 합니다. **두 줄이면 끝납니다.**
 
+### Paseo 설치 (Mac·Windows)
+
+Paseo에서 Claude Code를 사용할 분은 [Paseo 공식 다운로드](https://paseo.sh/download)에서 운영체제에 맞는 **데스크톱 앱**을 설치하세요. Paseo 앱에는 자체 실행 서비스가 포함되어 있어 별도의 Paseo CLI 설치는 필요하지 않습니다. Claude Code와 회사 CLIProxy 연결은 위 단계에서 먼저 끝내야 합니다.
+
+Paseo가 이미 열려 있다면 완전히 종료하세요. 아래 Step 6에서 Zeude를 설치한 **뒤에 Paseo를 다시 열어야** 새 환경변수와 Zeude 실행 경로가 적용됩니다.
+
 ---
 
 ## 잠깐 — `/`로 시작하는 게 뭔가요?
@@ -291,6 +297,8 @@ Claude Code에서:
 - 텔레메트리 shim 설치 (Claude Code 사용 데이터가 팀 대시보드에 자동 기록)
 - 회사 표준 스킬 자동 동기화 (`ai-onboarding`, `onboarding`, `kb`, `tips` 등 10개+)
 - 대시보드 자동 로그인 (`/zeude`로 언제든 재접속)
+
+Paseo를 설치했다면 이제 앱을 다시 열고 Claude 세션에서 짧은 질문을 보내세요. Windows에서는 새 PowerShell의 `Get-Command claude -All` 첫 결과가 `.zeude\bin\claude.exe`인지 확인합니다. Paseo가 `claude`를 실행 파일의 절대경로로 직접 호출하면 Zeude를 거치지 않을 수 있습니다. 대시보드에 **본인 기록이 실제로 들어오는지** 확인하세요. Windows의 Paseo→Zeude 기록 수집은 아직 실기기 검증 전입니다.
 
 > ⚠️ **이걸 먼저 해야 다음 Step의 `/ai-onboarding`이 생깁니다.** 회사 스킬은 전부 여기서 받아옵니다. 가입은 1번만.
 
@@ -385,6 +393,7 @@ Step 3: Mac: bash scripts/setup-mac.sh
         WSL 선택 시: bash scripts/setup-wsl.sh
 Step 4: CLIProxy 환경변수 설정 + 실제 Claude 응답 확인
 Step 5: 버전 확인 4개
+        Paseo를 쓴다면 공식 데스크톱 앱 설치 (Zeude 설치 뒤 재시작)
         ┈┈ 여기까지 터미널. 아래는 Claude Code 안에서 ┈┈
 Step 6: /zeude-setup           ← 회사 스킬 동기화 + 모니터링 (먼저 해야 나머지가 생김)
 Step 7: /ai-onboarding         ← ★ 종착지. 남은 준비는 이 스킬이 안내합니다
@@ -407,6 +416,7 @@ Step 7: /ai-onboarding         ← ★ 종착지. 남은 준비는 이 스킬이
 | `node`를 못 찾음 | 터미널 **껐다 다시 열기**. macOS는 `source ~/.zshrc`, WSL은 `source ~/.bashrc` |
 | Claude가 답변하지 않음 | Tailscale 연결, CLIProxy 키와 Step 4 환경변수 확인. 새 터미널에서 다시 실행 |
 | 개인 Claude 로그인 화면이 나옴 | Step 4의 환경변수가 현재 프로세스에 적용됐는지 확인. 터미널·Paseo를 완전히 재시작 |
+| Paseo에서만 Zeude 기록이 안 보임 | Paseo 완전 종료 후 재시작. Windows는 `Get-Command claude -All`로 shim 우선순위 확인 |
 | `/zeude-setup` 후에도 스킬이 안 보임 | Claude Code 새 창. 또는 `claude --version` 한번 호출해서 sync trigger. (Windows는 `Get-Command claude`로 shim 경로 확인) |
 | `/company-setup` clone 403 | 비공개 레포(회사 KB) 권한 없음 → 슬랙에 GitHub username 보고 |
 | zeude credentials 잃어버림 | 슬랙에서 새 초대 링크 요청 (호스트가 `/zeude-invite 1`로 발급) |
